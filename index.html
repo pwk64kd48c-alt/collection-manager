@@ -225,6 +225,12 @@ input {
   color: #666;
 }
 
+.file-name {
+  font-size: 11px;
+  color: #999;
+  margin: -5px 0 10px;
+}
+
 .modal-buttons {
   display: flex;
   gap: 8px;
@@ -274,6 +280,7 @@ input {
   </div>
 
   <div id="patternView" style="display:none;">
+
     <button class="back-button" onclick="showCharacters()">
       ← キャラ一覧
     </button>
@@ -287,6 +294,7 @@ input {
     <div class="section-title">Collection</div>
 
     <div id="patternList" class="pattern-list"></div>
+
   </div>
 
 </div>
@@ -294,53 +302,96 @@ input {
 <!-- キャラ追加 -->
 <div id="characterModal" class="modal">
   <div class="modal-content">
+
     <h2>キャラを追加</h2>
 
     <input id="characterName" placeholder="キャラ名">
 
     <label class="file-label">
-      キャラ画像を選択
-      <input id="characterImage" type="file" accept="image/*" style="display:none;">
+      ＋ キャラ画像を選択
+      <input
+        id="characterImage"
+        type="file"
+        accept="image/*"
+        style="display:none;"
+        onchange="showFileName('characterImage','characterFileName')"
+      >
     </label>
 
+    <div id="characterFileName" class="file-name"></div>
+
     <div class="modal-buttons">
-      <button class="cancel-button" onclick="closeCharacterModal()">キャンセル</button>
-      <button class="save-button" onclick="saveCharacter()">追加</button>
+      <button class="cancel-button" onclick="closeCharacterModal()">
+        キャンセル
+      </button>
+
+      <button class="save-button" onclick="saveCharacter()">
+        追加
+      </button>
     </div>
+
   </div>
 </div>
 
 <!-- 絵柄追加 -->
 <div id="patternModal" class="modal">
   <div class="modal-content">
+
     <h2>絵柄を追加</h2>
 
     <input id="patternName" placeholder="絵柄名">
 
     <label class="file-label">
-      絵柄画像を選択
-      <input id="patternImage" type="file" accept="image/*" style="display:none;">
+      ＋ 絵柄画像を選択
+      <input
+        id="patternImage"
+        type="file"
+        accept="image/*"
+        style="display:none;"
+        onchange="showFileName('patternImage','patternFileName')"
+      >
     </label>
 
-    <input id="goodsInput" placeholder="グッズ（例：ぱしゃっつ 日本版）">
+    <div id="patternFileName" class="file-name"></div>
+
+    <input
+      id="goodsInput"
+      placeholder="グッズ（例：ぱしゃっつ 日本版）"
+    >
 
     <div class="modal-buttons">
-      <button class="cancel-button" onclick="closePatternModal()">キャンセル</button>
-      <button class="save-button" onclick="savePattern()">追加</button>
+      <button class="cancel-button" onclick="closePatternModal()">
+        キャンセル
+      </button>
+
+      <button class="save-button" onclick="savePattern()">
+        追加
+      </button>
     </div>
+
   </div>
 </div>
 
 <script>
-let data = JSON.parse(localStorage.getItem("collectionData") || "[]");
+
+const STORAGE_KEY = "collectionData";
+
+let data = JSON.parse(localStorage.getItem(STORAGE_KEY) || "[]");
+
 let selectedCharacter = null;
 
+
+/* 保存 */
 function saveData() {
-  localStorage.setItem("collectionData", JSON.stringify(data));
+  localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
 }
 
-function imageToBase64(file) {
-  return new Promise((resolve) => {
+
+/* 画像を小さくして保存 */
+function compressImage(file, maxSize = 600, quality = 0.75) {
+
+  return new Promise((resolve, reject) => {
+
     if (!file) {
       resolve("");
       return;
@@ -348,183 +399,415 @@ function imageToBase64(file) {
 
     const reader = new FileReader();
 
-    reader.onload = () => resolve(reader.result);
+    reader.onload = function(event) {
+
+      const img = new Image();
+
+      img.onload = function() {
+
+        let width = img.width;
+        let height = img.height;
+
+        if (width > height) {
+
+          if (width > maxSize) {
+            height = Math.round(height * maxSize / width);
+            width = maxSize;
+          }
+
+        } else {
+
+          if (height > maxSize) {
+            width = Math.round(width * maxSize / height);
+            height = maxSize;
+          }
+
+        }
+
+        const canvas = document.createElement("canvas");
+
+        canvas.width = width;
+        canvas.height = height;
+
+        const ctx = canvas.getContext("2d");
+
+        ctx.drawImage(img, 0, 0, width, height);
+
+        const compressed = canvas.toDataURL(
+          "image/jpeg",
+          quality
+        );
+
+        resolve(compressed);
+
+      };
+
+      img.onerror = reject;
+
+      img.src = event.target.result;
+    };
+
+    reader.onerror = reject;
+
     reader.readAsDataURL(file);
+
   });
 }
 
+
+/* ファイル名表示 */
+function showFileName(inputId, outputId) {
+
+  const file = document.getElementById(inputId).files[0];
+
+  const output = document.getElementById(outputId);
+
+  if (file) {
+    output.textContent = file.name;
+  } else {
+    output.textContent = "";
+  }
+}
+
+
+/* キャラ一覧 */
 function renderCharacters() {
+
   const list = document.getElementById("characterList");
 
   if (data.length === 0) {
+
     list.innerHTML = `
       <div class="empty">
         まだキャラが登録されていません
       </div>
     `;
+
     return;
   }
 
-  list.innerHTML = data.map((character, index) => `
-    <div class="character-card" onclick="openCharacter(${index})">
-      <img class="character-image"
-           src="${character.image || 'data:image/svg+xml;charset=UTF-8,<svg xmlns=%22http://www.w3.org/2000/svg%22 width=%2272%22 height=%2272%22><rect width=%22100%25%22 height=%22100%25%22 fill=%22%23eee%22/></svg>'}">
-      <div>
-        <div class="character-name">${escapeHTML(character.name)}</div>
-        <div class="character-count">
-          絵柄 ${character.patterns.length}
+  list.innerHTML = data.map((character, index) => {
+
+    const image = character.image || "";
+
+    return `
+      <div
+        class="character-card"
+        onclick="openCharacter(${index})"
+      >
+
+        ${
+          image
+          ?
+          `<img
+            class="character-image"
+            src="${image}"
+          >`
+          :
+          `<div class="character-image"></div>`
+        }
+
+        <div>
+
+          <div class="character-name">
+            ${escapeHTML(character.name)}
+          </div>
+
+          <div class="character-count">
+            絵柄 ${character.patterns.length}
+          </div>
+
         </div>
+
       </div>
-    </div>
-  `).join("");
+    `;
+
+  }).join("");
 }
 
+
+/* キャラページ */
 function openCharacter(index) {
+
   selectedCharacter = index;
 
   document.getElementById("characterView").style.display = "none";
+
   document.getElementById("patternView").style.display = "block";
 
   renderCharacterPage();
 }
 
+
 function renderCharacterPage() {
+
   const character = data[selectedCharacter];
 
-  document.getElementById("characterHeader").innerHTML = `
+  const header = document.getElementById("characterHeader");
+
+  header.innerHTML = `
+
     <div class="character-header">
-      <img src="${character.image || 'data:image/svg+xml;charset=UTF-8,<svg xmlns=%22http://www.w3.org/2000/svg%22 width=%2275%22 height=%2275%22><rect width=%22100%25%22 height=%22100%25%22 fill=%22%23eee%22/></svg>'}">
-      <h2>${escapeHTML(character.name)}</h2>
+
+      ${
+        character.image
+        ?
+        `<img src="${character.image}">`
+        :
+        `<div class="character-image"></div>`
+      }
+
+      <h2>
+        ${escapeHTML(character.name)}
+      </h2>
+
     </div>
+
   `;
 
   const list = document.getElementById("patternList");
 
   if (character.patterns.length === 0) {
+
     list.innerHTML = `
-      <div class="empty" style="grid-column:1/-1;">
+      <div
+        class="empty"
+        style="grid-column:1/-1;"
+      >
         まだ絵柄が登録されていません
       </div>
     `;
+
     return;
   }
 
-  list.innerHTML = character.patterns.map(pattern => `
-    <div class="pattern-card">
-      <img class="pattern-image" src="${pattern.image}">
-      <div class="pattern-info">
-        <div class="pattern-name">
-          ${escapeHTML(pattern.name)}
-        </div>
+  list.innerHTML = character.patterns.map(pattern => {
 
-        <div class="goods-title">グッズ</div>
+    return `
 
-        <div class="goods-list">
-          ${
-            pattern.goods.length
-              ? pattern.goods.map(g => `
+      <div class="pattern-card">
+
+        <img
+          class="pattern-image"
+          src="${pattern.image}"
+        >
+
+        <div class="pattern-info">
+
+          <div class="pattern-name">
+            ${escapeHTML(pattern.name)}
+          </div>
+
+          <div class="goods-title">
+            グッズ
+          </div>
+
+          <div class="goods-list">
+
+            ${
+              pattern.goods.length
+              ?
+              pattern.goods.map(g => `
                 <span class="goods-item">
                   ${escapeHTML(g)}
                 </span>
               `).join("")
-              : `<span style="font-size:10px;color:#aaa;">未登録</span>`
-          }
+              :
+              `<span style="font-size:10px;color:#aaa;">
+                未登録
+              </span>`
+            }
+
+          </div>
+
         </div>
+
       </div>
-    </div>
-  `).join("");
+
+    `;
+
+  }).join("");
 }
 
+
+/* キャラ一覧へ戻る */
 function showCharacters() {
+
   selectedCharacter = null;
 
   document.getElementById("characterView").style.display = "block";
+
   document.getElementById("patternView").style.display = "none";
 
   renderCharacters();
 }
 
+
+/* キャラ追加画面 */
 function openCharacterModal() {
+
   document.getElementById("characterModal").style.display = "flex";
+
 }
+
 
 function closeCharacterModal() {
+
   document.getElementById("characterModal").style.display = "none";
+
   document.getElementById("characterName").value = "";
+
   document.getElementById("characterImage").value = "";
+
+  document.getElementById("characterFileName").textContent = "";
+
 }
 
+
+/* キャラ保存 */
 async function saveCharacter() {
-  const name = document.getElementById("characterName").value.trim();
-  const file = document.getElementById("characterImage").files[0];
+
+  const name =
+    document.getElementById("characterName").value.trim();
+
+  const file =
+    document.getElementById("characterImage").files[0];
 
   if (!name) {
+
     alert("キャラ名を入力してね！");
+
     return;
   }
 
-  const image = await imageToBase64(file);
+  try {
 
-  data.push({
-    name,
-    image,
-    patterns: []
-  });
+    const image = await compressImage(file);
 
-  saveData();
-  closeCharacterModal();
-  renderCharacters();
+    data.push({
+
+      name: name,
+
+      image: image,
+
+      patterns: []
+
+    });
+
+    saveData();
+
+    closeCharacterModal();
+
+    renderCharacters();
+
+  } catch (error) {
+
+    alert("画像の保存に失敗しました。もう一度試してみてね！");
+
+  }
+
 }
 
+
+/* 絵柄追加画面 */
 function openPatternModal() {
+
   document.getElementById("patternModal").style.display = "flex";
+
 }
+
 
 function closePatternModal() {
+
   document.getElementById("patternModal").style.display = "none";
+
   document.getElementById("patternName").value = "";
+
   document.getElementById("patternImage").value = "";
+
+  document.getElementById("patternFileName").textContent = "";
+
   document.getElementById("goodsInput").value = "";
+
 }
 
+
+/* 絵柄保存 */
 async function savePattern() {
-  const name = document.getElementById("patternName").value.trim();
-  const file = document.getElementById("patternImage").files[0];
-  const goods = document.getElementById("goodsInput").value.trim();
+
+  const name =
+    document.getElementById("patternName").value.trim();
+
+  const file =
+    document.getElementById("patternImage").files[0];
+
+  const goods =
+    document.getElementById("goodsInput").value.trim();
 
   if (!name) {
+
     alert("絵柄名を入力してね！");
+
     return;
   }
 
   if (!file) {
+
     alert("絵柄画像を選択してね！");
+
     return;
   }
 
-  const image = await imageToBase64(file);
+  try {
 
-  data[selectedCharacter].patterns.push({
-    name,
-    image,
-    goods: goods ? [goods] : []
-  });
+    const image = await compressImage(file);
 
-  saveData();
-  closePatternModal();
-  renderCharacterPage();
+    data[selectedCharacter].patterns.push({
+
+      name: name,
+
+      image: image,
+
+      goods: goods ? [goods] : []
+
+    });
+
+    saveData();
+
+    closePatternModal();
+
+    renderCharacterPage();
+
+  } catch (error) {
+
+    alert("画像の保存に失敗しました。もう一度試してみてね！");
+
+  }
+
 }
 
+
+/* HTMLエスケープ */
 function escapeHTML(text) {
-  return text
+
+  return String(text)
+
     .replaceAll("&", "&amp;")
+
     .replaceAll("<", "&lt;")
+
     .replaceAll(">", "&gt;")
+
     .replaceAll('"', "&quot;")
+
     .replaceAll("'", "&#039;");
+
 }
 
+
+/* 初期表示 */
 renderCharacters();
+
 </script>
 
 </body>

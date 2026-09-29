@@ -2,453 +2,409 @@
 <html lang="ja">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Collection</title>
 
 <style>
 *{box-sizing:border-box}
 
 body{
-margin:0;
-background:#f6f6f6;
-color:#555;
-font-family:-apple-system,BlinkMacSystemFont,"Helvetica Neue",sans-serif
+  margin:0;
+  background:#f6f6f6;
+  color:#555;
+  font-family:-apple-system,BlinkMacSystemFont,"Helvetica Neue",Arial,sans-serif;
 }
 
 header{
-padding:22px 18px;
-background:#fff;
-border-bottom:1px solid #eee
+  background:#fff;
+  padding:30px 20px 25px;
+  border-bottom:1px solid #e5e5e5;
 }
 
 h1{
-margin:0;
-font-size:22px;
-color:#444
+  margin:0;
+  font-size:30px;
+  color:#444;
 }
 
-.container{
-max-width:700px;
-margin:auto;
-padding:18px 14px 40px
+main{
+  max-width:800px;
+  margin:auto;
+  padding:28px 16px 60px;
 }
 
 button{
-border:0;
-border-radius:10px;
-background:#888;
-color:#fff;
-padding:10px 14px;
-font-size:14px
+  font:inherit;
+  border:0;
+  cursor:pointer;
 }
 
-.add{
-width:100%;
-margin-bottom:14px
+.add-main{
+  width:100%;
+  padding:18px;
+  border-radius:18px;
+  background:#999;
+  color:white;
+  font-size:19px;
+  margin-bottom:24px;
+}
+
+.add-main:active,
+.action:active{
+  transform:scale(.98);
+}
+
+.character-list{
+  display:grid;
+  grid-template-columns:repeat(2,1fr);
+  gap:14px;
+}
+
+.character-card{
+  background:white;
+  border-radius:18px;
+  padding:14px;
+  box-shadow:0 2px 8px rgba(0,0,0,.06);
+  position:relative;
+  overflow:hidden;
+}
+
+.character-card:active{
+  transform:scale(.98);
+}
+
+.char-image{
+  width:100%;
+  aspect-ratio:1;
+  object-fit:cover;
+  border-radius:14px;
+  background:#eee;
+  display:block;
+}
+
+.char-name{
+  font-size:17px;
+  font-weight:bold;
+  margin-top:10px;
+  color:#444;
+}
+
+.char-color{
+  width:12px;
+  height:12px;
+  border-radius:50%;
+  display:inline-block;
+  margin-right:5px;
+}
+
+.card-star{
+  position:absolute;
+  right:10px;
+  top:10px;
+  font-size:20px;
 }
 
 .back{
-background:#e7e7e7;
-color:#666;
-margin-bottom:14px
+  background:white;
+  border-radius:12px;
+  padding:10px 15px;
+  margin-bottom:18px;
+  color:#666;
 }
 
-.hidden{
-display:none!important
+.character-head{
+  background:white;
+  border-radius:20px;
+  padding:18px;
+  margin-bottom:20px;
+  border-left:8px solid var(--theme,#aaa);
 }
 
-.chars{
-display:flex;
-flex-direction:column;
-gap:10px
+.character-title{
+  font-size:25px;
+  font-weight:bold;
+  color:#444;
 }
 
-.char{
-background:#fff;
-border:1px solid #eee;
-border-radius:14px;
-padding:12px;
-display:flex;
-align-items:center;
-gap:12px
+.character-actions{
+  display:flex;
+  gap:8px;
+  margin-top:12px;
 }
 
-.char img,
-.noimg{
-width:68px;
-height:68px;
-object-fit:cover;
-border-radius:10px;
-background:#eee;
-flex:none
+.action{
+  flex:1;
+  padding:10px;
+  border-radius:10px;
+  background:#eee;
+  color:#555;
 }
 
-.noimg{
-display:flex;
-align-items:center;
-justify-content:center;
-font-size:10px;
-color:#aaa
+.action.theme{
+  background:var(--theme,#999);
+  color:white;
 }
 
-.charname{
-flex:1;
-font-size:16px;
-font-weight:600
+.pattern-grid{
+  display:grid;
+  grid-template-columns:repeat(2,1fr);
+  gap:14px;
 }
 
-.acts{
-display:flex;
-gap:5px
+.pattern-card{
+  background:white;
+  border-radius:18px;
+  overflow:hidden;
+  box-shadow:0 2px 8px rgba(0,0,0,.06);
+  position:relative;
 }
 
-.small{
-padding:7px 9px;
-font-size:12px;
-background:#e5e5e5;
-color:#666
+.pattern-image{
+  width:100%;
+  aspect-ratio:1;
+  object-fit:cover;
+  display:block;
+  background:#eee;
 }
 
-.head{
-background:#fff;
-border:1px solid #eee;
-border-left:5px solid var(--theme);
-border-radius:16px;
-padding:14px;
-margin-bottom:14px
+.pattern-empty{
+  aspect-ratio:1;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  background:#eee;
+  color:#aaa;
 }
 
-.headin{
-display:flex;
-align-items:center;
-gap:11px
+.pattern-info{
+  padding:12px;
 }
 
-.head img,
-.headno{
-width:56px;
-height:56px;
-object-fit:cover;
-border-radius:11px;
-background:#eee
+.pattern-name{
+  font-weight:bold;
+  color:#444;
+  font-size:16px;
 }
 
-.headno{
-display:flex;
-align-items:center;
-justify-content:center;
-font-size:10px;
-color:#aaa
+.goods-list{
+  margin-top:10px;
+  display:flex;
+  flex-direction:column;
+  gap:7px;
 }
 
-.headname{
-font-size:19px;
-font-weight:700;
-color:var(--theme)
+.goods-item{
+  display:flex;
+  align-items:center;
+  gap:7px;
+  padding:7px;
+  background:#f7f7f7;
+  border-radius:9px;
+  font-size:13px;
 }
 
-.grid{
-display:grid;
-grid-template-columns:repeat(2,1fr);
-gap:10px
+.goods-thumb{
+  width:38px;
+  height:38px;
+  object-fit:cover;
+  border-radius:7px;
+  background:#ddd;
+  flex:none;
 }
 
-.card{
-background:#fff;
-border:1px solid #eee;
-border-radius:14px;
-overflow:hidden
-}
-
-.pimg,
-.pno{
-width:100%;
-aspect-ratio:1;
-object-fit:cover;
-background:#eee;
-display:block
-}
-
-.pimg{
-cursor:pointer
-}
-
-.pno{
-display:flex;
-align-items:center;
-justify-content:center;
-font-size:11px;
-color:#aaa
-}
-
-.content{
-padding:9px
-}
-
-.prow{
-display:flex;
-align-items:flex-start;
-gap:4px
-}
-
-.pname{
-flex:1;
-font-weight:600;
-font-size:13px;
-word-break:break-word
+.goods-name{
+  flex:1;
+  min-width:0;
+  word-break:break-word;
 }
 
 .star{
-background:transparent;
-color:#bbb;
-padding:0;
-font-size:21px;
-line-height:1
+  color:#bbb;
+  font-size:19px;
 }
 
 .star.on{
-color:var(--theme)
+  color:var(--theme,#999);
 }
 
-.goods{
-display:flex;
-flex-direction:column;
-gap:5px;
-margin-top:7px
+.pattern-star{
+  position:absolute;
+  right:9px;
+  top:8px;
+  background:rgba(255,255,255,.9);
+  border-radius:50%;
+  width:34px;
+  height:34px;
+  font-size:21px;
 }
 
-.good{
-background:#f3f3f3;
-border-radius:9px;
-padding:5px;
-display:flex;
-align-items:center;
-gap:6px;
-font-size:12px
+.small-buttons{
+  display:flex;
+  gap:5px;
+  margin-top:8px;
 }
 
-.gimg,
-.gno{
-width:40px;
-height:40px;
-object-fit:cover;
-border-radius:7px;
-background:#e7e7e7;
-flex:none
-}
-
-.gno{
-display:flex;
-align-items:center;
-justify-content:center;
-font-size:9px;
-color:#aaa
-}
-
-.gimg{
-cursor:pointer
-}
-
-.gname{
-flex:1;
-word-break:break-word
-}
-
-.gact{
-display:flex;
-align-items:center
-}
-
-.gstar,
-.gedit,
-.gdel{
-background:transparent;
-color:#aaa;
-padding:2px 3px;
-font-size:16px
-}
-
-.gstar.on{
-color:var(--theme)
-}
-
-.gedit{
-font-size:13px
-}
-
-.gdel{
-font-size:15px
-}
-
-.gadd{
-width:100%;
-margin-top:7px;
-background:#eee;
-color:#666;
-font-size:12px;
-padding:7px
-}
-
-.pacts{
-display:flex;
-gap:5px;
-margin-top:8px
-}
-
-.pacts button{
-flex:1;
-background:#eee;
-color:#666;
-font-size:12px;
-padding:7px
+.small-buttons button{
+  flex:1;
+  padding:7px 3px;
+  border-radius:8px;
+  background:#eee;
+  color:#666;
+  font-size:12px;
 }
 
 .empty{
-text-align:center;
-color:#aaa;
-padding:35px 10px;
-font-size:13px
+  text-align:center;
+  color:#aaa;
+  padding:40px 10px;
 }
 
-.bg{
-display:none;
-position:fixed;
-inset:0;
-background:rgba(0,0,0,.35);
-align-items:center;
-justify-content:center;
-padding:20px;
-z-index:100
+.modal-bg{
+  display:none;
+  position:fixed;
+  inset:0;
+  background:rgba(0,0,0,.45);
+  z-index:1000;
+  align-items:flex-end;
+  justify-content:center;
+}
+
+.modal-bg.show{
+  display:flex;
 }
 
 .modal{
-width:100%;
-max-width:420px;
-max-height:90vh;
-overflow:auto;
-background:#fff;
-border-radius:16px;
-padding:20px
+  width:100%;
+  max-width:600px;
+  max-height:90vh;
+  overflow:auto;
+  background:white;
+  border-radius:22px 22px 0 0;
+  padding:22px;
 }
 
 .modal h2{
-margin:0 0 15px;
-font-size:18px;
-color:#444
+  margin:0 0 18px;
+  color:#444;
 }
 
-.modal label{
-display:block;
-margin:11px 0 6px;
-font-size:13px;
-color:#777
+label{
+  display:block;
+  font-size:13px;
+  margin:14px 0 6px;
+  color:#777;
 }
 
-.modal input{
-width:100%;
-padding:10px;
-border:1px solid #ddd;
-border-radius:9px;
-background:#fafafa
+input[type="text"],
+input[type="date"]{
+  width:100%;
+  padding:13px;
+  border:1px solid #ddd;
+  border-radius:10px;
+  font:inherit;
 }
 
-.current{
-width:80px;
-height:80px;
-object-fit:cover;
-border-radius:10px;
-margin-top:5px
+input[type="file"]{
+  width:100%;
+  margin-bottom:8px;
 }
 
-.fname{
-margin-top:5px;
-font-size:11px;
-color:#999;
-word-break:break-all
-}
-
-.mbtn{
-display:flex;
-gap:8px;
-margin-top:18px
-}
-
-.mbtn button{
-flex:1
-}
-
-.cancel{
-background:#e8e8e8;
-color:#666
+.preview{
+  width:100%;
+  max-height:220px;
+  object-fit:contain;
+  border-radius:12px;
+  background:#f5f5f5;
+  margin-top:8px;
+  display:none;
 }
 
 .colors{
-display:grid;
-grid-template-columns:repeat(4,1fr);
-gap:6px
+  display:grid;
+  grid-template-columns:repeat(6,1fr);
+  gap:8px;
 }
 
-.color{
-border:1px solid #ddd;
-background:#fff;
-color:#666;
-padding:8px 4px;
-font-size:11px
+.color-btn{
+  height:38px;
+  border-radius:10px;
+  border:3px solid transparent;
 }
 
-.color.sel{
-border:2px solid #555;
-padding:7px 3px;
-font-weight:bold
+.color-btn.selected{
+  border-color:#333;
 }
 
-.dot{
-display:inline-block;
-width:13px;
-height:13px;
-border-radius:50%;
-vertical-align:-2px;
-margin-right:3px;
-border:1px solid #bbb
+.modal-buttons{
+  display:flex;
+  gap:8px;
+  margin-top:20px;
 }
 
-.photo{
-display:none;
-position:fixed;
-inset:0;
-background:rgba(0,0,0,.78);
-align-items:center;
-justify-content:center;
-padding:20px;
-z-index:200
+.modal-buttons button{
+  flex:1;
+  padding:13px;
+  border-radius:11px;
 }
 
-.photo img{
-max-width:95vw;
-max-height:88vh;
-object-fit:contain;
-border-radius:10px
+.cancel{
+  background:#eee;
+  color:#666;
 }
 
-.x{
-position:fixed;
-right:15px;
-top:15px;
-width:38px;
-height:38px;
-padding:0;
-border-radius:50%;
-background:#fff;
-color:#555;
-font-size:22px
+.save{
+  background:#777;
+  color:white;
 }
 
-@media(max-width:500px){
-.grid{gap:8px}
-.gimg,.gno{
-width:38px;
-height:38px
+.delete{
+  background:#f0dddd;
+  color:#a55;
 }
+
+.photo-view{
+  display:none;
+  position:fixed;
+  inset:0;
+  background:rgba(0,0,0,.85);
+  z-index:2000;
+  align-items:center;
+  justify-content:center;
+  padding:20px;
+}
+
+.photo-view.show{
+  display:flex;
+}
+
+.photo-view img{
+  max-width:100%;
+  max-height:90vh;
+  object-fit:contain;
+  border-radius:10px;
+}
+
+.close-photo{
+  position:fixed;
+  top:20px;
+  right:20px;
+  width:45px;
+  height:45px;
+  border-radius:50%;
+  background:white;
+  font-size:25px;
+}
+
+@media(max-width:420px){
+  .character-list,
+  .pattern-grid{
+    gap:10px;
+  }
+
+  main{
+    padding-left:12px;
+    padding-right:12px;
+  }
 }
 </style>
 </head>
@@ -456,1791 +412,1067 @@ height:38px
 <body>
 
 <header>
-<h1>Collection</h1>
+  <h1>Collection</h1>
 </header>
 
-<div class="container">
+<main id="app"></main>
 
-<section id="listPage">
+<!-- キャラ編集 -->
+<div class="modal-bg" id="characterModal">
+  <div class="modal">
+    <h2 id="characterModalTitle">キャラを追加</h2>
 
-<button class="add" id="addCharBtn">
-＋ キャラを追加
-</button>
+    <label>キャラ名</label>
+    <input id="characterName" type="text" placeholder="例：月永レオ">
 
-<div id="chars" class="chars"></div>
+    <label>画像</label>
+    <input id="characterImage" type="file" accept="image/*">
+    <img id="characterPreview" class="preview">
 
-</section>
+    <label>テーマカラー</label>
+    <div id="colorList" class="colors"></div>
 
-
-<section id="patPage" class="hidden">
-
-<button class="back" id="backBtn">
-← キャラ一覧へ
-</button>
-
-<div id="head"></div>
-
-<button class="add" id="addPatternBtn">
-＋ 絵柄を追加
-</button>
-
-<div id="pats" class="grid"></div>
-
-</section>
-
+    <div class="modal-buttons">
+      <button class="cancel" data-action="close-character">キャンセル</button>
+      <button class="save" data-action="save-character">保存</button>
+    </div>
+  </div>
 </div>
 
+<!-- 絵柄編集 -->
+<div class="modal-bg" id="patternModal">
+  <div class="modal">
+    <h2 id="patternModalTitle">絵柄を追加</h2>
 
-<!-- キャラ -->
+    <label>絵柄名</label>
+    <input id="patternName" type="text" placeholder="例：ハフアニ">
 
-<div id="cm" class="bg">
+    <label>画像</label>
+    <input id="patternImage" type="file" accept="image/*">
+    <img id="patternPreview" class="preview">
 
-<div class="modal">
-
-<h2 id="cmt">キャラを追加</h2>
-
-<label>キャラ名</label>
-
-<input
-id="cn"
-placeholder="例：月永レオ"
->
-
-<label>キャラ画像</label>
-
-<input
-id="ci"
-type="file"
-accept="image/*"
->
-
-<div id="cfn" class="fname"></div>
-
-<div id="cca" class="hidden">
-
-<label>現在の画像</label>
-
-<img id="cc" class="current">
-
+    <div class="modal-buttons">
+      <button class="cancel" data-action="close-pattern">キャンセル</button>
+      <button class="save" data-action="save-pattern">保存</button>
+    </div>
+  </div>
 </div>
 
-<label>キャラカラー</label>
+<!-- グッズ編集 -->
+<div class="modal-bg" id="goodsModal">
+  <div class="modal">
+    <h2 id="goodsModalTitle">グッズを追加</h2>
 
-<div id="colors" class="colors"></div>
+    <label>グッズ名</label>
+    <input id="goodsName" type="text" placeholder="例：缶バッジ">
 
-<div class="mbtn">
+    <label>画像</label>
+    <input id="goodsImage" type="file" accept="image/*">
+    <img id="goodsPreview" class="preview">
 
-<button class="cancel" id="cancelC">
-キャンセル
-</button>
+    <label>
+      <input id="goodsPriority" type="checkbox">
+      ⭐ 最優先
+    </label>
 
-<button id="saveCBtn">
-保存
-</button>
-
+    <div class="modal-buttons">
+      <button class="cancel" data-action="close-goods">キャンセル</button>
+      <button class="save" data-action="save-goods">保存</button>
+    </div>
+  </div>
 </div>
 
+<!-- 写真拡大 -->
+<div class="photo-view" id="photoView">
+  <button class="close-photo" data-action="close-photo">×</button>
+  <img id="photoLarge">
 </div>
-
-</div>
-
-
-<!-- 絵柄 -->
-
-<div id="pm" class="bg">
-
-<div class="modal">
-
-<h2 id="pmt">絵柄を追加</h2>
-
-<label>絵柄名</label>
-
-<input
-id="pn"
-placeholder="例：ハフアニ"
->
-
-<label>絵柄画像</label>
-
-<input
-id="pi"
-type="file"
-accept="image/*"
->
-
-<div id="pfn" class="fname"></div>
-
-<div id="pca" class="hidden">
-
-<label>現在の画像</label>
-
-<img id="pc" class="current">
-
-</div>
-
-<div class="mbtn">
-
-<button class="cancel" id="cancelP">
-キャンセル
-</button>
-
-<button id="savePBtn">
-保存
-</button>
-
-</div>
-
-</div>
-
-</div>
-
-
-<!-- グッズ -->
-
-<div id="gm" class="bg">
-
-<div class="modal">
-
-<h2 id="gmt">グッズを追加</h2>
-
-<label>グッズ名</label>
-
-<input
-id="gn"
-placeholder="例：ぱしゃっつ 日本版"
->
-
-<label>グッズ画像</label>
-
-<input
-id="gi"
-type="file"
-accept="image/*"
->
-
-<div id="gfn" class="fname"></div>
-
-<div id="gca" class="hidden">
-
-<label>現在の画像</label>
-
-<img id="gc" class="current">
-
-</div>
-
-<label>最優先</label>
-
-<button id="gp">
-☆ 最優先にする
-</button>
-
-<div class="mbtn">
-
-<button class="cancel" id="cancelG">
-キャンセル
-</button>
-
-<button id="saveGBtn">
-保存
-</button>
-
-</div>
-
-</div>
-
-</div>
-
-
-<!-- 画像拡大 -->
-
-<div id="photo" class="photo">
-
-<button class="x" id="closePhotoBtn">
-×
-</button>
-
-<img id="large">
-
-</div>
-
 
 <script>
+(function(){
 
-const KEY="collectionData";
+"use strict";
 
+const KEY = "collectionData";
 
-const COLORS=[
-["red","赤","#d95c5c"],
-["pink","ピンク","#e68ab0"],
-["orange","オレンジ","#e69a55"],
-["yellow","黄色","#d4b63f"],
-["green","緑","#62a878"],
-["lightblue","水色","#63b9d1"],
-["blue","青","#5f82c9"],
-["purple","紫","#9570bd"],
-["brown","茶色","#9a7259"],
-["black","黒","#555"],
-["white","白","#c8c8c8"],
-["gray","グレー","#8f8f8f"]
+const COLORS = [
+  {name:"赤", value:"#e57373"},
+  {name:"ピンク", value:"#f48fb1"},
+  {name:"オレンジ", value:"#ffb74d"},
+  {name:"黄色", value:"#fff176"},
+  {name:"緑", value:"#81c784"},
+  {name:"水色", value:"#80cbc4"},
+  {name:"青", value:"#64b5f6"},
+  {name:"紫", value:"#9575cd"},
+  {name:"茶色", value:"#a1887f"},
+  {name:"黒", value:"#555"},
+  {name:"白", value:"#ddd"},
+  {name:"グレー", value:"#aaa"}
 ];
 
+let data = [];
+let currentCharacter = null;
+let editingCharacter = -1;
+let editingPattern = -1;
+let editingGoods = -1;
 
-let data=[];
+const app = document.getElementById("app");
 
-try{
+function safeLoad(){
+  try{
+    const raw = localStorage.getItem(KEY);
+    if(!raw) return [];
 
-data=
-JSON.parse(
-localStorage.getItem(KEY)||"[]"
-);
+    const parsed = JSON.parse(raw);
 
-}catch(e){
+    if(!Array.isArray(parsed)) return [];
 
-data=[];
-
+    return parsed.map(normalizeCharacter);
+  }catch(e){
+    console.log("データ読み込みエラー",e);
+    return [];
+  }
 }
 
-if(!Array.isArray(data)){
-data=[];
+function normalizeCharacter(c){
+  c = c || {};
+
+  return {
+    name: String(c.name || ""),
+    image: typeof c.image === "string" ? c.image : "",
+    color: c.color || "#aaa",
+    patterns: Array.isArray(c.patterns)
+      ? c.patterns.map(normalizePattern)
+      : []
+  };
 }
 
+function normalizePattern(p){
+  p = p || {};
 
-let currentChar=-1;
-let editPattern=-1;
-let currentPattern=-1;
-let editGoods=-1;
-let goodsPriority=false;
-let selectedColor="gray";
+  return {
+    name: String(p.name || ""),
+    image: typeof p.image === "string" ? p.image : "",
+    priority: !!p.priority,
+    goods: Array.isArray(p.goods)
+      ? p.goods.map(normalizeGoods)
+      : []
+  };
+}
 
+function normalizeGoods(g){
+  if(typeof g === "string"){
+    return {
+      name:g,
+      image:"",
+      priority:false
+    };
+  }
 
-/* HTML要素 */
+  g = g || {};
 
-const cm=document.getElementById("cm");
-const cmt=document.getElementById("cmt");
-const cn=document.getElementById("cn");
-const ciInput=document.getElementById("ci");
-const cfn=document.getElementById("cfn");
-const cca=document.getElementById("cca");
-const cc=document.getElementById("cc");
-const colors=document.getElementById("colors");
-
-const pm=document.getElementById("pm");
-const pmt=document.getElementById("pmt");
-const pn=document.getElementById("pn");
-const piInput=document.getElementById("pi");
-const pfn=document.getElementById("pfn");
-const pca=document.getElementById("pca");
-const pc=document.getElementById("pc");
-
-const gm=document.getElementById("gm");
-const gmt=document.getElementById("gmt");
-const gn=document.getElementById("gn");
-const giInput=document.getElementById("gi");
-const gfn=document.getElementById("gfn");
-const gca=document.getElementById("gca");
-const gc=document.getElementById("gc");
-const gp=document.getElementById("gp");
-
-const listPage=document.getElementById("listPage");
-const patPage=document.getElementById("patPage");
-const chars=document.getElementById("chars");
-const head=document.getElementById("head");
-const pats=document.getElementById("pats");
-
-const photo=document.getElementById("photo");
-const large=document.getElementById("large");
-
-
-/* 保存 */
+  return {
+    name:String(g.name || ""),
+    image:typeof g.image === "string" ? g.image : "",
+    priority:!!g.priority
+  };
+}
 
 function save(){
-
-try{
-
-localStorage.setItem(
-KEY,
-JSON.stringify(data)
-);
-
-return true;
-
-}catch(e){
-
-alert(
-"保存容量を超えました。\n"+
-"画像を少し減らしてみてね！"
-);
-
-return false;
-
+  try{
+    localStorage.setItem(KEY, JSON.stringify(data));
+  }catch(e){
+    alert("保存できませんでした。画像が大きすぎる可能性があります。");
+  }
 }
 
+function escapeHTML(str){
+  return String(str || "")
+    .replace(/&/g,"&amp;")
+    .replace(/</g,"&lt;")
+    .replace(/>/g,"&gt;")
+    .replace(/"/g,"&quot;")
+    .replace(/'/g,"&#039;");
 }
 
+function colorValue(){
+  if(!currentCharacter) return "#aaa";
 
-/* 古いデータ対応 */
+  const found = COLORS.find(c => c.name === currentCharacter.color);
 
-function normalize(){
+  if(found) return found.value;
 
-data.forEach(c=>{
+  if(String(currentCharacter.color).startsWith("#")){
+    return currentCharacter.color;
+  }
 
-if(!c.color){
-c.color="gray";
+  return "#aaa";
 }
-
-if(!Array.isArray(c.patterns)){
-c.patterns=[];
-}
-
-c.patterns.forEach(p=>{
-
-p.priority=!!p.priority;
-
-if(!Array.isArray(p.goods)){
-p.goods=[];
-}
-
-p.goods=p.goods.map(g=>{
-
-if(typeof g==="string"){
-
-return{
-name:g,
-image:null,
-priority:false
-};
-
-}
-
-return{
-
-name:g.name||"",
-image:g.image||null,
-priority:!!g.priority
-
-};
-
-});
-
-});
-
-});
-
-}
-
-normalize();
-
-
-/* 画像処理 */
 
 function compressImage(file){
+  return new Promise(function(resolve){
+    if(!file){
+      resolve("");
+      return;
+    }
 
-return new Promise((resolve,reject)=>{
+    const reader = new FileReader();
 
-if(!file){
+    reader.onload = function(){
+      const img = new Image();
 
-resolve(null);
+      img.onload = function(){
 
-return;
+        const max = 600;
+        let w = img.width;
+        let h = img.height;
 
+        if(w > max || h > max){
+          if(w > h){
+            h = Math.round(h * max / w);
+            w = max;
+          }else{
+            w = Math.round(w * max / h);
+            h = max;
+          }
+        }
+
+        const canvas = document.createElement("canvas");
+        canvas.width = w;
+        canvas.height = h;
+
+        const ctx = canvas.getContext("2d");
+        ctx.drawImage(img,0,0,w,h);
+
+        resolve(canvas.toDataURL("image/jpeg",0.72));
+      };
+
+      img.onerror = function(){
+        resolve(reader.result);
+      };
+
+      img.src = reader.result;
+    };
+
+    reader.onerror = function(){
+      resolve("");
+    };
+
+    reader.readAsDataURL(file);
+  });
 }
 
-const reader=new FileReader();
-
-reader.onload=function(e){
-
-const image=new Image();
-
-image.onload=function(){
-
-const max=600;
-
-const scale=Math.min(
-1,
-max/Math.max(
-image.width,
-image.height
-)
-);
-
-const canvas=document.createElement("canvas");
-
-canvas.width=Math.max(
-1,
-Math.round(image.width*scale)
-);
-
-canvas.height=Math.max(
-1,
-Math.round(image.height*scale)
-);
-
-const ctx=canvas.getContext("2d");
-
-ctx.drawImage(
-image,
-0,
-0,
-canvas.width,
-canvas.height
-);
-
-resolve(
-canvas.toDataURL(
-"image/jpeg",
-0.7
-)
-);
-
-};
-
-image.onerror=reject;
-
-image.src=e.target.result;
-
-};
-
-reader.onerror=reject;
-
-reader.readAsDataURL(file);
-
+function openModal(id){
+  document.getElementById(id).classList.add("show");
 }
 
-
-/* HTMLエスケープ */
-
-function esc(text){
-
-return String(text||"")
-.replace(/&/g,"&amp;")
-.replace(/</g,"&lt;")
-.replace(/>/g,"&gt;")
-.replace(/"/g,"&quot;")
-.replace(/'/g,"&#039;");
-
+function closeModal(id){
+  document.getElementById(id).classList.remove("show");
 }
 
-
-/* 色 */
-
-function getColor(){
-
-const found=
-COLORS.find(
-x=>x[0]===(
-data[currentChar]?.color||"gray"
-)
-);
-
-return found
-?
-found[2]
-:
-"#888";
-
+function render(){
+  if(!currentCharacter){
+    renderCharacters();
+  }else{
+    renderCharacter();
+  }
 }
-
-
-function renderColors(){
-
-colors.innerHTML=
-COLORS.map(c=>`
-
-<button
-class="color ${selectedColor===c[0]?"sel":""}"
-data-color="${c[0]}"
->
-
-<span
-class="dot"
-style="background:${c[2]}"
-></span>
-
-${c[1]}
-
-</button>
-
-`).join("");
-
-document
-.querySelectorAll(".color")
-.forEach(btn=>{
-
-btn.addEventListener(
-"click",
-function(){
-
-selectedColor=this.dataset.color;
-
-renderColors();
-
-}
-);
-
-});
-
-}
-
-
-/* キャラ一覧 */
 
 function renderCharacters(){
 
-listPage.classList.remove("hidden");
+  let html = `
+    <button class="add-main" data-action="add-character">
+      ＋ キャラを追加
+    </button>
+  `;
 
-patPage.classList.add("hidden");
+  if(data.length === 0){
+    html += `<div class="empty">まだキャラが登録されていません</div>`;
+  }else{
 
-if(data.length===0){
+    html += `<div class="character-list">`;
 
-chars.innerHTML=
-`<div class="empty">
-まだキャラがいないよ
-</div>`;
+    data.forEach(function(c,index){
 
-return;
+      const color = getColor(c.color);
 
+      html += `
+        <div class="character-card"
+             data-character="${index}"
+             style="--theme:${color}">
+
+          ${c.image
+            ? `<img class="char-image" src="${c.image}" data-photo="${c.image}">`
+            : `<div class="char-image"></div>`
+          }
+
+          <div class="char-name">
+            <span class="char-color" style="background:${color}"></span>
+            ${escapeHTML(c.name)}
+          </div>
+
+        </div>
+      `;
+    });
+
+    html += `</div>`;
+  }
+
+  app.innerHTML = html;
 }
 
-chars.innerHTML=
-data.map((c,i)=>`
+function getColor(color){
 
-<div class="char">
+  const found = COLORS.find(function(c){
+    return c.name === color;
+  });
 
-${
-c.image
-?
-`<img src="${c.image}">`
-:
-`<div class="noimg">画像なし</div>`
+  if(found) return found.value;
+
+  if(String(color).startsWith("#")){
+    return color;
+  }
+
+  return "#aaa";
 }
 
-<div class="charname">
-${esc(c.name)}
-</div>
+function renderCharacter(){
 
-<div class="acts">
+  const c = data[currentCharacter];
 
-<button
-class="small"
-data-open="${i}"
->
-開く
-</button>
+  if(!c){
+    currentCharacter = null;
+    renderCharacters();
+    return;
+  }
 
-<button
-class="small"
-data-edit="${i}"
->
-編集
-</button>
+  const color = getColor(c.color);
 
-<button
-class="small"
-data-delete="${i}"
->
-削除
-</button>
+  let html = `
+    <button class="back" data-action="back">
+      ← キャラ一覧
+    </button>
 
-</div>
+    <div class="character-head" style="--theme:${color}">
+      <div class="character-title">
+        ${escapeHTML(c.name)}
+      </div>
 
-</div>
+      <div class="character-actions">
+        <button class="action theme" data-action="add-pattern">
+          ＋ 絵柄を追加
+        </button>
 
-`).join("");
+        <button class="action" data-action="edit-character">
+          ⚙ キャラ情報
+        </button>
+      </div>
+    </div>
+  `;
 
+  if(c.patterns.length === 0){
 
-document
-.querySelectorAll("[data-open]")
-.forEach(btn=>{
+    html += `<div class="empty">まだ絵柄がありません</div>`;
 
-btn.addEventListener(
-"click",
-function(){
+  }else{
 
-openCharacter(
-Number(this.dataset.open)
-);
+    html += `<div class="pattern-grid">`;
 
+    c.patterns.forEach(function(p,pIndex){
+
+      html += `
+        <div class="pattern-card" style="--theme:${color}">
+
+          <button
+            class="pattern-star ${p.priority ? "on" : ""}"
+            data-action="toggle-pattern-priority"
+            data-pattern="${pIndex}">
+            ${p.priority ? "★" : "☆"}
+          </button>
+
+          ${
+            p.image
+            ? `<img class="pattern-image"
+                    src="${p.image}"
+                    data-photo="${p.image}">`
+            : `<div class="pattern-empty">画像なし</div>`
+          }
+
+          <div class="pattern-info">
+
+            <div class="pattern-name">
+              ${escapeHTML(p.name)}
+            </div>
+
+            <div class="goods-list">
+      `;
+
+      if(p.goods.length === 0){
+
+        html += `
+          <div style="font-size:12px;color:#aaa">
+            グッズなし
+          </div>
+        `;
+
+      }else{
+
+        p.goods.forEach(function(g,gIndex){
+
+          html += `
+            <div class="goods-item">
+
+              ${
+                g.image
+                ? `<img class="goods-thumb"
+                        src="${g.image}"
+                        data-photo="${g.image}">`
+                : `<div class="goods-thumb"></div>`
+              }
+
+              <div class="goods-name">
+                ${escapeHTML(g.name)}
+              </div>
+
+              <button
+                class="star ${g.priority ? "on" : ""}"
+                data-action="toggle-goods-priority"
+                data-pattern="${pIndex}"
+                data-goods="${gIndex}">
+                ${g.priority ? "★" : "☆"}
+              </button>
+
+            </div>
+          `;
+        });
+      }
+
+      html += `
+            </div>
+
+            <div class="small-buttons">
+              <button
+                data-action="add-goods"
+                data-pattern="${pIndex}">
+                ＋グッズ
+              </button>
+
+              <button
+                data-action="edit-pattern"
+                data-pattern="${pIndex}">
+                編集
+              </button>
+
+              <button
+                data-action="delete-pattern"
+                data-pattern="${pIndex}">
+                削除
+              </button>
+            </div>
+
+          </div>
+        </div>
+      `;
+    });
+
+    html += `</div>`;
+  }
+
+  app.innerHTML = html;
 }
-);
-
-});
-
-
-document
-.querySelectorAll("[data-edit]")
-.forEach(btn=>{
-
-btn.addEventListener(
-"click",
-function(){
-
-openCharacterEditor(
-Number(this.dataset.edit)
-);
-
-}
-);
-
-});
-
-
-document
-.querySelectorAll("[data-delete]")
-.forEach(btn=>{
-
-btn.addEventListener(
-"click",
-function(){
-
-deleteCharacter(
-Number(this.dataset.delete)
-);
-
-}
-);
-
-});
-
-}
-
-
-/* キャラ追加 */
 
 function openCharacterEditor(index){
 
-editPattern=index;
+  editingCharacter = index;
 
-if(index===null){
+  const name = document.getElementById("characterName");
+  const image = document.getElementById("characterImage");
+  const preview = document.getElementById("characterPreview");
 
-cmt.textContent="キャラを追加";
+  if(index === -1){
 
-cn.value="";
+    document.getElementById("characterModalTitle").textContent =
+      "キャラを追加";
 
-ciInput.value="";
+    name.value = "";
+    image.value = "";
+    preview.style.display = "none";
+    preview.src = "";
 
-cfn.textContent="";
+  }else{
 
-cca.classList.add("hidden");
+    const c = data[index];
 
-selectedColor="gray";
+    document.getElementById("characterModalTitle").textContent =
+      "キャラを編集";
 
-}else{
+    name.value = c.name;
+    image.value = "";
 
-const c=data[index];
+    if(c.image){
+      preview.src = c.image;
+      preview.style.display = "block";
+    }else{
+      preview.style.display = "none";
+    }
+  }
 
-cmt.textContent="キャラを編集";
+  renderColors(index === -1 ? "#aaa" : data[index].color);
 
-cn.value=c.name||"";
-
-ciInput.value="";
-
-cfn.textContent=
-"画像を変更しない場合はそのままでOK";
-
-selectedColor=c.color||"gray";
-
-if(c.image){
-
-cc.src=c.image;
-
-cca.classList.remove("hidden");
-
-}else{
-
-cca.classList.add("hidden");
-
+  openModal("characterModal");
 }
 
+function renderColors(selected){
+
+  const box = document.getElementById("colorList");
+
+  box.innerHTML = "";
+
+  COLORS.forEach(function(c){
+
+    const b = document.createElement("button");
+
+    b.type = "button";
+    b.className = "color-btn";
+
+    if(selected === c.name){
+      b.classList.add("selected");
+    }
+
+    b.style.background = c.value;
+    b.title = c.name;
+    b.dataset.color = c.name;
+
+    box.appendChild(b);
+  });
 }
-
-renderColors();
-
-cm.style.display="flex";
-
-}
-
 
 async function saveCharacter(){
 
-const name=cn.value.trim();
+  const name = document.getElementById("characterName").value.trim();
 
-if(!name){
+  if(!name){
+    alert("キャラ名を入力してね！");
+    return;
+  }
 
-alert("キャラ名を入力してね！");
+  let color = "グレー";
 
-return;
+  const selected = document.querySelector(".color-btn.selected");
 
+  if(selected){
+    color = selected.dataset.color;
+  }
+
+  const file =
+    document.getElementById("characterImage").files[0];
+
+  let image = "";
+
+  if(editingCharacter !== -1){
+    image = data[editingCharacter].image || "";
+  }
+
+  if(file){
+    image = await compressImage(file);
+  }
+
+  const obj = {
+    name:name,
+    image:image,
+    color:color,
+    patterns:[]
+  };
+
+  if(editingCharacter === -1){
+
+    data.push(obj);
+
+  }else{
+
+    obj.patterns = data[editingCharacter].patterns || [];
+    data[editingCharacter] = obj;
+  }
+
+  save();
+
+  closeModal("characterModal");
+
+  currentCharacter = null;
+
+  render();
 }
-
-try{
-
-let image=null;
-
-if(editPattern!==null &&
-editPattern>=0){
-
-image=data[editPattern].image||null;
-
-}
-
-if(ciInput.files.length>0){
-
-image=
-await compressImage(
-ciInput.files[0]
-);
-
-}
-
-if(editPattern===null){
-
-data.push({
-
-name:name,
-image:image,
-color:selectedColor,
-patterns:[]
-
-});
-
-}else{
-
-data[editPattern].name=name;
-data[editPattern].image=image;
-data[editPattern].color=selectedColor;
-
-}
-
-if(save()){
-
-closeCharacterEditor();
-
-renderCharacters();
-
-}
-
-}catch(error){
-
-console.error(error);
-
-alert(
-"画像の処理に失敗しました。\n"+
-"別の画像でもう一度試してみてね。"
-);
-
-}
-
-}
-
-
-function deleteCharacter(index){
-
-if(
-confirm(
-`「${data[index].name}」を削除する？`
-)
-){
-
-data.splice(index,1);
-
-save();
-
-renderCharacters();
-
-}
-
-}
-
-
-/* キャラページ */
-
-function openCharacter(index){
-
-currentChar=index;
-
-listPage.classList.add("hidden");
-
-patPage.classList.remove("hidden");
-
-renderPatterns();
-
-}
-
-
-function renderCharacterHeader(){
-
-const c=data[currentChar];
-
-const theme=getColor();
-
-document.documentElement.style.setProperty(
-"--theme",
-theme
-);
-
-head.innerHTML=`
-
-<div class="head">
-
-<div class="headin">
-
-${
-c.image
-?
-`<img src="${c.image}">`
-:
-`<div class="headno">画像なし</div>`
-}
-
-<div class="headname">
-${esc(c.name)}
-</div>
-
-</div>
-
-</div>
-
-`;
-
-}
-
-
-/* 絵柄 */
-
-function renderPatterns(){
-
-renderCharacterHeader();
-
-const patterns=data[currentChar].patterns;
-
-if(patterns.length===0){
-
-pats.innerHTML=
-`<div class="empty"
-style="grid-column:1/-1">
-まだ絵柄がないよ
-</div>`;
-
-return;
-
-}
-
-pats.innerHTML=
-patterns.map((p,i)=>{
-
-const goodsHTML=
-p.goods.map((g,j)=>`
-
-<div class="good">
-
-${
-g.image
-?
-`<img
-class="gimg"
-src="${g.image}"
-data-photo="${encodeURIComponent(g.image)}"
->`
-:
-`<div class="gno">
-画像なし
-</div>`
-}
-
-<div class="gname">
-${esc(g.name)}
-</div>
-
-<div class="gact">
-
-<button
-class="gstar ${g.priority?"on":""}"
-data-gstar="${i},${j}"
->
-${g.priority?"★":"☆"}
-</button>
-
-<button
-class="gedit"
-data-gedit="${i},${j}"
->
-✎
-</button>
-
-<button
-class="gdel"
-data-gdel="${i},${j}"
->
-×
-</button>
-
-</div>
-
-</div>
-
-`).join("");
-
-
-return `
-
-<div class="card">
-
-${
-p.image
-?
-`<img
-class="pimg"
-src="${p.image}"
-data-photo="${encodeURIComponent(p.image)}"
->`
-:
-`<div class="pno">
-画像なし
-</div>`
-}
-
-<div class="content">
-
-<div class="prow">
-
-<div class="pname">
-${esc(p.name)}
-</div>
-
-<button
-class="star ${p.priority?"on":""}"
-data-pstar="${i}"
->
-${p.priority?"★":"☆"}
-</button>
-
-</div>
-
-<div class="goods">
-
-${
-goodsHTML
-||
-`<div
-style="font-size:11px;color:#aaa"
->
-グッズなし
-</div>`
-}
-
-</div>
-
-<button
-class="gadd"
-data-gadd="${i}"
->
-＋ グッズを追加
-</button>
-
-<div class="pacts">
-
-<button data-pedit="${i}">
-編集
-</button>
-
-<button data-pdelete="${i}">
-🗑️ 削除
-</button>
-
-</div>
-
-</div>
-
-</div>
-
-`;
-
-}).join("");
-
-
-/* イベント */
-
-document
-.querySelectorAll("[data-photo]")
-.forEach(el=>{
-
-el.addEventListener(
-"click",
-function(){
-
-openPhoto(
-decodeURIComponent(
-this.dataset.photo
-)
-);
-
-}
-);
-
-});
-
-
-document
-.querySelectorAll("[data-pstar]")
-.forEach(el=>{
-
-el.addEventListener(
-"click",
-function(){
-
-togglePatternPriority(
-Number(this.dataset.pstar)
-);
-
-}
-);
-
-});
-
-
-document
-.querySelectorAll("[data-pedit]")
-.forEach(el=>{
-
-el.addEventListener(
-"click",
-function(){
-
-openPatternEditor(
-Number(this.dataset.pedit)
-);
-
-}
-);
-
-});
-
-
-document
-.querySelectorAll("[data-pdelete]")
-.forEach(el=>{
-
-el.addEventListener(
-"click",
-function(){
-
-deletePattern(
-Number(this.dataset.pdelete)
-);
-
-}
-);
-
-});
-
-
-document
-.querySelectorAll("[data-gadd]")
-.forEach(el=>{
-
-el.addEventListener(
-"click",
-function(){
-
-openGoodsEditor(
-Number(this.dataset.gadd),
-null
-);
-
-}
-);
-
-});
-
-
-document
-.querySelectorAll("[data-gstar]")
-.forEach(el=>{
-
-el.addEventListener(
-"click",
-function(){
-
-const parts=
-this.dataset.gstar.split(",");
-
-toggleGoodsPriority(
-Number(parts[0]),
-Number(parts[1])
-);
-
-}
-);
-
-});
-
-
-document
-.querySelectorAll("[data-gedit]")
-.forEach(el=>{
-
-el.addEventListener(
-"click",
-function(){
-
-const parts=
-this.dataset.gedit.split(",");
-
-openGoodsEditor(
-Number(parts[0]),
-Number(parts[1])
-);
-
-}
-);
-
-});
-
-
-document
-.querySelectorAll("[data-gdel]")
-.forEach(el=>{
-
-el.addEventListener(
-"click",
-function(){
-
-const parts=
-this.dataset.gdel.split(",");
-
-deleteGoods(
-Number(parts[0]),
-Number(parts[1])
-);
-
-}
-);
-
-});
-
-}
-
-
-/* 絵柄追加 */
 
 function openPatternEditor(index){
 
-editPattern=index;
+  editingPattern = index;
 
-if(index===null){
+  const c = data[currentCharacter];
 
-pmt.textContent="絵柄を追加";
+  const name = document.getElementById("patternName");
+  const image = document.getElementById("patternImage");
+  const preview = document.getElementById("patternPreview");
 
-pn.value="";
+  if(index === -1){
 
-piInput.value="";
+    document.getElementById("patternModalTitle").textContent =
+      "絵柄を追加";
 
-pfn.textContent="";
+    name.value = "";
+    image.value = "";
+    preview.style.display = "none";
+    preview.src = "";
 
-pca.classList.add("hidden");
+  }else{
 
-}else{
+    const p = c.patterns[index];
 
-const p=data[currentChar].patterns[index];
+    document.getElementById("patternModalTitle").textContent =
+      "絵柄を編集";
 
-pmt.textContent="絵柄を編集";
+    name.value = p.name;
+    image.value = "";
 
-pn.value=p.name||"";
+    if(p.image){
+      preview.src = p.image;
+      preview.style.display = "block";
+    }else{
+      preview.style.display = "none";
+    }
+  }
 
-piInput.value="";
-
-pfn.textContent=
-"画像を変更しない場合はそのままでOK";
-
-if(p.image){
-
-pc.src=p.image;
-
-pca.classList.remove("hidden");
-
-}else{
-
-pca.classList.add("hidden");
-
+  openModal("patternModal");
 }
-
-}
-
-pm.style.display="flex";
-
-}
-
 
 async function savePattern(){
 
-const name=pn.value.trim();
+  const name = document.getElementById("patternName").value.trim();
 
-if(!name){
+  if(!name){
+    alert("絵柄名を入力してね！");
+    return;
+  }
 
-alert("絵柄名を入力してね！");
+  const c = data[currentCharacter];
 
-return;
+  const file =
+    document.getElementById("patternImage").files[0];
 
+  let image = "";
+
+  if(editingPattern !== -1){
+    image = c.patterns[editingPattern].image || "";
+  }
+
+  if(file){
+    image = await compressImage(file);
+  }
+
+  if(editingPattern === -1){
+
+    c.patterns.push({
+      name:name,
+      image:image,
+      priority:false,
+      goods:[]
+    });
+
+  }else{
+
+    c.patterns[editingPattern].name = name;
+    c.patterns[editingPattern].image = image;
+  }
+
+  save();
+  closeModal("patternModal");
+  renderCharacter();
 }
-
-try{
-
-let image=null;
-
-if(
-editPattern!==null &&
-editPattern>=0
-){
-
-image=
-data[currentChar]
-.patterns[editPattern]
-.image||null;
-
-}
-
-if(piInput.files.length>0){
-
-image=
-await compressImage(
-piInput.files[0]
-);
-
-}
-
-if(editPattern===null){
-
-data[currentChar].patterns.push({
-
-name:name,
-image:image,
-priority:false,
-goods:[]
-
-});
-
-}else{
-
-data[currentChar]
-.patterns[editPattern]
-.name=name;
-
-data[currentChar]
-.patterns[editPattern]
-.image=image;
-
-}
-
-if(save()){
-
-closePatternEditor();
-
-renderPatterns();
-
-}
-
-}catch(error){
-
-console.error(error);
-
-alert(
-"画像の処理に失敗しました。\n"+
-"別の画像でもう一度試してみてね。"
-);
-
-}
-
-}
-
-
-function togglePatternPriority(index){
-
-const p=
-data[currentChar].patterns[index];
-
-p.priority=!p.priority;
-
-save();
-
-renderPatterns();
-
-}
-
-
-function deletePattern(index){
-
-if(
-confirm(
-`「${data[currentChar].patterns[index].name}」を削除する？\n`+
-"この絵柄のグッズも全部削除されます。"
-)
-){
-
-data[currentChar].patterns.splice(
-index,
-1
-);
-
-save();
-
-renderPatterns();
-
-}
-
-}
-
-
-/* グッズ */
 
 function openGoodsEditor(patternIndex,goodsIndex){
 
-currentPattern=patternIndex;
+  editingPattern = patternIndex;
+  editingGoods = goodsIndex;
 
-editGoods=goodsIndex;
+  const p = data[currentCharacter].patterns[patternIndex];
 
-goodsPriority=
-goodsIndex!==null &&
-!!data[currentChar]
-.patterns[patternIndex]
-.goods[goodsIndex]
-.priority;
+  const name = document.getElementById("goodsName");
+  const image = document.getElementById("goodsImage");
+  const preview = document.getElementById("goodsPreview");
+  const priority = document.getElementById("goodsPriority");
 
-gmt.textContent=
-goodsIndex===null
-?
-"グッズを追加"
-:
-"グッズを編集";
+  if(goodsIndex === -1){
 
+    document.getElementById("goodsModalTitle").textContent =
+      "グッズを追加";
 
-if(goodsIndex===null){
+    name.value = "";
+    image.value = "";
+    preview.style.display = "none";
+    preview.src = "";
+    priority.checked = false;
 
-gn.value="";
+  }else{
 
-giInput.value="";
+    const g = p.goods[goodsIndex];
 
-gfn.textContent="";
+    document.getElementById("goodsModalTitle").textContent =
+      "グッズを編集";
 
-gca.classList.add("hidden");
+    name.value = g.name;
+    image.value = "";
 
-}else{
+    if(g.image){
+      preview.src = g.image;
+      preview.style.display = "block";
+    }else{
+      preview.style.display = "none";
+    }
 
-const item=
-data[currentChar]
-.patterns[patternIndex]
-.goods[goodsIndex];
+    priority.checked = !!g.priority;
+  }
 
-gn.value=item.name||"";
-
-giInput.value="";
-
-gfn.textContent=
-"画像を変更しない場合はそのままでOK";
-
-if(item.image){
-
-gc.src=item.image;
-
-gca.classList.remove("hidden");
-
-}else{
-
-gca.classList.add("hidden");
-
+  openModal("goodsModal");
 }
-
-}
-
-updateGoodsButton();
-
-gm.style.display="flex";
-
-}
-
-
-function updateGoodsButton(){
-
-gp.textContent=
-goodsPriority
-?
-"★ 最優先"
-:
-"☆ 最優先にする";
-
-gp.style.background=
-goodsPriority
-?
-getColor()
-:
-"#eee";
-
-gp.style.color=
-goodsPriority
-?
-"#fff"
-:
-"#666";
-
-}
-
 
 async function saveGoods(){
 
-const name=gn.value.trim();
+  const name = document.getElementById("goodsName").value.trim();
 
-if(!name){
+  if(!name){
+    alert("グッズ名を入力してね！");
+    return;
+  }
 
-alert("グッズ名を入力してね！");
+  const p =
+    data[currentCharacter].patterns[editingPattern];
 
-return;
+  const file =
+    document.getElementById("goodsImage").files[0];
 
+  let image = "";
+
+  if(editingGoods !== -1){
+    image = p.goods[editingGoods].image || "";
+  }
+
+  if(file){
+    image = await compressImage(file);
+  }
+
+  const priority =
+    document.getElementById("goodsPriority").checked;
+
+  const obj = {
+    name:name,
+    image:image,
+    priority:priority
+  };
+
+  if(editingGoods === -1){
+    p.goods.push(obj);
+  }else{
+    p.goods[editingGoods] = obj;
+  }
+
+  save();
+  closeModal("goodsModal");
+  renderCharacter();
 }
 
-try{
+function deleteCharacter(){
 
-const goods=
-data[currentChar]
-.patterns[currentPattern]
-.goods;
+  if(editingCharacter < 0) return;
 
-let image=null;
+  const c = data[editingCharacter];
 
-if(editGoods!==null){
+  if(!confirm("「" + c.name + "」を削除する？")){
+    return;
+  }
 
-image=
-goods[editGoods]
-.image||null;
+  data.splice(editingCharacter,1);
 
+  save();
+
+  closeModal("characterModal");
+
+  currentCharacter = null;
+
+  render();
 }
 
-if(giInput.files.length>0){
+function deletePattern(index){
 
-image=
-await compressImage(
-giInput.files[0]
-);
+  const p = data[currentCharacter].patterns[index];
 
+  if(!confirm("「" + p.name + "」を削除する？")){
+    return;
+  }
+
+  data[currentCharacter].patterns.splice(index,1);
+
+  save();
+
+  renderCharacter();
 }
 
-const item={
+function togglePatternPriority(index){
 
-name:name,
-image:image,
-priority:goodsPriority
+  const p = data[currentCharacter].patterns[index];
 
-};
+  p.priority = !p.priority;
 
+  save();
 
-if(editGoods===null){
-
-goods.push(item);
-
-}else{
-
-goods[editGoods]=item;
-
+  renderCharacter();
 }
 
-if(save()){
+function toggleGoodsPriority(patternIndex,goodsIndex){
 
-closeGoodsEditor();
+  const g =
+    data[currentCharacter]
+      .patterns[patternIndex]
+      .goods[goodsIndex];
 
-renderPatterns();
+  g.priority = !g.priority;
 
+  save();
+
+  renderCharacter();
 }
 
-}catch(error){
+function deleteGoods(patternIndex,goodsIndex){
 
-console.error(error);
+  const p = data[currentCharacter].patterns[patternIndex];
 
-alert(
-"画像の処理に失敗しました。\n"+
-"別の画像でもう一度試してみてね。"
-);
+  if(!confirm("このグッズを削除する？")){
+    return;
+  }
 
+  p.goods.splice(goodsIndex,1);
+
+  save();
+
+  renderCharacter();
 }
 
+function showPhoto(src){
+
+  if(!src) return;
+
+  document.getElementById("photoLarge").src = src;
+
+  document.getElementById("photoView")
+    .classList.add("show");
 }
-
-
-function toggleGoodsPriority(p,g){
-
-data[currentChar]
-.patterns[p]
-.goods[g]
-.priority=
-!data[currentChar]
-.patterns[p]
-.goods[g]
-.priority;
-
-save();
-
-renderPatterns();
-
-}
-
-
-function deleteGoods(p,g){
-
-const item=
-data[currentChar]
-.patterns[p]
-.goods[g];
-
-if(
-confirm(
-`「${item.name}」を削除する？`
-)
-){
-
-data[currentChar]
-.patterns[p]
-.goods.splice(g,1);
-
-save();
-
-renderPatterns();
-
-}
-
-}
-
-
-/* 閉じる */
-
-function closeCharacterEditor(){
-
-cm.style.display="none";
-
-editPattern=-1;
-
-}
-
-
-function closePatternEditor(){
-
-pm.style.display="none";
-
-editPattern=-1;
-
-}
-
-
-function closeGoodsEditor(){
-
-gm.style.display="none";
-
-currentPattern=-1;
-
-editGoods=-1;
-
-goodsPriority=false;
-
-}
-
-
-/* 画像拡大 */
-
-function openPhoto(src){
-
-large.src=src;
-
-photo.style.display="flex";
-
-}
-
 
 function closePhoto(){
 
-photo.style.display="none";
-
-large.src="";
-
+  document.getElementById("photoView")
+    .classList.remove("show");
 }
 
+function previewFile(input,preview){
 
-/* ボタンイベント */
+  input.addEventListener("change",function(){
 
-/* キャラ追加 */
+    const file = input.files[0];
 
-document
-.getElementById("addCharBtn")
-.addEventListener(
-"click",
-function(){
+    if(!file){
+      preview.style.display = "none";
+      return;
+    }
 
-openCharacterEditor(null);
+    const reader = new FileReader();
 
+    reader.onload = function(){
+      preview.src = reader.result;
+      preview.style.display = "block";
+    };
+
+    reader.readAsDataURL(file);
+  });
 }
+
+/* -----------------------------
+   イベント処理
+----------------------------- */
+
+document.addEventListener("click",function(e){
+
+  const target = e.target;
+
+  /* 写真拡大 */
+  if(target.dataset.photo){
+    e.stopPropagation();
+    showPhoto(target.dataset.photo);
+    return;
+  }
+
+  /* キャラカード */
+  const characterCard =
+    target.closest("[data-character]");
+
+  if(characterCard && !target.closest("button")){
+
+    currentCharacter =
+      Number(characterCard.dataset.character);
+
+    renderCharacter();
+
+    return;
+  }
+
+  /* アクション */
+  const actionButton =
+    target.closest("[data-action]");
+
+  if(!actionButton) return;
+
+  const action = actionButton.dataset.action;
+
+  if(action === "add-character"){
+    openCharacterEditor(-1);
+    return;
+  }
+
+  if(action === "close-character"){
+    closeModal("characterModal");
+    return;
+  }
+
+  if(action === "save-character"){
+    saveCharacter();
+    return;
+  }
+
+  if(action === "back"){
+    currentCharacter = null;
+    render();
+    return;
+  }
+
+  if(action === "edit-character"){
+    openCharacterEditor(currentCharacter);
+    return;
+  }
+
+  if(action === "add-pattern"){
+    openPatternEditor(-1);
+    return;
+  }
+
+  if(action === "close-pattern"){
+    closeModal("patternModal");
+    return;
+  }
+
+  if(action === "save-pattern"){
+    savePattern();
+    return;
+  }
+
+  if(action === "edit-pattern"){
+    openPatternEditor(Number(actionButton.dataset.pattern));
+    return;
+  }
+
+  if(action === "delete-pattern"){
+    deletePattern(Number(actionButton.dataset.pattern));
+    return;
+  }
+
+  if(action === "toggle-pattern-priority"){
+    togglePatternPriority(Number(actionButton.dataset.pattern));
+    return;
+  }
+
+  if(action === "add-goods"){
+    openGoodsEditor(
+      Number(actionButton.dataset.pattern),
+      -1
+    );
+    return;
+  }
+
+  if(action === "close-goods"){
+    closeModal("goodsModal");
+    return;
+  }
+
+  if(action === "save-goods"){
+    saveGoods();
+    return;
+  }
+
+  if(action === "toggle-goods-priority"){
+    toggleGoodsPriority(
+      Number(actionButton.dataset.pattern),
+      Number(actionButton.dataset.goods)
+    );
+    return;
+  }
+
+  if(action === "close-photo"){
+    closePhoto();
+    return;
+  }
+
+  if(action === "delete-character"){
+    deleteCharacter();
+    return;
+  }
+});
+
+/* カラー選択 */
+document.addEventListener("click",function(e){
+
+  const btn = e.target.closest(".color-btn");
+
+  if(!btn) return;
+
+  document.querySelectorAll(".color-btn")
+    .forEach(function(b){
+      b.classList.remove("selected");
+    });
+
+  btn.classList.add("selected");
+});
+
+/* モーダル外側をタップ */
+document.querySelectorAll(".modal-bg").forEach(function(bg){
+
+  bg.addEventListener("click",function(e){
+
+    if(e.target === bg){
+      bg.classList.remove("show");
+    }
+
+  });
+
+});
+
+/* ファイルプレビュー */
+previewFile(
+  document.getElementById("characterImage"),
+  document.getElementById("characterPreview")
 );
 
-
-/* キャラ保存 */
-
-document
-.getElementById("saveCBtn")
-.addEventListener(
-"click",
-saveCharacter
+previewFile(
+  document.getElementById("patternImage"),
+  document.getElementById("patternPreview")
 );
 
-
-/* キャラキャンセル */
-
-document
-.getElementById("cancelC")
-.addEventListener(
-"click",
-closeCharacterEditor
+previewFile(
+  document.getElementById("goodsImage"),
+  document.getElementById("goodsPreview")
 );
 
+/* 初期化 */
+data = safeLoad();
 
-/* 絵柄追加 */
+render();
 
-document
-.getElementById("addPatternBtn")
-.addEventListener(
-"click",
-function(){
-
-openPatternEditor(null);
-
-}
-);
-
-
-/* 絵柄保存 */
-
-document
-.getElementById("savePBtn")
-.addEventListener(
-"click",
-savePattern
-);
-
-
-/* 絵柄キャンセル */
-
-document
-.getElementById("cancelP")
-.addEventListener(
-"click",
-closePatternEditor
-);
-
-
-/* グッズ保存 */
-
-document
-.getElementById("saveGBtn")
-.addEventListener(
-"click",
-saveGoods
-);
-
-
-/* グッズキャンセル */
-
-document
-.getElementById("cancelG")
-.addEventListener(
-"click",
-closeGoodsEditor
-);
-
-
-/* グッズ最優先 */
-
-gp.addEventListener(
-"click",
-function(){
-
-goodsPriority=!goodsPriority;
-
-updateGoodsButton();
-
-}
-);
-
-
-/* 戻る */
-
-document
-.getElementById("backBtn")
-.addEventListener(
-"click",
-function(){
-
-currentChar=-1;
-
-renderCharacters();
-
-}
-);
-
-
-/* ファイル名 */
-
-ciInput.addEventListener(
-"change",
-function(){
-
-cfn.textContent=
-this.files[0]
-?
-this.files[0].name
-:
-"";
-
-}
-);
-
-
-piInput.addEventListener(
-"change",
-function(){
-
-pfn.textContent=
-this.files[0]
-?
-this.files[0].name
-:
-"";
-
-}
-);
-
-
-giInput.addEventListener(
-"change",
-function(){
-
-gfn.textContent=
-this.files[0]
-?
-this.files[0].name
-:
-"";
-
-}
-);
-
-
-/* 画像拡大を閉じる */
-
-document
-.getElementById("closePhotoBtn")
-.addEventListener(
-"click",
-closePhoto
-);
-
-
-/* 初期表示 */
-
-renderCharacters();
-
+})();
 </script>
 
 </body>

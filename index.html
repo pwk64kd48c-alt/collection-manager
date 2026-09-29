@@ -4,71 +4,452 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Collection</title>
+
 <style>
 *{box-sizing:border-box}
-body{margin:0;background:#f6f6f6;color:#555;font-family:-apple-system,BlinkMacSystemFont,"Helvetica Neue",sans-serif}
-header{padding:24px 20px 18px;background:#fff;border-bottom:1px solid #e9e9e9}
-h1{margin:0;font-size:22px;color:#444}
-.container{max-width:700px;margin:auto;padding:18px 14px 40px}
-button{border:0;border-radius:10px;background:#8d8d8d;color:#fff;padding:10px 15px;font-size:14px}
-.add{width:100%;margin-bottom:16px}
-.back{background:#e7e7e7;color:#666;margin-bottom:14px}
-.hidden{display:none!important}
-.chars{display:flex;flex-direction:column;gap:10px}
-.char{background:#fff;border:1px solid #ededed;border-radius:14px;padding:12px;display:flex;align-items:center;gap:12px}
-.char img,.noimg{width:68px;height:68px;object-fit:cover;border-radius:10px;background:#eee;flex:none}
-.noimg{display:flex;align-items:center;justify-content:center;color:#aaa;font-size:11px}
-.charname{flex:1;font-size:16px;font-weight:600}
-.acts{display:flex;gap:5px}
-.small{padding:7px 9px;font-size:12px;background:#e5e5e5;color:#666}
-.head{background:#fff;border:1px solid #ededed;border-left:5px solid var(--theme);border-radius:16px;padding:14px;margin-bottom:14px}
-.headin{display:flex;align-items:center;gap:11px}
-.head img,.headno{width:56px;height:56px;object-fit:cover;border-radius:11px;background:#eee}
-.headno{display:flex;align-items:center;justify-content:center;color:#aaa;font-size:10px}
-.headname{font-size:19px;font-weight:700;color:var(--theme)}
-.grid{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}
-.card{background:#fff;border:1px solid #ededed;border-radius:14px;overflow:hidden}
-.pimg,.pno{width:100%;aspect-ratio:1;object-fit:cover;background:#eee;display:block}
-.pimg{cursor:pointer}
-.pno{display:flex;align-items:center;justify-content:center;color:#aaa;font-size:11px}
-.content{padding:9px}
-.prow{display:flex;gap:4px;align-items:flex-start}
-.pname{flex:1;font-weight:600;font-size:13px;margin-bottom:8px;word-break:break-word}
-.star{border:0;background:transparent;color:#bbb;padding:0;font-size:21px;line-height:1}
-.star.on{color:var(--theme)}
-.goods{display:flex;flex-direction:column;gap:5px}
-.good{background:#f3f3f3;border-radius:9px;padding:5px;display:flex;align-items:center;gap:6px;font-size:12px;min-width:0}
-.gimg,.gno{width:40px;height:40px;object-fit:cover;border-radius:7px;background:#e7e7e7;flex:none}
-.gimg{cursor:pointer}
-.gno{display:flex;align-items:center;justify-content:center;color:#aaa;font-size:9px}
-.gname{flex:1;word-break:break-word}
-.gact{display:flex;gap:0;flex:none}
-.gstar,.gedit,.gdel{border:0;background:transparent;padding:2px 3px;color:#aaa;font-size:17px}
-.gstar.on{color:var(--theme)}
-.gedit{font-size:13px}
-.gdel{font-size:15px}
-.gadd{width:100%;margin-top:7px;background:#eee;color:#666;padding:7px;font-size:12px}
-.pacts{display:flex;gap:5px;margin-top:8px}
-.pacts button{flex:1;background:#eee;color:#666;padding:7px;font-size:12px}
-.empty{text-align:center;color:#aaa;padding:35px 10px;font-size:13px}
-.bg{display:none;position:fixed;inset:0;background:rgba(0,0,0,.35);align-items:center;justify-content:center;padding:20px;z-index:100}
-.modal{width:100%;max-width:420px;max-height:90vh;overflow:auto;background:#fff;border-radius:16px;padding:20px}
-.modal h2{margin:0 0 15px;font-size:18px;color:#444}
-.modal label{display:block;margin:11px 0 6px;font-size:13px;color:#777}
-.modal input{width:100%;padding:10px;border:1px solid #ddd;border-radius:9px;background:#fafafa}
-.current{width:80px;height:80px;object-fit:cover;border-radius:10px;margin-top:5px}
-.fname{margin-top:5px;font-size:11px;color:#999;word-break:break-all}
-.mbtn{display:flex;gap:8px;margin-top:18px}
-.mbtn button{flex:1}
-.cancel{background:#e8e8e8;color:#666}
-.colors{display:grid;grid-template-columns:repeat(4,1fr);gap:6px}
-.color{border:1px solid #ddd;background:#fff;color:#666;padding:8px 4px;border-radius:9px;font-size:11px}
-.color.sel{border:2px solid #555;padding:7px 3px;font-weight:bold}
-.dot{display:inline-block;width:13px;height:13px;border-radius:50%;vertical-align:-2px;margin-right:3px;border:1px solid #bbb}
-.photo{display:none;position:fixed;inset:0;background:rgba(0,0,0,.78);align-items:center;justify-content:center;padding:20px;z-index:200}
-.photo img{max-width:95vw;max-height:88vh;object-fit:contain;border-radius:10px}
-.x{position:fixed;right:15px;top:15px;width:38px;height:38px;border-radius:50%;padding:0;background:#fff;color:#555;font-size:22px}
-@media(max-width:500px){.grid{gap:8px}.gimg,.gno{width:38px;height:38px}}
+
+body{
+margin:0;
+background:#f6f6f6;
+color:#555;
+font-family:-apple-system,BlinkMacSystemFont,"Helvetica Neue",sans-serif
+}
+
+header{
+padding:22px 18px;
+background:#fff;
+border-bottom:1px solid #eee
+}
+
+h1{
+margin:0;
+font-size:22px;
+color:#444
+}
+
+.container{
+max-width:700px;
+margin:auto;
+padding:18px 14px 40px
+}
+
+button{
+border:0;
+border-radius:10px;
+background:#888;
+color:#fff;
+padding:10px 14px;
+font-size:14px
+}
+
+.add{
+width:100%;
+margin-bottom:14px
+}
+
+.back{
+background:#e7e7e7;
+color:#666;
+margin-bottom:14px
+}
+
+.hidden{
+display:none!important
+}
+
+.chars{
+display:flex;
+flex-direction:column;
+gap:10px
+}
+
+.char{
+background:#fff;
+border:1px solid #eee;
+border-radius:14px;
+padding:12px;
+display:flex;
+align-items:center;
+gap:12px
+}
+
+.char img,
+.noimg{
+width:68px;
+height:68px;
+object-fit:cover;
+border-radius:10px;
+background:#eee;
+flex:none
+}
+
+.noimg{
+display:flex;
+align-items:center;
+justify-content:center;
+font-size:10px;
+color:#aaa
+}
+
+.charname{
+flex:1;
+font-size:16px;
+font-weight:600
+}
+
+.acts{
+display:flex;
+gap:5px
+}
+
+.small{
+padding:7px 9px;
+font-size:12px;
+background:#e5e5e5;
+color:#666
+}
+
+.head{
+background:#fff;
+border:1px solid #eee;
+border-left:5px solid var(--theme);
+border-radius:16px;
+padding:14px;
+margin-bottom:14px
+}
+
+.headin{
+display:flex;
+align-items:center;
+gap:11px
+}
+
+.head img,
+.headno{
+width:56px;
+height:56px;
+object-fit:cover;
+border-radius:11px;
+background:#eee
+}
+
+.headno{
+display:flex;
+align-items:center;
+justify-content:center;
+font-size:10px;
+color:#aaa
+}
+
+.headname{
+font-size:19px;
+font-weight:700;
+color:var(--theme)
+}
+
+.grid{
+display:grid;
+grid-template-columns:repeat(2,1fr);
+gap:10px
+}
+
+.card{
+background:#fff;
+border:1px solid #eee;
+border-radius:14px;
+overflow:hidden
+}
+
+.pimg,
+.pno{
+width:100%;
+aspect-ratio:1;
+object-fit:cover;
+background:#eee;
+display:block
+}
+
+.pimg{
+cursor:pointer
+}
+
+.pno{
+display:flex;
+align-items:center;
+justify-content:center;
+font-size:11px;
+color:#aaa
+}
+
+.content{
+padding:9px
+}
+
+.prow{
+display:flex;
+align-items:flex-start;
+gap:4px
+}
+
+.pname{
+flex:1;
+font-weight:600;
+font-size:13px;
+word-break:break-word
+}
+
+.star{
+background:transparent;
+color:#bbb;
+padding:0;
+font-size:21px;
+line-height:1
+}
+
+.star.on{
+color:var(--theme)
+}
+
+.goods{
+display:flex;
+flex-direction:column;
+gap:5px;
+margin-top:7px
+}
+
+.good{
+background:#f3f3f3;
+border-radius:9px;
+padding:5px;
+display:flex;
+align-items:center;
+gap:6px;
+font-size:12px
+}
+
+.gimg,
+.gno{
+width:40px;
+height:40px;
+object-fit:cover;
+border-radius:7px;
+background:#e7e7e7;
+flex:none
+}
+
+.gno{
+display:flex;
+align-items:center;
+justify-content:center;
+font-size:9px;
+color:#aaa
+}
+
+.gimg{
+cursor:pointer
+}
+
+.gname{
+flex:1;
+word-break:break-word
+}
+
+.gact{
+display:flex;
+align-items:center
+}
+
+.gstar,
+.gedit,
+.gdel{
+background:transparent;
+color:#aaa;
+padding:2px 3px;
+font-size:16px
+}
+
+.gstar.on{
+color:var(--theme)
+}
+
+.gedit{
+font-size:13px
+}
+
+.gdel{
+font-size:15px
+}
+
+.gadd{
+width:100%;
+margin-top:7px;
+background:#eee;
+color:#666;
+font-size:12px;
+padding:7px
+}
+
+.pacts{
+display:flex;
+gap:5px;
+margin-top:8px
+}
+
+.pacts button{
+flex:1;
+background:#eee;
+color:#666;
+font-size:12px;
+padding:7px
+}
+
+.empty{
+text-align:center;
+color:#aaa;
+padding:35px 10px;
+font-size:13px
+}
+
+.bg{
+display:none;
+position:fixed;
+inset:0;
+background:rgba(0,0,0,.35);
+align-items:center;
+justify-content:center;
+padding:20px;
+z-index:100
+}
+
+.modal{
+width:100%;
+max-width:420px;
+max-height:90vh;
+overflow:auto;
+background:#fff;
+border-radius:16px;
+padding:20px
+}
+
+.modal h2{
+margin:0 0 15px;
+font-size:18px;
+color:#444
+}
+
+.modal label{
+display:block;
+margin:11px 0 6px;
+font-size:13px;
+color:#777
+}
+
+.modal input{
+width:100%;
+padding:10px;
+border:1px solid #ddd;
+border-radius:9px;
+background:#fafafa
+}
+
+.current{
+width:80px;
+height:80px;
+object-fit:cover;
+border-radius:10px;
+margin-top:5px
+}
+
+.fname{
+margin-top:5px;
+font-size:11px;
+color:#999;
+word-break:break-all
+}
+
+.mbtn{
+display:flex;
+gap:8px;
+margin-top:18px
+}
+
+.mbtn button{
+flex:1
+}
+
+.cancel{
+background:#e8e8e8;
+color:#666
+}
+
+.colors{
+display:grid;
+grid-template-columns:repeat(4,1fr);
+gap:6px
+}
+
+.color{
+border:1px solid #ddd;
+background:#fff;
+color:#666;
+padding:8px 4px;
+font-size:11px
+}
+
+.color.sel{
+border:2px solid #555;
+padding:7px 3px;
+font-weight:bold
+}
+
+.dot{
+display:inline-block;
+width:13px;
+height:13px;
+border-radius:50%;
+vertical-align:-2px;
+margin-right:3px;
+border:1px solid #bbb
+}
+
+.photo{
+display:none;
+position:fixed;
+inset:0;
+background:rgba(0,0,0,.78);
+align-items:center;
+justify-content:center;
+padding:20px;
+z-index:200
+}
+
+.photo img{
+max-width:95vw;
+max-height:88vh;
+object-fit:contain;
+border-radius:10px
+}
+
+.x{
+position:fixed;
+right:15px;
+top:15px;
+width:38px;
+height:38px;
+padding:0;
+border-radius:50%;
+background:#fff;
+color:#555;
+font-size:22px
+}
+
+@media(max-width:500px){
+.grid{gap:8px}
+.gimg,.gno{
+width:38px;
+height:38px
+}
+}
 </style>
 </head>
 
@@ -81,112 +462,212 @@ button{border:0;border-radius:10px;background:#8d8d8d;color:#fff;padding:10px 15
 <div class="container">
 
 <section id="listPage">
-<button class="add" onclick="charModal()">＋ キャラを追加</button>
+
+<button class="add" id="addCharBtn">
+＋ キャラを追加
+</button>
+
 <div id="chars" class="chars"></div>
+
 </section>
 
+
 <section id="patPage" class="hidden">
-<button class="back" onclick="back()">← キャラ一覧へ</button>
+
+<button class="back" id="backBtn">
+← キャラ一覧へ
+</button>
+
 <div id="head"></div>
-<button class="add" onclick="patModal()">＋ 絵柄を追加</button>
+
+<button class="add" id="addPatternBtn">
+＋ 絵柄を追加
+</button>
+
 <div id="pats" class="grid"></div>
+
 </section>
 
 </div>
 
-<!-- キャラ編集 -->
+
+<!-- キャラ -->
+
 <div id="cm" class="bg">
+
 <div class="modal">
 
 <h2 id="cmt">キャラを追加</h2>
 
 <label>キャラ名</label>
-<input id="cn" placeholder="例：月永レオ">
+
+<input
+id="cn"
+placeholder="例：月永レオ"
+>
 
 <label>キャラ画像</label>
-<input id="ci" type="file" accept="image/*">
+
+<input
+id="ci"
+type="file"
+accept="image/*"
+>
+
 <div id="cfn" class="fname"></div>
 
 <div id="cca" class="hidden">
+
 <label>現在の画像</label>
+
 <img id="cc" class="current">
+
 </div>
 
 <label>キャラカラー</label>
+
 <div id="colors" class="colors"></div>
 
 <div class="mbtn">
-<button class="cancel" onclick="closeC()">キャンセル</button>
-<button onclick="saveC()">保存</button>
+
+<button class="cancel" id="cancelC">
+キャンセル
+</button>
+
+<button id="saveCBtn">
+保存
+</button>
+
 </div>
 
 </div>
+
 </div>
 
-<!-- 絵柄編集 -->
+
+<!-- 絵柄 -->
+
 <div id="pm" class="bg">
+
 <div class="modal">
 
 <h2 id="pmt">絵柄を追加</h2>
 
 <label>絵柄名</label>
-<input id="pn" placeholder="例：ハフアニ">
+
+<input
+id="pn"
+placeholder="例：ハフアニ"
+>
 
 <label>絵柄画像</label>
-<input id="pi" type="file" accept="image/*">
+
+<input
+id="pi"
+type="file"
+accept="image/*"
+>
+
 <div id="pfn" class="fname"></div>
 
 <div id="pca" class="hidden">
+
 <label>現在の画像</label>
+
 <img id="pc" class="current">
+
 </div>
 
 <div class="mbtn">
-<button class="cancel" onclick="closeP()">キャンセル</button>
-<button onclick="saveP()">保存</button>
+
+<button class="cancel" id="cancelP">
+キャンセル
+</button>
+
+<button id="savePBtn">
+保存
+</button>
+
 </div>
 
 </div>
+
 </div>
 
-<!-- グッズ編集 -->
+
+<!-- グッズ -->
+
 <div id="gm" class="bg">
+
 <div class="modal">
 
 <h2 id="gmt">グッズを追加</h2>
 
 <label>グッズ名</label>
-<input id="gn" placeholder="例：ぱしゃっつ 日本版">
+
+<input
+id="gn"
+placeholder="例：ぱしゃっつ 日本版"
+>
 
 <label>グッズ画像</label>
-<input id="gi" type="file" accept="image/*">
+
+<input
+id="gi"
+type="file"
+accept="image/*"
+>
+
 <div id="gfn" class="fname"></div>
 
 <div id="gca" class="hidden">
+
 <label>現在の画像</label>
+
 <img id="gc" class="current">
+
 </div>
 
 <label>最優先</label>
-<button id="gp" onclick="toggleGP()">☆ 最優先にする</button>
+
+<button id="gp">
+☆ 最優先にする
+</button>
 
 <div class="mbtn">
-<button class="cancel" onclick="closeG()">キャンセル</button>
-<button onclick="saveG()">保存</button>
+
+<button class="cancel" id="cancelG">
+キャンセル
+</button>
+
+<button id="saveGBtn">
+保存
+</button>
+
 </div>
 
 </div>
+
 </div>
+
 
 <!-- 画像拡大 -->
-<div id="photo" class="photo" onclick="closePhoto(event)">
-<button class="x" onclick="closePhoto(event)">×</button>
+
+<div id="photo" class="photo">
+
+<button class="x" id="closePhotoBtn">
+×
+</button>
+
 <img id="large">
+
 </div>
+
 
 <script>
 
 const KEY="collectionData";
+
 
 const COLORS=[
 ["red","赤","#d95c5c"],
@@ -203,37 +684,92 @@ const COLORS=[
 ["gray","グレー","#8f8f8f"]
 ];
 
+
 let data=[];
 
 try{
-data=JSON.parse(localStorage.getItem(KEY)||"[]");
+
+data=
+JSON.parse(
+localStorage.getItem(KEY)||"[]"
+);
+
 }catch(e){
+
 data=[];
+
 }
 
 if(!Array.isArray(data)){
 data=[];
 }
 
-let ci=-1;
-let ei=-1;
-let pi=-1;
-let gi=-1;
-let gpri=false;
-let color="gray";
 
+let currentChar=-1;
+let editPattern=-1;
+let currentPattern=-1;
+let editGoods=-1;
+let goodsPriority=false;
+let selectedColor="gray";
+
+
+/* HTML要素 */
+
+const cm=document.getElementById("cm");
+const cmt=document.getElementById("cmt");
+const cn=document.getElementById("cn");
+const ciInput=document.getElementById("ci");
+const cfn=document.getElementById("cfn");
+const cca=document.getElementById("cca");
+const cc=document.getElementById("cc");
+const colors=document.getElementById("colors");
+
+const pm=document.getElementById("pm");
+const pmt=document.getElementById("pmt");
+const pn=document.getElementById("pn");
+const piInput=document.getElementById("pi");
+const pfn=document.getElementById("pfn");
+const pca=document.getElementById("pca");
+const pc=document.getElementById("pc");
+
+const gm=document.getElementById("gm");
+const gmt=document.getElementById("gmt");
+const gn=document.getElementById("gn");
+const giInput=document.getElementById("gi");
+const gfn=document.getElementById("gfn");
+const gca=document.getElementById("gca");
+const gc=document.getElementById("gc");
+const gp=document.getElementById("gp");
+
+const listPage=document.getElementById("listPage");
+const patPage=document.getElementById("patPage");
+const chars=document.getElementById("chars");
+const head=document.getElementById("head");
+const pats=document.getElementById("pats");
+
+const photo=document.getElementById("photo");
+const large=document.getElementById("large");
+
+
+/* 保存 */
 
 function save(){
 
 try{
 
-localStorage.setItem(KEY,JSON.stringify(data));
+localStorage.setItem(
+KEY,
+JSON.stringify(data)
+);
 
 return true;
 
 }catch(e){
 
-alert("保存容量を超えました。画像を減らしてみてね！");
+alert(
+"保存容量を超えました。\n"+
+"画像を少し減らしてみてね！"
+);
 
 return false;
 
@@ -242,25 +778,27 @@ return false;
 }
 
 
-function norm(){
+/* 古いデータ対応 */
+
+function normalize(){
 
 data.forEach(c=>{
 
-c.color=c.color||"gray";
+if(!c.color){
+c.color="gray";
+}
 
-c.patterns=
-Array.isArray(c.patterns)
-?c.patterns
-:[];
+if(!Array.isArray(c.patterns)){
+c.patterns=[];
+}
 
 c.patterns.forEach(p=>{
 
 p.priority=!!p.priority;
 
-p.goods=
-Array.isArray(p.goods)
-?p.goods
-:[];
+if(!Array.isArray(p.goods)){
+p.goods=[];
+}
 
 p.goods=p.goods.map(g=>{
 
@@ -274,26 +812,28 @@ priority:false
 
 }
 
-return Object.assign({
-name:"",
-image:null,
-priority:false
-},g);
+return{
+
+name:g.name||"",
+image:g.image||null,
+priority:!!g.priority
+
+};
 
 });
 
 });
 
 });
-
-save();
 
 }
 
-norm();
+normalize();
 
 
-function img(file,max=600,q=.75){
+/* 画像処理 */
+
+function compressImage(file){
 
 return new Promise((resolve,reject)=>{
 
@@ -307,14 +847,15 @@ return;
 
 const reader=new FileReader();
 
-reader.onload=e=>{
+reader.onload=function(e){
 
 const image=new Image();
 
-image.onload=()=>{
+image.onload=function(){
 
-const scale=
-Math.min(
+const max=600;
+
+const scale=Math.min(
 1,
 max/Math.max(
 image.width,
@@ -322,17 +863,14 @@ image.height
 )
 );
 
-const canvas=
-document.createElement("canvas");
+const canvas=document.createElement("canvas");
 
-canvas.width=
-Math.max(
+canvas.width=Math.max(
 1,
 Math.round(image.width*scale)
 );
 
-canvas.height=
-Math.max(
+canvas.height=Math.max(
 1,
 Math.round(image.height*scale)
 );
@@ -350,7 +888,7 @@ canvas.height
 resolve(
 canvas.toDataURL(
 "image/jpeg",
-q
+0.7
 )
 );
 
@@ -369,9 +907,11 @@ reader.readAsDataURL(file);
 }
 
 
-function esc(s){
+/* HTMLエスケープ */
 
-return String(s||"")
+function esc(text){
+
+return String(text||"")
 .replace(/&/g,"&amp;")
 .replace(/</g,"&lt;")
 .replace(/>/g,"&gt;")
@@ -381,14 +921,22 @@ return String(s||"")
 }
 
 
-function col(){
+/* 色 */
 
-const x=
+function getColor(){
+
+const found=
 COLORS.find(
-x=>x[0]===(data[ci]?.color||"gray")
+x=>x[0]===(
+data[currentChar]?.color||"gray"
+)
 );
 
-return x?x[2]:"#8f8f8f";
+return found
+?
+found[2]
+:
+"#888";
 
 }
 
@@ -396,52 +944,67 @@ return x?x[2]:"#8f8f8f";
 function renderColors(){
 
 colors.innerHTML=
-COLORS.map(x=>`
+COLORS.map(c=>`
 
 <button
-class="color ${color===x[0]?"sel":""}"
-onclick="pickColor('${x[0]}')"
+class="color ${selectedColor===c[0]?"sel":""}"
+data-color="${c[0]}"
 >
 
-<i
+<span
 class="dot"
-style="background:${x[2]}"
-></i>
+style="background:${c[2]}"
+></span>
 
-${x[1]}
+${c[1]}
 
 </button>
 
 `).join("");
 
-}
+document
+.querySelectorAll(".color")
+.forEach(btn=>{
 
+btn.addEventListener(
+"click",
+function(){
 
-function pickColor(x){
-
-color=x;
+selectedColor=this.dataset.color;
 
 renderColors();
 
 }
+);
+
+});
+
+}
 
 
-function renderChars(){
+/* キャラ一覧 */
+
+function renderCharacters(){
 
 listPage.classList.remove("hidden");
 
 patPage.classList.add("hidden");
 
+if(data.length===0){
+
 chars.innerHTML=
-data.length
+`<div class="empty">
+まだキャラがいないよ
+</div>`;
 
-?
+return;
 
+}
+
+chars.innerHTML=
 data.map((c,i)=>`
 
 <div class="char">
-
-<div>
 
 ${
 c.image
@@ -451,8 +1014,6 @@ c.image
 `<div class="noimg">画像なし</div>`
 }
 
-</div>
-
 <div class="charname">
 ${esc(c.name)}
 </div>
@@ -461,21 +1022,21 @@ ${esc(c.name)}
 
 <button
 class="small"
-onclick="openChar(${i})"
+data-open="${i}"
 >
 開く
 </button>
 
 <button
 class="small"
-onclick="editChar(${i})"
+data-edit="${i}"
 >
 編集
 </button>
 
 <button
 class="small"
-onclick="delChar(${i})"
+data-delete="${i}"
 >
 削除
 </button>
@@ -484,51 +1045,99 @@ onclick="delChar(${i})"
 
 </div>
 
-`).join("")
+`).join("");
 
-:
 
-`
-<div class="empty">
-まだキャラがいないよ
-</div>
-`;
+document
+.querySelectorAll("[data-open]")
+.forEach(btn=>{
+
+btn.addEventListener(
+"click",
+function(){
+
+openCharacter(
+Number(this.dataset.open)
+);
+
+}
+);
+
+});
+
+
+document
+.querySelectorAll("[data-edit]")
+.forEach(btn=>{
+
+btn.addEventListener(
+"click",
+function(){
+
+openCharacterEditor(
+Number(this.dataset.edit)
+);
+
+}
+);
+
+});
+
+
+document
+.querySelectorAll("[data-delete]")
+.forEach(btn=>{
+
+btn.addEventListener(
+"click",
+function(){
+
+deleteCharacter(
+Number(this.dataset.delete)
+);
+
+}
+);
+
+});
 
 }
 
 
-function charModal(i=null){
+/* キャラ追加 */
 
-ei=i;
+function openCharacterEditor(index){
 
-if(i===null){
+editPattern=index;
+
+if(index===null){
 
 cmt.textContent="キャラを追加";
 
 cn.value="";
 
-document.getElementById("ci").value="";
+ciInput.value="";
 
 cfn.textContent="";
 
 cca.classList.add("hidden");
 
-color="gray";
+selectedColor="gray";
 
 }else{
 
-const c=data[i];
+const c=data[index];
 
 cmt.textContent="キャラを編集";
 
 cn.value=c.name||"";
 
-document.getElementById("ci").value="";
+ciInput.value="";
 
 cfn.textContent=
 "画像を変更しない場合はそのままでOK";
 
-color=c.color||"gray";
+selectedColor=c.color||"gray";
 
 if(c.image){
 
@@ -551,14 +1160,7 @@ cm.style.display="flex";
 }
 
 
-function editChar(i){
-
-charModal(i);
-
-}
-
-
-async function saveC(){
+async function saveCharacter(){
 
 const name=cn.value.trim();
 
@@ -572,64 +1174,58 @@ return;
 
 try{
 
-let image=
-ei>=0
-?
-(data[ei].image||null)
-:
-null;
+let image=null;
 
-const file=
-document.getElementById("ci").files[0];
+if(editPattern!==null &&
+editPattern>=0){
 
-if(file){
-
-image=await img(file);
+image=data[editPattern].image||null;
 
 }
 
-if(ei<0){
+if(ciInput.files.length>0){
+
+image=
+await compressImage(
+ciInput.files[0]
+);
+
+}
+
+if(editPattern===null){
 
 data.push({
 
 name:name,
-
 image:image,
-
-color:color,
-
+color:selectedColor,
 patterns:[]
 
 });
 
 }else{
 
-Object.assign(
-data[ei],
-{
-name:name,
-image:image,
-color:color
-}
-);
+data[editPattern].name=name;
+data[editPattern].image=image;
+data[editPattern].color=selectedColor;
 
 }
 
 if(save()){
 
-closeC();
+closeCharacterEditor();
 
-renderChars();
+renderCharacters();
 
 }
 
-}catch(e){
+}catch(error){
 
-console.error(e);
+console.error(error);
 
 alert(
 "画像の処理に失敗しました。\n"+
-"もう一度試してみてね。"
+"別の画像でもう一度試してみてね。"
 );
 
 }
@@ -637,45 +1233,49 @@ alert(
 }
 
 
-function delChar(i){
+function deleteCharacter(index){
 
 if(
 confirm(
-`「${data[i].name}」を削除する？`
+`「${data[index].name}」を削除する？`
 )
 ){
 
-data.splice(i,1);
+data.splice(index,1);
 
 save();
 
-renderChars();
+renderCharacters();
 
 }
 
 }
 
 
-function openChar(i){
+/* キャラページ */
 
-ci=i;
+function openCharacter(index){
+
+currentChar=index;
 
 listPage.classList.add("hidden");
 
 patPage.classList.remove("hidden");
 
-renderPat();
+renderPatterns();
 
 }
 
 
-function renderHead(){
+function renderCharacterHeader(){
 
-const c=data[ci];
+const c=data[currentChar];
+
+const theme=getColor();
 
 document.documentElement.style.setProperty(
 "--theme",
-col()
+theme
 );
 
 head.innerHTML=`
@@ -705,42 +1305,46 @@ ${esc(c.name)}
 }
 
 
-function renderPat(){
+/* 絵柄 */
 
-renderHead();
+function renderPatterns(){
 
-const patterns=data[ci].patterns;
+renderCharacterHeader();
+
+const patterns=data[currentChar].patterns;
+
+if(patterns.length===0){
 
 pats.innerHTML=
+`<div class="empty"
+style="grid-column:1/-1">
+まだ絵柄がないよ
+</div>`;
 
-patterns.length
+return;
 
-?
+}
 
+pats.innerHTML=
 patterns.map((p,i)=>{
 
-const goods=
+const goodsHTML=
 p.goods.map((g,j)=>`
 
 <div class="good">
 
 ${
 g.image
-
 ?
-
 `<img
 class="gimg"
 src="${g.image}"
-onclick="photoOpen('${encodeURIComponent(g.image)}')"
+data-photo="${encodeURIComponent(g.image)}"
 >`
-
 :
-
 `<div class="gno">
 画像なし
 </div>`
-
 }
 
 <div class="gname">
@@ -751,21 +1355,21 @@ ${esc(g.name)}
 
 <button
 class="gstar ${g.priority?"on":""}"
-onclick="toggleG(${i},${j})"
+data-gstar="${i},${j}"
 >
 ${g.priority?"★":"☆"}
 </button>
 
 <button
 class="gedit"
-onclick="editG(${i},${j})"
+data-gedit="${i},${j}"
 >
 ✎
 </button>
 
 <button
 class="gdel"
-onclick="delG(${i},${j})"
+data-gdel="${i},${j}"
 >
 ×
 </button>
@@ -776,27 +1380,23 @@ onclick="delG(${i},${j})"
 
 `).join("");
 
+
 return `
 
 <div class="card">
 
 ${
 p.image
-
 ?
-
 `<img
 class="pimg"
 src="${p.image}"
-onclick="photoOpen('${encodeURIComponent(p.image)}')"
+data-photo="${encodeURIComponent(p.image)}"
 >`
-
 :
-
 `<div class="pno">
 画像なし
 </div>`
-
 }
 
 <div class="content">
@@ -809,7 +1409,7 @@ ${esc(p.name)}
 
 <button
 class="star ${p.priority?"on":""}"
-onclick="toggleP(${i})"
+data-pstar="${i}"
 >
 ${p.priority?"★":"☆"}
 </button>
@@ -819,27 +1419,31 @@ ${p.priority?"★":"☆"}
 <div class="goods">
 
 ${
-goods
+goodsHTML
 ||
-'<div style="font-size:11px;color:#aaa">グッズなし</div>'
+`<div
+style="font-size:11px;color:#aaa"
+>
+グッズなし
+</div>`
 }
 
 </div>
 
 <button
 class="gadd"
-onclick="goodsModal(${i})"
+data-gadd="${i}"
 >
 ＋ グッズを追加
 </button>
 
 <div class="pacts">
 
-<button onclick="editP(${i})">
+<button data-pedit="${i}">
 編集
 </button>
 
-<button onclick="delP(${i})">
+<button data-pdelete="${i}">
 🗑️ 削除
 </button>
 
@@ -851,44 +1455,185 @@ onclick="goodsModal(${i})"
 
 `;
 
-}).join("")
+}).join("");
 
-:
 
-`
+/* イベント */
 
-<div
-class="empty"
-style="grid-column:1/-1"
->
-まだ絵柄がないよ
-</div>
+document
+.querySelectorAll("[data-photo]")
+.forEach(el=>{
 
-`;
+el.addEventListener(
+"click",
+function(){
+
+openPhoto(
+decodeURIComponent(
+this.dataset.photo
+)
+);
+
+}
+);
+
+});
+
+
+document
+.querySelectorAll("[data-pstar]")
+.forEach(el=>{
+
+el.addEventListener(
+"click",
+function(){
+
+togglePatternPriority(
+Number(this.dataset.pstar)
+);
+
+}
+);
+
+});
+
+
+document
+.querySelectorAll("[data-pedit]")
+.forEach(el=>{
+
+el.addEventListener(
+"click",
+function(){
+
+openPatternEditor(
+Number(this.dataset.pedit)
+);
+
+}
+);
+
+});
+
+
+document
+.querySelectorAll("[data-pdelete]")
+.forEach(el=>{
+
+el.addEventListener(
+"click",
+function(){
+
+deletePattern(
+Number(this.dataset.pdelete)
+);
+
+}
+);
+
+});
+
+
+document
+.querySelectorAll("[data-gadd]")
+.forEach(el=>{
+
+el.addEventListener(
+"click",
+function(){
+
+openGoodsEditor(
+Number(this.dataset.gadd),
+null
+);
+
+}
+);
+
+});
+
+
+document
+.querySelectorAll("[data-gstar]")
+.forEach(el=>{
+
+el.addEventListener(
+"click",
+function(){
+
+const parts=
+this.dataset.gstar.split(",");
+
+toggleGoodsPriority(
+Number(parts[0]),
+Number(parts[1])
+);
+
+}
+);
+
+});
+
+
+document
+.querySelectorAll("[data-gedit]")
+.forEach(el=>{
+
+el.addEventListener(
+"click",
+function(){
+
+const parts=
+this.dataset.gedit.split(",");
+
+openGoodsEditor(
+Number(parts[0]),
+Number(parts[1])
+);
+
+}
+);
+
+});
+
+
+document
+.querySelectorAll("[data-gdel]")
+.forEach(el=>{
+
+el.addEventListener(
+"click",
+function(){
+
+const parts=
+this.dataset.gdel.split(",");
+
+deleteGoods(
+Number(parts[0]),
+Number(parts[1])
+);
+
+}
+);
+
+});
 
 }
 
 
-function back(){
+/* 絵柄追加 */
 
-ci=-1;
+function openPatternEditor(index){
 
-renderChars();
+editPattern=index;
 
-}
-
-
-function patModal(i=null){
-
-ei=i;
-
-if(i===null){
+if(index===null){
 
 pmt.textContent="絵柄を追加";
 
 pn.value="";
 
-document.getElementById("pi").value="";
+piInput.value="";
 
 pfn.textContent="";
 
@@ -896,13 +1641,13 @@ pca.classList.add("hidden");
 
 }else{
 
-const p=data[ci].patterns[i];
+const p=data[currentChar].patterns[index];
 
 pmt.textContent="絵柄を編集";
 
 pn.value=p.name||"";
 
-document.getElementById("pi").value="";
+piInput.value="";
 
 pfn.textContent=
 "画像を変更しない場合はそのままでOK";
@@ -926,14 +1671,7 @@ pm.style.display="flex";
 }
 
 
-function editP(i){
-
-patModal(i);
-
-}
-
-
-async function saveP(){
+async function savePattern(){
 
 const name=pn.value.trim();
 
@@ -947,70 +1685,67 @@ return;
 
 try{
 
-const p=
-ei>=0
-?
-data[ci].patterns[ei]
-:
-null;
+let image=null;
 
-let image=
-p
-?
-(p.image||null)
-:
-null;
+if(
+editPattern!==null &&
+editPattern>=0
+){
 
-const file=
-document.getElementById("pi").files[0];
-
-if(file){
-
-image=await img(file);
+image=
+data[currentChar]
+.patterns[editPattern]
+.image||null;
 
 }
 
-if(!p){
+if(piInput.files.length>0){
 
-data[ci].patterns.push({
+image=
+await compressImage(
+piInput.files[0]
+);
+
+}
+
+if(editPattern===null){
+
+data[currentChar].patterns.push({
 
 name:name,
-
 image:image,
-
 priority:false,
-
 goods:[]
 
 });
 
 }else{
 
-Object.assign(
-p,
-{
-name:name,
-image:image
-}
-);
+data[currentChar]
+.patterns[editPattern]
+.name=name;
+
+data[currentChar]
+.patterns[editPattern]
+.image=image;
 
 }
 
 if(save()){
 
-closeP();
+closePatternEditor();
 
-renderPat();
+renderPatterns();
 
 }
 
-}catch(e){
+}catch(error){
 
-console.error(e);
+console.error(error);
 
 alert(
 "画像の処理に失敗しました。\n"+
-"もう一度試してみてね。"
+"別の画像でもう一度試してみてね。"
 );
 
 }
@@ -1018,61 +1753,71 @@ alert(
 }
 
 
-function toggleP(i){
+function togglePatternPriority(index){
 
-data[ci].patterns[i].priority=
-!data[ci].patterns[i].priority;
+const p=
+data[currentChar].patterns[index];
+
+p.priority=!p.priority;
 
 save();
 
-renderPat();
+renderPatterns();
 
 }
 
 
-function delP(i){
+function deletePattern(index){
 
 if(
 confirm(
-`「${data[ci].patterns[i].name}」を削除する？
-この絵柄のグッズも全部削除されます。`
+`「${data[currentChar].patterns[index].name}」を削除する？\n`+
+"この絵柄のグッズも全部削除されます。"
 )
 ){
 
-data[ci].patterns.splice(i,1);
+data[currentChar].patterns.splice(
+index,
+1
+);
 
 save();
 
-renderPat();
+renderPatterns();
 
 }
 
 }
 
 
-function goodsModal(p,g=null){
+/* グッズ */
 
-pi=p;
+function openGoodsEditor(patternIndex,goodsIndex){
 
-gi=g;
+currentPattern=patternIndex;
 
-gpri=
-g!==null
-&&
-!!data[ci].patterns[p].goods[g].priority;
+editGoods=goodsIndex;
+
+goodsPriority=
+goodsIndex!==null &&
+!!data[currentChar]
+.patterns[patternIndex]
+.goods[goodsIndex]
+.priority;
 
 gmt.textContent=
-g===null
+goodsIndex===null
 ?
 "グッズを追加"
 :
 "グッズを編集";
 
-if(g===null){
+
+if(goodsIndex===null){
 
 gn.value="";
 
-document.getElementById("gi").value="";
+giInput.value="";
 
 gfn.textContent="";
 
@@ -1081,11 +1826,13 @@ gca.classList.add("hidden");
 }else{
 
 const item=
-data[ci].patterns[p].goods[g];
+data[currentChar]
+.patterns[patternIndex]
+.goods[goodsIndex];
 
 gn.value=item.name||"";
 
-document.getElementById("gi").value="";
+giInput.value="";
 
 gfn.textContent=
 "画像を変更しない場合はそのままでOK";
@@ -1104,38 +1851,31 @@ gca.classList.add("hidden");
 
 }
 
-updateGP();
+updateGoodsButton();
 
 gm.style.display="flex";
 
 }
 
 
-function editG(p,g){
-
-goodsModal(p,g);
-
-}
-
-
-function updateGP(){
+function updateGoodsButton(){
 
 gp.textContent=
-gpri
+goodsPriority
 ?
 "★ 最優先"
 :
 "☆ 最優先にする";
 
 gp.style.background=
-gpri
+goodsPriority
 ?
-col()
+getColor()
 :
 "#eee";
 
 gp.style.color=
-gpri
+goodsPriority
 ?
 "#fff"
 :
@@ -1144,16 +1884,7 @@ gpri
 }
 
 
-function toggleGP(){
-
-gpri=!gpri;
-
-updateGP();
-
-}
-
-
-async function saveG(){
+async function saveGoods(){
 
 const name=gn.value.trim();
 
@@ -1167,67 +1898,64 @@ return;
 
 try{
 
-const arr=
-data[ci].patterns[pi].goods;
+const goods=
+data[currentChar]
+.patterns[currentPattern]
+.goods;
 
-const old=
-gi!==null
-?
-arr[gi]
-:
-null;
+let image=null;
 
-let image=
-old
-?
-(old.image||null)
-:
-null;
+if(editGoods!==null){
 
-const file=
-document.getElementById("gi").files[0];
+image=
+goods[editGoods]
+.image||null;
 
-if(file){
+}
 
-image=await img(file);
+if(giInput.files.length>0){
+
+image=
+await compressImage(
+giInput.files[0]
+);
 
 }
 
 const item={
 
 name:name,
-
 image:image,
-
-priority:gpri
+priority:goodsPriority
 
 };
 
-if(gi===null){
 
-arr.push(item);
+if(editGoods===null){
+
+goods.push(item);
 
 }else{
 
-arr[gi]=item;
+goods[editGoods]=item;
 
 }
 
 if(save()){
 
-closeG();
+closeGoodsEditor();
 
-renderPat();
+renderPatterns();
 
 }
 
-}catch(e){
+}catch(error){
 
-console.error(e);
+console.error(error);
 
 alert(
 "画像の処理に失敗しました。\n"+
-"もう一度試してみてね。"
+"別の画像でもう一度試してみてね。"
 );
 
 }
@@ -1235,22 +1963,30 @@ alert(
 }
 
 
-function toggleG(p,g){
+function toggleGoodsPriority(p,g){
 
-data[ci].patterns[p].goods[g].priority=
-!data[ci].patterns[p].goods[g].priority;
+data[currentChar]
+.patterns[p]
+.goods[g]
+.priority=
+!data[currentChar]
+.patterns[p]
+.goods[g]
+.priority;
 
 save();
 
-renderPat();
+renderPatterns();
 
 }
 
 
-function delG(p,g){
+function deleteGoods(p,g){
 
 const item=
-data[ci].patterns[p].goods[g];
+data[currentChar]
+.patterns[p]
+.goods[g];
 
 if(
 confirm(
@@ -1258,66 +1994,64 @@ confirm(
 )
 ){
 
-data[ci].patterns[p].goods.splice(g,1);
+data[currentChar]
+.patterns[p]
+.goods.splice(g,1);
 
 save();
 
-renderPat();
+renderPatterns();
 
 }
 
 }
 
 
-function closeC(){
+/* 閉じる */
+
+function closeCharacterEditor(){
 
 cm.style.display="none";
 
-ei=-1;
+editPattern=-1;
 
 }
 
 
-function closeP(){
+function closePatternEditor(){
 
 pm.style.display="none";
 
-ei=-1;
+editPattern=-1;
 
 }
 
 
-function closeG(){
+function closeGoodsEditor(){
 
 gm.style.display="none";
 
-pi=-1;
+currentPattern=-1;
 
-gi=-1;
+editGoods=-1;
 
-gpri=false;
+goodsPriority=false;
 
 }
 
 
-function photoOpen(src){
+/* 画像拡大 */
 
-large.src=decodeURIComponent(src);
+function openPhoto(src){
+
+large.src=src;
 
 photo.style.display="flex";
 
 }
 
 
-function closePhoto(e){
-
-if(
-e &&
-e.target.id==="large"
-)return;
-
-if(e)
-e.stopPropagation();
+function closePhoto(){
 
 photo.style.display="none";
 
@@ -1326,31 +2060,186 @@ large.src="";
 }
 
 
-document.getElementById("ci").onchange=()=>{
+/* ボタンイベント */
+
+/* キャラ追加 */
+
+document
+.getElementById("addCharBtn")
+.addEventListener(
+"click",
+function(){
+
+openCharacterEditor(null);
+
+}
+);
+
+
+/* キャラ保存 */
+
+document
+.getElementById("saveCBtn")
+.addEventListener(
+"click",
+saveCharacter
+);
+
+
+/* キャラキャンセル */
+
+document
+.getElementById("cancelC")
+.addEventListener(
+"click",
+closeCharacterEditor
+);
+
+
+/* 絵柄追加 */
+
+document
+.getElementById("addPatternBtn")
+.addEventListener(
+"click",
+function(){
+
+openPatternEditor(null);
+
+}
+);
+
+
+/* 絵柄保存 */
+
+document
+.getElementById("savePBtn")
+.addEventListener(
+"click",
+savePattern
+);
+
+
+/* 絵柄キャンセル */
+
+document
+.getElementById("cancelP")
+.addEventListener(
+"click",
+closePatternEditor
+);
+
+
+/* グッズ保存 */
+
+document
+.getElementById("saveGBtn")
+.addEventListener(
+"click",
+saveGoods
+);
+
+
+/* グッズキャンセル */
+
+document
+.getElementById("cancelG")
+.addEventListener(
+"click",
+closeGoodsEditor
+);
+
+
+/* グッズ最優先 */
+
+gp.addEventListener(
+"click",
+function(){
+
+goodsPriority=!goodsPriority;
+
+updateGoodsButton();
+
+}
+);
+
+
+/* 戻る */
+
+document
+.getElementById("backBtn")
+.addEventListener(
+"click",
+function(){
+
+currentChar=-1;
+
+renderCharacters();
+
+}
+);
+
+
+/* ファイル名 */
+
+ciInput.addEventListener(
+"change",
+function(){
 
 cfn.textContent=
-document.getElementById("ci").files[0]?.name||"";
+this.files[0]
+?
+this.files[0].name
+:
+"";
 
-};
+}
+);
 
 
-document.getElementById("pi").onchange=()=>{
+piInput.addEventListener(
+"change",
+function(){
 
 pfn.textContent=
-document.getElementById("pi").files[0]?.name||"";
+this.files[0]
+?
+this.files[0].name
+:
+"";
 
-};
+}
+);
 
 
-document.getElementById("gi").onchange=()=>{
+giInput.addEventListener(
+"change",
+function(){
 
 gfn.textContent=
-document.getElementById("gi").files[0]?.name||"";
+this.files[0]
+?
+this.files[0].name
+:
+"";
 
-};
+}
+);
 
 
-renderChars();
+/* 画像拡大を閉じる */
+
+document
+.getElementById("closePhotoBtn")
+.addEventListener(
+"click",
+closePhoto
+);
+
+
+/* 初期表示 */
+
+renderCharacters();
 
 </script>
 

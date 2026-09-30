@@ -203,6 +203,12 @@ button{
   border-radius:9px;
   font-size:13px;
   min-width:0;
+
+  /* 長押し時の選択やブラウザ標準動作を抑える */
+  user-select:none;
+  -webkit-user-select:none;
+  -webkit-touch-callout:none;
+  touch-action:pan-y;
 }
 
 .goods-thumb{
@@ -233,21 +239,6 @@ button{
 
 .star.on{
   color:var(--theme,#999);
-}
-
-/* 🗑️ ゴミ箱だけコンパクトに */
-.goods-item button[data-action="delete-goods"]{
-  width:24px;
-  min-width:24px;
-  height:24px;
-  padding:0;
-  margin:0;
-  font-size:14px;
-  line-height:24px;
-  flex:none;
-  display:flex;
-  align-items:center;
-  justify-content:center;
 }
 
 .pattern-star{
@@ -779,7 +770,6 @@ function normalizePattern(p){
       Array.isArray(p.goods)
       ? p.goods.map(normalizeGoods)
       : []
-
   };
 
 }
@@ -1225,7 +1215,10 @@ function renderCharacter(){
 
               html += `
 
-                <div class="goods-item">
+                <div
+                  class="goods-item"
+                  data-goods-pattern="${pIndex}"
+                  data-goods-index="${gIndex}">
 
                   ${
                     g.image
@@ -1251,15 +1244,6 @@ function renderCharacter(){
                     data-pattern="${pIndex}"
                     data-goods="${gIndex}">
                     ${g.priority ? "★" : "☆"}
-                  </button>
-
-                  <button
-                    class="star"
-                    data-action="delete-goods"
-                    data-pattern="${pIndex}"
-                    data-goods="${gIndex}"
-                    title="このグッズを削除">
-                    🗑️
                   </button>
 
                 </div>
@@ -1337,16 +1321,22 @@ function setColorPicker(color){
   }
 
   document
-    .getElementById("characterColor")
+    .getElementById(
+      "characterColor"
+    )
     .value = value;
 
   document
-    .getElementById("characterColorHex")
+    .getElementById(
+      "characterColorHex"
+    )
     .value =
       value.toUpperCase();
 
   document
-    .getElementById("colorPreview")
+    .getElementById(
+      "colorPreview"
+    )
     .style.background = value;
 
 }
@@ -2041,6 +2031,277 @@ function deleteGoods(
 }
 
 /* -----------------------------
+   長押し削除
+----------------------------- */
+
+let goodsLongPressTimer = null;
+let goodsLongPressTarget = null;
+let goodsLongPressTriggered = false;
+
+function cancelGoodsLongPress(){
+
+  if(goodsLongPressTimer !== null){
+
+    clearTimeout(
+      goodsLongPressTimer
+    );
+
+    goodsLongPressTimer = null;
+
+  }
+
+  goodsLongPressTarget = null;
+
+}
+
+function startGoodsLongPress(e){
+
+  const item =
+    e.target.closest(".goods-item");
+
+  if(!item){
+
+    return;
+
+  }
+
+  /*
+    ⭐ボタンや画像を直接操作している場合は
+    長押し削除を発動させない
+  */
+
+  if(
+    e.target.closest("button") ||
+    e.target.closest("img")
+  ){
+
+    return;
+
+  }
+
+  cancelGoodsLongPress();
+
+  goodsLongPressTarget = item;
+  goodsLongPressTriggered = false;
+
+  goodsLongPressTimer =
+    setTimeout(function(){
+
+      if(!goodsLongPressTarget){
+
+        return;
+
+      }
+
+      goodsLongPressTriggered = true;
+
+      const patternIndex =
+        Number(
+          goodsLongPressTarget.dataset.goodsPattern
+        );
+
+      const goodsIndex =
+        Number(
+          goodsLongPressTarget.dataset.goodsIndex
+        );
+
+      if(
+        Number.isNaN(patternIndex) ||
+        Number.isNaN(goodsIndex)
+      ){
+
+        cancelGoodsLongPress();
+
+        return;
+
+      }
+
+      const p =
+        data[currentCharacter]
+          .patterns[patternIndex];
+
+      const g =
+        p &&
+        p.goods
+        ? p.goods[goodsIndex]
+        : null;
+
+      if(!g){
+
+        cancelGoodsLongPress();
+
+        return;
+
+      }
+
+      const ok =
+        confirm(
+          "「" +
+          g.name +
+          "」を削除する？"
+        );
+
+      if(ok){
+
+        p.goods.splice(
+          goodsIndex,
+          1
+        );
+
+        save();
+
+        renderCharacter();
+
+      }
+
+      cancelGoodsLongPress();
+
+    },800);
+
+}
+
+document.addEventListener(
+  "touchstart",
+  function(e){
+
+    startGoodsLongPress(e);
+
+  },
+  {
+    passive:true
+  }
+);
+
+document.addEventListener(
+  "touchend",
+  function(){
+
+    if(goodsLongPressTriggered){
+
+      goodsLongPressTriggered = false;
+
+      cancelGoodsLongPress();
+
+      return;
+
+    }
+
+    cancelGoodsLongPress();
+
+  },
+  {
+    passive:true
+  }
+);
+
+document.addEventListener(
+  "touchmove",
+  function(){
+
+    cancelGoodsLongPress();
+
+  },
+  {
+    passive:true
+  }
+);
+
+document.addEventListener(
+  "touchcancel",
+  function(){
+
+    cancelGoodsLongPress();
+
+  },
+  {
+    passive:true
+  }
+);
+
+/* PCの右クリック */
+
+document.addEventListener(
+  "contextmenu",
+  function(e){
+
+    const item =
+      e.target.closest(".goods-item");
+
+    if(!item){
+
+      return;
+
+    }
+
+    if(
+      e.target.closest("button") ||
+      e.target.closest("img")
+    ){
+
+      return;
+
+    }
+
+    e.preventDefault();
+
+    const patternIndex =
+      Number(
+        item.dataset.goodsPattern
+      );
+
+    const goodsIndex =
+      Number(
+        item.dataset.goodsIndex
+      );
+
+    if(
+      Number.isNaN(patternIndex) ||
+      Number.isNaN(goodsIndex)
+    ){
+
+      return;
+
+    }
+
+    const p =
+      data[currentCharacter]
+        .patterns[patternIndex];
+
+    const g =
+      p &&
+      p.goods
+      ? p.goods[goodsIndex]
+      : null;
+
+    if(!g){
+
+      return;
+
+    }
+
+    if(
+      confirm(
+        "「" +
+        g.name +
+        "」を削除する？"
+      )
+    ){
+
+      p.goods.splice(
+        goodsIndex,
+        1
+      );
+
+      save();
+
+      renderCharacter();
+
+    }
+
+  }
+);
+
+/* -----------------------------
    最優先
 ----------------------------- */
 
@@ -2174,6 +2435,7 @@ document.addEventListener(
       e.target;
 
     /* 写真 */
+
     if(target.dataset.photo){
 
       e.stopPropagation();
@@ -2187,6 +2449,7 @@ document.addEventListener(
     }
 
     /* キャラカード */
+
     const characterCard =
       target.closest(
         "[data-character]"
@@ -2209,6 +2472,7 @@ document.addEventListener(
     }
 
     /* アクション */
+
     const actionButton =
       target.closest(
         "[data-action]"

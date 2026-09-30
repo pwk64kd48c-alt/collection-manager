@@ -4,41 +4,34 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Collection</title>
-
 <style>
 *{box-sizing:border-box}
-
 body{
   margin:0;
   background:#f6f6f6;
   color:#555;
   font-family:-apple-system,BlinkMacSystemFont,"Helvetica Neue",Arial,sans-serif;
 }
-
 header{
   background:#fff;
   padding:30px 20px 25px;
   border-bottom:1px solid #e5e5e5;
 }
-
 h1{
   margin:0;
   font-size:30px;
   color:#444;
 }
-
 main{
   max-width:800px;
   margin:auto;
   padding:28px 16px 60px;
 }
-
 button{
   font:inherit;
   border:0;
   cursor:pointer;
 }
-
 .add-main{
   width:100%;
   padding:18px;
@@ -48,18 +41,15 @@ button{
   font-size:19px;
   margin-bottom:24px;
 }
-
 .add-main:active,
 .action:active{
   transform:scale(.98);
 }
-
 .character-list{
   display:grid;
   grid-template-columns:repeat(2,1fr);
   gap:14px;
 }
-
 .character-card{
   background:white;
   border-radius:18px;
@@ -68,11 +58,9 @@ button{
   position:relative;
   overflow:hidden;
 }
-
 .character-card:active{
   transform:scale(.98);
 }
-
 .char-image{
   width:100%;
   aspect-ratio:1;
@@ -81,29 +69,26 @@ button{
   background:#eee;
   display:block;
 }
-
 .char-name{
   font-size:17px;
   font-weight:bold;
   margin-top:10px;
   color:#444;
 }
-
 .char-color{
   width:12px;
   height:12px;
   border-radius:50%;
   display:inline-block;
   margin-right:5px;
+  vertical-align:middle;
 }
-
 .card-star{
   position:absolute;
   right:10px;
   top:10px;
   font-size:20px;
 }
-
 .back{
   background:white;
   border-radius:12px;
@@ -111,7 +96,6 @@ button{
   margin-bottom:18px;
   color:#666;
 }
-
 .character-head{
   background:white;
   border-radius:20px;
@@ -119,19 +103,16 @@ button{
   margin-bottom:20px;
   border-left:8px solid var(--theme,#aaa);
 }
-
 .character-title{
   font-size:25px;
   font-weight:bold;
   color:#444;
 }
-
 .character-actions{
   display:flex;
   gap:8px;
   margin-top:12px;
 }
-
 .action{
   flex:1;
   padding:10px;
@@ -139,18 +120,15 @@ button{
   background:#eee;
   color:#555;
 }
-
 .action.theme{
   background:var(--theme,#999);
   color:white;
 }
-
 .pattern-grid{
   display:grid;
   grid-template-columns:repeat(2,1fr);
   gap:14px;
 }
-
 .pattern-card{
   background:white;
   border-radius:18px;
@@ -158,7 +136,6 @@ button{
   box-shadow:0 2px 8px rgba(0,0,0,.06);
   position:relative;
 }
-
 .pattern-image{
   width:100%;
   aspect-ratio:1;
@@ -166,7 +143,6 @@ button{
   display:block;
   background:#eee;
 }
-
 .pattern-empty{
   aspect-ratio:1;
   display:flex;
@@ -175,24 +151,20 @@ button{
   background:#eee;
   color:#aaa;
 }
-
 .pattern-info{
   padding:12px;
 }
-
 .pattern-name{
   font-weight:bold;
   color:#444;
   font-size:16px;
 }
-
 .goods-list{
   margin-top:10px;
   display:flex;
   flex-direction:column;
   gap:7px;
 }
-
 .goods-item{
   display:flex;
   align-items:center;
@@ -202,7 +174,6 @@ button{
   border-radius:9px;
   font-size:13px;
 }
-
 .goods-thumb{
   width:38px;
   height:38px;
@@ -211,22 +182,20 @@ button{
   background:#ddd;
   flex:none;
 }
-
 .goods-name{
   flex:1;
   min-width:0;
   word-break:break-word;
 }
-
 .star{
   color:#bbb;
   font-size:19px;
+  background:none;
+  padding:0;
 }
-
 .star.on{
   color:var(--theme,#999);
 }
-
 .pattern-star{
   position:absolute;
   right:9px;
@@ -237,13 +206,11 @@ button{
   height:34px;
   font-size:21px;
 }
-
 .small-buttons{
   display:flex;
   gap:5px;
   margin-top:8px;
 }
-
 .small-buttons button{
   flex:1;
   padding:7px 3px;
@@ -252,13 +219,11 @@ button{
   color:#666;
   font-size:12px;
 }
-
 .empty{
   text-align:center;
   color:#aaa;
   padding:40px 10px;
 }
-
 .modal-bg{
   display:none;
   position:fixed;
@@ -268,11 +233,9 @@ button{
   align-items:flex-end;
   justify-content:center;
 }
-
 .modal-bg.show{
   display:flex;
 }
-
 .modal{
   width:100%;
   max-width:600px;
@@ -282,19 +245,16 @@ button{
   border-radius:22px 22px 0 0;
   padding:22px;
 }
-
 .modal h2{
   margin:0 0 18px;
   color:#444;
 }
-
 label{
   display:block;
   font-size:13px;
   margin:14px 0 6px;
   color:#777;
 }
-
 input[type="text"],
 input[type="date"]{
   width:100%;
@@ -303,12 +263,10 @@ input[type="date"]{
   border-radius:10px;
   font:inherit;
 }
-
 input[type="file"]{
   width:100%;
   margin-bottom:8px;
 }
-
 .preview{
   width:100%;
   max-height:220px;
@@ -318,50 +276,68 @@ input[type="file"]{
   margin-top:8px;
   display:none;
 }
-
-.colors{
-  display:grid;
-  grid-template-columns:repeat(6,1fr);
+/* カラーピッカー */
+.color-picker-area{
+  display:flex;
+  align-items:center;
+  gap:12px;
+  padding:12px;
+  background:#f7f7f7;
+  border-radius:14px;
+}
+#characterColor{
+  width:58px;
+  height:58px;
+  padding:0;
+  border:0;
+  border-radius:12px;
+  overflow:hidden;
+  cursor:pointer;
+  background:none;
+}
+.color-code-area{
+  display:flex;
+  align-items:center;
   gap:8px;
+  flex:1;
 }
-
-.color-btn{
-  height:38px;
+.color-preview{
+  width:24px;
+  height:24px;
+  border-radius:50%;
+  border:1px solid #ddd;
+  flex:none;
+}
+#characterColorHex{
+  width:100%;
+  padding:11px;
+  border:1px solid #ddd;
   border-radius:10px;
-  border:3px solid transparent;
+  font:inherit;
+  text-transform:uppercase;
 }
-
-.color-btn.selected{
-  border-color:#333;
-}
-
 .modal-buttons{
   display:flex;
   gap:8px;
   margin-top:20px;
 }
-
 .modal-buttons button{
   flex:1;
   padding:13px;
   border-radius:11px;
 }
-
 .cancel{
   background:#eee;
   color:#666;
 }
-
 .save{
   background:#777;
   color:white;
 }
-
 .delete{
   background:#f0dddd;
   color:#a55;
 }
-
 .photo-view{
   display:none;
   position:fixed;
@@ -372,18 +348,15 @@ input[type="file"]{
   justify-content:center;
   padding:20px;
 }
-
 .photo-view.show{
   display:flex;
 }
-
 .photo-view img{
   max-width:100%;
   max-height:90vh;
   object-fit:contain;
   border-radius:10px;
 }
-
 .close-photo{
   position:fixed;
   top:20px;
@@ -394,107 +367,167 @@ input[type="file"]{
   background:white;
   font-size:25px;
 }
-
 @media(max-width:420px){
   .character-list,
   .pattern-grid{
     gap:10px;
   }
-
   main{
     padding-left:12px;
     padding-right:12px;
   }
+  .small-buttons button{
+    font-size:11px;
+  }
 }
 </style>
 </head>
-
 <body>
-
 <header>
   <h1>Collection</h1>
 </header>
-
 <main id="app"></main>
-
 <!-- キャラ編集 -->
 <div class="modal-bg" id="characterModal">
   <div class="modal">
-    <h2 id="characterModalTitle">キャラを追加</h2>
-
-    <label>キャラ名</label>
-    <input id="characterName" type="text" placeholder="例：月永レオ">
-
-    <label>画像</label>
-    <input id="characterImage" type="file" accept="image/*">
-    <img id="characterPreview" class="preview">
-
-    <label>テーマカラー</label>
-    <div id="colorList" class="colors"></div>
-
-    <div class="modal-buttons">
-      <button class="cancel" data-action="close-character">キャンセル</button>
-      <button class="save" data-action="save-character">保存</button>
-    </div>
+<h2 id="characterModalTitle">キャラを追加</h2>
+<label>キャラ名</label>
+<input id="characterName" type="text" placeholder="例：月永レオ">
+<label>画像</label>
+<input id="characterImage" type="file" accept="image/*">
+<img id="characterPreview" class="preview">
+<label>テーマカラー</label>
+<div class="color-picker-area">
+  <input
+    id="characterColor"
+    type="color"
+    value="#aaaaaa"
+  >
+  <div class="color-code-area">
+    <span
+      id="colorPreview"
+      class="color-preview"
+      style="background:#aaaaaa">
+    </span>
+    <input
+      id="characterColorHex"
+      type="text"
+      value="#AAAAAA"
+      maxlength="7"
+    >
   </div>
 </div>
-
+<div class="modal-buttons">
+  <button
+    class="cancel"
+    data-action="close-character">
+    キャンセル
+  </button>
+  <button
+    class="delete"
+    id="deleteCharacterButton"
+    data-action="delete-character"
+    style="display:none;">
+    🗑️ 削除
+  </button>
+  <button
+    class="save"
+    data-action="save-character">
+    保存
+  </button>
+</div>
+  </div>
+</div>
 <!-- 絵柄編集 -->
 <div class="modal-bg" id="patternModal">
   <div class="modal">
-    <h2 id="patternModalTitle">絵柄を追加</h2>
-
-    <label>絵柄名</label>
-    <input id="patternName" type="text" placeholder="例：ハフアニ">
-
-    <label>画像</label>
-    <input id="patternImage" type="file" accept="image/*">
-    <img id="patternPreview" class="preview">
-
-    <div class="modal-buttons">
-      <button class="cancel" data-action="close-pattern">キャンセル</button>
-      <button class="save" data-action="save-pattern">保存</button>
-    </div>
+<h2 id="patternModalTitle">絵柄を追加</h2>
+<label>絵柄名</label>
+<input
+  id="patternName"
+  type="text"
+  placeholder="例：ハフアニ">
+<label>画像</label>
+<input
+  id="patternImage"
+  type="file"
+  accept="image/*">
+<img
+  id="patternPreview"
+  class="preview">
+<div class="modal-buttons">
+  <button
+    class="cancel"
+    data-action="close-pattern">
+    キャンセル
+  </button>
+  <button
+    class="delete"
+    id="deletePatternButton"
+    data-action="delete-pattern-modal"
+    style="display:none;">
+    🗑️ 削除
+  </button>
+  <button
+    class="save"
+    data-action="save-pattern">
+    保存
+  </button>
+</div>
   </div>
 </div>
-
 <!-- グッズ編集 -->
 <div class="modal-bg" id="goodsModal">
   <div class="modal">
-    <h2 id="goodsModalTitle">グッズを追加</h2>
-
-    <label>グッズ名</label>
-    <input id="goodsName" type="text" placeholder="例：缶バッジ">
-
-    <label>画像</label>
-    <input id="goodsImage" type="file" accept="image/*">
-    <img id="goodsPreview" class="preview">
-
-    <label>
-      <input id="goodsPriority" type="checkbox">
-      ⭐ 最優先
-    </label>
-
-    <div class="modal-buttons">
-      <button class="cancel" data-action="close-goods">キャンセル</button>
-      <button class="save" data-action="save-goods">保存</button>
-    </div>
+<h2 id="goodsModalTitle">グッズを追加</h2>
+<label>グッズ名</label>
+<input
+  id="goodsName"
+  type="text"
+  placeholder="例：缶バッジ">
+<label>画像</label>
+<input
+  id="goodsImage"
+  type="file"
+  accept="image/*">
+<img
+  id="goodsPreview"
+  class="preview">
+<label>
+  <input id="goodsPriority" type="checkbox">
+  ⭐ 最優先
+</label>
+<div class="modal-buttons">
+  <button
+    class="cancel"
+    data-action="close-goods">
+    キャンセル
+  </button>
+  <button
+    class="delete"
+    id="deleteGoodsButton"
+    data-action="delete-goods"
+    style="display:none;">
+    🗑️ 削除
+  </button>
+  <button
+    class="save"
+    data-action="save-goods">
+    保存
+  </button>
+</div>
   </div>
 </div>
-
 <!-- 写真拡大 -->
 <div class="photo-view" id="photoView">
-  <button class="close-photo" data-action="close-photo">×</button>
+
+×
   <img id="photoLarge">
 </div>
-
 <script>
 (function(){
-
 "use strict";
-
 const KEY = "collectionData";
-
 const COLORS = [
   {name:"赤", value:"#e57373"},
   {name:"ピンク", value:"#f48fb1"},
@@ -505,61 +538,69 @@ const COLORS = [
   {name:"青", value:"#64b5f6"},
   {name:"紫", value:"#9575cd"},
   {name:"茶色", value:"#a1887f"},
-  {name:"黒", value:"#555"},
-  {name:"白", value:"#ddd"},
-  {name:"グレー", value:"#aaa"}
+  {name:"黒", value:"#555555"},
+  {name:"白", value:"#dddddd"},
+  {name:"グレー", value:"#aaaaaa"}
 ];
-
 let data = [];
 let currentCharacter = null;
 let editingCharacter = -1;
 let editingPattern = -1;
 let editingGoods = -1;
-
 const app = document.getElementById("app");
-
+/* -----------------------------
+   データ読み込み
+----------------------------- */
 function safeLoad(){
   try{
-    const raw = localStorage.getItem(KEY);
+    const raw =
+      localStorage.getItem(KEY);
     if(!raw) return [];
-
-    const parsed = JSON.parse(raw);
-
-    if(!Array.isArray(parsed)) return [];
-
+    const parsed =
+      JSON.parse(raw);
+    if(!Array.isArray(parsed)){
+      return [];
+    }
     return parsed.map(normalizeCharacter);
   }catch(e){
-    console.log("データ読み込みエラー",e);
+    console.log(
+      "データ読み込みエラー",
+      e
+    );
     return [];
   }
 }
-
 function normalizeCharacter(c){
   c = c || {};
-
   return {
-    name: String(c.name || ""),
-    image: typeof c.image === "string" ? c.image : "",
-    color: c.color || "#aaa",
-    patterns: Array.isArray(c.patterns)
+    name:String(c.name || ""),
+    image:
+      typeof c.image === "string"
+      ? c.image
+      : "",
+    color:
+      c.color || "#aaaaaa",
+    patterns:
+      Array.isArray(c.patterns)
       ? c.patterns.map(normalizePattern)
       : []
   };
 }
-
 function normalizePattern(p){
   p = p || {};
-
   return {
-    name: String(p.name || ""),
-    image: typeof p.image === "string" ? p.image : "",
-    priority: !!p.priority,
-    goods: Array.isArray(p.goods)
+    name:String(p.name || ""),
+    image:
+      typeof p.image === "string"
+      ? p.image
+      : "",
+    priority:!!p.priority,
+    goods:
+      Array.isArray(p.goods)
       ? p.goods.map(normalizeGoods)
       : []
   };
 }
-
 function normalizeGoods(g){
   if(typeof g === "string"){
     return {
@@ -568,24 +609,32 @@ function normalizeGoods(g){
       priority:false
     };
   }
-
   g = g || {};
-
   return {
     name:String(g.name || ""),
-    image:typeof g.image === "string" ? g.image : "",
+    image:
+      typeof g.image === "string"
+      ? g.image
+      : "",
     priority:!!g.priority
   };
 }
-
 function save(){
   try{
-    localStorage.setItem(KEY, JSON.stringify(data));
+    localStorage.setItem(
+      KEY,
+      JSON.stringify(data)
+    );
   }catch(e){
-    alert("保存できませんでした。画像が大きすぎる可能性があります。");
+    alert(
+      "保存できませんでした。\n" +
+      "画像が大きすぎる可能性があります。"
+    );
   }
 }
-
+/* -----------------------------
+   共通
+----------------------------- */
 function escapeHTML(str){
   return String(str || "")
     .replace(/&/g,"&amp;")
@@ -594,886 +643,1167 @@ function escapeHTML(str){
     .replace(/"/g,"&quot;")
     .replace(/'/g,"&#039;");
 }
-
-function colorValue(){
-  if(!currentCharacter) return "#aaa";
-
-  const found = COLORS.find(c => c.name === currentCharacter.color);
-
-  if(found) return found.value;
-
-  if(String(currentCharacter.color).startsWith("#")){
-    return currentCharacter.color;
+function getColor(color){
+  const found =
+    COLORS.find(function(c){
+      return c.name === color;
+    });
+  if(found){
+    return found.value;
   }
-
-  return "#aaa";
+  if(
+    typeof color === "string" &&
+    /^#[0-9a-fA-F]{6}$/.test(color)
+  ){
+    return color;
+  }
+  return "#aaaaaa";
 }
-
 function compressImage(file){
   return new Promise(function(resolve){
     if(!file){
       resolve("");
       return;
     }
-
-    const reader = new FileReader();
-
+    const reader =
+      new FileReader();
     reader.onload = function(){
-      const img = new Image();
-
+      const img =
+        new Image();
       img.onload = function(){
-
         const max = 600;
         let w = img.width;
         let h = img.height;
-
         if(w > max || h > max){
           if(w > h){
-            h = Math.round(h * max / w);
+            h =
+              Math.round(
+                h * max / w
+              );
             w = max;
           }else{
-            w = Math.round(w * max / h);
+            w =
+              Math.round(
+                w * max / h
+              );
             h = max;
           }
         }
-
-        const canvas = document.createElement("canvas");
+        const canvas =
+          document.createElement("canvas");
         canvas.width = w;
         canvas.height = h;
-
-        const ctx = canvas.getContext("2d");
-        ctx.drawImage(img,0,0,w,h);
-
-        resolve(canvas.toDataURL("image/jpeg",0.72));
+        const ctx =
+          canvas.getContext("2d");
+        ctx.drawImage(
+          img,
+          0,
+          0,
+          w,
+          h
+        );
+        resolve(
+          canvas.toDataURL(
+            "image/jpeg",
+            0.72
+          )
+        );
       };
-
       img.onerror = function(){
         resolve(reader.result);
       };
-
       img.src = reader.result;
     };
-
     reader.onerror = function(){
       resolve("");
     };
-
     reader.readAsDataURL(file);
   });
 }
-
 function openModal(id){
-  document.getElementById(id).classList.add("show");
+  document
+    .getElementById(id)
+    .classList.add("show");
 }
-
 function closeModal(id){
-  document.getElementById(id).classList.remove("show");
+  document
+    .getElementById(id)
+    .classList.remove("show");
 }
-
 function render(){
-  if(!currentCharacter){
+  if(currentCharacter === null){
     renderCharacters();
   }else{
     renderCharacter();
   }
 }
-
+/* -----------------------------
+   キャラ一覧
+----------------------------- */
 function renderCharacters(){
-
   let html = `
-    <button class="add-main" data-action="add-character">
+    <button
+      class="add-main"
+      data-action="add-character">
       ＋ キャラを追加
     </button>
   `;
-
   if(data.length === 0){
-    html += `<div class="empty">まだキャラが登録されていません</div>`;
+    html += `
+      <div class="empty">
+        まだキャラが登録されていません
+      </div>
+    `;
   }else{
-
-    html += `<div class="character-list">`;
-
+    html += `
+      <div class="character-list">
+    `;
     data.forEach(function(c,index){
-
-      const color = getColor(c.color);
-
+      const color =
+        getColor(c.color);
       html += `
-        <div class="character-card"
-             data-character="${index}"
-             style="--theme:${color}">
-
-          ${c.image
-            ? `<img class="char-image" src="${c.image}" data-photo="${c.image}">`
-            : `<div class="char-image"></div>`
+        <div
+          class="character-card"
+          data-character="${index}"
+          style="--theme:${color}">
+          ${
+            c.image
+            ? `
+              <img
+                class="char-image"
+                src="${c.image}"
+                data-photo="${c.image}">
+            `
+            : `
+              <div class="char-image"></div>
+            `
           }
-
           <div class="char-name">
-            <span class="char-color" style="background:${color}"></span>
+            <span
+              class="char-color"
+              style="background:${color}">
+            </span>
             ${escapeHTML(c.name)}
           </div>
-
         </div>
       `;
     });
-
     html += `</div>`;
   }
-
   app.innerHTML = html;
 }
-
-function getColor(color){
-
-  const found = COLORS.find(function(c){
-    return c.name === color;
-  });
-
-  if(found) return found.value;
-
-  if(String(color).startsWith("#")){
-    return color;
-  }
-
-  return "#aaa";
-}
-
+/* -----------------------------
+   キャラ詳細
+----------------------------- */
 function renderCharacter(){
-
-  const c = data[currentCharacter];
-
+  const c =
+    data[currentCharacter];
   if(!c){
     currentCharacter = null;
     renderCharacters();
     return;
   }
-
-  const color = getColor(c.color);
-
+  const color =
+    getColor(c.color);
   let html = `
-    <button class="back" data-action="back">
+    <button
+      class="back"
+      data-action="back">
       ← キャラ一覧
     </button>
-
-    <div class="character-head" style="--theme:${color}">
+    <div
+      class="character-head"
+      style="--theme:${color}">
       <div class="character-title">
         ${escapeHTML(c.name)}
       </div>
-
       <div class="character-actions">
-        <button class="action theme" data-action="add-pattern">
+        <button
+          class="action theme"
+          data-action="add-pattern">
           ＋ 絵柄を追加
         </button>
-
-        <button class="action" data-action="edit-character">
+        <button
+          class="action"
+          data-action="edit-character">
           ⚙ キャラ情報
         </button>
       </div>
     </div>
   `;
-
   if(c.patterns.length === 0){
-
-    html += `<div class="empty">まだ絵柄がありません</div>`;
-
+    html += `
+      <div class="empty">
+        まだ絵柄がありません
+      </div>
+    `;
   }else{
-
-    html += `<div class="pattern-grid">`;
-
-    c.patterns.forEach(function(p,pIndex){
-
-      html += `
-        <div class="pattern-card" style="--theme:${color}">
-
-          <button
-            class="pattern-star ${p.priority ? "on" : ""}"
-            data-action="toggle-pattern-priority"
-            data-pattern="${pIndex}">
-            ${p.priority ? "★" : "☆"}
-          </button>
-
-          ${
-            p.image
-            ? `<img class="pattern-image"
-                    src="${p.image}"
-                    data-photo="${p.image}">`
-            : `<div class="pattern-empty">画像なし</div>`
-          }
-
-          <div class="pattern-info">
-
-            <div class="pattern-name">
-              ${escapeHTML(p.name)}
-            </div>
-
-            <div class="goods-list">
-      `;
-
-      if(p.goods.length === 0){
-
+    html += `
+      <div class="pattern-grid">
+    `;
+    c.patterns.forEach(
+      function(p,pIndex){
         html += `
-          <div style="font-size:12px;color:#aaa">
-            グッズなし
-          </div>
-        `;
-
-      }else{
-
-        p.goods.forEach(function(g,gIndex){
-
-          html += `
-            <div class="goods-item">
-
-              ${
-                g.image
-                ? `<img class="goods-thumb"
-                        src="${g.image}"
-                        data-photo="${g.image}">`
-                : `<div class="goods-thumb"></div>`
-              }
-
-              <div class="goods-name">
-                ${escapeHTML(g.name)}
+          <div
+            class="pattern-card"
+            style="--theme:${color}">
+            <button
+              class="pattern-star
+              ${p.priority ? "on" : ""}"
+              data-action="toggle-pattern-priority"
+              data-pattern="${pIndex}">
+              ${p.priority ? "★" : "☆"}
+            </button>
+            ${
+              p.image
+              ? `
+                <img
+                  class="pattern-image"
+                  src="${p.image}"
+                  data-photo="${p.image}">
+              `
+              : `
+                <div class="pattern-empty">
+                  画像なし
+                </div>
+              `
+            }
+            <div class="pattern-info">
+              <div class="pattern-name">
+                ${escapeHTML(p.name)}
               </div>
-
-              <button
-                class="star ${g.priority ? "on" : ""}"
-                data-action="toggle-goods-priority"
-                data-pattern="${pIndex}"
-                data-goods="${gIndex}">
-                ${g.priority ? "★" : "☆"}
-              </button>
-
+              <div class="goods-list">
+        `;
+        if(p.goods.length === 0){
+          html += `
+            <div
+              style="font-size:12px;color:#aaa">
+              グッズなし
             </div>
           `;
-        });
-      }
-
-      html += `
+        }else{
+          p.goods.forEach(
+            function(g,gIndex){
+              html += `
+                <div class="goods-item">
+                  ${
+                    g.image
+                    ? `
+                      <img
+                        class="goods-thumb"
+                        src="${g.image}"
+                        data-photo="${g.image}">
+                    `
+                    : `
+                      <div class="goods-thumb"></div>
+                    `
+                  }
+                  <div class="goods-name">
+                    ${escapeHTML(g.name)}
+                  </div>
+                  <button
+                    class="star
+                    ${g.priority ? "on" : ""}"
+                    data-action="toggle-goods-priority"
+                    data-pattern="${pIndex}"
+                    data-goods="${gIndex}">
+                    ${g.priority ? "★" : "☆"}
+                  </button>
+                  <button
+                    class="star"
+                    data-action="delete-goods"
+                    data-pattern="${pIndex}"
+                    data-goods="${gIndex}"
+                    title="このグッズを削除">
+                    🗑️
+                  </button>
+                </div>
+              `;
+            }
+          );
+        }
+        html += `
+              </div>
+              <div class="small-buttons">
+                <button
+                  data-action="add-goods"
+                  data-pattern="${pIndex}">
+                  ＋グッズ
+                </button>
+                <button
+                  data-action="edit-pattern"
+                  data-pattern="${pIndex}">
+                  編集
+                </button>
+                <button
+                  data-action="delete-pattern"
+                  data-pattern="${pIndex}">
+                  削除
+                </button>
+              </div>
             </div>
-
-            <div class="small-buttons">
-              <button
-                data-action="add-goods"
-                data-pattern="${pIndex}">
-                ＋グッズ
-              </button>
-
-              <button
-                data-action="edit-pattern"
-                data-pattern="${pIndex}">
-                編集
-              </button>
-
-              <button
-                data-action="delete-pattern"
-                data-pattern="${pIndex}">
-                削除
-              </button>
-            </div>
-
           </div>
-        </div>
-      `;
-    });
-
+        `;
+      }
+    );
     html += `</div>`;
   }
-
   app.innerHTML = html;
 }
-
+/* -----------------------------
+   キャラ編集
+----------------------------- */
+function setColorPicker(color){
+  let value = color;
+  if(!String(value).startsWith("#")){
+    value = getColor(value);
+  }
+  if(
+    !/^#[0-9a-fA-F]{6}$/.test(value)
+  ){
+    value = "#aaaaaa";
+  }
+  document
+    .getElementById("characterColor")
+    .value = value;
+  document
+    .getElementById("characterColorHex")
+    .value =
+      value.toUpperCase();
+  document
+    .getElementById("colorPreview")
+    .style.background = value;
+}
 function openCharacterEditor(index){
-
   editingCharacter = index;
-
-  const name = document.getElementById("characterName");
-  const image = document.getElementById("characterImage");
-  const preview = document.getElementById("characterPreview");
-
+  const name =
+    document.getElementById(
+      "characterName"
+    );
+  const image =
+    document.getElementById(
+      "characterImage"
+    );
+  const preview =
+    document.getElementById(
+      "characterPreview"
+    );
+  const deleteButton =
+    document.getElementById(
+      "deleteCharacterButton"
+    );
   if(index === -1){
-
-    document.getElementById("characterModalTitle").textContent =
-      "キャラを追加";
-
+    document
+      .getElementById(
+        "characterModalTitle"
+      )
+      .textContent =
+        "キャラを追加";
     name.value = "";
     image.value = "";
-    preview.style.display = "none";
+    preview.style.display =
+      "none";
     preview.src = "";
-
+    deleteButton.style.display =
+      "none";
+    setColorPicker("#aaaaaa");
   }else{
-
     const c = data[index];
-
-    document.getElementById("characterModalTitle").textContent =
-      "キャラを編集";
-
+    document
+      .getElementById(
+        "characterModalTitle"
+      )
+      .textContent =
+        "キャラを編集";
     name.value = c.name;
     image.value = "";
-
     if(c.image){
       preview.src = c.image;
-      preview.style.display = "block";
+      preview.style.display =
+        "block";
     }else{
-      preview.style.display = "none";
+      preview.style.display =
+        "none";
     }
+    deleteButton.style.display =
+      "block";
+    setColorPicker(c.color);
   }
-
-  renderColors(index === -1 ? "#aaa" : data[index].color);
-
   openModal("characterModal");
 }
-
-function renderColors(selected){
-
-  const box = document.getElementById("colorList");
-
-  box.innerHTML = "";
-
-  COLORS.forEach(function(c){
-
-    const b = document.createElement("button");
-
-    b.type = "button";
-    b.className = "color-btn";
-
-    if(selected === c.name){
-      b.classList.add("selected");
-    }
-
-    b.style.background = c.value;
-    b.title = c.name;
-    b.dataset.color = c.name;
-
-    box.appendChild(b);
-  });
-}
-
 async function saveCharacter(){
-
-  const name = document.getElementById("characterName").value.trim();
-
+  const name =
+    document
+      .getElementById(
+        "characterName"
+      )
+      .value
+      .trim();
   if(!name){
-    alert("キャラ名を入力してね！");
+    alert(
+      "キャラ名を入力してね！"
+    );
     return;
   }
-
-  let color = "グレー";
-
-  const selected = document.querySelector(".color-btn.selected");
-
-  if(selected){
-    color = selected.dataset.color;
+  let color =
+    document
+      .getElementById(
+        "characterColor"
+      )
+      .value;
+  const hex =
+    document
+      .getElementById(
+        "characterColorHex"
+      )
+      .value
+      .trim();
+  if(
+    /^#[0-9a-fA-F]{6}$/.test(hex)
+  ){
+    color = hex;
   }
-
   const file =
-    document.getElementById("characterImage").files[0];
-
+    document
+      .getElementById(
+        "characterImage"
+      )
+      .files[0];
   let image = "";
-
   if(editingCharacter !== -1){
-    image = data[editingCharacter].image || "";
+    image =
+      data[editingCharacter]
+        .image || "";
   }
-
   if(file){
-    image = await compressImage(file);
+    image =
+      await compressImage(file);
   }
-
-  const obj = {
-    name:name,
-    image:image,
-    color:color,
-    patterns:[]
-  };
-
   if(editingCharacter === -1){
-
-    data.push(obj);
-
+    data.push({
+      name:name,
+      image:image,
+      color:color,
+      patterns:[]
+    });
   }else{
-
-    obj.patterns = data[editingCharacter].patterns || [];
-    data[editingCharacter] = obj;
+    const old =
+      data[editingCharacter];
+    data[editingCharacter] = {
+      name:name,
+      image:image,
+      color:color,
+      patterns:
+        old.patterns || []
+    };
   }
-
   save();
-
-  closeModal("characterModal");
-
+  closeModal(
+    "characterModal"
+  );
   currentCharacter = null;
-
   render();
 }
-
-function openPatternEditor(index){
-
-  editingPattern = index;
-
-  const c = data[currentCharacter];
-
-  const name = document.getElementById("patternName");
-  const image = document.getElementById("patternImage");
-  const preview = document.getElementById("patternPreview");
-
-  if(index === -1){
-
-    document.getElementById("patternModalTitle").textContent =
-      "絵柄を追加";
-
-    name.value = "";
-    image.value = "";
-    preview.style.display = "none";
-    preview.src = "";
-
-  }else{
-
-    const p = c.patterns[index];
-
-    document.getElementById("patternModalTitle").textContent =
-      "絵柄を編集";
-
-    name.value = p.name;
-    image.value = "";
-
-    if(p.image){
-      preview.src = p.image;
-      preview.style.display = "block";
-    }else{
-      preview.style.display = "none";
-    }
-  }
-
-  openModal("patternModal");
-}
-
-async function savePattern(){
-
-  const name = document.getElementById("patternName").value.trim();
-
-  if(!name){
-    alert("絵柄名を入力してね！");
+function deleteCharacter(){
+  if(editingCharacter < 0){
     return;
   }
-
-  const c = data[currentCharacter];
-
+  const c =
+    data[editingCharacter];
+  if(
+    !confirm(
+      "「" +
+      c.name +
+      "」を削除する？\n\n" +
+      "このキャラの絵柄・グッズもすべて削除されます。"
+    )
+  ){
+    return;
+  }
+  data.splice(
+    editingCharacter,
+    1
+  );
+  save();
+  closeModal(
+    "characterModal"
+  );
+  editingCharacter = -1;
+  currentCharacter = null;
+  render();
+}
+/* -----------------------------
+   絵柄編集
+----------------------------- */
+function openPatternEditor(index){
+  editingPattern = index;
+  const c =
+    data[currentCharacter];
+  const name =
+    document.getElementById(
+      "patternName"
+    );
+  const image =
+    document.getElementById(
+      "patternImage"
+    );
+  const preview =
+    document.getElementById(
+      "patternPreview"
+    );
+  const deleteButton =
+    document.getElementById(
+      "deletePatternButton"
+    );
+  if(index === -1){
+    document
+      .getElementById(
+        "patternModalTitle"
+      )
+      .textContent =
+        "絵柄を追加";
+    name.value = "";
+    image.value = "";
+    preview.style.display =
+      "none";
+    preview.src = "";
+    deleteButton.style.display =
+      "none";
+  }else{
+    const p =
+      c.patterns[index];
+    document
+      .getElementById(
+        "patternModalTitle"
+      )
+      .textContent =
+        "絵柄を編集";
+    name.value =
+      p.name;
+    image.value = "";
+    if(p.image){
+      preview.src =
+        p.image;
+      preview.style.display =
+        "block";
+    }else{
+      preview.style.display =
+        "none";
+    }
+    deleteButton.style.display =
+      "block";
+  }
+  openModal(
+    "patternModal"
+  );
+}
+async function savePattern(){
+  const name =
+    document
+      .getElementById(
+        "patternName"
+      )
+      .value
+      .trim();
+  if(!name){
+    alert(
+      "絵柄名を入力してね！"
+    );
+    return;
+  }
+  const c =
+    data[currentCharacter];
   const file =
-    document.getElementById("patternImage").files[0];
-
+    document
+      .getElementById(
+        "patternImage"
+      )
+      .files[0];
   let image = "";
-
   if(editingPattern !== -1){
-    image = c.patterns[editingPattern].image || "";
+    image =
+      c.patterns[
+        editingPattern
+      ].image || "";
   }
-
   if(file){
-    image = await compressImage(file);
+    image =
+      await compressImage(file);
   }
-
   if(editingPattern === -1){
-
     c.patterns.push({
       name:name,
       image:image,
       priority:false,
       goods:[]
     });
-
   }else{
-
-    c.patterns[editingPattern].name = name;
-    c.patterns[editingPattern].image = image;
+    c.patterns[
+      editingPattern
+    ].name = name;
+    c.patterns[
+      editingPattern
+    ].image = image;
   }
-
   save();
-  closeModal("patternModal");
+  closeModal(
+    "patternModal"
+  );
   renderCharacter();
 }
-
-function openGoodsEditor(patternIndex,goodsIndex){
-
-  editingPattern = patternIndex;
-  editingGoods = goodsIndex;
-
-  const p = data[currentCharacter].patterns[patternIndex];
-
-  const name = document.getElementById("goodsName");
-  const image = document.getElementById("goodsImage");
-  const preview = document.getElementById("goodsPreview");
-  const priority = document.getElementById("goodsPriority");
-
-  if(goodsIndex === -1){
-
-    document.getElementById("goodsModalTitle").textContent =
-      "グッズを追加";
-
-    name.value = "";
-    image.value = "";
-    preview.style.display = "none";
-    preview.src = "";
-    priority.checked = false;
-
-  }else{
-
-    const g = p.goods[goodsIndex];
-
-    document.getElementById("goodsModalTitle").textContent =
-      "グッズを編集";
-
-    name.value = g.name;
-    image.value = "";
-
-    if(g.image){
-      preview.src = g.image;
-      preview.style.display = "block";
-    }else{
-      preview.style.display = "none";
-    }
-
-    priority.checked = !!g.priority;
-  }
-
-  openModal("goodsModal");
-}
-
-async function saveGoods(){
-
-  const name = document.getElementById("goodsName").value.trim();
-
-  if(!name){
-    alert("グッズ名を入力してね！");
+function deletePattern(index){
+  const p =
+    data[currentCharacter]
+      .patterns[index];
+  if(
+    !confirm(
+      "「" +
+      p.name +
+      "」を削除する？\n\n" +
+      "この絵柄に登録したグッズもすべて削除されます。"
+    )
+  ){
     return;
   }
-
+  data[currentCharacter]
+    .patterns
+    .splice(index,1);
+  save();
+  renderCharacter();
+}
+/* -----------------------------
+   グッズ編集
+----------------------------- */
+function openGoodsEditor(
+  patternIndex,
+  goodsIndex
+){
+  editingPattern =
+    patternIndex;
+  editingGoods =
+    goodsIndex;
   const p =
-    data[currentCharacter].patterns[editingPattern];
-
-  const file =
-    document.getElementById("goodsImage").files[0];
-
-  let image = "";
-
-  if(editingGoods !== -1){
-    image = p.goods[editingGoods].image || "";
-  }
-
-  if(file){
-    image = await compressImage(file);
-  }
-
+    data[currentCharacter]
+      .patterns[patternIndex];
+  const name =
+    document.getElementById(
+      "goodsName"
+    );
+  const image =
+    document.getElementById(
+      "goodsImage"
+    );
+  const preview =
+    document.getElementById(
+      "goodsPreview"
+    );
   const priority =
-    document.getElementById("goodsPriority").checked;
-
+    document.getElementById(
+      "goodsPriority"
+    );
+  const deleteButton =
+    document.getElementById(
+      "deleteGoodsButton"
+    );
+  if(goodsIndex === -1){
+    document
+      .getElementById(
+        "goodsModalTitle"
+      )
+      .textContent =
+        "グッズを追加";
+    name.value = "";
+    image.value = "";
+    preview.style.display =
+      "none";
+    preview.src = "";
+    priority.checked =
+      false;
+    deleteButton.style.display =
+      "none";
+  }else{
+    const g =
+      p.goods[goodsIndex];
+    document
+      .getElementById(
+        "goodsModalTitle"
+      )
+      .textContent =
+        "グッズを編集";
+    name.value =
+      g.name;
+    image.value = "";
+    if(g.image){
+      preview.src =
+        g.image;
+      preview.style.display =
+        "block";
+    }else{
+      preview.style.display =
+        "none";
+    }
+    priority.checked =
+      !!g.priority;
+    deleteButton.style.display =
+      "block";
+  }
+  openModal(
+    "goodsModal"
+  );
+}
+async function saveGoods(){
+  const name =
+    document
+      .getElementById(
+        "goodsName"
+      )
+      .value
+      .trim();
+  if(!name){
+    alert(
+      "グッズ名を入力してね！"
+    );
+    return;
+  }
+  const p =
+    data[currentCharacter]
+      .patterns[editingPattern];
+  const file =
+    document
+      .getElementById(
+        "goodsImage"
+      )
+      .files[0];
+  let image = "";
+  if(editingGoods !== -1){
+    image =
+      p.goods[
+        editingGoods
+      ].image || "";
+  }
+  if(file){
+    image =
+      await compressImage(file);
+  }
+  const priority =
+    document
+      .getElementById(
+        "goodsPriority"
+      )
+      .checked;
   const obj = {
     name:name,
     image:image,
     priority:priority
   };
-
   if(editingGoods === -1){
     p.goods.push(obj);
   }else{
-    p.goods[editingGoods] = obj;
+    p.goods[
+      editingGoods
+    ] = obj;
   }
-
   save();
-  closeModal("goodsModal");
+  closeModal(
+    "goodsModal"
+  );
   renderCharacter();
 }
-
-function deleteCharacter(){
-
-  if(editingCharacter < 0) return;
-
-  const c = data[editingCharacter];
-
-  if(!confirm("「" + c.name + "」を削除する？")){
+function deleteGoods(
+  patternIndex,
+  goodsIndex
+){
+  const p =
+    data[currentCharacter]
+      .patterns[patternIndex];
+  const g =
+    p.goods[goodsIndex];
+  if(!g){
     return;
   }
-
-  data.splice(editingCharacter,1);
-
-  save();
-
-  closeModal("characterModal");
-
-  currentCharacter = null;
-
-  render();
-}
-
-function deletePattern(index){
-
-  const p = data[currentCharacter].patterns[index];
-
-  if(!confirm("「" + p.name + "」を削除する？")){
+  if(
+    !confirm(
+      "「" +
+      g.name +
+      "」を削除する？"
+    )
+  ){
     return;
   }
-
-  data[currentCharacter].patterns.splice(index,1);
-
+  p.goods.splice(
+    goodsIndex,
+    1
+  );
   save();
-
+  closeModal(
+    "goodsModal"
+  );
+  editingGoods = -1;
   renderCharacter();
 }
-
+/* -----------------------------
+   最優先
+----------------------------- */
 function togglePatternPriority(index){
-
-  const p = data[currentCharacter].patterns[index];
-
-  p.priority = !p.priority;
-
+  const p =
+    data[currentCharacter]
+      .patterns[index];
+  p.priority =
+    !p.priority;
   save();
-
   renderCharacter();
 }
-
-function toggleGoodsPriority(patternIndex,goodsIndex){
-
+function toggleGoodsPriority(
+  patternIndex,
+  goodsIndex
+){
   const g =
     data[currentCharacter]
       .patterns[patternIndex]
       .goods[goodsIndex];
-
-  g.priority = !g.priority;
-
+  g.priority =
+    !g.priority;
   save();
-
   renderCharacter();
 }
-
-function deleteGoods(patternIndex,goodsIndex){
-
-  const p = data[currentCharacter].patterns[patternIndex];
-
-  if(!confirm("このグッズを削除する？")){
+/* -----------------------------
+   写真
+----------------------------- */
+function showPhoto(src){
+  if(!src){
     return;
   }
-
-  p.goods.splice(goodsIndex,1);
-
-  save();
-
-  renderCharacter();
+  document
+    .getElementById(
+      "photoLarge"
+    )
+    .src = src;
+  document
+    .getElementById(
+      "photoView"
+    )
+    .classList
+    .add("show");
 }
-
-function showPhoto(src){
-
-  if(!src) return;
-
-  document.getElementById("photoLarge").src = src;
-
-  document.getElementById("photoView")
-    .classList.add("show");
-}
-
 function closePhoto(){
-
-  document.getElementById("photoView")
-    .classList.remove("show");
+  document
+    .getElementById(
+      "photoView"
+    )
+    .classList
+    .remove("show");
 }
-
-function previewFile(input,preview){
-
-  input.addEventListener("change",function(){
-
-    const file = input.files[0];
-
-    if(!file){
-      preview.style.display = "none";
-      return;
+/* -----------------------------
+   プレビュー
+----------------------------- */
+function previewFile(
+  input,
+  preview
+){
+  input.addEventListener(
+    "change",
+    function(){
+      const file =
+        input.files[0];
+      if(!file){
+        preview.style.display =
+          "none";
+        return;
+      }
+      const reader =
+        new FileReader();
+      reader.onload =
+        function(){
+          preview.src =
+            reader.result;
+          preview.style.display =
+            "block";
+        };
+      reader.readAsDataURL(file);
     }
-
-    const reader = new FileReader();
-
-    reader.onload = function(){
-      preview.src = reader.result;
-      preview.style.display = "block";
-    };
-
-    reader.readAsDataURL(file);
-  });
+  );
 }
-
 /* -----------------------------
    イベント処理
 ----------------------------- */
-
-document.addEventListener("click",function(e){
-
-  const target = e.target;
-
-  /* 写真拡大 */
-  if(target.dataset.photo){
-    e.stopPropagation();
-    showPhoto(target.dataset.photo);
-    return;
-  }
-
-  /* キャラカード */
-  const characterCard =
-    target.closest("[data-character]");
-
-  if(characterCard && !target.closest("button")){
-
-    currentCharacter =
-      Number(characterCard.dataset.character);
-
-    renderCharacter();
-
-    return;
-  }
-
-  /* アクション */
-  const actionButton =
-    target.closest("[data-action]");
-
-  if(!actionButton) return;
-
-  const action = actionButton.dataset.action;
-
-  if(action === "add-character"){
-    openCharacterEditor(-1);
-    return;
-  }
-
-  if(action === "close-character"){
-    closeModal("characterModal");
-    return;
-  }
-
-  if(action === "save-character"){
-    saveCharacter();
-    return;
-  }
-
-  if(action === "back"){
-    currentCharacter = null;
-    render();
-    return;
-  }
-
-  if(action === "edit-character"){
-    openCharacterEditor(currentCharacter);
-    return;
-  }
-
-  if(action === "add-pattern"){
-    openPatternEditor(-1);
-    return;
-  }
-
-  if(action === "close-pattern"){
-    closeModal("patternModal");
-    return;
-  }
-
-  if(action === "save-pattern"){
-    savePattern();
-    return;
-  }
-
-  if(action === "edit-pattern"){
-    openPatternEditor(Number(actionButton.dataset.pattern));
-    return;
-  }
-
-  if(action === "delete-pattern"){
-    deletePattern(Number(actionButton.dataset.pattern));
-    return;
-  }
-
-  if(action === "toggle-pattern-priority"){
-    togglePatternPriority(Number(actionButton.dataset.pattern));
-    return;
-  }
-
-  if(action === "add-goods"){
-    openGoodsEditor(
-      Number(actionButton.dataset.pattern),
-      -1
-    );
-    return;
-  }
-
-  if(action === "close-goods"){
-    closeModal("goodsModal");
-    return;
-  }
-
-  if(action === "save-goods"){
-    saveGoods();
-    return;
-  }
-
-  if(action === "toggle-goods-priority"){
-    toggleGoodsPriority(
-      Number(actionButton.dataset.pattern),
-      Number(actionButton.dataset.goods)
-    );
-    return;
-  }
-
-  if(action === "close-photo"){
-    closePhoto();
-    return;
-  }
-
-  if(action === "delete-character"){
-    deleteCharacter();
-    return;
-  }
-});
-
-/* カラー選択 */
-document.addEventListener("click",function(e){
-
-  const btn = e.target.closest(".color-btn");
-
-  if(!btn) return;
-
-  document.querySelectorAll(".color-btn")
-    .forEach(function(b){
-      b.classList.remove("selected");
-    });
-
-  btn.classList.add("selected");
-});
-
-/* モーダル外側をタップ */
-document.querySelectorAll(".modal-bg").forEach(function(bg){
-
-  bg.addEventListener("click",function(e){
-
-    if(e.target === bg){
-      bg.classList.remove("show");
+document.addEventListener(
+  "click",
+  function(e){
+    const target =
+      e.target;
+    /* 写真 */
+    if(target.dataset.photo){
+      e.stopPropagation();
+      showPhoto(
+        target.dataset.photo
+      );
+      return;
     }
-
-  });
-
-});
-
-/* ファイルプレビュー */
-previewFile(
-  document.getElementById("characterImage"),
-  document.getElementById("characterPreview")
+    /* キャラカード */
+    const characterCard =
+      target.closest(
+        "[data-character]"
+      );
+    if(
+      characterCard &&
+      !target.closest("button")
+    ){
+      currentCharacter =
+        Number(
+          characterCard.dataset.character
+        );
+      renderCharacter();
+      return;
+    }
+    /* アクション */
+    const actionButton =
+      target.closest(
+        "[data-action]"
+      );
+    if(!actionButton){
+      return;
+    }
+    const action =
+      actionButton.dataset.action;
+    if(action === "add-character"){
+      openCharacterEditor(-1);
+      return;
+    }
+    if(action === "close-character"){
+      closeModal(
+        "characterModal"
+      );
+      return;
+    }
+    if(action === "save-character"){
+      saveCharacter();
+      return;
+    }
+    if(action === "delete-character"){
+      deleteCharacter();
+      return;
+    }
+    if(action === "back"){
+      currentCharacter = null;
+      render();
+      return;
+    }
+    if(action === "edit-character"){
+      openCharacterEditor(
+        currentCharacter
+      );
+      return;
+    }
+    if(action === "add-pattern"){
+      openPatternEditor(-1);
+      return;
+    }
+    if(action === "close-pattern"){
+      closeModal(
+        "patternModal"
+      );
+      return;
+    }
+    if(action === "save-pattern"){
+      savePattern();
+      return;
+    }
+    if(action === "edit-pattern"){
+      openPatternEditor(
+        Number(
+          actionButton.dataset.pattern
+        )
+      );
+      return;
+    }
+    if(action === "delete-pattern"){
+      deletePattern(
+        Number(
+          actionButton.dataset.pattern
+        )
+      );
+      return;
+    }
+    if(action === "delete-pattern-modal"){
+      if(editingPattern !== -1){
+        deletePattern(
+          editingPattern
+        );
+        closeModal(
+          "patternModal"
+        );
+      }
+      return;
+    }
+    if(action === "toggle-pattern-priority"){
+      togglePatternPriority(
+        Number(
+          actionButton.dataset.pattern
+        )
+      );
+      return;
+    }
+    if(action === "add-goods"){
+      openGoodsEditor(
+        Number(
+          actionButton.dataset.pattern
+        ),
+        -1
+      );
+      return;
+    }
+    if(action === "close-goods"){
+      closeModal(
+        "goodsModal"
+      );
+      return;
+    }
+    if(action === "save-goods"){
+      saveGoods();
+      return;
+    }
+    if(action === "delete-goods"){
+      deleteGoods(
+        Number(
+          actionButton.dataset.pattern
+        ),
+        Number(
+          actionButton.dataset.goods
+        )
+      );
+      return;
+    }
+    if(action === "toggle-goods-priority"){
+      toggleGoodsPriority(
+        Number(
+          actionButton.dataset.pattern
+        ),
+        Number(
+          actionButton.dataset.goods
+        )
+      );
+      return;
+    }
+    if(action === "close-photo"){
+      closePhoto();
+      return;
+    }
+  }
 );
-
+/* -----------------------------
+   カラーピッカー
+----------------------------- */
+document
+  .getElementById(
+    "characterColor"
+  )
+  .addEventListener(
+    "input",
+    function(){
+      const value =
+        this.value.toUpperCase();
+      document
+        .getElementById(
+          "characterColorHex"
+        )
+        .value = value;
+      document
+        .getElementById(
+          "colorPreview"
+        )
+        .style.background =
+          value;
+    }
+  );
+document
+  .getElementById(
+    "characterColorHex"
+  )
+  .addEventListener(
+    "input",
+    function(){
+      let value =
+        this.value.trim();
+      if(
+        !value.startsWith("#")
+      ){
+        value =
+          "#" + value;
+      }
+      if(
+        /^#[0-9a-fA-F]{6}$/
+          .test(value)
+      ){
+        value =
+          value.toUpperCase();
+        document
+          .getElementById(
+            "characterColor"
+          )
+          .value = value;
+        document
+          .getElementById(
+            "colorPreview"
+          )
+          .style.background =
+            value;
+      }
+    }
+  );
+/* -----------------------------
+   モーダル外側
+----------------------------- */
+document
+  .querySelectorAll(
+    ".modal-bg"
+  )
+  .forEach(
+    function(bg){
+      bg.addEventListener(
+        "click",
+        function(e){
+          if(e.target === bg){
+            bg.classList.remove(
+              "show"
+            );
+          }
+        }
+      );
+    }
+  );
+/* -----------------------------
+   ファイルプレビュー
+----------------------------- */
 previewFile(
-  document.getElementById("patternImage"),
-  document.getElementById("patternPreview")
+  document.getElementById(
+    "characterImage"
+  ),
+  document.getElementById(
+    "characterPreview"
+  )
 );
-
 previewFile(
-  document.getElementById("goodsImage"),
-  document.getElementById("goodsPreview")
+  document.getElementById(
+    "patternImage"
+  ),
+  document.getElementById(
+    "patternPreview"
+  )
 );
-
-/* 初期化 */
+previewFile(
+  document.getElementById(
+    "goodsImage"
+  ),
+  document.getElementById(
+    "goodsPreview"
+  )
+);
+/* -----------------------------
+   初期化
+----------------------------- */
 data = safeLoad();
-
 render();
-
 })();
 </script>
-
 </body>
 </html>

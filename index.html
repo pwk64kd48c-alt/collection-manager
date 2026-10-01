@@ -139,6 +139,26 @@ button{
   color:white;
 }
 
+/* 優先度説明 */
+
+.priority-legend{
+  margin-top:10px;
+  padding:9px 11px;
+  background:#f7f7f7;
+  border-radius:10px;
+  font-size:11px;
+  color:#888;
+  display:flex;
+  flex-wrap:wrap;
+  align-items:center;
+  gap:6px 10px;
+}
+
+.priority-legend-title{
+  font-weight:bold;
+  color:#666;
+}
+
 .pattern-grid{
   display:grid;
   grid-template-columns:repeat(2,1fr);
@@ -196,7 +216,6 @@ button{
   border-radius:9px;
   font-size:13px;
   min-width:0;
-
   user-select:none;
   -webkit-user-select:none;
   -webkit-touch-callout:none;
@@ -219,9 +238,7 @@ button{
   overflow-wrap:anywhere;
 }
 
-/* -----------------------------
-   優先度マーク
------------------------------ */
+/* 優先度マーク */
 
 .priority-mark{
   width:27px;
@@ -242,10 +259,6 @@ button{
 
 .priority-yellow{
   color:#e6c44a;
-}
-
-.priority-red{
-  color:#e57373;
 }
 
 .priority-star{
@@ -644,8 +657,7 @@ input[type="file"]{
 
       <option value="0">☆ 通常</option>
       <option value="1">🟡 優先</option>
-      <option value="2">🔴 かなり優先</option>
-      <option value="3">⭐ 最優先</option>
+      <option value="2">⭐ 最優先</option>
 
     </select>
 
@@ -726,11 +738,12 @@ const app = document.getElementById("app");
 function normalizePriority(value){
 
   /*
-    今までの true は⭐最優先として引き継ぐ
+    今までの⭐最優先データは
+    3段階版では⭐最優先として引き継ぐ
   */
 
   if(value === true){
-    return 3;
+    return 2;
   }
 
   if(value === false || value === undefined || value === null){
@@ -739,8 +752,7 @@ function normalizePriority(value){
 
   const n = Number(value);
 
-  if(n >= 3) return 3;
-  if(n === 2) return 2;
+  if(n >= 2) return 2;
   if(n === 1) return 1;
 
   return 0;
@@ -752,25 +764,22 @@ function priorityMark(priority){
   const p =
     normalizePriority(priority);
 
-  if(p === 3){
+  if(p === 2){
+
     return {
       mark:"⭐",
       className:"priority-star"
     };
-  }
 
-  if(p === 2){
-    return {
-      mark:"🔴",
-      className:"priority-red"
-    };
   }
 
   if(p === 1){
+
     return {
       mark:"🟡",
       className:"priority-yellow"
     };
+
   }
 
   return {
@@ -785,7 +794,7 @@ function nextPriority(priority){
   const p =
     normalizePriority(priority);
 
-  return (p + 1) % 4;
+  return (p + 1) % 3;
 
 }
 
@@ -1233,6 +1242,20 @@ function renderCharacter(){
           data-action="edit-character">
           ⚙ キャラ情報
         </button>
+
+      </div>
+
+      <div class="priority-legend">
+
+        <span class="priority-legend-title">
+          優先度：
+        </span>
+
+        <span>☆ 通常</span>
+
+        <span>🟡 優先</span>
+
+        <span>⭐ 最優先</span>
 
       </div>
 

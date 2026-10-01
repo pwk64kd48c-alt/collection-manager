@@ -98,13 +98,6 @@ button{
   vertical-align:middle;
 }
 
-.card-star{
-  position:absolute;
-  right:10px;
-  top:10px;
-  font-size:20px;
-}
-
 .back{
   background:white;
   border-radius:12px;
@@ -204,7 +197,6 @@ button{
   font-size:13px;
   min-width:0;
 
-  /* 長押し時の選択やブラウザ標準動作を抑える */
   user-select:none;
   -webkit-user-select:none;
   -webkit-touch-callout:none;
@@ -220,7 +212,6 @@ button{
   flex:none;
 }
 
-/* グッズ名 */
 .goods-name{
   flex:1;
   min-width:0;
@@ -228,28 +219,53 @@ button{
   overflow-wrap:anywhere;
 }
 
-/* ⭐ */
-.star{
-  color:#bbb;
-  font-size:19px;
+/* -----------------------------
+   優先度マーク
+----------------------------- */
+
+.priority-mark{
+  width:27px;
+  height:27px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
   background:none;
   padding:0;
   flex:none;
+  font-size:18px;
+  line-height:1;
 }
 
-.star.on{
+.priority-none{
+  color:#bbb;
+}
+
+.priority-yellow{
+  color:#e6c44a;
+}
+
+.priority-red{
+  color:#e57373;
+}
+
+.priority-star{
   color:var(--theme,#999);
 }
 
-.pattern-star{
+/* 絵柄の優先度 */
+
+.pattern-priority{
   position:absolute;
   right:9px;
   top:8px;
-  background:rgba(255,255,255,.9);
+  background:rgba(255,255,255,.92);
   border-radius:50%;
   width:34px;
   height:34px;
-  font-size:21px;
+  font-size:20px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
 }
 
 .small-buttons{
@@ -310,12 +326,14 @@ label{
 }
 
 input[type="text"],
-input[type="date"]{
+input[type="date"],
+select{
   width:100%;
   padding:13px;
   border:1px solid #ddd;
   border-radius:10px;
   font:inherit;
+  background:white;
 }
 
 input[type="file"]{
@@ -334,6 +352,7 @@ input[type="file"]{
 }
 
 /* カラーピッカー */
+
 .color-picker-area{
   display:flex;
   align-items:center;
@@ -473,12 +492,14 @@ input[type="file"]{
     <h2 id="characterModalTitle">キャラを追加</h2>
 
     <label>キャラ名</label>
+
     <input
       id="characterName"
       type="text"
       placeholder="例：月永レオ">
 
     <label>画像</label>
+
     <input
       id="characterImage"
       type="file"
@@ -617,12 +638,16 @@ input[type="file"]{
       id="goodsPreview"
       class="preview">
 
-    <label>
-      <input
-        id="goodsPriority"
-        type="checkbox">
-      ⭐ 最優先
-    </label>
+    <label>優先度</label>
+
+    <select id="goodsPriority">
+
+      <option value="0">☆ 通常</option>
+      <option value="1">🟡 優先</option>
+      <option value="2">🔴 かなり優先</option>
+      <option value="3">⭐ 最優先</option>
+
+    </select>
 
     <div class="modal-buttons">
 
@@ -695,6 +720,76 @@ let editingGoods = -1;
 const app = document.getElementById("app");
 
 /* -----------------------------
+   優先度
+----------------------------- */
+
+function normalizePriority(value){
+
+  /*
+    今までの true は⭐最優先として引き継ぐ
+  */
+
+  if(value === true){
+    return 3;
+  }
+
+  if(value === false || value === undefined || value === null){
+    return 0;
+  }
+
+  const n = Number(value);
+
+  if(n >= 3) return 3;
+  if(n === 2) return 2;
+  if(n === 1) return 1;
+
+  return 0;
+
+}
+
+function priorityMark(priority){
+
+  const p =
+    normalizePriority(priority);
+
+  if(p === 3){
+    return {
+      mark:"⭐",
+      className:"priority-star"
+    };
+  }
+
+  if(p === 2){
+    return {
+      mark:"🔴",
+      className:"priority-red"
+    };
+  }
+
+  if(p === 1){
+    return {
+      mark:"🟡",
+      className:"priority-yellow"
+    };
+  }
+
+  return {
+    mark:"☆",
+    className:"priority-none"
+  };
+
+}
+
+function nextPriority(priority){
+
+  const p =
+    normalizePriority(priority);
+
+  return (p + 1) % 4;
+
+}
+
+/* -----------------------------
    データ読み込み
 ----------------------------- */
 
@@ -724,6 +819,7 @@ function safeLoad(){
     );
 
     return [];
+
   }
 
 }
@@ -733,6 +829,7 @@ function normalizeCharacter(c){
   c = c || {};
 
   return {
+
     name:String(c.name || ""),
 
     image:
@@ -747,6 +844,7 @@ function normalizeCharacter(c){
       Array.isArray(c.patterns)
       ? c.patterns.map(normalizePattern)
       : []
+
   };
 
 }
@@ -764,12 +862,14 @@ function normalizePattern(p){
       ? p.image
       : "",
 
-    priority:!!p.priority,
+    priority:
+      normalizePriority(p.priority),
 
     goods:
       Array.isArray(p.goods)
       ? p.goods.map(normalizeGoods)
       : []
+
   };
 
 }
@@ -779,9 +879,11 @@ function normalizeGoods(g){
   if(typeof g === "string"){
 
     return {
+
       name:g,
       image:"",
-      priority:false
+      priority:0
+
     };
 
   }
@@ -797,7 +899,8 @@ function normalizeGoods(g){
       ? g.image
       : "",
 
-    priority:!!g.priority
+    priority:
+      normalizePriority(g.priority)
 
   };
 
@@ -1158,6 +1261,9 @@ function renderCharacter(){
     c.patterns.forEach(
       function(p,pIndex){
 
+        const pp =
+          priorityMark(p.priority);
+
         html += `
 
           <div
@@ -1165,11 +1271,10 @@ function renderCharacter(){
             style="--theme:${color}">
 
             <button
-              class="pattern-star
-              ${p.priority ? "on" : ""}"
+              class="pattern-priority ${pp.className}"
               data-action="toggle-pattern-priority"
               data-pattern="${pIndex}">
-              ${p.priority ? "★" : "☆"}
+              ${pp.mark}
             </button>
 
             ${
@@ -1213,6 +1318,9 @@ function renderCharacter(){
           p.goods.forEach(
             function(g,gIndex){
 
+              const gp =
+                priorityMark(g.priority);
+
               html += `
 
                 <div
@@ -1238,12 +1346,11 @@ function renderCharacter(){
                   </div>
 
                   <button
-                    class="star
-                    ${g.priority ? "on" : ""}"
+                    class="priority-mark ${gp.className}"
                     data-action="toggle-goods-priority"
                     data-pattern="${pIndex}"
                     data-goods="${gIndex}">
-                    ${g.priority ? "★" : "☆"}
+                    ${gp.mark}
                   </button>
 
                 </div>
@@ -1727,7 +1834,7 @@ async function savePattern(){
 
       name:name,
       image:image,
-      priority:false,
+      priority:0,
       goods:[]
 
     });
@@ -1845,8 +1952,8 @@ function openGoodsEditor(
 
     preview.src = "";
 
-    priority.checked =
-      false;
+    priority.value =
+      "0";
 
     deleteButton.style.display =
       "none";
@@ -1883,8 +1990,10 @@ function openGoodsEditor(
 
     }
 
-    priority.checked =
-      !!g.priority;
+    priority.value =
+      String(
+        normalizePriority(g.priority)
+      );
 
     deleteButton.style.display =
       "block";
@@ -1947,11 +2056,13 @@ async function saveGoods(){
   }
 
   const priority =
-    document
-      .getElementById(
-        "goodsPriority"
-      )
-      .checked;
+    Number(
+      document
+        .getElementById(
+          "goodsPriority"
+        )
+        .value
+    );
 
   const obj = {
 
@@ -2064,11 +2175,6 @@ function startGoodsLongPress(e){
     return;
 
   }
-
-  /*
-    ⭐ボタンや画像を直接操作している場合は
-    長押し削除を発動させない
-  */
 
   if(
     e.target.closest("button") ||
@@ -2302,7 +2408,7 @@ document.addEventListener(
 );
 
 /* -----------------------------
-   最優先
+   優先度変更
 ----------------------------- */
 
 function togglePatternPriority(index){
@@ -2312,7 +2418,7 @@ function togglePatternPriority(index){
       .patterns[index];
 
   p.priority =
-    !p.priority;
+    nextPriority(p.priority);
 
   save();
 
@@ -2331,7 +2437,7 @@ function toggleGoodsPriority(
       .goods[goodsIndex];
 
   g.priority =
-    !g.priority;
+    nextPriority(g.priority);
 
   save();
 
@@ -2655,12 +2761,8 @@ document.addEventListener(
     if(action === "delete-goods"){
 
       deleteGoods(
-        Number(
-          actionButton.dataset.pattern
-        ),
-        Number(
-          actionButton.dataset.goods
-        )
+        editingPattern,
+        editingGoods
       );
 
       return;

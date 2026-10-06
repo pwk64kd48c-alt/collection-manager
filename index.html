@@ -535,8 +535,89 @@ input[type="file"]{
   font-size:22px;
   font-weight:bold;
   color:#444;
-  margin-bottom:14px;
+  margin-bottom:12px;
 }
+
+/* モード切替 */
+
+.shot-mode-tabs{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:7px;
+  margin-bottom:10px;
+}
+
+.shot-mode-tab{
+  padding:10px 5px;
+  border-radius:10px;
+  background:#eee;
+  color:#666;
+  font-size:13px;
+}
+
+.shot-mode-tab.active{
+  background:#777;
+  color:white;
+}
+
+/* グッズ種類選択 */
+
+.shot-type-select{
+  background:#f7f7f7;
+  border-radius:12px;
+  padding:11px;
+  margin-bottom:12px;
+}
+
+.shot-type-title{
+  font-size:12px;
+  font-weight:bold;
+  color:#666;
+  margin-bottom:8px;
+}
+
+.shot-type-options{
+  display:flex;
+  flex-wrap:wrap;
+  gap:6px;
+}
+
+.shot-type-option{
+  display:flex;
+  align-items:center;
+  gap:5px;
+  background:white;
+  border:1px solid #ddd;
+  border-radius:9px;
+  padding:7px 9px;
+  font-size:12px;
+  color:#555;
+  margin:0;
+}
+
+.shot-type-option input{
+  accent-color:#777;
+  width:auto;
+}
+
+/* 選択ボタン */
+
+.shot-type-actions{
+  display:flex;
+  gap:6px;
+  margin-top:8px;
+}
+
+.shot-type-actions button{
+  flex:1;
+  padding:7px;
+  border-radius:8px;
+  background:#e5e5e5;
+  color:#666;
+  font-size:11px;
+}
+
+/* 絵柄ごとの枠 */
 
 .shot-grid{
   display:grid;
@@ -544,32 +625,84 @@ input[type="file"]{
   gap:10px;
 }
 
-.shot-card{
+.shot-pattern-card{
   background:#f7f7f7;
-  border-radius:12px;
+  border:1px solid #e5e5e5;
+  border-radius:15px;
   padding:9px;
-  display:flex;
-  align-items:center;
-  gap:8px;
+  min-width:0;
+  display:grid;
+  grid-template-columns:105px minmax(0,1fr);
+  gap:9px;
+  align-items:start;
+}
+
+.shot-pattern-main{
   min-width:0;
 }
 
-.shot-pattern-image{
-  width:55px;
-  height:55px;
+.shot-pattern-image-large{
+  width:100%;
+  aspect-ratio:1;
   object-fit:cover;
-  border-radius:9px;
+  border-radius:11px;
   background:#ddd;
-  flex:none;
+  display:block;
+}
+
+.shot-pattern-name-large{
+  font-size:14px;
+  font-weight:bold;
+  color:#444;
+  margin-top:6px;
+  overflow-wrap:anywhere;
+  line-height:1.25;
+}
+
+.shot-goods-list{
+  display:flex;
+  flex-direction:column;
+  gap:5px;
+  min-width:0;
+}
+
+.shot-goods-row{
+  background:white;
+  border-radius:9px;
+  padding:5px;
+  display:flex;
+  align-items:center;
+  gap:5px;
+  min-width:0;
 }
 
 .shot-goods-image{
-  width:42px;
-  height:42px;
+  width:38px;
+  height:38px;
   object-fit:cover;
   border-radius:7px;
   background:#ddd;
   flex:none;
+}
+
+.shot-goods-info{
+  min-width:0;
+  flex:1;
+}
+
+.shot-goods-name{
+  font-size:11px;
+  font-weight:bold;
+  color:#444;
+  line-height:1.2;
+  overflow-wrap:anywhere;
+}
+
+.shot-priority{
+  width:18px;
+  flex:none;
+  text-align:center;
+  font-size:16px;
 }
 
 .shot-no-image{
@@ -581,46 +714,35 @@ input[type="file"]{
   font-size:10px;
 }
 
-.shot-info{
-  min-width:0;
-  flex:1;
-}
-
-.shot-pattern-name{
-  font-size:11px;
-  color:#888;
-  white-space:nowrap;
-  overflow:hidden;
-  text-overflow:ellipsis;
-  margin-bottom:2px;
-}
-
-.shot-goods-name{
-  font-size:13px;
-  font-weight:bold;
-  color:#444;
-  overflow-wrap:anywhere;
-}
-
-.shot-priority{
-  font-size:16px;
-  flex:none;
-  width:18px;
-  text-align:center;
-}
-
-.shot-section-title{
-  font-size:15px;
-  font-weight:bold;
-  color:#555;
-  margin:18px 0 8px;
-}
-
 .shot-empty{
   text-align:center;
   padding:30px 10px;
   color:#aaa;
   font-size:13px;
+  grid-column:1/-1;
+}
+
+@media(max-width:500px){
+
+  .shot-pattern-card{
+    grid-template-columns:82px minmax(0,1fr);
+    gap:7px;
+    padding:7px;
+  }
+
+  .shot-pattern-name-large{
+    font-size:12px;
+  }
+
+  .shot-goods-image{
+    width:32px;
+    height:32px;
+  }
+
+  .shot-goods-name{
+    font-size:10px;
+  }
+
 }
 
 @media(max-width:420px){
@@ -647,23 +769,21 @@ input[type="file"]{
     gap:7px;
   }
 
-  .shot-card{
-    padding:7px;
-    gap:5px;
+}
+
+@media(max-width:380px){
+
+  .shot-pattern-card{
+    grid-template-columns:70px minmax(0,1fr);
   }
 
-  .shot-pattern-image{
-    width:45px;
-    height:45px;
+  .shot-pattern-name-large{
+    font-size:11px;
   }
 
   .shot-goods-image{
-    width:35px;
-    height:35px;
-  }
-
-  .shot-goods-name{
-    font-size:11px;
+    width:28px;
+    height:28px;
   }
 
 }
@@ -858,6 +978,7 @@ let editingPattern=-1;
 let editingGoods=-1;
 
 let screenshotMode="all";
+let selectedShotTypes=new Set();
 
 const app=document.getElementById("app");
 
@@ -1988,12 +2109,45 @@ renderCharacter();
    スクショ
 ========================= */
 
+function getShotTypes(){
+
+const c=data[currentCharacter];
+
+if(!c)return[];
+
+const types=[];
+
+c.patterns.forEach(function(p){
+
+p.goods.forEach(function(g){
+
+const name=g.name.trim();
+
+if(
+name &&
+!types.includes(name)
+){
+
+types.push(name);
+
+}
+
+});
+
+});
+
+return types;
+
+}
+
+
 function createShotImage(src,className){
 
 if(src){
 
 return `
-<img class="${className}"
+<img
+class="${className}"
 src="${src}">
 `;
 
@@ -2007,32 +2161,63 @@ return `
 
 }
 
-function makeShotCard(pattern,goods){
 
-const gp=priorityMark(goods.priority);
+function createShotPatternCard(pattern,goodsList){
 
 return `
 
-<div class="shot-card">
+<div class="shot-pattern-card">
 
-${createShotImage(
-pattern.image,
-"shot-pattern-image"
-)}
+<div class="shot-pattern-main">
 
-${createShotImage(
-goods.image,
-"shot-goods-image"
-)}
+${
+pattern.image
+?`
+<img
+class="shot-pattern-image-large"
+src="${pattern.image}">
+`
+:`
+<div class="shot-pattern-image-large shot-no-image">
+画像なし
+</div>
+`
+}
 
-<div class="shot-info">
-
-<div class="shot-pattern-name">
+<div class="shot-pattern-name-large">
 ${escapeHTML(pattern.name)}
 </div>
 
+</div>
+
+<div class="shot-goods-list">
+
+${goodsList.map(function(g){
+
+const gp=priorityMark(g.priority);
+
+return `
+
+<div class="shot-goods-row">
+
+${
+g.image
+?`
+<img
+class="shot-goods-image"
+src="${g.image}">
+`
+:`
+<div class="shot-goods-image shot-no-image">
+画像なし
+</div>
+`
+}
+
+<div class="shot-goods-info">
+
 <div class="shot-goods-name">
-${escapeHTML(goods.name)}
+${escapeHTML(g.name)}
 </div>
 
 </div>
@@ -2042,9 +2227,195 @@ ${gp.mark}
 </div>
 
 </div>
+
+`;
+
+}).join("")}
+
+</div>
+
+</div>
+
 `;
 
 }
+
+
+function renderShotPatterns(){
+
+const c=data[currentCharacter];
+
+if(!c)return;
+
+let html="";
+
+if(screenshotMode==="type"){
+
+const types=getShotTypes();
+
+html+=`
+
+<div class="shot-type-select">
+
+<div class="shot-type-title">
+グッズ種類を選択
+</div>
+
+<div class="shot-type-options">
+`;
+
+types.forEach(function(type){
+
+const checked=selectedShotTypes.has(type)
+?"checked"
+:"";
+
+html+=`
+
+<label class="shot-type-option">
+
+<input
+type="checkbox"
+value="${escapeHTML(type)}"
+data-shot-type
+${checked}>
+
+<span>
+${escapeHTML(type)}
+</span>
+
+</label>
+
+`;
+
+});
+
+html+=`
+
+</div>
+
+<div class="shot-type-actions">
+
+<button data-action="shot-select-all">
+すべて選択
+</button>
+
+<button data-action="shot-select-none">
+すべて解除
+</button>
+
+</div>
+
+</div>
+
+`;
+
+if(selectedShotTypes.size===0){
+
+html+=`
+
+<div class="shot-empty">
+グッズ種類を1つ以上選択してね
+</div>
+
+`;
+
+}else{
+
+html+=`
+
+<div class="shot-grid">
+`;
+
+let count=0;
+
+c.patterns.forEach(function(p){
+
+const goods=p.goods.filter(function(g){
+
+return selectedShotTypes.has(
+g.name.trim()
+);
+
+});
+
+if(goods.length===0)return;
+
+html+=createShotPatternCard(
+p,
+goods
+);
+
+count++;
+
+});
+
+if(count===0){
+
+html+=`
+
+<div class="shot-empty">
+選択したグッズがありません
+</div>
+
+`;
+
+}
+
+html+=`
+
+</div>
+`;
+
+}
+
+}else{
+
+html+=`
+
+<div class="shot-grid">
+`;
+
+let count=0;
+
+c.patterns.forEach(function(p){
+
+if(!p.goods.length)return;
+
+html+=createShotPatternCard(
+p,
+p.goods
+);
+
+count++;
+
+});
+
+if(count===0){
+
+html+=`
+
+<div class="shot-empty">
+グッズがありません
+</div>
+
+`;
+
+}
+
+html+=`
+
+</div>
+`;
+
+}
+
+document.getElementById(
+"shotPatternArea"
+).innerHTML=html;
+
+}
+
 
 function openScreenshot(mode){
 
@@ -2054,11 +2425,31 @@ const c=data[currentCharacter];
 
 if(!c)return;
 
-let html="";
+if(mode==="type"){
 
-if(mode==="all"){
+const types=getShotTypes();
 
-html+=`
+/*
+最初に種類別を開いたときは
+登録されている種類を全部選択
+*/
+if(selectedShotTypes.size===0){
+
+types.forEach(function(type){
+
+selectedShotTypes.add(type);
+
+});
+
+}
+
+}else{
+
+selectedShotTypes.clear();
+
+}
+
+const html=`
 
 <div class="shot-sheet">
 
@@ -2066,127 +2457,46 @@ html+=`
 ${escapeHTML(c.name)} Collection
 </div>
 
-<div class="shot-grid">
-`;
+<div class="shot-mode-tabs">
 
-let count=0;
+<button
+class="shot-mode-tab ${mode==="all"?"active":""}"
+data-action="shot-mode-all">
+絵柄別
+</button>
 
-c.patterns.forEach(function(p){
+<button
+class="shot-mode-tab ${mode==="type"?"active":""}"
+data-action="shot-mode-type">
+グッズ種類別
+</button>
 
-p.goods.forEach(function(g){
-
-html+=makeShotCard(p,g);
-count++;
-
-});
-
-});
-
-if(count===0){
-
-html+=`
-<div class="shot-empty"
-style="grid-column:1/-1">
-グッズがありません
 </div>
+
+<div id="shotPatternArea"></div>
+
+</div>
+
 `;
+
+document.getElementById(
+"screenshotContent"
+).innerHTML=html;
+
+renderShotPatterns();
+
+document.getElementById(
+"screenshotView"
+).classList.add("show");
 
 }
 
-html+=`
-
-</div>
-</div>
-`;
-
-}else{
-
-html+=`
-
-<div class="shot-sheet">
-
-<div class="shot-title">
-${escapeHTML(c.name)}・種類別
-</div>
-`;
-
-const groups={};
-
-c.patterns.forEach(function(p){
-
-p.goods.forEach(function(g){
-
-const key=g.name.trim()||"その他";
-
-if(!groups[key]){
-groups[key]=[];
-}
-
-groups[key].push({
-pattern:p,
-goods:g
-});
-
-});
-
-});
-
-const keys=Object.keys(groups);
-
-if(keys.length===0){
-
-html+=`
-<div class="shot-empty">
-グッズがありません
-</div>
-`;
-
-}else{
-
-keys.forEach(function(type){
-
-html+=`
-
-<div class="shot-section-title">
-${escapeHTML(type)}
-</div>
-
-<div class="shot-grid">
-`;
-
-groups[type].forEach(function(item){
-
-html+=makeShotCard(
-item.pattern,
-item.goods
-);
-
-});
-
-html+=`
-</div>
-`;
-
-});
-
-}
-
-html+=`
-</div>
-`;
-
-}
-
-document.getElementById("screenshotContent").innerHTML=html;
-
-document.getElementById("screenshotView")
-.classList.add("show");
-
-}
 
 async function saveScreenshot(){
 
-const target=document.getElementById("screenshotContent");
+const target=document.getElementById(
+"screenshotContent"
+);
 
 if(!target)return;
 
@@ -2213,10 +2523,17 @@ const link=document.createElement("a");
 
 const c=data[currentCharacter];
 
-const suffix=
-screenshotMode==="all"
-?"全部"
-:"種類別";
+let suffix;
+
+if(screenshotMode==="all"){
+
+suffix="絵柄別";
+
+}else{
+
+suffix="種類別";
+
+}
 
 link.download=
 (c.name||"Collection")+
@@ -2397,7 +2714,9 @@ if(confirm("「"+g.name+"」を削除する？")){
 p.goods.splice(goodsIndex,1);
 
 save().then(function(){
+
 renderCharacter();
+
 });
 
 }
@@ -2408,6 +2727,40 @@ renderCharacter();
 /* =========================
    イベント
 ========================= */
+
+document.addEventListener(
+"change",
+function(e){
+
+const target=e.target;
+
+if(
+target &&
+target.matches &&
+target.matches("[data-shot-type]")
+){
+
+if(target.checked){
+
+selectedShotTypes.add(
+target.value
+);
+
+}else{
+
+selectedShotTypes.delete(
+target.value
+);
+
+}
+
+renderShotPatterns();
+
+}
+
+}
+);
+
 
 document.addEventListener(
 "click",
@@ -2453,49 +2806,77 @@ if(!button)return;
 const action=button.dataset.action;
 
 if(action==="add-character"){
+
 openCharacterEditor(-1);
+
 return;
+
 }
 
 if(action==="close-character"){
+
 closeModal("characterModal");
+
 return;
+
 }
 
 if(action==="save-character"){
+
 saveCharacter();
+
 return;
+
 }
 
 if(action==="delete-character"){
+
 deleteCharacter();
+
 return;
+
 }
 
 if(action==="back"){
+
 currentCharacter=null;
+
 render();
+
 return;
+
 }
 
 if(action==="edit-character"){
+
 openCharacterEditor(currentCharacter);
+
 return;
+
 }
 
 if(action==="add-pattern"){
+
 openPatternEditor(-1);
+
 return;
+
 }
 
 if(action==="close-pattern"){
+
 closeModal("patternModal");
+
 return;
+
 }
 
 if(action==="save-pattern"){
+
 savePattern();
+
 return;
+
 }
 
 if(action==="edit-pattern"){
@@ -2505,6 +2886,7 @@ Number(button.dataset.pattern)
 );
 
 return;
+
 }
 
 if(action==="delete-pattern"){
@@ -2514,6 +2896,7 @@ Number(button.dataset.pattern)
 );
 
 return;
+
 }
 
 if(action==="delete-pattern-modal"){
@@ -2527,6 +2910,7 @@ closeModal("patternModal");
 }
 
 return;
+
 }
 
 if(action==="toggle-pattern-priority"){
@@ -2536,6 +2920,7 @@ Number(button.dataset.pattern)
 );
 
 return;
+
 }
 
 if(action==="add-goods"){
@@ -2546,6 +2931,7 @@ Number(button.dataset.pattern),
 );
 
 return;
+
 }
 
 if(action==="close-goods"){
@@ -2553,6 +2939,7 @@ if(action==="close-goods"){
 closeModal("goodsModal");
 
 return;
+
 }
 
 if(action==="save-goods"){
@@ -2560,6 +2947,7 @@ if(action==="save-goods"){
 saveGoods();
 
 return;
+
 }
 
 if(action==="delete-goods"){
@@ -2570,6 +2958,7 @@ editingGoods
 );
 
 return;
+
 }
 
 if(action==="toggle-goods-priority"){
@@ -2580,6 +2969,7 @@ Number(button.dataset.goods)
 );
 
 return;
+
 }
 
 if(action==="close-photo"){
@@ -2587,13 +2977,17 @@ if(action==="close-photo"){
 closePhoto();
 
 return;
+
 }
 
 if(action==="screenshot-all"){
 
+selectedShotTypes.clear();
+
 openScreenshot("all");
 
 return;
+
 }
 
 if(action==="screenshot-type"){
@@ -2601,6 +2995,49 @@ if(action==="screenshot-type"){
 openScreenshot("type");
 
 return;
+
+}
+
+if(action==="shot-mode-all"){
+
+selectedShotTypes.clear();
+
+openScreenshot("all");
+
+return;
+
+}
+
+if(action==="shot-mode-type"){
+
+openScreenshot("type");
+
+return;
+
+}
+
+if(action==="shot-select-all"){
+
+getShotTypes().forEach(function(type){
+
+selectedShotTypes.add(type);
+
+});
+
+renderShotPatterns();
+
+return;
+
+}
+
+if(action==="shot-select-none"){
+
+selectedShotTypes.clear();
+
+renderShotPatterns();
+
+return;
+
 }
 
 if(action==="close-screenshot"){
@@ -2609,6 +3046,7 @@ document.getElementById("screenshotView")
 .classList.remove("show");
 
 return;
+
 }
 
 if(action==="save-screenshot"){
@@ -2616,6 +3054,7 @@ if(action==="save-screenshot"){
 saveScreenshot();
 
 return;
+
 }
 
 }
@@ -2671,7 +3110,9 @@ document.querySelectorAll(".modal-bg")
 bg.addEventListener("click",function(e){
 
 if(e.target===bg){
+
 bg.classList.remove("show");
+
 }
 
 });
@@ -2691,6 +3132,7 @@ const file=input.files[0];
 if(!file){
 
 preview.style.display="none";
+
 return;
 
 }
@@ -2700,6 +3142,7 @@ const reader=new FileReader();
 reader.onload=function(){
 
 preview.src=reader.result;
+
 preview.style.display="block";
 
 };

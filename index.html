@@ -244,7 +244,7 @@ button:active{
 }
 
 .priority-none{
-  color:#aaa;
+  color:#777;
 }
 
 .priority-star{
@@ -499,22 +499,23 @@ input[type="file"]{
 }
 
 .screenshot-toolbar{
-  max-width:600px;
+  max-width:800px;
   margin:0 auto 14px;
   display:flex;
   gap:8px;
   position:sticky;
   top:0;
-  z-index:5;
+  z-index:20;
 }
 
 .screenshot-toolbar button{
   flex:1;
-  padding:12px 5px;
-  border-radius:11px;
+  padding:14px 5px;
+  border-radius:14px;
   background:white;
   color:#555;
   box-shadow:0 2px 7px rgba(0,0,0,.08);
+  font-size:16px;
 }
 
 .screenshot-toolbar .shot-save{
@@ -522,122 +523,110 @@ input[type="file"]{
   color:white;
 }
 
+/* スクショ本体 */
 .shot-sheet{
   width:100%;
-  max-width:600px;
+  max-width:800px;
   margin:0 auto;
   background:white;
-  border-radius:18px;
-  padding:18px;
+  border-radius:22px;
+  padding:24px;
 }
 
 .shot-title{
-  font-size:22px;
+  font-size:30px;
   font-weight:bold;
   color:#444;
-  margin-bottom:12px;
+  margin-bottom:20px;
 }
 
 /* モード切替 */
-
-.shot-mode-tabs{
+.shot-mode-buttons{
   display:grid;
   grid-template-columns:1fr 1fr;
-  gap:7px;
-  margin-bottom:10px;
+  gap:12px;
+  margin-bottom:20px;
 }
 
-.shot-mode-tab{
-  padding:10px 5px;
-  border-radius:10px;
+.shot-mode-button{
+  padding:15px 8px;
+  border-radius:15px;
   background:#eee;
-  color:#666;
-  font-size:13px;
+  color:#777;
+  font-size:17px;
+  font-weight:bold;
 }
 
-.shot-mode-tab.active{
+.shot-mode-button.active{
   background:#777;
   color:white;
 }
 
 /* グッズ種類選択 */
-
-.shot-type-select{
+.shot-type-panel{
   background:#f7f7f7;
-  border-radius:12px;
-  padding:11px;
-  margin-bottom:12px;
+  border-radius:15px;
+  padding:14px;
+  margin-bottom:18px;
 }
 
 .shot-type-title{
-  font-size:12px;
+  font-size:13px;
   font-weight:bold;
   color:#666;
-  margin-bottom:8px;
+  margin-bottom:10px;
 }
 
-.shot-type-options{
+.shot-type-list{
   display:flex;
   flex-wrap:wrap;
-  gap:6px;
+  gap:7px;
 }
 
-.shot-type-option{
-  display:flex;
-  align-items:center;
-  gap:5px;
+.shot-type-button{
+  padding:8px 12px;
+  border-radius:20px;
   background:white;
   border:1px solid #ddd;
-  border-radius:9px;
-  padding:7px 9px;
-  font-size:12px;
-  color:#555;
-  margin:0;
-}
-
-.shot-type-option input{
-  accent-color:#777;
-  width:auto;
-}
-
-/* 選択ボタン */
-
-.shot-type-actions{
-  display:flex;
-  gap:6px;
-  margin-top:8px;
-}
-
-.shot-type-actions button{
-  flex:1;
-  padding:7px;
-  border-radius:8px;
-  background:#e5e5e5;
   color:#666;
-  font-size:11px;
+  font-size:13px;
 }
 
-/* 絵柄ごとの枠 */
+.shot-type-button.active{
+  background:#777;
+  color:white;
+  border-color:#777;
+}
 
-.shot-grid{
+.shot-type-help{
+  margin-top:9px;
+  font-size:11px;
+  color:#999;
+}
+
+/*
+  絵柄ごとの大きなカード
+*/
+.shot-pattern-grid{
   display:grid;
-  grid-template-columns:repeat(2,1fr);
-  gap:10px;
+  grid-template-columns:repeat(2,minmax(0,1fr));
+  gap:14px;
+  align-items:start;
 }
 
 .shot-pattern-card{
   background:#f7f7f7;
-  border:1px solid #e5e5e5;
-  border-radius:15px;
-  padding:9px;
-  min-width:0;
+  border:2px solid #e7e7e7;
+  border-radius:18px;
+  padding:12px;
   display:grid;
-  grid-template-columns:105px minmax(0,1fr);
-  gap:9px;
-  align-items:start;
+  grid-template-columns:120px minmax(0,1fr);
+  gap:12px;
+  min-width:0;
 }
 
-.shot-pattern-main{
+/* 絵柄側 */
+.shot-pattern-side{
   min-width:0;
 }
 
@@ -645,93 +634,136 @@ input[type="file"]{
   width:100%;
   aspect-ratio:1;
   object-fit:cover;
-  border-radius:11px;
+  border-radius:13px;
   background:#ddd;
   display:block;
 }
 
 .shot-pattern-name-large{
-  font-size:14px;
+  margin-top:8px;
+  font-size:15px;
   font-weight:bold;
-  color:#444;
-  margin-top:6px;
-  overflow-wrap:anywhere;
   line-height:1.25;
+  color:#444;
+  overflow-wrap:anywhere;
 }
 
-.shot-goods-list{
+/* グッズ側 */
+.shot-goods-side{
+  min-width:0;
   display:flex;
   flex-direction:column;
-  gap:5px;
-  min-width:0;
+  gap:7px;
+}
+
+.shot-goods-label{
+  display:inline-block;
+  align-self:flex-start;
+  padding:5px 9px;
+  background:#e9eeee;
+  border-radius:20px;
+  font-size:10px;
+  color:#777;
+  margin-bottom:1px;
 }
 
 .shot-goods-row{
-  background:white;
-  border-radius:9px;
-  padding:5px;
   display:flex;
   align-items:center;
-  gap:5px;
+  gap:7px;
   min-width:0;
+  background:white;
+  border-radius:10px;
+  padding:7px;
+  min-height:52px;
 }
 
 .shot-goods-image{
-  width:38px;
-  height:38px;
+  width:42px;
+  height:42px;
   object-fit:cover;
   border-radius:7px;
   background:#ddd;
   flex:none;
 }
 
-.shot-goods-info{
-  min-width:0;
-  flex:1;
-}
-
-.shot-goods-name{
-  font-size:11px;
-  font-weight:bold;
-  color:#444;
-  line-height:1.2;
-  overflow-wrap:anywhere;
-}
-
-.shot-priority{
-  width:18px;
-  flex:none;
-  text-align:center;
-  font-size:16px;
-}
-
 .shot-no-image{
-  background:#ddd;
   display:flex;
   align-items:center;
   justify-content:center;
   color:#aaa;
-  font-size:10px;
+  font-size:9px;
+  background:#ddd;
+}
+
+.shot-goods-info{
+  flex:1;
+  min-width:0;
+}
+
+.shot-goods-name{
+  font-size:12px;
+  font-weight:bold;
+  line-height:1.25;
+  color:#444;
+  overflow-wrap:anywhere;
+}
+
+.shot-priority{
+  width:22px;
+  flex:none;
+  text-align:center;
+  font-size:18px;
+  line-height:1;
 }
 
 .shot-empty{
+  grid-column:1/-1;
   text-align:center;
-  padding:30px 10px;
+  padding:35px 10px;
   color:#aaa;
   font-size:13px;
-  grid-column:1/-1;
 }
 
-@media(max-width:500px){
+@media(max-width:600px){
+
+  .screenshot-view{
+    padding:12px;
+  }
+
+  .shot-sheet{
+    padding:14px;
+    border-radius:18px;
+  }
+
+  .shot-title{
+    font-size:24px;
+  }
+
+  .shot-pattern-grid{
+    gap:9px;
+  }
 
   .shot-pattern-card{
-    grid-template-columns:82px minmax(0,1fr);
+    grid-template-columns:72px minmax(0,1fr);
     gap:7px;
-    padding:7px;
+    padding:8px;
+    border-radius:14px;
   }
 
   .shot-pattern-name-large{
     font-size:12px;
+  }
+
+  .shot-goods-label{
+    font-size:8px;
+    padding:4px 6px;
+  }
+
+  .shot-goods-row{
+    padding:5px;
+    gap:5px;
+    min-height:43px;
   }
 
   .shot-goods-image{
@@ -743,47 +775,39 @@ input[type="file"]{
     font-size:10px;
   }
 
+  .shot-priority{
+    font-size:15px;
+    width:17px;
+  }
+
 }
 
 @media(max-width:420px){
 
-  .character-list,
-  .pattern-grid{
-    gap:10px;
-  }
-
-  main{
-    padding-left:12px;
-    padding-right:12px;
-  }
-
-  .small-buttons button{
-    font-size:11px;
-  }
-
-  .shot-sheet{
-    padding:12px;
-  }
-
-  .shot-grid{
+  .shot-mode-buttons{
     gap:7px;
   }
 
-}
-
-@media(max-width:380px){
+  .shot-mode-button{
+    font-size:14px;
+    padding:12px 5px;
+  }
 
   .shot-pattern-card{
-    grid-template-columns:70px minmax(0,1fr);
+    grid-template-columns:64px minmax(0,1fr);
   }
 
   .shot-pattern-name-large{
     font-size:11px;
   }
 
+  .shot-goods-name{
+    font-size:9px;
+  }
+
   .shot-goods-image{
-    width:28px;
-    height:28px;
+    width:29px;
+    height:29px;
   }
 
 }
@@ -793,7 +817,7 @@ input[type="file"]{
 <body>
 
 <header>
-  <h1>Collection</h1>
+<h1>Collection</h1>
 </header>
 
 <main id="app"></main>
@@ -978,7 +1002,9 @@ let editingPattern=-1;
 let editingGoods=-1;
 
 let screenshotMode="all";
-let selectedShotTypes=new Set();
+
+/* 選択中のグッズ種類 */
+let selectedGoodsTypes=[];
 
 const app=document.getElementById("app");
 
@@ -998,7 +1024,7 @@ const COLORS=[
 ];
 
 /* =========================
-   IndexedDB
+ IndexedDB
 ========================= */
 
 function openDB(){
@@ -1075,7 +1101,7 @@ reject(request.error);
 }
 
 /* =========================
-   データ
+ データ
 ========================= */
 
 function normalizePriority(value){
@@ -1241,7 +1267,7 @@ return false;
 }
 
 /* =========================
-   共通
+ 共通
 ========================= */
 
 function escapeHTML(str){
@@ -1354,7 +1380,7 @@ document.getElementById(id).classList.remove("show");
 }
 
 /* =========================
-   一覧
+ 一覧
 ========================= */
 
 function render(){
@@ -1437,7 +1463,7 @@ app.innerHTML=html;
 }
 
 /* =========================
-   キャラ詳細
+ キャラ詳細
 ========================= */
 
 function renderCharacter(){
@@ -1653,7 +1679,7 @@ app.innerHTML=html;
 }
 
 /* =========================
-   キャラ編集
+ キャラ編集
 ========================= */
 
 function setColorPicker(color){
@@ -1820,7 +1846,7 @@ render();
 }
 
 /* =========================
-   絵柄
+ 絵柄
 ========================= */
 
 function openPatternEditor(index){
@@ -1942,7 +1968,7 @@ renderCharacter();
 }
 
 /* =========================
-   グッズ
+ グッズ
 ========================= */
 
 function openGoodsEditor(patternIndex,goodsIndex){
@@ -2076,7 +2102,7 @@ renderCharacter();
 }
 
 /* =========================
-   優先度
+ 優先度
 ========================= */
 
 async function togglePatternPriority(index){
@@ -2106,48 +2132,15 @@ renderCharacter();
 }
 
 /* =========================
-   スクショ
+ スクショ
 ========================= */
-
-function getShotTypes(){
-
-const c=data[currentCharacter];
-
-if(!c)return[];
-
-const types=[];
-
-c.patterns.forEach(function(p){
-
-p.goods.forEach(function(g){
-
-const name=g.name.trim();
-
-if(
-name &&
-!types.includes(name)
-){
-
-types.push(name);
-
-}
-
-});
-
-});
-
-return types;
-
-}
-
 
 function createShotImage(src,className){
 
 if(src){
 
 return `
-<img
-class="${className}"
+<img class="${className}"
 src="${src}">
 `;
 
@@ -2161,58 +2154,26 @@ return `
 
 }
 
+/*
+ 1つの絵柄の中に、
+ 選択されたグッズを全部まとめる
+*/
+function makePatternShotCard(pattern,goodsList){
 
-function createShotPatternCard(pattern,goodsList){
+let goodsHTML="";
 
-return `
-
-<div class="shot-pattern-card">
-
-<div class="shot-pattern-main">
-
-${
-pattern.image
-?`
-<img
-class="shot-pattern-image-large"
-src="${pattern.image}">
-`
-:`
-<div class="shot-pattern-image-large shot-no-image">
-画像なし
-</div>
-`
-}
-
-<div class="shot-pattern-name-large">
-${escapeHTML(pattern.name)}
-</div>
-
-</div>
-
-<div class="shot-goods-list">
-
-${goodsList.map(function(g){
+goodsList.forEach(function(g){
 
 const gp=priorityMark(g.priority);
 
-return `
+goodsHTML+=`
 
 <div class="shot-goods-row">
 
-${
-g.image
-?`
-<img
-class="shot-goods-image"
-src="${g.image}">
-`
-:`
-<div class="shot-goods-image shot-no-image">
-画像なし
-</div>
-`
-}
+${createShotImage(
+g.image,
+"shot-goods-image"
+)}
 
 <div class="shot-goods-info">
 
@@ -2227,153 +2188,179 @@ ${gp.mark}
 </div>
 
 </div>
-
 `;
 
-}).join("")}
+});
 
+return `
+
+<div class="shot-pattern-card">
+
+<div class="shot-pattern-side">
+
+${createShotImage(
+pattern.image,
+"shot-pattern-image-large"
+)}
+
+<div class="shot-pattern-name-large">
+${escapeHTML(pattern.name)}
 </div>
 
 </div>
 
+<div class="shot-goods-side">
+
+<div class="shot-goods-label">
+求めてるグッズ
+</div>
+
+${goodsHTML}
+
+</div>
+
+</div>
 `;
 
 }
 
+/*
+ 登録されているグッズ種類を取得
+*/
+function getGoodsTypes(c){
 
-function renderShotPatterns(){
+const map=new Map();
+
+c.patterns.forEach(function(p){
+
+p.goods.forEach(function(g){
+
+const name=g.name.trim();
+
+if(name && !map.has(name)){
+map.set(name,name);
+}
+
+});
+
+});
+
+return Array.from(map.values());
+
+}
+
+/*
+ グッズ種類選択UI
+*/
+function makeGoodsTypePanel(c){
+
+const types=getGoodsTypes(c);
+
+if(types.length===0){
+
+return `
+<div class="shot-type-panel">
+
+<div class="shot-type-title">
+表示するグッズ種類
+</div>
+
+<div style="font-size:12px;color:#aaa;">
+まだグッズが登録されていません
+</div>
+
+</div>
+`;
+
+}
+
+let html=`
+
+<div class="shot-type-panel">
+
+<div class="shot-type-title">
+表示するグッズ種類
+</div>
+
+<div class="shot-type-list">
+`;
+
+types.forEach(function(type){
+
+const active=selectedGoodsTypes.includes(type)
+?"active"
+:"";
+
+html+=`
+
+<button
+class="shot-type-button ${active}"
+data-action="toggle-shot-type"
+data-shot-type="${escapeHTML(type)}">
+${escapeHTML(type)}
+</button>
+`;
+
+});
+
+html+=`
+
+</div>
+
+<div class="shot-type-help">
+複数選択OK。同じ絵柄のグッズは1つの枠にまとまります。
+</div>
+
+</div>
+`;
+
+return html;
+
+}
+
+/*
+ スクショ全体を作る
+*/
+function renderScreenshot(){
 
 const c=data[currentCharacter];
 
 if(!c)return;
 
-let html="";
+let html=`
 
-if(screenshotMode==="type"){
+<div class="shot-sheet">
 
-const types=getShotTypes();
-
-html+=`
-
-<div class="shot-type-select">
-
-<div class="shot-type-title">
-グッズ種類を選択
+<div class="shot-title">
+${escapeHTML(c.name)} Collection
 </div>
 
-<div class="shot-type-options">
-`;
+<div class="shot-mode-buttons">
 
-types.forEach(function(type){
-
-const checked=selectedShotTypes.has(type)
-?"checked"
-:"";
-
-html+=`
-
-<label class="shot-type-option">
-
-<input
-type="checkbox"
-value="${escapeHTML(type)}"
-data-shot-type
-${checked}>
-
-<span>
-${escapeHTML(type)}
-</span>
-
-</label>
-
-`;
-
-});
-
-html+=`
-
-</div>
-
-<div class="shot-type-actions">
-
-<button data-action="shot-select-all">
-すべて選択
+<button
+class="shot-mode-button ${screenshotMode==="all"?"active":""}"
+data-action="shot-mode-all">
+絵柄別
 </button>
 
-<button data-action="shot-select-none">
-すべて解除
+<button
+class="shot-mode-button ${screenshotMode==="type"?"active":""}"
+data-action="shot-mode-type">
+グッズ種類別
 </button>
 
 </div>
-
-</div>
-
 `;
 
-if(selectedShotTypes.size===0){
+/* =========================
+ 絵柄別
+========================= */
+
+if(screenshotMode==="all"){
 
 html+=`
 
-<div class="shot-empty">
-グッズ種類を1つ以上選択してね
-</div>
-
-`;
-
-}else{
-
-html+=`
-
-<div class="shot-grid">
-`;
-
-let count=0;
-
-c.patterns.forEach(function(p){
-
-const goods=p.goods.filter(function(g){
-
-return selectedShotTypes.has(
-g.name.trim()
-);
-
-});
-
-if(goods.length===0)return;
-
-html+=createShotPatternCard(
-p,
-goods
-);
-
-count++;
-
-});
-
-if(count===0){
-
-html+=`
-
-<div class="shot-empty">
-選択したグッズがありません
-</div>
-
-`;
-
-}
-
-html+=`
-
-</div>
-`;
-
-}
-
-}else{
-
-html+=`
-
-<div class="shot-grid">
+<div class="shot-pattern-grid">
 `;
 
 let count=0;
@@ -2382,7 +2369,7 @@ c.patterns.forEach(function(p){
 
 if(!p.goods.length)return;
 
-html+=createShotPatternCard(
+html+=makePatternShotCard(
 p,
 p.goods
 );
@@ -2394,11 +2381,9 @@ count++;
 if(count===0){
 
 html+=`
-
 <div class="shot-empty">
 グッズがありません
 </div>
-
 `;
 
 }
@@ -2410,93 +2395,140 @@ html+=`
 
 }
 
-document.getElementById(
-"shotPatternArea"
-).innerHTML=html;
+/* =========================
+ グッズ種類別
+========================= */
+
+else{
+
+html+=makeGoodsTypePanel(c);
+
+if(selectedGoodsTypes.length===0){
+
+html+=`
+
+<div class="shot-empty">
+グッズ種類を1つ以上選択してください
+</div>
+`;
+
+}else{
+
+html+=`
+
+<div class="shot-pattern-grid">
+`;
+
+let count=0;
+
+c.patterns.forEach(function(p){
+
+/*
+ 同じ絵柄の中から、
+ 選択された種類だけを抽出
+*/
+const filtered=p.goods.filter(function(g){
+
+return selectedGoodsTypes.includes(
+g.name.trim()
+);
+
+});
+
+if(filtered.length===0)return;
+
+/*
+ filteredされたものを
+ 絵柄単位で1つの枠にする
+*/
+html+=makePatternShotCard(
+p,
+filtered
+);
+
+count++;
+
+});
+
+if(count===0){
+
+html+=`
+<div class="shot-empty">
+選択したグッズがありません
+</div>
+`;
 
 }
 
+html+=`
 
+</div>
+`;
+
+}
+
+}
+
+html+=`
+
+</div>
+`;
+
+document.getElementById("screenshotContent")
+.innerHTML=html;
+
+document.getElementById("screenshotView")
+.classList.add("show");
+
+}
+
+/*
+ スクショ開始
+*/
 function openScreenshot(mode){
 
 screenshotMode=mode;
 
-const c=data[currentCharacter];
-
-if(!c)return;
-
-if(mode==="type"){
-
-const types=getShotTypes();
-
 /*
-最初に種類別を開いたときは
-登録されている種類を全部選択
+ 種類別を開いたとき、
+ 以前の選択を残さず最初は全種類未選択
 */
-if(selectedShotTypes.size===0){
+if(mode==="type"){
+selectedGoodsTypes=[];
+}
 
-types.forEach(function(type){
-
-selectedShotTypes.add(type);
-
-});
+renderScreenshot();
 
 }
+
+/*
+ グッズ種類のON/OFF
+*/
+function toggleShotType(type){
+
+const index=selectedGoodsTypes.indexOf(type);
+
+if(index===-1){
+
+selectedGoodsTypes.push(type);
 
 }else{
 
-selectedShotTypes.clear();
+selectedGoodsTypes.splice(index,1);
 
 }
 
-const html=`
-
-<div class="shot-sheet">
-
-<div class="shot-title">
-${escapeHTML(c.name)} Collection
-</div>
-
-<div class="shot-mode-tabs">
-
-<button
-class="shot-mode-tab ${mode==="all"?"active":""}"
-data-action="shot-mode-all">
-絵柄別
-</button>
-
-<button
-class="shot-mode-tab ${mode==="type"?"active":""}"
-data-action="shot-mode-type">
-グッズ種類別
-</button>
-
-</div>
-
-<div id="shotPatternArea"></div>
-
-</div>
-
-`;
-
-document.getElementById(
-"screenshotContent"
-).innerHTML=html;
-
-renderShotPatterns();
-
-document.getElementById(
-"screenshotView"
-).classList.add("show");
+renderScreenshot();
 
 }
 
+/* =========================
+ スクショ保存
+========================= */
 
 async function saveScreenshot(){
 
-const target=document.getElementById(
-"screenshotContent"
-);
+const target=document.getElementById("screenshotContent");
 
 if(!target)return;
 
@@ -2516,22 +2548,22 @@ try{
 const canvas=await html2canvas(target,{
 backgroundColor:"#eeeeee",
 scale:2,
-useCORS:true
+useCORS:true,
+logging:false
 });
 
 const link=document.createElement("a");
 
 const c=data[currentCharacter];
 
-let suffix;
+let suffix="絵柄別";
 
-if(screenshotMode==="all"){
+if(screenshotMode==="type"){
 
-suffix="絵柄別";
-
-}else{
-
-suffix="種類別";
+suffix=
+selectedGoodsTypes.length
+?selectedGoodsTypes.join("・")
+:"種類別";
 
 }
 
@@ -2557,7 +2589,7 @@ alert(
 }
 
 /* =========================
-   写真
+ 写真
 ========================= */
 
 function showPhoto(src){
@@ -2579,7 +2611,7 @@ document.getElementById("photoView")
 }
 
 /* =========================
-   長押し削除
+ 長押し削除
 ========================= */
 
 let goodsTimer=null;
@@ -2714,9 +2746,7 @@ if(confirm("「"+g.name+"」を削除する？")){
 p.goods.splice(goodsIndex,1);
 
 save().then(function(){
-
 renderCharacter();
-
 });
 
 }
@@ -2725,42 +2755,8 @@ renderCharacter();
 );
 
 /* =========================
-   イベント
+ イベント
 ========================= */
-
-document.addEventListener(
-"change",
-function(e){
-
-const target=e.target;
-
-if(
-target &&
-target.matches &&
-target.matches("[data-shot-type]")
-){
-
-if(target.checked){
-
-selectedShotTypes.add(
-target.value
-);
-
-}else{
-
-selectedShotTypes.delete(
-target.value
-);
-
-}
-
-renderShotPatterns();
-
-}
-
-}
-);
-
 
 document.addEventListener(
 "click",
@@ -2768,6 +2764,7 @@ function(e){
 
 const target=e.target;
 
+/* 写真 */
 if(target.dataset.photo){
 
 e.stopPropagation();
@@ -2778,6 +2775,7 @@ return;
 
 }
 
+/* キャラ */
 const characterCard=target.closest(
 "[data-character]"
 );
@@ -2797,6 +2795,7 @@ return;
 
 }
 
+/* アクション */
 const button=target.closest(
 "[data-action]"
 );
@@ -2806,77 +2805,49 @@ if(!button)return;
 const action=button.dataset.action;
 
 if(action==="add-character"){
-
 openCharacterEditor(-1);
-
 return;
-
 }
 
 if(action==="close-character"){
-
 closeModal("characterModal");
-
 return;
-
 }
 
 if(action==="save-character"){
-
 saveCharacter();
-
 return;
-
 }
 
 if(action==="delete-character"){
-
 deleteCharacter();
-
 return;
-
 }
 
 if(action==="back"){
-
 currentCharacter=null;
-
 render();
-
 return;
-
 }
 
 if(action==="edit-character"){
-
 openCharacterEditor(currentCharacter);
-
 return;
-
 }
 
 if(action==="add-pattern"){
-
 openPatternEditor(-1);
-
 return;
-
 }
 
 if(action==="close-pattern"){
-
 closeModal("patternModal");
-
 return;
-
 }
 
 if(action==="save-pattern"){
-
 savePattern();
-
 return;
-
 }
 
 if(action==="edit-pattern"){
@@ -2886,7 +2857,6 @@ Number(button.dataset.pattern)
 );
 
 return;
-
 }
 
 if(action==="delete-pattern"){
@@ -2896,7 +2866,6 @@ Number(button.dataset.pattern)
 );
 
 return;
-
 }
 
 if(action==="delete-pattern-modal"){
@@ -2910,7 +2879,6 @@ closeModal("patternModal");
 }
 
 return;
-
 }
 
 if(action==="toggle-pattern-priority"){
@@ -2920,7 +2888,6 @@ Number(button.dataset.pattern)
 );
 
 return;
-
 }
 
 if(action==="add-goods"){
@@ -2931,7 +2898,6 @@ Number(button.dataset.pattern),
 );
 
 return;
-
 }
 
 if(action==="close-goods"){
@@ -2939,7 +2905,6 @@ if(action==="close-goods"){
 closeModal("goodsModal");
 
 return;
-
 }
 
 if(action==="save-goods"){
@@ -2947,7 +2912,6 @@ if(action==="save-goods"){
 saveGoods();
 
 return;
-
 }
 
 if(action==="delete-goods"){
@@ -2958,7 +2922,6 @@ editingGoods
 );
 
 return;
-
 }
 
 if(action==="toggle-goods-priority"){
@@ -2969,7 +2932,6 @@ Number(button.dataset.goods)
 );
 
 return;
-
 }
 
 if(action==="close-photo"){
@@ -2977,17 +2939,17 @@ if(action==="close-photo"){
 closePhoto();
 
 return;
-
 }
 
-if(action==="screenshot-all"){
+/* =========================
+ スクショ
+========================= */
 
-selectedShotTypes.clear();
+if(action==="screenshot-all"){
 
 openScreenshot("all");
 
 return;
-
 }
 
 if(action==="screenshot-type"){
@@ -2995,49 +2957,33 @@ if(action==="screenshot-type"){
 openScreenshot("type");
 
 return;
-
 }
 
 if(action==="shot-mode-all"){
 
-selectedShotTypes.clear();
+screenshotMode="all";
 
-openScreenshot("all");
+renderScreenshot();
 
 return;
-
 }
 
 if(action==="shot-mode-type"){
 
-openScreenshot("type");
+screenshotMode="type";
+
+renderScreenshot();
 
 return;
-
 }
 
-if(action==="shot-select-all"){
+if(action==="toggle-shot-type"){
 
-getShotTypes().forEach(function(type){
-
-selectedShotTypes.add(type);
-
-});
-
-renderShotPatterns();
+toggleShotType(
+button.dataset.shotType
+);
 
 return;
-
-}
-
-if(action==="shot-select-none"){
-
-selectedShotTypes.clear();
-
-renderShotPatterns();
-
-return;
-
 }
 
 if(action==="close-screenshot"){
@@ -3046,7 +2992,6 @@ document.getElementById("screenshotView")
 .classList.remove("show");
 
 return;
-
 }
 
 if(action==="save-screenshot"){
@@ -3054,14 +2999,13 @@ if(action==="save-screenshot"){
 saveScreenshot();
 
 return;
-
 }
 
 }
 );
 
 /* =========================
-   カラー
+ カラー
 ========================= */
 
 document.getElementById("characterColor")
@@ -3101,7 +3045,7 @@ document.getElementById("colorPreview")
 });
 
 /* =========================
-   モーダル外
+ モーダル外
 ========================= */
 
 document.querySelectorAll(".modal-bg")
@@ -3110,9 +3054,7 @@ document.querySelectorAll(".modal-bg")
 bg.addEventListener("click",function(e){
 
 if(e.target===bg){
-
 bg.classList.remove("show");
-
 }
 
 });
@@ -3120,7 +3062,7 @@ bg.classList.remove("show");
 });
 
 /* =========================
-   プレビュー
+ プレビュー
 ========================= */
 
 function previewFile(input,preview){
@@ -3132,7 +3074,6 @@ const file=input.files[0];
 if(!file){
 
 preview.style.display="none";
-
 return;
 
 }
@@ -3142,7 +3083,6 @@ const reader=new FileReader();
 reader.onload=function(){
 
 preview.src=reader.result;
-
 preview.style.display="block";
 
 };
@@ -3169,7 +3109,7 @@ document.getElementById("goodsPreview")
 );
 
 /* =========================
-   初期化
+ 初期化
 ========================= */
 
 (async function(){
@@ -3200,7 +3140,6 @@ render();
 })();
 </script>
 
-<!-- スクショ画像生成 -->
 <script
 src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js">
 </script>

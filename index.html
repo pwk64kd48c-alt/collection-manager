@@ -3,1290 +3,141 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
-<title>Collection</title>
+<title>Collection データ復旧</title>
 
 <style>
 *{box-sizing:border-box}
 
 body{
   margin:0;
-  background:#eeeeee;
-  color:#444;
-  font-family:-apple-system,BlinkMacSystemFont,
-  "Helvetica Neue","Hiragino Kaku Gothic ProN",
-  "Yu Gothic",Meiryo,sans-serif;
+  padding:30px 16px;
+  font-family:-apple-system,BlinkMacSystemFont,"Helvetica Neue",sans-serif;
+  background:#f5f5f5;
+  color:#333;
 }
 
-button,input,select{font:inherit}
-button{cursor:pointer;border:none}
-
-header{
+.box{
+  max-width:600px;
+  margin:auto;
   background:#fff;
-  padding:20px 15px;
-  text-align:center;
-  border-bottom:1px solid #eee;
+  border-radius:20px;
+  padding:25px;
+  box-shadow:0 4px 20px rgba(0,0,0,.08);
 }
 
-header h1{
-  margin:0;
-  font-size:24px;
-  color:#555;
+h1{
+  font-size:22px;
+  margin-top:0;
 }
 
-main{
-  max-width:1000px;
-  margin:0 auto;
-  padding:18px;
-}
-
-/* =========================
-   共通
-========================= */
-
-.empty{
-  background:#fff;
-  border-radius:18px;
-  padding:50px 20px;
-  text-align:center;
-  color:#aaa;
-  font-size:14px;
-}
-
-.add-main{
+button{
   width:100%;
-  background:#fff;
-  border:1px dashed #bbb;
-  color:#777;
-  border-radius:16px;
+  border:0;
+  border-radius:14px;
   padding:15px;
-  margin-bottom:15px;
-}
-
-.back{
-  background:#fff;
-  color:#777;
-  border-radius:12px;
-  padding:9px 13px;
-  margin-bottom:12px;
-}
-
-/* =========================
-   キャラ一覧
-========================= */
-
-.character-list{
-  display:grid;
-  grid-template-columns:repeat(2,minmax(0,1fr));
-  gap:12px;
-}
-
-.character-card{
-  background:#fff;
-  border-radius:18px;
-  overflow:hidden;
-  border:2px solid var(--theme);
-  position:relative;
-}
-
-.char-image{
-  width:100%;
-  aspect-ratio:1/1;
-  object-fit:cover;
-  display:block;
-  background:#eee;
-}
-
-.char-name{
-  padding:11px 12px;
+  margin-top:12px;
   font-size:16px;
   font-weight:bold;
-  display:flex;
-  align-items:center;
-  gap:7px;
+  cursor:pointer;
 }
 
-.char-color{
-  width:11px;
-  height:11px;
-  border-radius:50%;
-  flex:none;
-}
-
-/* =========================
-   キャラ詳細
-========================= */
-
-.character-head{
-  background:#fff;
-  border-radius:18px;
-  padding:15px;
-  margin-bottom:14px;
-  border-left:5px solid var(--theme);
-}
-
-.character-title{
-  font-size:23px;
-  font-weight:bold;
-  margin-bottom:12px;
-}
-
-.character-actions{
-  display:flex;
-  gap:8px;
-  flex-wrap:wrap;
-}
-
-.action{
-  background:#f2f2f2;
-  color:#666;
-  border-radius:11px;
-  padding:9px 12px;
-}
-
-.action.theme{
-  background:var(--theme);
+#recover{
+  background:#333;
   color:#fff;
 }
 
-.priority-legend{
-  margin-top:13px;
-  background:#f7f7f7;
-  border-radius:12px;
-  padding:10px;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  gap:15px;
-  flex-wrap:wrap;
-  font-size:13px;
+#backup{
+  background:#e9e9e9;
+  color:#333;
 }
 
-.priority-legend-title{
-  color:#777;
-}
-
-.screenshot-buttons{
-  display:flex;
-  gap:8px;
-  margin-top:10px;
-}
-
-.screenshot-buttons button{
-  flex:1;
-  background:#555;
-  color:#fff;
-  border-radius:11px;
-  padding:10px;
-}
-
-/* =========================
-   絵柄
-========================= */
-
-.pattern-grid{
-  display:grid;
-  grid-template-columns:repeat(2,minmax(0,1fr));
-  gap:12px;
-}
-
-.pattern-card{
-  background:#fff;
-  border-radius:18px;
-  padding:10px;
-  position:relative;
-  overflow:hidden;
-}
-
-.pattern-image,
-.pattern-empty{
-  width:100%;
-  aspect-ratio:1/1;
-  border-radius:13px;
-  object-fit:cover;
-  display:block;
-  background:#eee;
-}
-
-.pattern-empty{
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  color:#aaa;
-  font-size:12px;
-}
-
-.pattern-priority{
-  position:absolute;
-  top:14px;
-  right:14px;
-  width:38px;
-  height:38px;
-  border-radius:50%;
-  background:rgba(255,255,255,.92);
-  font-size:23px;
-  z-index:2;
-}
-
-.priority-star{color:#555}
-.priority-none{color:#777}
-
-.pattern-info{
-  padding-top:9px;
-}
-
-.pattern-name{
-  font-weight:bold;
-  font-size:15px;
-  line-height:1.3;
-  margin-bottom:8px;
-}
-
-.goods-list{
-  display:flex;
-  flex-direction:column;
-  gap:6px;
-}
-
-.goods-item{
-  background:#f7f7f7;
-  border-radius:10px;
-  padding:5px;
-  display:flex;
-  align-items:center;
-  gap:6px;
-  min-width:0;
-}
-
-.goods-thumb{
-  width:40px;
-  height:40px;
-  border-radius:7px;
-  object-fit:cover;
-  background:#ddd;
-  flex:none;
-}
-
-.goods-name{
-  flex:1;
-  min-width:0;
-  font-size:12px;
-  line-height:1.2;
-  overflow-wrap:anywhere;
-}
-
-.priority-mark{
-  width:27px;
-  min-width:27px;
-  background:transparent;
-  font-size:21px;
-  padding:0;
-}
-
-.small-buttons{
-  display:flex;
-  gap:5px;
-  margin-top:8px;
-}
-
-.small-buttons button{
-  flex:1;
-  background:#eee;
-  color:#666;
-  border-radius:8px;
-  padding:7px 3px;
-  font-size:11px;
-}
-
-/* =========================
-   モーダル
-========================= */
-
-.modal-bg{
-  position:fixed;
-  inset:0;
-  background:rgba(0,0,0,.45);
-  display:none;
-  align-items:center;
-  justify-content:center;
-  padding:18px;
-  z-index:1000;
-}
-
-.modal-bg.show{
-  display:flex;
-}
-
-.modal{
-  width:100%;
-  max-width:430px;
-  max-height:90vh;
-  overflow:auto;
-  background:#fff;
-  border-radius:20px;
-  padding:20px;
-}
-
-.modal h2{
-  margin:0 0 18px;
-  font-size:20px;
-}
-
-.modal label{
-  display:block;
-  margin:12px 0 6px;
-  font-size:13px;
-  color:#777;
-}
-
-.modal input[type="text"],
-.modal select{
-  width:100%;
-  padding:11px;
-  border:1px solid #ddd;
-  border-radius:10px;
-  background:#fff;
-}
-
-.modal input[type="file"]{
-  width:100%;
-}
-
-.preview{
-  display:none;
-  width:120px;
-  height:120px;
-  object-fit:cover;
-  border-radius:12px;
-  margin-top:10px;
-  background:#eee;
-}
-
-.color-picker-area{
-  display:flex;
-  align-items:center;
-  gap:10px;
-}
-
-.color-picker-area input[type="color"]{
-  width:45px;
-  height:45px;
-  padding:0;
-  border:none;
-  background:none;
-}
-
-.color-code-area{
-  display:flex;
-  align-items:center;
-  gap:7px;
-  flex:1;
-}
-
-.color-preview{
-  width:22px;
-  height:22px;
-  border-radius:50%;
-  border:1px solid #ddd;
-  flex:none;
-}
-
-.color-code-area input{
-  flex:1;
-  padding:9px;
-  border:1px solid #ddd;
-  border-radius:9px;
-}
-
-.modal-buttons{
-  display:flex;
-  gap:7px;
+#result{
   margin-top:20px;
-}
-
-.modal-buttons button{
-  flex:1;
-  padding:11px 5px;
-  border-radius:10px;
-}
-
-.cancel{
-  background:#eee;
-  color:#666;
-}
-
-.delete{
-  background:#f3dede;
-  color:#b55;
-}
-
-.save{
-  background:#555;
-  color:#fff;
-}
-
-/* =========================
-   写真
-========================= */
-
-.photo-view{
-  position:fixed;
-  inset:0;
-  background:rgba(0,0,0,.85);
-  display:none;
-  align-items:center;
-  justify-content:center;
-  padding:20px;
-  z-index:2000;
-}
-
-.photo-view.show{
-  display:flex;
-}
-
-.photo-view img{
-  max-width:95vw;
-  max-height:90vh;
-  object-fit:contain;
-  border-radius:10px;
-}
-
-.close-photo{
-  position:absolute;
-  top:12px;
-  right:15px;
-  width:42px;
-  height:42px;
-  border-radius:50%;
-  background:rgba(255,255,255,.9);
-  font-size:28px;
-  color:#555;
-}
-
-/* =========================
-   スクショ画面
-========================= */
-
-.screenshot-view{
-  position:fixed;
-  inset:0;
-  background:#ddd;
-  overflow:auto;
-  display:none;
-  z-index:1500;
-}
-
-.screenshot-view.show{
-  display:block;
-}
-
-.screenshot-toolbar{
-  position:sticky;
-  top:0;
-  z-index:10;
-  background:rgba(255,255,255,.95);
-  padding:10px;
-  display:flex;
-  gap:8px;
-  box-shadow:0 1px 5px rgba(0,0,0,.08);
-}
-
-.screenshot-toolbar button{
-  background:#eee;
-  color:#555;
-  border-radius:10px;
-  padding:9px 12px;
-}
-
-.screenshot-toolbar .shot-save{
-  margin-left:auto;
-  background:#555;
-  color:#fff;
-}
-
-/* =========================
-   スクショ本体
-========================= */
-
-#screenshotContent{
-  padding:12px;
-
-  /*
-    スマホ画面幅に無理やり合わせない。
-    スクショ用の紙そのものを広くする。
-  */
-  min-width:1000px;
-}
-
-.shot-sheet{
-  width:980px;
-  max-width:none;
-  margin:0 auto;
-  background:#fff;
-  padding:18px;
-  border-radius:20px;
-}
-
-.shot-title{
-  text-align:center;
-  font-size:28px;
-  font-weight:bold;
-  color:#777;
-  margin:0 0 24px;
-}
-
-/* =========================
-   優先度
-========================= */
-
-.shot-priority{
-  background:#f7f7f7;
-  border-radius:18px;
-  padding:13px 10px;
-  margin-bottom:28px;
-
-  display:flex;
-  align-items:center;
-  justify-content:center;
-
-  gap:28px;
-
-  color:#666;
-  font-size:20px;
-  white-space:nowrap;
-}
-
-.shot-priority .normal{
-  color:#666;
-}
-
-.shot-priority .high{
-  color:#666;
-}
-
-.shot-priority .top{
-  color:#666;
-}
-
-/* =========================
-   2列カード
-========================= */
-
-.shot-pattern-grid{
-  display:grid;
-  grid-template-columns:repeat(2,minmax(0,1fr));
-  gap:12px;
-}
-
-/* =========================
-   1枚のカード
-========================= */
-
-.shot-pattern-card{
-  background:#f8f8f8;
-  border:2px solid #e3e3e3;
-  border-radius:22px;
-  padding:10px;
-
-  /*
-    左：絵柄画像
-    右：グッズ一覧
-
-    ここを固定幅にして
-    グッズ文字が縦に潰れないようにする
-  */
-  display:grid;
-  grid-template-columns:190px minmax(0,1fr);
-
-  gap:12px;
-
-  align-items:start;
-  min-width:0;
-}
-
-/* =========================
-   左：絵柄
-========================= */
-
-.shot-pattern-side{
-  min-width:0;
-
-  display:flex;
-  flex-direction:column;
-  align-items:flex-start;
-
-  gap:8px;
-}
-
-.shot-pattern-main-image,
-.shot-pattern-no-image{
-  width:190px;
-  height:190px;
-
-  object-fit:cover;
-
-  border-radius:17px;
-
-  display:block;
-
-  background:#ddd;
-}
-
-.shot-pattern-no-image{
-  display:flex;
-  align-items:center;
-  justify-content:center;
-
-  color:#aaa;
-  font-size:12px;
-}
-
-.shot-pattern-title{
-  width:100%;
-
-  color:#444;
-  font-weight:bold;
-
-  font-size:17px;
-  line-height:1.25;
-
-  overflow-wrap:anywhere;
-}
-
-/* =========================
-   右：グッズ
-========================= */
-
-.shot-goods-list{
-  width:100%;
-  min-width:0;
-
-  display:flex;
-  flex-direction:column;
-
-  gap:7px;
-}
-
-.shot-goods-item{
-  width:100%;
-  min-width:0;
-
-  background:#fff;
-  border-radius:14px;
-
-  padding:7px;
-
-  display:flex;
-  align-items:center;
-
-  gap:8px;
-
-  min-height:58px;
-}
-
-.shot-goods-thumb,
-.shot-goods-no-image{
-  width:42px;
-  height:42px;
-
-  object-fit:cover;
-
-  border-radius:7px;
-
-  background:#ddd;
-
-  flex:none;
-}
-
-.shot-goods-no-image{
-  display:flex;
-  align-items:center;
-  justify-content:center;
-
-  color:#aaa;
-  font-size:8px;
-}
-
-.shot-goods-info{
-  flex:1;
-  min-width:0;
-}
-
-.shot-goods-name{
-  font-size:15px;
-  line-height:1.3;
-
-  color:#444;
-
-  /*
-    重要：
-    日本語を1文字ずつ縦にしない
-  */
-  overflow-wrap:anywhere;
-  word-break:normal;
-  white-space:normal;
-}
-
-.shot-goods-priority{
-  width:31px;
-  min-width:31px;
-
-  text-align:center;
-
-  font-size:27px;
-  line-height:1;
-
-  flex:none;
-}
-
-.shot-empty{
-  text-align:center;
-  padding:35px 10px;
-  color:#aaa;
+  padding:15px;
+  border-radius:12px;
+  background:#f3f3f3;
+  white-space:pre-wrap;
+  word-break:break-all;
   font-size:13px;
-  grid-column:1/-1;
+  display:none;
 }
 
-/* =========================
-   種類選択
-========================= */
-
-.shot-type-selector{
-  background:#f7f7f7;
-  border-radius:15px;
-  padding:12px;
-  margin-bottom:12px;
+.ok{
+  color:#16803c;
+  font-weight:bold;
 }
 
-.shot-type-title{
-  font-size:12px;
-  color:#777;
-  margin-bottom:8px;
-}
-
-.shot-type-list{
-  display:flex;
-  flex-wrap:wrap;
-  gap:6px;
-}
-
-.shot-type-chip{
-  background:#fff;
-  border:1px solid #ddd;
-  color:#777;
-  border-radius:9px;
-  padding:7px 10px;
-  font-size:11px;
-}
-
-.shot-type-chip.selected{
-  background:#777;
-  color:#fff;
-  border-color:#777;
-}
-
-/* =========================
-   スマホ
-========================= */
-
-@media(max-width:700px){
-
-  main{
-    padding:12px;
-  }
-
-  .character-list,
-  .pattern-grid{
-    gap:9px;
-  }
-
-  .character-card{
-    border-radius:14px;
-  }
-
-  .char-name{
-    font-size:13px;
-    padding:8px;
-  }
-
-  .character-head{
-    padding:12px;
-  }
-
-  .character-title{
-    font-size:20px;
-  }
-
-  .priority-legend{
-    gap:9px;
-    font-size:11px;
-  }
-
-  .screenshot-buttons button{
-    font-size:11px;
-  }
-
-  .pattern-card{
-    padding:7px;
-    border-radius:14px;
-  }
-
-  .pattern-name{
-    font-size:12px;
-  }
-
-  .goods-thumb{
-    width:32px;
-    height:32px;
-  }
-
-  .goods-name{
-    font-size:10px;
-  }
-
-  .priority-mark{
-    font-size:17px;
-    width:22px;
-    min-width:22px;
-  }
-
-  /* =========================
-     スクショ
-     スマホでもスクショ本体は
-     広い横幅を維持
-  ========================= */
-
-  #screenshotContent{
-    min-width:1000px;
-    padding:10px;
-  }
-
-  .shot-sheet{
-    width:980px;
-    max-width:none;
-
-    padding:14px;
-
-    border-radius:18px;
-  }
-
-  .shot-title{
-    font-size:25px;
-    margin-bottom:20px;
-  }
-
-  .shot-priority{
-    font-size:18px;
-    gap:25px;
-    padding:12px 8px;
-    margin-bottom:20px;
-  }
-
-  .shot-pattern-grid{
-    grid-template-columns:repeat(2,minmax(0,1fr));
-    gap:10px;
-  }
-
-  .shot-pattern-card{
-    grid-template-columns:190px minmax(0,1fr);
-
-    gap:10px;
-
-    padding:9px;
-
-    border-radius:18px;
-  }
-
-  .shot-pattern-main-image,
-  .shot-pattern-no-image{
-    width:190px;
-    height:190px;
-
-    border-radius:14px;
-  }
-
-  .shot-pattern-title{
-    font-size:16px;
-    line-height:1.25;
-  }
-
-  .shot-goods-list{
-    gap:6px;
-  }
-
-  .shot-goods-item{
-    padding:6px;
-    gap:7px;
-
-    border-radius:11px;
-
-    min-height:55px;
-  }
-
-  .shot-goods-thumb,
-  .shot-goods-no-image{
-    width:40px;
-    height:40px;
-
-    border-radius:6px;
-  }
-
-  .shot-goods-name{
-    font-size:14px;
-    line-height:1.3;
-
-    overflow-wrap:anywhere;
-    word-break:normal;
-    white-space:normal;
-  }
-
-  .shot-goods-priority{
-    width:30px;
-    min-width:30px;
-    font-size:25px;
-  }
-
+.ng{
+  color:#c62828;
+  font-weight:bold;
 }
 </style>
 </head>
 
 <body>
 
-<header>
-  <h1>Collection</h1>
-</header>
+<div class="box">
 
-<main id="app"></main>
+<h1>📦 Collection データ復旧</h1>
 
+<p>
+前のCollectionに保存されていたデータを探して、
+見つかった場合は現在の保存場所にも復元します。
+</p>
 
-<!-- =========================
-     キャラ
-========================= -->
+<p>
+<strong>このページでは既存データを削除しません。</strong>
+</p>
 
-<div class="modal-bg" id="characterModal">
+<button id="recover">🔎 前のデータを探して復元</button>
 
-  <div class="modal">
+<button id="backup" style="display:none;">
+💾 復元データをバックアップ
+</button>
 
-    <h2 id="characterModalTitle">
-      キャラを追加
-    </h2>
-
-    <label>キャラ名</label>
-
-    <input
-      id="characterName"
-      type="text"
-      placeholder="例：月永レオ">
-
-    <label>画像</label>
-
-    <input
-      id="characterImage"
-      type="file"
-      accept="image/*">
-
-    <img
-      id="characterPreview"
-      class="preview">
-
-    <label>テーマカラー</label>
-
-    <div class="color-picker-area">
-
-      <input
-        id="characterColor"
-        type="color"
-        value="#aaaaaa">
-
-      <div class="color-code-area">
-
-        <span
-          id="colorPreview"
-          class="color-preview"
-          style="background:#aaaaaa">
-        </span>
-
-        <input
-          id="characterColorHex"
-          type="text"
-          value="#AAAAAA"
-          maxlength="7">
-
-      </div>
-
-    </div>
-
-    <div class="modal-buttons">
-
-      <button
-        class="cancel"
-        data-action="close-character">
-        キャンセル
-      </button>
-
-      <button
-        class="delete"
-        id="deleteCharacterButton"
-        data-action="delete-character"
-        style="display:none;">
-        🗑️ 削除
-      </button>
-
-      <button
-        class="save"
-        data-action="save-character">
-        保存
-      </button>
-
-    </div>
-
-  </div>
+<div id="result"></div>
 
 </div>
 
-
-<!-- =========================
-     絵柄
-========================= -->
-
-<div class="modal-bg" id="patternModal">
-
-  <div class="modal">
-
-    <h2 id="patternModalTitle">
-      絵柄を追加
-    </h2>
-
-    <label>絵柄名</label>
-
-    <input
-      id="patternName"
-      type="text"
-      placeholder="例：Half Anniversary">
-
-    <label>画像</label>
-
-    <input
-      id="patternImage"
-      type="file"
-      accept="image/*">
-
-    <img
-      id="patternPreview"
-      class="preview">
-
-    <div class="modal-buttons">
-
-      <button
-        class="cancel"
-        data-action="close-pattern">
-        キャンセル
-      </button>
-
-      <button
-        class="delete"
-        id="deletePatternButton"
-        data-action="delete-pattern-modal"
-        style="display:none;">
-        🗑️ 削除
-      </button>
-
-      <button
-        class="save"
-        data-action="save-pattern">
-        保存
-      </button>
-
-    </div>
-
-  </div>
-
-</div>
-
-
-<!-- =========================
-     グッズ
-========================= -->
-
-<div class="modal-bg" id="goodsModal">
-
-  <div class="modal">
-
-    <h2 id="goodsModalTitle">
-      グッズを追加
-    </h2>
-
-    <label>グッズ名</label>
-
-    <input
-      id="goodsName"
-      type="text"
-      placeholder="例：チェキ">
-
-    <label>画像</label>
-
-    <input
-      id="goodsImage"
-      type="file"
-      accept="image/*">
-
-    <img
-      id="goodsPreview"
-      class="preview">
-
-    <label>優先度</label>
-
-    <select id="goodsPriority">
-
-      <option value="0">
-        ☆ 通常
-      </option>
-
-      <option value="1">
-        ★ 優先
-      </option>
-
-      <option value="2">
-        ⭐️ 最優先
-      </option>
-
-    </select>
-
-    <div class="modal-buttons">
-
-      <button
-        class="cancel"
-        data-action="close-goods">
-        キャンセル
-      </button>
-
-      <button
-        class="delete"
-        id="deleteGoodsButton"
-        data-action="delete-goods"
-        style="display:none;">
-        🗑️ 削除
-      </button>
-
-      <button
-        class="save"
-        data-action="save-goods">
-        保存
-      </button>
-
-    </div>
-
-  </div>
-
-</div>
-
-
-<!-- =========================
-     写真
-========================= -->
-
-<div class="photo-view" id="photoView">
-
-  <button
-    class="close-photo"
-    data-action="close-photo">
-    ×
-  </button>
-
-  <img id="photoLarge">
-
-</div>
-
-
-<!-- =========================
-     スクショ
-========================= -->
-
-<div
-  class="screenshot-view"
-  id="screenshotView">
-
-  <div class="screenshot-toolbar">
-
-    <button data-action="close-screenshot">
-      ← 戻る
-    </button>
-
-    <button
-      class="shot-save"
-      data-action="save-screenshot">
-      📸 画像として保存
-    </button>
-
-  </div>
-
-  <div id="screenshotContent"></div>
-
-</div>
 <script>
 
-/* =========================
-   データ
-========================= */
-
 const DB_NAME = "CollectionDB";
-const DB_VERSION = 1;
-const STORE_NAME = "data";
+const OLD_STORE = "appData";
 const DATA_KEY = "collectionData";
 
-let db = null;
+const result = document.getElementById("result");
+const backupBtn = document.getElementById("backup");
 
-let data = {
-  characters: []
-};
-
-let currentCharacterId = null;
-let editingCharacterId = null;
-let editingPatternId = null;
-let editingGoodsId = null;
-
-let currentShotCharacterId = null;
-let currentShotMode = "all";
-let selectedShotTypes = [];
+let recoveredData = null;
 
 
 /* =========================
-   IndexedDB
+   表示
 ========================= */
 
-function openDB(){
+function show(message, type=""){
+  result.style.display = "block";
+  result.className = type;
+  result.textContent = message;
+}
+
+
+/* =========================
+   IndexedDBを開く
+========================= */
+
+function openDatabase(){
 
   return new Promise((resolve,reject)=>{
 
-    const request =
-      indexedDB.open(DB_NAME,DB_VERSION);
-
-    request.onupgradeneeded = e => {
-
-      const database = e.target.result;
-
-      if(!database.objectStoreNames.contains(STORE_NAME)){
-
-        database.createObjectStore(
-          STORE_NAME,
-          {keyPath:"key"}
-        );
-
-      }
-
-    };
-
-    request.onsuccess = e => {
-
-      db = e.target.result;
-
-      resolve(db);
-
-    };
+    const request = indexedDB.open(DB_NAME);
 
     request.onerror = () => {
-
       reject(request.error);
+    };
 
+    request.onsuccess = () => {
+      resolve(request.result);
     };
 
   });
@@ -1294,2561 +145,296 @@ function openDB(){
 }
 
 
-function saveData(){
+/* =========================
+   appDataから探す
+========================= */
+
+function readOldData(db){
 
   return new Promise((resolve,reject)=>{
 
-    if(!db){
-
-      localStorage.setItem(
-        DATA_KEY,
-        JSON.stringify(data)
-      );
-
-      resolve();
-
+    if(!db.objectStoreNames.contains(OLD_STORE)){
+      resolve(null);
       return;
+    }
+
+    try{
+
+      const transaction =
+        db.transaction(OLD_STORE,"readonly");
+
+      const store =
+        transaction.objectStore(OLD_STORE);
+
+      const request =
+        store.get(DATA_KEY);
+
+      request.onsuccess = () => {
+
+        if(request.result === undefined){
+          resolve(null);
+          return;
+        }
+
+        resolve(request.result);
+
+      };
+
+      request.onerror = () => {
+        reject(request.error);
+      };
+
+    }catch(e){
+
+      reject(e);
 
     }
 
-    const tx =
-      db.transaction(
-        STORE_NAME,
-        "readwrite"
-      );
-
-    tx.objectStore(STORE_NAME).put({
-      key:DATA_KEY,
-      value:data
-    });
-
-    tx.oncomplete = () => {
-
-      localStorage.setItem(
-        DATA_KEY,
-        JSON.stringify(data)
-      );
-
-      resolve();
-
-    };
-
-    tx.onerror = () => {
-
-      localStorage.setItem(
-        DATA_KEY,
-        JSON.stringify(data)
-      );
-
-      resolve();
-
-    };
-
   });
 
 }
 
 
-function loadLocalData(){
+/* =========================
+   データを正規化
+========================= */
+
+function normalizeData(data){
+
+  if(!data) return null;
+
+  /*
+    前のCollectionが
+    配列で保存されていた場合にも対応
+  */
+
+  if(Array.isArray(data)){
+    return {
+      characters:data
+    };
+  }
+
+  /*
+    {characters: [...]} の場合
+  */
+
+  if(
+    typeof data === "object" &&
+    Array.isArray(data.characters)
+  ){
+    return data;
+  }
+
+  return data;
+}
+
+
+/* =========================
+   復元
+========================= */
+
+document.getElementById("recover").onclick =
+async function(){
+
+  show("🔎 データを探しています…");
 
   try{
 
-    const saved =
-      localStorage.getItem(DATA_KEY);
+    /*
+      ① localStorage
+    */
 
-    if(saved){
+    let localData = null;
 
-      const parsed =
-        JSON.parse(saved);
+    try{
 
-      if(parsed){
+      const raw =
+        localStorage.getItem(DATA_KEY);
 
-        data = normalizeData(parsed);
-
+      if(raw){
+        localData = JSON.parse(raw);
       }
 
+    }catch(e){}
+
+
+    /*
+      ② IndexedDB
+    */
+
+    let dbData = null;
+
+    try{
+
+      const db = await openDatabase();
+
+      dbData = await readOldData(db);
+
+      db.close();
+
+    }catch(e){
+
+      console.log("IndexedDB error:",e);
+
     }
+
+
+    /*
+      IndexedDBを優先
+    */
+
+    let found =
+      dbData !== null
+        ? dbData
+        : localData;
+
+
+    if(found === null){
+
+      show(
+        "❌ 前のデータが見つかりませんでした。\n\n"+
+        "IndexedDB / localStorage の両方を確認しました。",
+        "ng"
+      );
+
+      return;
+    }
+
+
+    /*
+      result.value形式の場合
+      にも対応
+    */
+
+    if(
+      found &&
+      typeof found === "object" &&
+      "value" in found
+    ){
+      found = found.value;
+    }
+
+
+    recoveredData =
+      normalizeData(found);
+
+
+    if(!recoveredData){
+
+      show(
+        "❌ データは見つかりましたが、読み取れませんでした。",
+        "ng"
+      );
+
+      return;
+    }
+
+
+    /*
+      localStorageにも復元
+    */
+
+    localStorage.setItem(
+      DATA_KEY,
+      JSON.stringify(recoveredData)
+    );
+
+
+    /*
+      件数確認
+    */
+
+    let characterCount = 0;
+
+    if(Array.isArray(recoveredData)){
+      characterCount = recoveredData.length;
+    }
+
+    if(
+      recoveredData.characters &&
+      Array.isArray(recoveredData.characters)
+    ){
+      characterCount =
+        recoveredData.characters.length;
+    }
+
+
+    show(
+      "✅ データを復元しました！！\n\n"+
+      "キャラクター数："+
+      characterCount+
+      "\n\n"+
+      "今のところデータは削除していません。\n"+
+      "まず下の「バックアップ」を押してください。",
+      "ok"
+    );
+
+
+    backupBtn.style.display = "block";
+
 
   }catch(e){
 
     console.error(e);
 
+    show(
+      "❌ 復元中にエラーが発生しました。\n\n"+
+      e.message,
+      "ng"
+    );
+
   }
 
-}
+};
 
 
-function loadDBData(){
+/* =========================
+   JSONバックアップ
+========================= */
 
-  return new Promise((resolve)=>{
+backupBtn.onclick = function(){
 
-    if(!db){
+  if(!recoveredData){
+    return;
+  }
 
-      resolve();
-
-      return;
-
-    }
-
-    const tx =
-      db.transaction(
-        STORE_NAME,
-        "readonly"
-      );
-
-    const request =
-      tx.objectStore(STORE_NAME)
-        .get(DATA_KEY);
-
-    request.onsuccess = () => {
-
-      if(request.result &&
-         request.result.value){
-
-        data =
-          normalizeData(
-            request.result.value
-          );
-
+  const blob =
+    new Blob(
+      [
+        JSON.stringify(
+          recoveredData,
+          null,
+          2
+        )
+      ],
+      {
+        type:"application/json"
       }
-
-      resolve();
-
-    };
-
-    request.onerror = () => {
-
-      resolve();
-
-    };
-
-  });
-
-}
-
-
-/* =========================
-   データ補正
-========================= */
-
-function normalizePriority(value){
-
-  const n = Number(value);
-
-  if(n === 2) return 2;
-  if(n === 1) return 1;
-
-  return 0;
-
-}
-
-
-function normalizeData(input){
-
-  if(!input ||
-     typeof input !== "object"){
-
-    return {
-      characters:[]
-    };
-
-  }
-
-  if(!Array.isArray(input.characters)){
-
-    input.characters = [];
-
-  }
-
-  input.characters.forEach(character => {
-
-    if(!Array.isArray(character.patterns)){
-
-      character.patterns = [];
-
-    }
-
-    character.patterns.forEach(pattern => {
-
-      pattern.priority =
-        normalizePriority(
-          pattern.priority
-        );
-
-      if(!Array.isArray(pattern.goods)){
-
-        pattern.goods = [];
-
-      }
-
-      pattern.goods.forEach(goods => {
-
-        goods.priority =
-          normalizePriority(
-            goods.priority
-          );
-
-      });
-
-    });
-
-  });
-
-  return input;
-
-}
-
-
-/* =========================
-   ID
-========================= */
-
-function createId(){
-
-  return Date.now().toString(36)
-    + Math.random()
-      .toString(36)
-      .slice(2);
-
-}
-
-
-/* =========================
-   画像
-========================= */
-
-function fileToDataURL(file){
-
-  return new Promise((resolve,reject)=>{
-
-    if(!file){
-
-      resolve("");
-
-      return;
-
-    }
-
-    const reader =
-      new FileReader();
-
-    reader.onload = () => {
-
-      resolve(reader.result);
-
-    };
-
-    reader.onerror = () => {
-
-      reject(reader.error);
-
-    };
-
-    reader.readAsDataURL(file);
-
-  });
-
-}
-
-
-/* =========================
-   HTMLエスケープ
-========================= */
-
-function escapeHTML(value){
-
-  return String(value ?? "")
-    .replace(/&/g,"&amp;")
-    .replace(/</g,"&lt;")
-    .replace(/>/g,"&gt;")
-    .replace(/"/g,"&quot;")
-    .replace(/'/g,"&#039;");
-
-}
-
-
-/* =========================
-   優先度
-========================= */
-
-function priorityMark(priority){
-
-  priority =
-    normalizePriority(priority);
-
-  if(priority === 2){
-
-    return "⭐️";
-
-  }
-
-  if(priority === 1){
-
-    return "★";
-
-  }
-
-  return "☆";
-
-}
-
-
-/* =========================
-   キャラ一覧
-========================= */
-
-function render(){
-
-  const app =
-    document.getElementById("app");
-
-  if(!currentCharacterId){
-
-    renderCharacterList();
-
-    return;
-
-  }
-
-  const character =
-    data.characters.find(
-      c => c.id === currentCharacterId
-    );
-
-  if(!character){
-
-    currentCharacterId = null;
-
-    renderCharacterList();
-
-    return;
-
-  }
-
-  renderCharacterDetail(character);
-
-}
-
-
-function renderCharacterList(){
-
-  const app =
-    document.getElementById("app");
-
-  let html = `
-
-    <button
-      class="add-main"
-      data-action="add-character">
-      ＋ キャラを追加
-    </button>
-
-  `;
-
-  if(!data.characters.length){
-
-    html += `
-
-      <div class="empty">
-        まだキャラが登録されていません
-      </div>
-
-    `;
-
-    app.innerHTML = html;
-
-    return;
-
-  }
-
-  html += `<div class="character-list">`;
-
-  data.characters.forEach(character => {
-
-    html += `
-
-      <div
-        class="character-card"
-        style="--theme:${escapeHTML(
-          character.color || "#aaa"
-        )}"
-        data-character-id="${character.id}">
-
-        ${
-          character.image
-          ?
-          `<img
-            class="char-image"
-            src="${character.image}"
-            data-photo="${character.image}">`
-          :
-          `<div
-            class="char-image"
-            style="
-              display:flex;
-              align-items:center;
-              justify-content:center;
-              color:#aaa;
-            ">
-            No Image
-          </div>`
-        }
-
-        <div class="char-name">
-
-          <span
-            class="char-color"
-            style="
-              background:${escapeHTML(
-                character.color || "#aaa"
-              )}
-            ">
-          </span>
-
-          ${escapeHTML(character.name)}
-
-        </div>
-
-      </div>
-
-    `;
-
-  });
-
-  html += `</div>`;
-
-  app.innerHTML = html;
-
-}
-
-
-/* =========================
-   キャラ詳細
-========================= */
-
-function renderCharacterDetail(character){
-
-  const app =
-    document.getElementById("app");
-
-  let html = `
-
-    <button
-      class="back"
-      data-action="back-character">
-      ← キャラ一覧
-    </button>
-
-    <section
-      class="character-head"
-      style="--theme:${escapeHTML(
-        character.color || "#aaa"
-      )}">
-
-      <div class="character-title">
-        ${escapeHTML(character.name)}
-      </div>
-
-      <div class="character-actions">
-
-        <button
-          class="action theme"
-          data-action="edit-character">
-          ✏️ キャラ編集
-        </button>
-
-        <button
-          class="action"
-          data-action="add-pattern">
-          ＋ 絵柄追加
-        </button>
-
-      </div>
-
-      <div class="priority-legend">
-
-        <span class="priority-legend-title">
-          優先度：
-        </span>
-
-        <span>☆ 通常</span>
-        <span>★ 優先</span>
-        <span>⭐️ 最優先</span>
-
-      </div>
-
-      <div class="screenshot-buttons">
-
-        <button
-          data-action="screenshot-all">
-          📸 まとめてスクショ
-        </button>
-
-        <button
-          data-action="screenshot-type">
-          📸 種類別スクショ
-        </button>
-
-      </div>
-
-    </section>
-
-  `;
-
-
-  if(!character.patterns.length){
-
-    html += `
-
-      <div class="empty">
-        まだ絵柄が登録されていません
-      </div>
-
-    `;
-
-    app.innerHTML = html;
-
-    return;
-
-  }
-
-
-  html += `<div class="pattern-grid">`;
-
-
-  character.patterns.forEach(pattern => {
-
-    html += `
-
-      <div class="pattern-card">
-
-        ${
-          pattern.image
-          ?
-          `<img
-            class="pattern-image"
-            src="${pattern.image}"
-            data-photo="${pattern.image}">`
-          :
-          `<div class="pattern-empty">
-            No Image
-          </div>`
-        }
-
-        <button
-          class="pattern-priority"
-          data-action="toggle-pattern-priority"
-          data-pattern-id="${pattern.id}">
-          ${priorityMark(pattern.priority)}
-        </button>
-
-        <div class="pattern-info">
-
-          <div class="pattern-name">
-            ${escapeHTML(pattern.name)}
-          </div>
-
-          <div class="goods-list">
-
-            ${
-              pattern.goods.length
-              ?
-              pattern.goods.map(goods => `
-
-                <div
-                  class="goods-item"
-                  data-goods-id="${goods.id}"
-                  data-pattern-id="${pattern.id}">
-
-                  ${
-                    goods.image
-                    ?
-                    `<img
-                      class="goods-thumb"
-                      src="${goods.image}"
-                      data-photo="${goods.image}">`
-                    :
-                    `<div
-                      class="goods-thumb"
-                      style="
-                        display:flex;
-                        align-items:center;
-                        justify-content:center;
-                        color:#aaa;
-                        font-size:8px;
-                      ">
-                      No
-                    </div>`
-                  }
-
-                  <div class="goods-name">
-                    ${escapeHTML(goods.name)}
-                  </div>
-
-                  <button
-                    class="priority-mark"
-                    data-action="toggle-goods-priority"
-                    data-pattern-id="${pattern.id}"
-                    data-goods-id="${goods.id}">
-                    ${priorityMark(goods.priority)}
-                  </button>
-
-                </div>
-
-              `).join("")
-              :
-              `<div
-                style="
-                  color:#aaa;
-                  font-size:11px;
-                  padding:5px;
-                ">
-                グッズなし
-              </div>`
-            }
-
-          </div>
-
-          <div class="small-buttons">
-
-            <button
-              data-action="add-goods"
-              data-pattern-id="${pattern.id}">
-              ＋ グッズ
-            </button>
-
-            <button
-              data-action="edit-pattern"
-              data-pattern-id="${pattern.id}">
-              編集
-            </button>
-
-          </div>
-
-        </div>
-
-      </div>
-
-    `;
-
-  });
-
-
-  html += `</div>`;
-
-  app.innerHTML = html;
-
-}
-
-
-/* =========================
-   モーダル共通
-========================= */
-
-function showModal(id){
-
-  document
-    .getElementById(id)
-    .classList.add("show");
-
-}
-
-
-function hideModal(id){
-
-  document
-    .getElementById(id)
-    .classList.remove("show");
-
-}
-
-
-function resetFileInput(id){
-
-  const input =
-    document.getElementById(id);
-
-  if(input){
-
-    input.value = "";
-
-  }
-
-}
-
-
-/* =========================
-   キャラ追加
-========================= */
-
-function openAddCharacter(){
-
-  editingCharacterId = null;
-
-  document.getElementById(
-    "characterModalTitle"
-  ).textContent =
-    "キャラを追加";
-
-  document.getElementById(
-    "characterName"
-  ).value = "";
-
-  document.getElementById(
-    "characterColor"
-  ).value = "#aaaaaa";
-
-  document.getElementById(
-    "characterColorHex"
-  ).value = "#AAAAAA";
-
-  document.getElementById(
-    "colorPreview"
-  ).style.background =
-    "#aaaaaa";
-
-  resetFileInput(
-    "characterImage"
-  );
-
-  const preview =
-    document.getElementById(
-      "characterPreview"
-    );
-
-  preview.src = "";
-  preview.style.display = "none";
-
-  document.getElementById(
-    "deleteCharacterButton"
-  ).style.display = "none";
-
-  showModal("characterModal");
-
-}
-
-
-/* =========================
-   キャラ編集
-========================= */
-
-function openEditCharacter(){
-
-  const character =
-    data.characters.find(
-      c => c.id === currentCharacterId
-    );
-
-  if(!character) return;
-
-  editingCharacterId =
-    character.id;
-
-  document.getElementById(
-    "characterModalTitle"
-  ).textContent =
-    "キャラを編集";
-
-  document.getElementById(
-    "characterName"
-  ).value =
-    character.name || "";
-
-  document.getElementById(
-    "characterColor"
-  ).value =
-    character.color || "#aaaaaa";
-
-  document.getElementById(
-    "characterColorHex"
-  ).value =
-    character.color || "#AAAAAA";
-
-  document.getElementById(
-    "colorPreview"
-  ).style.background =
-    character.color || "#aaaaaa";
-
-  resetFileInput(
-    "characterImage"
-  );
-
-  const preview =
-    document.getElementById(
-      "characterPreview"
-    );
-
-  if(character.image){
-
-    preview.src =
-      character.image;
-
-    preview.style.display =
-      "block";
-
-  }else{
-
-    preview.src = "";
-
-    preview.style.display =
-      "none";
-
-  }
-
-  document.getElementById(
-    "deleteCharacterButton"
-  ).style.display =
-    "block";
-
-  showModal("characterModal");
-
-}
-
-
-/* =========================
-   キャラ保存
-========================= */
-
-async function saveCharacter(){
-
-  const name =
-    document.getElementById(
-      "characterName"
-    ).value.trim();
-
-  if(!name){
-
-    alert("キャラ名を入力してください");
-
-    return;
-
-  }
-
-  const colorInput =
-    document.getElementById(
-      "characterColor"
-    );
-
-  const colorHex =
-    document.getElementById(
-      "characterColorHex"
-    ).value.trim();
-
-  let color =
-    colorInput.value;
-
-  if(/^#[0-9A-Fa-f]{6}$/.test(colorHex)){
-
-    color =
-      colorHex;
-
-  }
-
-
-  const file =
-    document.getElementById(
-      "characterImage"
-    ).files[0];
-
-
-  if(editingCharacterId){
-
-    const character =
-      data.characters.find(
-        c => c.id === editingCharacterId
-      );
-
-    if(!character) return;
-
-    character.name =
-      name;
-
-    character.color =
-      color;
-
-    if(file){
-
-      character.image =
-        await fileToDataURL(file);
-
-    }
-
-  }else{
-
-    data.characters.push({
-
-      id:createId(),
-
-      name,
-
-      image:
-        file
-        ?
-        await fileToDataURL(file)
-        :
-        "",
-
-      color,
-
-      patterns:[]
-
-    });
-
-  }
-
-
-  await saveData();
-
-  hideModal("characterModal");
-
-  render();
-
-}
-
-
-/* =========================
-   キャラ削除
-========================= */
-
-async function deleteCharacter(){
-
-  if(!editingCharacterId) return;
-
-  const character =
-    data.characters.find(
-      c => c.id === editingCharacterId
-    );
-
-  if(!character) return;
-
-  if(!confirm(
-    `「${character.name}」を削除しますか？\n登録した絵柄・グッズもすべて削除されます。`
-  )){
-
-    return;
-
-  }
-
-  data.characters =
-    data.characters.filter(
-      c => c.id !== editingCharacterId
-    );
-
-  currentCharacterId = null;
-  editingCharacterId = null;
-
-  await saveData();
-
-  hideModal("characterModal");
-
-  render();
-
-}
-
-
-/* =========================
-   絵柄追加
-========================= */
-
-function openAddPattern(){
-
-  editingPatternId = null;
-
-  document.getElementById(
-    "patternModalTitle"
-  ).textContent =
-    "絵柄を追加";
-
-  document.getElementById(
-    "patternName"
-  ).value = "";
-
-  resetFileInput(
-    "patternImage"
-  );
-
-  const preview =
-    document.getElementById(
-      "patternPreview"
-    );
-
-  preview.src = "";
-  preview.style.display = "none";
-
-  document.getElementById(
-    "deletePatternButton"
-  ).style.display =
-    "none";
-
-  showModal("patternModal");
-
-}
-
-
-/* =========================
-   絵柄編集
-========================= */
-
-function openEditPattern(patternId){
-
-  const character =
-    data.characters.find(
-      c => c.id === currentCharacterId
-    );
-
-  if(!character) return;
-
-  const pattern =
-    character.patterns.find(
-      p => p.id === patternId
-    );
-
-  if(!pattern) return;
-
-  editingPatternId =
-    patternId;
-
-  document.getElementById(
-    "patternModalTitle"
-  ).textContent =
-    "絵柄を編集";
-
-  document.getElementById(
-    "patternName"
-  ).value =
-    pattern.name || "";
-
-  resetFileInput(
-    "patternImage"
-  );
-
-  const preview =
-    document.getElementById(
-      "patternPreview"
-    );
-
-  if(pattern.image){
-
-    preview.src =
-      pattern.image;
-
-    preview.style.display =
-      "block";
-
-  }else{
-
-    preview.src = "";
-
-    preview.style.display =
-      "none";
-
-  }
-
-  document.getElementById(
-    "deletePatternButton"
-  ).style.display =
-    "block";
-
-  showModal("patternModal");
-
-}
-
-
-/* =========================
-   絵柄保存
-========================= */
-
-async function savePattern(){
-
-  const character =
-    data.characters.find(
-      c => c.id === currentCharacterId
-    );
-
-  if(!character) return;
-
-  const name =
-    document.getElementById(
-      "patternName"
-    ).value.trim();
-
-  if(!name){
-
-    alert("絵柄名を入力してください");
-
-    return;
-
-  }
-
-  const file =
-    document.getElementById(
-      "patternImage"
-    ).files[0];
-
-
-  if(editingPatternId){
-
-    const pattern =
-      character.patterns.find(
-        p => p.id === editingPatternId
-      );
-
-    if(!pattern) return;
-
-    pattern.name =
-      name;
-
-    if(file){
-
-      pattern.image =
-        await fileToDataURL(file);
-
-    }
-
-  }else{
-
-    character.patterns.push({
-
-      id:createId(),
-
-      name,
-
-      image:
-        file
-        ?
-        await fileToDataURL(file)
-        :
-        "",
-
-      priority:0,
-
-      goods:[]
-
-    });
-
-  }
-
-
-  await saveData();
-
-  hideModal("patternModal");
-
-  render();
-
-}
-
-
-/* =========================
-   絵柄削除
-========================= */
-
-async function deletePattern(){
-
-  const character =
-    data.characters.find(
-      c => c.id === currentCharacterId
-    );
-
-  if(!character ||
-     !editingPatternId){
-
-    return;
-
-  }
-
-  const pattern =
-    character.patterns.find(
-      p => p.id === editingPatternId
-    );
-
-  if(!pattern) return;
-
-  if(!confirm(
-    `「${pattern.name}」を削除しますか？\n登録したグッズもすべて削除されます。`
-  )){
-
-    return;
-
-  }
-
-  character.patterns =
-    character.patterns.filter(
-      p => p.id !== editingPatternId
-    );
-
-  editingPatternId = null;
-
-  await saveData();
-
-  hideModal("patternModal");
-
-  render();
-
-}
-
-
-/* =========================
-   絵柄優先度
-========================= */
-
-async function togglePatternPriority(patternId){
-
-  const character =
-    data.characters.find(
-      c => c.id === currentCharacterId
-    );
-
-  if(!character) return;
-
-  const pattern =
-    character.patterns.find(
-      p => p.id === patternId
-    );
-
-  if(!pattern) return;
-
-  pattern.priority =
-    (normalizePriority(pattern.priority) + 1) % 3;
-
-  await saveData();
-
-  render();
-
-}
-
-
-/* =========================
-   グッズ追加
-========================= */
-
-function openAddGoods(patternId){
-
-  editingGoodsId = null;
-  editingPatternId = patternId;
-
-  document.getElementById(
-    "goodsModalTitle"
-  ).textContent =
-    "グッズを追加";
-
-  document.getElementById(
-    "goodsName"
-  ).value = "";
-
-  document.getElementById(
-    "goodsPriority"
-  ).value = "0";
-
-  resetFileInput(
-    "goodsImage"
-  );
-
-  const preview =
-    document.getElementById(
-      "goodsPreview"
-    );
-
-  preview.src = "";
-  preview.style.display = "none";
-
-  document.getElementById(
-    "deleteGoodsButton"
-  ).style.display =
-    "none";
-
-  showModal("goodsModal");
-
-}
-
-
-/* =========================
-   グッズ編集
-========================= */
-
-function openEditGoods(patternId,goodsId){
-
-  const character =
-    data.characters.find(
-      c => c.id === currentCharacterId
-    );
-
-  if(!character) return;
-
-  const pattern =
-    character.patterns.find(
-      p => p.id === patternId
-    );
-
-  if(!pattern) return;
-
-  const goods =
-    pattern.goods.find(
-      g => g.id === goodsId
-    );
-
-  if(!goods) return;
-
-  editingPatternId =
-    patternId;
-
-  editingGoodsId =
-    goodsId;
-
-  document.getElementById(
-    "goodsModalTitle"
-  ).textContent =
-    "グッズを編集";
-
-  document.getElementById(
-    "goodsName"
-  ).value =
-    goods.name || "";
-
-  document.getElementById(
-    "goodsPriority"
-  ).value =
-    String(
-      normalizePriority(
-        goods.priority
-      )
-    );
-
-  resetFileInput(
-    "goodsImage"
-  );
-
-  const preview =
-    document.getElementById(
-      "goodsPreview"
-    );
-
-  if(goods.image){
-
-    preview.src =
-      goods.image;
-
-    preview.style.display =
-      "block";
-
-  }else{
-
-    preview.src = "";
-
-    preview.style.display =
-      "none";
-
-  }
-
-  document.getElementById(
-    "deleteGoodsButton"
-  ).style.display =
-    "block";
-
-  showModal("goodsModal");
-
-}
-
-
-/* =========================
-   グッズ保存
-========================= */
-
-async function saveGoods(){
-
-  const character =
-    data.characters.find(
-      c => c.id === currentCharacterId
-    );
-
-  if(!character) return;
-
-  const pattern =
-    character.patterns.find(
-      p => p.id === editingPatternId
-    );
-
-  if(!pattern) return;
-
-  const name =
-    document.getElementById(
-      "goodsName"
-    ).value.trim();
-
-  if(!name){
-
-    alert("グッズ名を入力してください");
-
-    return;
-
-  }
-
-  const priority =
-    normalizePriority(
-      document.getElementById(
-        "goodsPriority"
-      ).value
-    );
-
-  const file =
-    document.getElementById(
-      "goodsImage"
-    ).files[0];
-
-
-  if(editingGoodsId){
-
-    const goods =
-      pattern.goods.find(
-        g => g.id === editingGoodsId
-      );
-
-    if(!goods) return;
-
-    goods.name =
-      name;
-
-    goods.priority =
-      priority;
-
-    if(file){
-
-      goods.image =
-        await fileToDataURL(file);
-
-    }
-
-  }else{
-
-    pattern.goods.push({
-
-      id:createId(),
-
-      name,
-
-      image:
-        file
-        ?
-        await fileToDataURL(file)
-        :
-        "",
-
-      priority
-
-    });
-
-  }
-
-
-  await saveData();
-
-  hideModal("goodsModal");
-
-  render();
-
-}
-
-
-/* =========================
-   グッズ削除
-========================= */
-
-async function deleteGoods(){
-
-  const character =
-    data.characters.find(
-      c => c.id === currentCharacterId
-    );
-
-  if(!character) return;
-
-  const pattern =
-    character.patterns.find(
-      p => p.id === editingPatternId
-    );
-
-  if(!pattern) return;
-
-  const goods =
-    pattern.goods.find(
-      g => g.id === editingGoodsId
-    );
-
-  if(!goods) return;
-
-  if(!confirm(
-    `「${goods.name}」を削除しますか？`
-  )){
-
-    return;
-
-  }
-
-  pattern.goods =
-    pattern.goods.filter(
-      g => g.id !== editingGoodsId
-    );
-
-  editingGoodsId = null;
-
-  await saveData();
-
-  hideModal("goodsModal");
-
-  render();
-
-}
-
-
-/* =========================
-   グッズ優先度
-========================= */
-
-async function toggleGoodsPriority(
-  patternId,
-  goodsId
-){
-
-  const character =
-    data.characters.find(
-      c => c.id === currentCharacterId
-    );
-
-  if(!character) return;
-
-  const pattern =
-    character.patterns.find(
-      p => p.id === patternId
-    );
-
-  if(!pattern) return;
-
-  const goods =
-    pattern.goods.find(
-      g => g.id === goodsId
-    );
-
-  if(!goods) return;
-
-  goods.priority =
-    (normalizePriority(goods.priority) + 1) % 3;
-
-  await saveData();
-
-  render();
-
-}
-
-
-/* =========================
-   写真拡大
-========================= */
-
-function openPhoto(src){
-
-  if(!src) return;
-
-  document.getElementById(
-    "photoLarge"
-  ).src = src;
-
-  document.getElementById(
-    "photoView"
-  ).classList.add("show");
-
-}
-
-
-function closePhoto(){
-
-  document.getElementById(
-    "photoView"
-  ).classList.remove("show");
-
-}
-
-
-/* =========================
-   スクショ画面
-========================= */
-
-function openScreenshot(
-  characterId,
-  mode
-){
-
-  const character =
-    data.characters.find(
-      c => c.id === characterId
-    );
-
-  if(!character) return;
-
-  currentShotCharacterId =
-    characterId;
-
-  currentShotMode =
-    mode;
-
-  selectedShotTypes = [];
-
-  renderScreenshot();
-
-  document.getElementById(
-    "screenshotView"
-  ).classList.add("show");
-
-}
-
-
-function closeScreenshot(){
-
-  document.getElementById(
-    "screenshotView"
-  ).classList.remove("show");
-
-}
-
-
-/* =========================
-   種類取得
-========================= */
-
-function getGoodsTypes(character){
-
-  const types = [];
-
-  character.patterns.forEach(pattern => {
-
-    pattern.goods.forEach(goods => {
-
-      const name =
-        String(goods.name || "").trim();
-
-      if(
-        name &&
-        !types.includes(name)
-      ){
-
-        types.push(name);
-
-      }
-
-    });
-
-  });
-
-  return types;
-
-}
-
-
-/* =========================
-   スクショ生成
-========================= */
-
-function renderScreenshot(){
-
-  const character =
-    data.characters.find(
-      c => c.id === currentShotCharacterId
-    );
-
-  if(!character) return;
-
-  const content =
-    document.getElementById(
-      "screenshotContent"
     );
 
 
-  let html = `
+  const url =
+    URL.createObjectURL(blob);
 
-    <div class="shot-sheet">
+  const a =
+    document.createElement("a");
 
-      <div class="shot-title">
-        ${escapeHTML(character.name)}
-      </div>
+  a.href = url;
 
-      <div class="shot-priority">
+  a.download =
+    "Collection_backup.json";
 
-        <span>☆ 通常</span>
-        <span>★ 優先</span>
-        <span>⭐️ 最優先</span>
+  document.body.appendChild(a);
 
-      </div>
+  a.click();
 
-  `;
+  a.remove();
 
+  URL.revokeObjectURL(url);
 
-  /* =========================
-     種類選択
-  ========================= */
+};
 
-  if(currentShotMode === "type"){
-
-    const types =
-      getGoodsTypes(character);
-
-    html += `
-
-      <div class="shot-type-selector">
-
-        <div class="shot-type-title">
-          スクショするグッズ種類を選択
-        </div>
-
-        <div class="shot-type-list">
-
-    `;
-
-
-    types.forEach(type => {
-
-      const selected =
-        selectedShotTypes.includes(type);
-
-      html += `
-
-        <button
-          class="shot-type-chip ${
-            selected ? "selected" : ""
-          }"
-          data-action="toggle-shot-type"
-          data-type="${escapeHTML(type)}">
-          ${escapeHTML(type)}
-        </button>
-
-      `;
-
-    });
-
-
-    html += `
-
-        </div>
-
-      </div>
-
-    `;
-
-  }
-
-
-  html += `
-
-      <div class="shot-pattern-grid">
-
-  `;
-
-
-  let hasAny = false;
-
-
-  character.patterns.forEach(pattern => {
-
-    let goodsList =
-      [...pattern.goods];
-
-
-    if(currentShotMode === "type"){
-
-      goodsList =
-        goodsList.filter(goods => {
-
-          return selectedShotTypes.includes(
-            goods.name
-          );
-
-        });
-
-    }
-
-
-    if(!goodsList.length){
-
-      return;
-
-    }
-
-
-    hasAny = true;
-
-
-    html += `
-
-      <div class="shot-pattern-card">
-
-        <div class="shot-pattern-side">
-
-          ${
-            pattern.image
-            ?
-            `<img
-              class="shot-pattern-main-image"
-              src="${pattern.image}"
-              data-photo="${pattern.image}">`
-            :
-            `<div class="shot-pattern-no-image">
-              No Image
-            </div>`
-          }
-
-          <div class="shot-pattern-title">
-            ${escapeHTML(pattern.name)}
-          </div>
-
-        </div>
-
-        <div class="shot-goods-list">
-
-    `;
-
-
-    goodsList.forEach(goods => {
-
-      html += `
-
-        <div class="shot-goods-item">
-
-          ${
-            goods.image
-            ?
-            `<img
-              class="shot-goods-thumb"
-              src="${goods.image}"
-              data-photo="${goods.image}">`
-            :
-            `<div class="shot-goods-no-image">
-              No
-            </div>`
-          }
-
-          <div class="shot-goods-info">
-
-            <div class="shot-goods-name">
-              ${escapeHTML(goods.name)}
-            </div>
-
-          </div>
-
-          <div class="shot-goods-priority">
-            ${priorityMark(goods.priority)}
-          </div>
-
-        </div>
-
-      `;
-
-    });
-
-
-    html += `
-
-        </div>
-
-      </div>
-
-    `;
-
-  });
-
-
-  if(!hasAny){
-
-    html += `
-
-      <div class="shot-empty">
-        ${
-          currentShotMode === "type"
-          ?
-          "グッズ種類を選択してください"
-          :
-          "まだグッズが登録されていません"
-        }
-      </div>
-
-    `;
-
-  }
-
-
-  html += `
-
-      </div>
-
-    </div>
-
-  `;
-
-
-  content.innerHTML =
-    html;
-
-}
-
-
-/* =========================
-   スクショ保存
-========================= */
-
-async function saveScreenshot(){
-
-  const target =
-    document.getElementById(
-      "screenshotContent"
-    );
-
-  if(!target){
-
-    return;
-
-  }
-
-
-  if(typeof html2canvas === "undefined"){
-
-    alert(
-      "画像保存機能を読み込めていません"
-    );
-
-    return;
-
-  }
-
-
-  const button =
-    document.querySelector(
-      '[data-action="save-screenshot"]'
-    );
-
-  if(button){
-
-    button.disabled = true;
-
-    button.textContent =
-      "📸 保存中…";
-
-  }
-
-
-  try{
-
-    const canvas =
-      await html2canvas(
-        target,
-        {
-          backgroundColor:"#ddd",
-          scale:2,
-          useCORS:true
-        }
-      );
-
-
-    const link =
-      document.createElement("a");
-
-    const character =
-      data.characters.find(
-        c => c.id === currentShotCharacterId
-      );
-
-
-    const modeName =
-      currentShotMode === "type"
-      ?
-      "種類別"
-      :
-      "まとめ";
-
-
-    link.download =
-      `Collection_${character?.name || "screenshot"}_${modeName}.png`;
-
-    link.href =
-      canvas.toDataURL("image/png");
-
-    link.click();
-
-  }catch(error){
-
-    console.error(error);
-
-    alert(
-      "画像の保存に失敗しました"
-    );
-
-  }
-
-
-  if(button){
-
-    button.disabled = false;
-
-    button.textContent =
-      "📸 画像として保存";
-
-  }
-
-}
-
-
-/* =========================
-   クリック処理
-========================= */
-
-document.addEventListener(
-  "click",
-  async e => {
-
-    const target =
-      e.target.closest(
-        "[data-action]"
-      );
-
-
-    /* 写真 */
-
-    const photo =
-      e.target.closest(
-        "[data-photo]"
-      );
-
-    if(photo){
-
-      openPhoto(
-        photo.dataset.photo
-      );
-
-      return;
-
-    }
-
-
-    if(!target){
-
-      /* キャラカード */
-
-      const card =
-        e.target.closest(
-          ".character-card"
-        );
-
-      if(card){
-
-        currentCharacterId =
-          card.dataset.characterId;
-
-        render();
-
-      }
-
-      return;
-
-    }
-
-
-    const action =
-      target.dataset.action;
-
-
-    if(action === "add-character"){
-
-      openAddCharacter();
-
-      return;
-
-    }
-
-
-    if(action === "edit-character"){
-
-      openEditCharacter();
-
-      return;
-
-    }
-
-
-    if(action === "delete-character"){
-
-      await deleteCharacter();
-
-      return;
-
-    }
-
-
-    if(action === "close-character"){
-
-      hideModal("characterModal");
-
-      return;
-
-    }
-
-
-    if(action === "save-character"){
-
-      await saveCharacter();
-
-      return;
-
-    }
-
-
-    if(action === "back-character"){
-
-      currentCharacterId = null;
-
-      render();
-
-      return;
-
-    }
-
-
-    if(action === "add-pattern"){
-
-      openAddPattern();
-
-      return;
-
-    }
-
-
-    if(action === "edit-pattern"){
-
-      openEditPattern(
-        target.dataset.patternId
-      );
-
-      return;
-
-    }
-
-
-    if(action === "delete-pattern-modal"){
-
-      await deletePattern();
-
-      return;
-
-    }
-
-
-    if(action === "close-pattern"){
-
-      hideModal("patternModal");
-
-      return;
-
-    }
-
-
-    if(action === "save-pattern"){
-
-      await savePattern();
-
-      return;
-
-    }
-
-
-    if(action === "toggle-pattern-priority"){
-
-      await togglePatternPriority(
-        target.dataset.patternId
-      );
-
-      return;
-
-    }
-
-
-    if(action === "add-goods"){
-
-      openAddGoods(
-        target.dataset.patternId
-      );
-
-      return;
-
-    }
-
-
-    if(action === "edit-goods"){
-
-      openEditGoods(
-        target.dataset.patternId,
-        target.dataset.goodsId
-      );
-
-      return;
-
-    }
-
-
-    if(action === "delete-goods"){
-
-      await deleteGoods();
-
-      return;
-
-    }
-
-
-    if(action === "close-goods"){
-
-      hideModal("goodsModal");
-
-      return;
-
-    }
-
-
-    if(action === "save-goods"){
-
-      await saveGoods();
-
-      return;
-
-    }
-
-
-    if(action === "toggle-goods-priority"){
-
-      await toggleGoodsPriority(
-        target.dataset.patternId,
-        target.dataset.goodsId
-      );
-
-      return;
-
-    }
-
-
-    if(action === "close-photo"){
-
-      closePhoto();
-
-      return;
-
-    }
-
-
-    if(action === "screenshot-all"){
-
-      openScreenshot(
-        currentCharacterId,
-        "all"
-      );
-
-      return;
-
-    }
-
-
-    if(action === "screenshot-type"){
-
-      openScreenshot(
-        currentCharacterId,
-        "type"
-      );
-
-      return;
-
-    }
-
-
-    if(action === "close-screenshot"){
-
-      closeScreenshot();
-
-      return;
-
-    }
-
-
-    if(action === "save-screenshot"){
-
-      await saveScreenshot();
-
-      return;
-
-    }
-
-
-    if(action === "toggle-shot-type"){
-
-      const type =
-        target.dataset.type;
-
-      if(
-        selectedShotTypes.includes(type)
-      ){
-
-        selectedShotTypes =
-          selectedShotTypes.filter(
-            item => item !== type
-          );
-
-      }else{
-
-        selectedShotTypes.push(type);
-
-      }
-
-      renderScreenshot();
-
-      return;
-
-    }
-
-  }
-);
-
-
-/* =========================
-   画像プレビュー
-========================= */
-
-document.getElementById(
-  "characterImage"
-).addEventListener(
-  "change",
-  async e => {
-
-    const file =
-      e.target.files[0];
-
-    const preview =
-      document.getElementById(
-        "characterPreview"
-      );
-
-    if(file){
-
-      preview.src =
-        await fileToDataURL(file);
-
-      preview.style.display =
-        "block";
-
-    }
-
-  }
-);
-
-
-document.getElementById(
-  "patternImage"
-).addEventListener(
-  "change",
-  async e => {
-
-    const file =
-      e.target.files[0];
-
-    const preview =
-      document.getElementById(
-        "patternPreview"
-      );
-
-    if(file){
-
-      preview.src =
-        await fileToDataURL(file);
-
-      preview.style.display =
-        "block";
-
-    }
-
-  }
-);
-
-
-document.getElementById(
-  "goodsImage"
-).addEventListener(
-  "change",
-  async e => {
-
-    const file =
-      e.target.files[0];
-
-    const preview =
-      document.getElementById(
-        "goodsPreview"
-      );
-
-    if(file){
-
-      preview.src =
-        await fileToDataURL(file);
-
-      preview.style.display =
-        "block";
-
-    }
-
-  }
-);
-
-
-/* =========================
-   カラー
-========================= */
-
-document.getElementById(
-  "characterColor"
-).addEventListener(
-  "input",
-  e => {
-
-    const color =
-      e.target.value;
-
-    document.getElementById(
-      "characterColorHex"
-    ).value =
-      color.toUpperCase();
-
-    document.getElementById(
-      "colorPreview"
-    ).style.background =
-      color;
-
-  }
-);
-
-
-document.getElementById(
-  "characterColorHex"
-).addEventListener(
-  "input",
-  e => {
-
-    let value =
-      e.target.value.trim();
-
-    if(!value.startsWith("#")){
-
-      value =
-        "#" + value;
-
-    }
-
-    if(/^#[0-9A-Fa-f]{6}$/.test(value)){
-
-      document.getElementById(
-        "characterColor"
-      ).value =
-        value;
-
-      document.getElementById(
-        "colorPreview"
-      ).style.background =
-        value;
-
-    }
-
-  }
-);
-
-
-/* =========================
-   モーダル外クリック
-========================= */
-
-document.querySelectorAll(
-  ".modal-bg"
-).forEach(modal => {
-
-  modal.addEventListener(
-    "click",
-    e => {
-
-      if(e.target === modal){
-
-        modal.classList.remove(
-          "show"
-        );
-
-      }
-
-    }
-  );
-
-});
-
-
-/* =========================
-   ESC
-========================= */
-
-document.addEventListener(
-  "keydown",
-  e => {
-
-    if(e.key !== "Escape") return;
-
-    closePhoto();
-
-    closeScreenshot();
-
-    document.querySelectorAll(
-      ".modal-bg.show"
-    ).forEach(modal => {
-
-      modal.classList.remove(
-        "show"
-      );
-
-    });
-
-  }
-);
-
-
-/* =========================
-   初期化
-========================= */
-
-(async function(){
-
-  loadLocalData();
-
-  try{
-
-    await openDB();
-
-    await loadDBData();
-
-    /*
-      IndexedDB側に何もなかった場合でも
-      localStorageのデータを保存しておく
-    */
-
-    await saveData();
-
-  }catch(error){
-
-    console.error(error);
-
-  }
-
-  render();
-
-})();
-
-</script>
-
-
-<!-- html2canvas -->
-<script
-  src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js">
 </script>
 
 </body>
-</htm
+</html>

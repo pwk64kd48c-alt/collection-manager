@@ -312,7 +312,9 @@ main{
   z-index:1000;
 }
 
-.modal-bg.show{display:flex}
+.modal-bg.show{
+  display:flex;
+}
 
 .modal{
   width:100%;
@@ -437,7 +439,9 @@ main{
   z-index:2000;
 }
 
-.photo-view.show{display:flex}
+.photo-view.show{
+  display:flex;
+}
 
 .photo-view img{
   max-width:95vw;
@@ -471,7 +475,9 @@ main{
   z-index:1500;
 }
 
-.screenshot-view.show{display:block}
+.screenshot-view.show{
+  display:block;
+}
 
 .screenshot-toolbar{
   position:sticky;
@@ -503,11 +509,17 @@ main{
 
 #screenshotContent{
   padding:12px;
+
+  /*
+    スマホ画面幅に無理やり合わせない。
+    スクショ用の紙そのものを広くする。
+  */
+  min-width:1000px;
 }
 
 .shot-sheet{
-  width:100%;
-  max-width:1100px;
+  width:980px;
+  max-width:none;
   margin:0 auto;
   background:#fff;
   padding:18px;
@@ -522,7 +534,9 @@ main{
   margin:0 0 24px;
 }
 
-/* 優先度 */
+/* =========================
+   優先度
+========================= */
 
 .shot-priority{
   background:#f7f7f7;
@@ -533,7 +547,8 @@ main{
   display:flex;
   align-items:center;
   justify-content:center;
-  gap:22px;
+
+  gap:28px;
 
   color:#666;
   font-size:20px;
@@ -562,37 +577,57 @@ main{
   gap:12px;
 }
 
+/* =========================
+   1枚のカード
+========================= */
+
 .shot-pattern-card{
   background:#f8f8f8;
   border:2px solid #e3e3e3;
   border-radius:22px;
   padding:10px;
 
+  /*
+    左：絵柄画像
+    右：グッズ一覧
+
+    ここを固定幅にして
+    グッズ文字が縦に潰れないようにする
+  */
   display:grid;
-  grid-template-columns:minmax(0,1fr) minmax(180px,1.08fr);
+  grid-template-columns:190px minmax(0,1fr);
+
   gap:12px;
 
   align-items:start;
   min-width:0;
 }
 
-/* 左：絵柄 */
+/* =========================
+   左：絵柄
+========================= */
 
 .shot-pattern-side{
   min-width:0;
+
   display:flex;
   flex-direction:column;
   align-items:flex-start;
+
   gap:8px;
 }
 
 .shot-pattern-main-image,
 .shot-pattern-no-image{
-  width:100%;
-  aspect-ratio:1/1;
+  width:190px;
+  height:190px;
+
   object-fit:cover;
+
   border-radius:17px;
+
   display:block;
+
   background:#ddd;
 }
 
@@ -600,20 +635,26 @@ main{
   display:flex;
   align-items:center;
   justify-content:center;
+
   color:#aaa;
   font-size:12px;
 }
 
 .shot-pattern-title{
   width:100%;
+
   color:#444;
   font-weight:bold;
-  font-size:20px;
-  line-height:1.18;
+
+  font-size:17px;
+  line-height:1.25;
+
   overflow-wrap:anywhere;
 }
 
-/* 右：グッズ */
+/* =========================
+   右：グッズ
+========================= */
 
 .shot-goods-list{
   width:100%;
@@ -621,6 +662,7 @@ main{
 
   display:flex;
   flex-direction:column;
+
   gap:7px;
 }
 
@@ -630,22 +672,28 @@ main{
 
   background:#fff;
   border-radius:14px;
+
   padding:7px;
 
   display:flex;
   align-items:center;
+
   gap:8px;
 
-  min-height:54px;
+  min-height:58px;
 }
 
 .shot-goods-thumb,
 .shot-goods-no-image{
   width:42px;
   height:42px;
+
   object-fit:cover;
+
   border-radius:7px;
+
   background:#ddd;
+
   flex:none;
 }
 
@@ -653,6 +701,7 @@ main{
   display:flex;
   align-items:center;
   justify-content:center;
+
   color:#aaa;
   font-size:8px;
 }
@@ -664,11 +713,15 @@ main{
 
 .shot-goods-name{
   font-size:15px;
-  line-height:1.25;
+  line-height:1.3;
+
   color:#444;
 
-  /* 絶対に1文字ずつ縦にならない */
-  overflow-wrap:break-word;
+  /*
+    重要：
+    日本語を1文字ずつ縦にしない
+  */
+  overflow-wrap:anywhere;
   word-break:normal;
   white-space:normal;
 }
@@ -676,9 +729,12 @@ main{
 .shot-goods-priority{
   width:31px;
   min-width:31px;
+
   text-align:center;
+
   font-size:27px;
   line-height:1;
+
   flex:none;
 }
 
@@ -795,85 +851,100 @@ main{
 
   /* =========================
      スクショ
-     スマホでも2列を維持
+     スマホでもスクショ本体は
+     広い横幅を維持
   ========================= */
 
   #screenshotContent{
-    padding:8px;
+    min-width:1000px;
+    padding:10px;
   }
 
   .shot-sheet{
-    padding:10px;
-    border-radius:16px;
-    min-width:0;
+    width:980px;
+    max-width:none;
+
+    padding:14px;
+
+    border-radius:18px;
   }
 
   .shot-title{
-    font-size:22px;
-    margin-bottom:17px;
+    font-size:25px;
+    margin-bottom:20px;
   }
 
   .shot-priority{
-    font-size:13px;
-    gap:12px;
-    padding:11px 5px;
-    margin-bottom:18px;
+    font-size:18px;
+    gap:25px;
+    padding:12px 8px;
+    margin-bottom:20px;
   }
 
   .shot-pattern-grid{
     grid-template-columns:repeat(2,minmax(0,1fr));
-    gap:8px;
+    gap:10px;
   }
 
   .shot-pattern-card{
-    grid-template-columns:92px minmax(0,1fr);
-    gap:7px;
-    padding:7px;
-    border-radius:15px;
+    grid-template-columns:190px minmax(0,1fr);
+
+    gap:10px;
+
+    padding:9px;
+
+    border-radius:18px;
   }
 
   .shot-pattern-main-image,
   .shot-pattern-no-image{
-    width:92px;
-    height:92px;
-    border-radius:10px;
+    width:190px;
+    height:190px;
+
+    border-radius:14px;
   }
 
   .shot-pattern-title{
-    font-size:11px;
-    line-height:1.2;
+    font-size:16px;
+    line-height:1.25;
   }
 
   .shot-goods-list{
-    gap:5px;
+    gap:6px;
   }
 
   .shot-goods-item{
-    padding:5px;
-    gap:5px;
-    border-radius:9px;
-    min-height:0;
+    padding:6px;
+    gap:7px;
+
+    border-radius:11px;
+
+    min-height:55px;
   }
 
   .shot-goods-thumb,
   .shot-goods-no-image{
-    width:28px;
-    height:28px;
-    border-radius:5px;
+    width:40px;
+    height:40px;
+
+    border-radius:6px;
   }
 
   .shot-goods-name{
-    font-size:10px;
-    line-height:1.2;
-    overflow-wrap:break-word;
+    font-size:14px;
+    line-height:1.3;
+
+    overflow-wrap:anywhere;
     word-break:normal;
+    white-space:normal;
   }
 
   .shot-goods-priority{
-    width:20px;
-    min-width:20px;
-    font-size:16px;
+    width:30px;
+    min-width:30px;
+    font-size:25px;
   }
+
 }
 </style>
 </head>
@@ -892,22 +963,39 @@ main{
 ========================= -->
 
 <div class="modal-bg" id="characterModal">
+
   <div class="modal">
 
-    <h2 id="characterModalTitle">キャラを追加</h2>
+    <h2 id="characterModalTitle">
+      キャラを追加
+    </h2>
 
     <label>キャラ名</label>
-    <input id="characterName" type="text" placeholder="例：月永レオ">
+
+    <input
+      id="characterName"
+      type="text"
+      placeholder="例：月永レオ">
 
     <label>画像</label>
-    <input id="characterImage" type="file" accept="image/*">
-    <img id="characterPreview" class="preview">
+
+    <input
+      id="characterImage"
+      type="file"
+      accept="image/*">
+
+    <img
+      id="characterPreview"
+      class="preview">
 
     <label>テーマカラー</label>
 
     <div class="color-picker-area">
 
-      <input id="characterColor" type="color" value="#aaaaaa">
+      <input
+        id="characterColor"
+        type="color"
+        value="#aaaaaa">
 
       <div class="color-code-area">
 
@@ -952,6 +1040,7 @@ main{
     </div>
 
   </div>
+
 </div>
 
 
@@ -960,9 +1049,12 @@ main{
 ========================= -->
 
 <div class="modal-bg" id="patternModal">
+
   <div class="modal">
 
-    <h2 id="patternModalTitle">絵柄を追加</h2>
+    <h2 id="patternModalTitle">
+      絵柄を追加
+    </h2>
 
     <label>絵柄名</label>
 
@@ -978,7 +1070,9 @@ main{
       type="file"
       accept="image/*">
 
-    <img id="patternPreview" class="preview">
+    <img
+      id="patternPreview"
+      class="preview">
 
     <div class="modal-buttons">
 
@@ -1005,6 +1099,7 @@ main{
     </div>
 
   </div>
+
 </div>
 
 
@@ -1013,9 +1108,12 @@ main{
 ========================= -->
 
 <div class="modal-bg" id="goodsModal">
+
   <div class="modal">
 
-    <h2 id="goodsModalTitle">グッズを追加</h2>
+    <h2 id="goodsModalTitle">
+      グッズを追加
+    </h2>
 
     <label>グッズ名</label>
 
@@ -1031,15 +1129,25 @@ main{
       type="file"
       accept="image/*">
 
-    <img id="goodsPreview" class="preview">
+    <img
+      id="goodsPreview"
+      class="preview">
 
     <label>優先度</label>
 
     <select id="goodsPriority">
 
-      <option value="0">☆ 通常</option>
-      <option value="1">★ 優先</option>
-      <option value="2">⭐️ 最優先</option>
+      <option value="0">
+        ☆ 通常
+      </option>
+
+      <option value="1">
+        ★ 優先
+      </option>
+
+      <option value="2">
+        ⭐️ 最優先
+      </option>
 
     </select>
 
@@ -1068,6 +1176,7 @@ main{
     </div>
 
   </div>
+
 </div>
 
 
@@ -1092,7 +1201,9 @@ main{
      スクショ
 ========================= -->
 
-<div class="screenshot-view" id="screenshotView">
+<div
+  class="screenshot-view"
+  id="screenshotView">
 
   <div class="screenshot-toolbar">
 
@@ -1111,31 +1222,31 @@ main{
   <div id="screenshotContent"></div>
 
 </div>
-
-
 <script>
 
-(function(){
+/* =========================
+   データ
+========================= */
 
-"use strict";
+const DB_NAME = "CollectionDB";
+const DB_VERSION = 1;
+const STORE_NAME = "data";
+const DATA_KEY = "collectionData";
 
+let db = null;
 
-const KEY="collectionData";
-const DB_NAME="CollectionDB";
-const DB_VERSION=1;
-const STORE_NAME="appData";
+let data = {
+  characters: []
+};
 
-let db=null;
-let data=[];
-let currentCharacter=null;
-let editingCharacter=-1;
-let editingPattern=-1;
-let editingGoods=-1;
+let currentCharacterId = null;
+let editingCharacterId = null;
+let editingPatternId = null;
+let editingGoodsId = null;
 
-let screenshotMode="all";
-let selectedShotTypes=[];
-
-const app=document.getElementById("app");
+let currentShotCharacterId = null;
+let currentShotMode = "all";
+let selectedShotTypes = [];
 
 
 /* =========================
@@ -1144,39 +1255,35 @@ const app=document.getElementById("app");
 
 function openDB(){
 
-  return new Promise(function(resolve,reject){
+  return new Promise((resolve,reject)=>{
 
-    const request=indexedDB.open(
-      DB_NAME,
-      DB_VERSION
-    );
+    const request =
+      indexedDB.open(DB_NAME,DB_VERSION);
 
-    request.onupgradeneeded=function(){
+    request.onupgradeneeded = e => {
 
-      const d=request.result;
+      const database = e.target.result;
 
-      if(
-        !d.objectStoreNames.contains(
-          STORE_NAME
-        )
-      ){
+      if(!database.objectStoreNames.contains(STORE_NAME)){
 
-        d.createObjectStore(
-          STORE_NAME
+        database.createObjectStore(
+          STORE_NAME,
+          {keyPath:"key"}
         );
 
       }
 
     };
 
-    request.onsuccess=function(){
+    request.onsuccess = e => {
 
-      db=request.result;
+      db = e.target.result;
+
       resolve(db);
 
     };
 
-    request.onerror=function(){
+    request.onerror = () => {
 
       reject(request.error);
 
@@ -1187,61 +1294,131 @@ function openDB(){
 }
 
 
-function getDBData(){
+function saveData(){
 
-  return new Promise(function(resolve,reject){
+  return new Promise((resolve,reject)=>{
 
-    const tx=db.transaction(
-      STORE_NAME,
-      "readonly"
-    );
+    if(!db){
 
-    const request=
-      tx.objectStore(STORE_NAME).get(KEY);
-
-    request.onsuccess=function(){
-
-      resolve(
-        request.result ?? null
+      localStorage.setItem(
+        DATA_KEY,
+        JSON.stringify(data)
       );
 
-    };
+      resolve();
 
-    request.onerror=function(){
+      return;
 
-      reject(request.error);
+    }
 
-    };
-
-  });
-
-}
-
-
-function putDBData(value){
-
-  return new Promise(function(resolve,reject){
-
-    const tx=db.transaction(
-      STORE_NAME,
-      "readwrite"
-    );
-
-    const request=
-      tx.objectStore(STORE_NAME).put(
-        value,
-        KEY
+    const tx =
+      db.transaction(
+        STORE_NAME,
+        "readwrite"
       );
 
-    request.onsuccess=function(){
+    tx.objectStore(STORE_NAME).put({
+      key:DATA_KEY,
+      value:data
+    });
+
+    tx.oncomplete = () => {
+
+      localStorage.setItem(
+        DATA_KEY,
+        JSON.stringify(data)
+      );
 
       resolve();
 
     };
 
-    request.onerror=function(){
+    tx.onerror = () => {
 
-      reject(request.error);
+      localStorage.setItem(
+        DATA_KEY,
+        JSON.stringify(data)
+      );
+
+      resolve();
+
+    };
+
+  });
+
+}
+
+
+function loadLocalData(){
+
+  try{
+
+    const saved =
+      localStorage.getItem(DATA_KEY);
+
+    if(saved){
+
+      const parsed =
+        JSON.parse(saved);
+
+      if(parsed){
+
+        data = normalizeData(parsed);
+
+      }
+
+    }
+
+  }catch(e){
+
+    console.error(e);
+
+  }
+
+}
+
+
+function loadDBData(){
+
+  return new Promise((resolve)=>{
+
+    if(!db){
+
+      resolve();
+
+      return;
+
+    }
+
+    const tx =
+      db.transaction(
+        STORE_NAME,
+        "readonly"
+      );
+
+    const request =
+      tx.objectStore(STORE_NAME)
+        .get(DATA_KEY);
+
+    request.onsuccess = () => {
+
+      if(request.result &&
+         request.result.value){
+
+        data =
+          normalizeData(
+            request.result.value
+          );
+
+      }
+
+      resolve();
+
+    };
+
+    request.onerror = () => {
+
+      resolve();
 
     };
 
@@ -1251,279 +1428,98 @@ function putDBData(value){
 
 
 /* =========================
-   優先度
+   データ補正
 ========================= */
 
 function normalizePriority(value){
 
-  if(value===true)return 2;
+  const n = Number(value);
 
-  if(
-    value===false ||
-    value===undefined ||
-    value===null
-  ){
-
-    return 0;
-
-  }
-
-  const n=Number(value);
-
-  if(n>=2)return 2;
-  if(n===1)return 1;
+  if(n === 2) return 2;
+  if(n === 1) return 1;
 
   return 0;
 
 }
 
 
-function priorityMark(priority){
+function normalizeData(input){
 
-  const p=normalizePriority(priority);
+  if(!input ||
+     typeof input !== "object"){
 
-  if(p===2){
-
-    return{
-      mark:"⭐️",
-      className:"priority-star"
+    return {
+      characters:[]
     };
 
   }
 
-  if(p===1){
+  if(!Array.isArray(input.characters)){
 
-    return{
-      mark:"★",
-      className:"priority-star"
-    };
+    input.characters = [];
 
   }
 
-  return{
-    mark:"☆",
-    className:"priority-none"
-  };
+  input.characters.forEach(character => {
 
-}
+    if(!Array.isArray(character.patterns)){
 
-
-function nextPriority(priority){
-
-  return(
-    normalizePriority(priority)+1
-  )%3;
-
-}
-
-
-/* =========================
-   データ整理
-========================= */
-
-function normalizeCharacter(c){
-
-  c=c||{};
-
-  return{
-
-    name:String(c.name||""),
-
-    image:
-      typeof c.image==="string"
-      ?c.image
-      :"",
-
-    color:
-      c.color||"#aaaaaa",
-
-    patterns:
-      Array.isArray(c.patterns)
-      ?c.patterns.map(normalizePattern)
-      :[]
-
-  };
-
-}
-
-
-function normalizePattern(p){
-
-  p=p||{};
-
-  return{
-
-    name:String(p.name||""),
-
-    image:
-      typeof p.image==="string"
-      ?p.image
-      :"",
-
-    priority:
-      normalizePriority(p.priority),
-
-    goods:
-      Array.isArray(p.goods)
-      ?p.goods.map(normalizeGoods)
-      :[]
-
-  };
-
-}
-
-
-function normalizeGoods(g){
-
-  if(typeof g==="string"){
-
-    return{
-      name:g,
-      image:"",
-      priority:0
-    };
-
-  }
-
-  g=g||{};
-
-  return{
-
-    name:String(g.name||""),
-
-    image:
-      typeof g.image==="string"
-      ?g.image
-      :"",
-
-    priority:
-      normalizePriority(g.priority)
-
-  };
-
-}
-
-
-/* =========================
-   読み込み・保存
-========================= */
-
-async function safeLoad(){
-
-  await openDB();
-
-  let saved=await getDBData();
-
-
-  if(saved===null){
-
-    const oldRaw=
-      localStorage.getItem(KEY);
-
-    if(oldRaw){
-
-      try{
-
-        const oldData=
-          JSON.parse(oldRaw);
-
-        if(Array.isArray(oldData)){
-
-          saved=
-            oldData.map(
-              normalizeCharacter
-            );
-
-          await putDBData(saved);
-
-          localStorage.removeItem(KEY);
-
-        }
-
-      }catch(e){
-
-        console.error(e);
-
-      }
+      character.patterns = [];
 
     }
 
-  }
+    character.patterns.forEach(pattern => {
 
+      pattern.priority =
+        normalizePriority(
+          pattern.priority
+        );
 
-  if(!Array.isArray(saved)){
+      if(!Array.isArray(pattern.goods)){
 
-    return[];
+        pattern.goods = [];
 
-  }
+      }
 
+      pattern.goods.forEach(goods => {
 
-  return saved.map(
-    normalizeCharacter
-  );
+        goods.priority =
+          normalizePriority(
+            goods.priority
+          );
 
-}
+      });
 
+    });
 
-async function save(){
+  });
 
-  try{
-
-    await putDBData(data);
-
-    return true;
-
-  }catch(e){
-
-    console.error(e);
-
-    alert(
-      "保存できませんでした。"
-    );
-
-    return false;
-
-  }
+  return input;
 
 }
 
 
 /* =========================
-   共通
+   ID
 ========================= */
 
-function escapeHTML(str){
+function createId(){
 
-  return String(str||"")
-
-    .replace(/&/g,"&amp;")
-    .replace(/</g,"&lt;")
-    .replace(/>/g,"&gt;")
-    .replace(/"/g,"&quot;")
-    .replace(/'/g,"&#039;");
+  return Date.now().toString(36)
+    + Math.random()
+      .toString(36)
+      .slice(2);
 
 }
 
 
-function getColor(color){
+/* =========================
+   画像
+========================= */
 
-  if(
-    typeof color==="string" &&
-    /^#[0-9a-fA-F]{6}$/.test(color)
-  ){
+function fileToDataURL(file){
 
-    return color;
-
-  }
-
-  return "#aaaaaa";
-
-}
-
-
-function compressImage(file){
-
-  return new Promise(function(resolve){
+  return new Promise((resolve,reject)=>{
 
     if(!file){
 
@@ -1533,74 +1529,18 @@ function compressImage(file){
 
     }
 
-    const reader=new FileReader();
+    const reader =
+      new FileReader();
 
-    reader.onload=function(){
+    reader.onload = () => {
 
-      const img=new Image();
-
-      img.onload=function(){
-
-        const max=700;
-
-        let w=img.width;
-        let h=img.height;
-
-        if(w>max || h>max){
-
-          if(w>h){
-
-            h=Math.round(h*max/w);
-            w=max;
-
-          }else{
-
-            w=Math.round(w*max/h);
-            h=max;
-
-          }
-
-        }
-
-        const canvas=
-          document.createElement("canvas");
-
-        canvas.width=w;
-        canvas.height=h;
-
-        const ctx=
-          canvas.getContext("2d");
-
-        ctx.drawImage(
-          img,
-          0,
-          0,
-          w,
-          h
-        );
-
-        resolve(
-          canvas.toDataURL(
-            "image/jpeg",
-            .75
-          )
-        );
-
-      };
-
-      img.onerror=function(){
-
-        resolve(reader.result);
-
-      };
-
-      img.src=reader.result;
+      resolve(reader.result);
 
     };
 
-    reader.onerror=function(){
+    reader.onerror = () => {
 
-      resolve("");
+      reject(reader.error);
 
     };
 
@@ -1611,46 +1551,91 @@ function compressImage(file){
 }
 
 
-function openModal(id){
+/* =========================
+   HTMLエスケープ
+========================= */
 
-  document
-    .getElementById(id)
-    .classList.add("show");
+function escapeHTML(value){
 
-}
-
-
-function closeModal(id){
-
-  document
-    .getElementById(id)
-    .classList.remove("show");
+  return String(value ?? "")
+    .replace(/&/g,"&amp;")
+    .replace(/</g,"&lt;")
+    .replace(/>/g,"&gt;")
+    .replace(/"/g,"&quot;")
+    .replace(/'/g,"&#039;");
 
 }
 
 
 /* =========================
-   表示
+   優先度
 ========================= */
 
-function render(){
+function priorityMark(priority){
 
-  if(currentCharacter===null){
+  priority =
+    normalizePriority(priority);
 
-    renderCharacters();
+  if(priority === 2){
 
-  }else{
-
-    renderCharacter();
+    return "⭐️";
 
   }
+
+  if(priority === 1){
+
+    return "★";
+
+  }
+
+  return "☆";
 
 }
 
 
-function renderCharacters(){
+/* =========================
+   キャラ一覧
+========================= */
 
-  let html=`
+function render(){
+
+  const app =
+    document.getElementById("app");
+
+  if(!currentCharacterId){
+
+    renderCharacterList();
+
+    return;
+
+  }
+
+  const character =
+    data.characters.find(
+      c => c.id === currentCharacterId
+    );
+
+  if(!character){
+
+    currentCharacterId = null;
+
+    renderCharacterList();
+
+    return;
+
+  }
+
+  renderCharacterDetail(character);
+
+}
+
+
+function renderCharacterList(){
+
+  const app =
+    document.getElementById("app");
+
+  let html = `
 
     <button
       class="add-main"
@@ -1660,10 +1645,9 @@ function renderCharacters(){
 
   `;
 
+  if(!data.characters.length){
 
-  if(data.length===0){
-
-    html+=`
+    html += `
 
       <div class="empty">
         まだキャラが登録されていません
@@ -1671,65 +1655,69 @@ function renderCharacters(){
 
     `;
 
-  }else{
+    app.innerHTML = html;
 
-    html+=`
-
-      <div class="character-list">
-
-    `;
-
-
-    data.forEach(function(c,index){
-
-      const color=getColor(c.color);
-
-      html+=`
-
-        <div
-          class="character-card"
-          data-character="${index}"
-          style="--theme:${color}">
-
-          ${
-            c.image
-            ?
-            `
-              <img
-                class="char-image"
-                src="${c.image}"
-                data-photo="${c.image}">
-            `
-            :
-            `
-              <div class="char-image"></div>
-            `
-          }
-
-          <div class="char-name">
-
-            <span
-              class="char-color"
-              style="background:${color}">
-            </span>
-
-            ${escapeHTML(c.name)}
-
-          </div>
-
-        </div>
-
-      `;
-
-    });
-
-
-    html+=`</div>`;
+    return;
 
   }
 
+  html += `<div class="character-list">`;
 
-  app.innerHTML=html;
+  data.characters.forEach(character => {
+
+    html += `
+
+      <div
+        class="character-card"
+        style="--theme:${escapeHTML(
+          character.color || "#aaa"
+        )}"
+        data-character-id="${character.id}">
+
+        ${
+          character.image
+          ?
+          `<img
+            class="char-image"
+            src="${character.image}"
+            data-photo="${character.image}">`
+          :
+          `<div
+            class="char-image"
+            style="
+              display:flex;
+              align-items:center;
+              justify-content:center;
+              color:#aaa;
+            ">
+            No Image
+          </div>`
+        }
+
+        <div class="char-name">
+
+          <span
+            class="char-color"
+            style="
+              background:${escapeHTML(
+                character.color || "#aaa"
+              )}
+            ">
+          </span>
+
+          ${escapeHTML(character.name)}
+
+        </div>
+
+      </div>
+
+    `;
+
+  });
+
+  html += `</div>`;
+
+  app.innerHTML = html;
 
 }
 
@@ -1738,51 +1726,41 @@ function renderCharacters(){
    キャラ詳細
 ========================= */
 
-function renderCharacter(){
+function renderCharacterDetail(character){
 
-  const c=data[currentCharacter];
+  const app =
+    document.getElementById("app");
 
-
-  if(!c){
-
-    currentCharacter=null;
-    renderCharacters();
-    return;
-
-  }
-
-
-  const color=getColor(c.color);
-
-
-  let html=`
+  let html = `
 
     <button
       class="back"
-      data-action="back">
+      data-action="back-character">
       ← キャラ一覧
     </button>
 
-    <div
+    <section
       class="character-head"
-      style="--theme:${color}">
+      style="--theme:${escapeHTML(
+        character.color || "#aaa"
+      )}">
 
       <div class="character-title">
-        ${escapeHTML(c.name)}
+        ${escapeHTML(character.name)}
       </div>
 
       <div class="character-actions">
 
         <button
           class="action theme"
-          data-action="add-pattern">
-          ＋ 絵柄を追加
+          data-action="edit-character">
+          ✏️ キャラ編集
         </button>
 
         <button
           class="action"
-          data-action="edit-character">
-          ⚙ キャラ情報
+          data-action="add-pattern">
+          ＋ 絵柄追加
         </button>
 
       </div>
@@ -1801,183 +1779,251 @@ function renderCharacter(){
 
       <div class="screenshot-buttons">
 
-        <button data-action="screenshot-all">
+        <button
+          data-action="screenshot-all">
           📸 まとめてスクショ
         </button>
 
-        <button data-action="screenshot-type">
-          📷 種類別にスクショ
+        <button
+          data-action="screenshot-type">
+          📸 種類別スクショ
         </button>
 
       </div>
 
-    </div>
+    </section>
 
   `;
 
 
-  if(c.patterns.length===0){
+  if(!character.patterns.length){
 
-    html+=`
+    html += `
 
       <div class="empty">
-        まだ絵柄がありません
+        まだ絵柄が登録されていません
       </div>
 
     `;
 
-  }else{
+    app.innerHTML = html;
 
-    html+=`
+    return;
 
-      <div class="pattern-grid">
-
-    `;
+  }
 
 
-    c.patterns.forEach(function(p,pIndex){
-
-      const pp=priorityMark(p.priority);
-
-      html+=`
-
-        <div class="pattern-card">
-
-          <button
-            class="pattern-priority ${pp.className}"
-            data-action="toggle-pattern-priority"
-            data-pattern="${pIndex}">
-            ${pp.mark}
-          </button>
-
-          ${
-            p.image
-            ?
-            `
-              <img
-                class="pattern-image"
-                src="${p.image}"
-                data-photo="${p.image}">
-            `
-            :
-            `
-              <div class="pattern-empty">
-                画像なし
-              </div>
-            `
-          }
-
-          <div class="pattern-info">
-
-            <div class="pattern-name">
-              ${escapeHTML(p.name)}
-            </div>
-
-            <div class="goods-list">
-
-      `;
+  html += `<div class="pattern-grid">`;
 
 
-      if(p.goods.length===0){
+  character.patterns.forEach(pattern => {
 
-        html+=`
+    html += `
 
-          <div style="font-size:12px;color:#aaa;">
-            グッズなし
+      <div class="pattern-card">
+
+        ${
+          pattern.image
+          ?
+          `<img
+            class="pattern-image"
+            src="${pattern.image}"
+            data-photo="${pattern.image}">`
+          :
+          `<div class="pattern-empty">
+            No Image
+          </div>`
+        }
+
+        <button
+          class="pattern-priority"
+          data-action="toggle-pattern-priority"
+          data-pattern-id="${pattern.id}">
+          ${priorityMark(pattern.priority)}
+        </button>
+
+        <div class="pattern-info">
+
+          <div class="pattern-name">
+            ${escapeHTML(pattern.name)}
           </div>
 
-        `;
+          <div class="goods-list">
 
-      }else{
+            ${
+              pattern.goods.length
+              ?
+              pattern.goods.map(goods => `
 
-        p.goods.forEach(function(g,gIndex){
+                <div
+                  class="goods-item"
+                  data-goods-id="${goods.id}"
+                  data-pattern-id="${pattern.id}">
 
-          const gp=priorityMark(g.priority);
+                  ${
+                    goods.image
+                    ?
+                    `<img
+                      class="goods-thumb"
+                      src="${goods.image}"
+                      data-photo="${goods.image}">`
+                    :
+                    `<div
+                      class="goods-thumb"
+                      style="
+                        display:flex;
+                        align-items:center;
+                        justify-content:center;
+                        color:#aaa;
+                        font-size:8px;
+                      ">
+                      No
+                    </div>`
+                  }
 
-          html+=`
+                  <div class="goods-name">
+                    ${escapeHTML(goods.name)}
+                  </div>
 
-            <div
-              class="goods-item"
-              data-goods-pattern="${pIndex}"
-              data-goods-index="${gIndex}">
+                  <button
+                    class="priority-mark"
+                    data-action="toggle-goods-priority"
+                    data-pattern-id="${pattern.id}"
+                    data-goods-id="${goods.id}">
+                    ${priorityMark(goods.priority)}
+                  </button>
 
-              ${
-                g.image
-                ?
-                `
-                  <img
-                    class="goods-thumb"
-                    src="${g.image}"
-                    data-photo="${g.image}">
-                `
-                :
-                `
-                  <div class="goods-thumb"></div>
-                `
-              }
+                </div>
 
-              <div class="goods-name">
-                ${escapeHTML(g.name)}
-              </div>
+              `).join("")
+              :
+              `<div
+                style="
+                  color:#aaa;
+                  font-size:11px;
+                  padding:5px;
+                ">
+                グッズなし
+              </div>`
+            }
 
-              <button
-                class="priority-mark ${gp.className}"
-                data-action="toggle-goods-priority"
-                data-pattern="${pIndex}"
-                data-goods="${gIndex}">
-                ${gp.mark}
-              </button>
+          </div>
 
-            </div>
+          <div class="small-buttons">
 
-          `;
+            <button
+              data-action="add-goods"
+              data-pattern-id="${pattern.id}">
+              ＋ グッズ
+            </button>
 
-        });
-
-      }
-
-
-      html+=`
-
-            </div>
-
-            <div class="small-buttons">
-
-              <button
-                data-action="add-goods"
-                data-pattern="${pIndex}">
-                ＋グッズ
-              </button>
-
-              <button
-                data-action="edit-pattern"
-                data-pattern="${pIndex}">
-                編集
-              </button>
-
-              <button
-                data-action="delete-pattern"
-                data-pattern="${pIndex}">
-                削除
-              </button>
-
-            </div>
+            <button
+              data-action="edit-pattern"
+              data-pattern-id="${pattern.id}">
+              編集
+            </button>
 
           </div>
 
         </div>
 
-      `;
+      </div>
 
-    });
+    `;
+
+  });
 
 
-    html+=`</div>`;
+  html += `</div>`;
+
+  app.innerHTML = html;
+
+}
+
+
+/* =========================
+   モーダル共通
+========================= */
+
+function showModal(id){
+
+  document
+    .getElementById(id)
+    .classList.add("show");
+
+}
+
+
+function hideModal(id){
+
+  document
+    .getElementById(id)
+    .classList.remove("show");
+
+}
+
+
+function resetFileInput(id){
+
+  const input =
+    document.getElementById(id);
+
+  if(input){
+
+    input.value = "";
 
   }
 
+}
 
-  app.innerHTML=html;
+
+/* =========================
+   キャラ追加
+========================= */
+
+function openAddCharacter(){
+
+  editingCharacterId = null;
+
+  document.getElementById(
+    "characterModalTitle"
+  ).textContent =
+    "キャラを追加";
+
+  document.getElementById(
+    "characterName"
+  ).value = "";
+
+  document.getElementById(
+    "characterColor"
+  ).value = "#aaaaaa";
+
+  document.getElementById(
+    "characterColorHex"
+  ).value = "#AAAAAA";
+
+  document.getElementById(
+    "colorPreview"
+  ).style.background =
+    "#aaaaaa";
+
+  resetFileInput(
+    "characterImage"
+  );
+
+  const preview =
+    document.getElementById(
+      "characterPreview"
+    );
+
+  preview.src = "";
+  preview.style.display = "none";
+
+  document.getElementById(
+    "deleteCharacterButton"
+  ).style.display = "none";
+
+  showModal("characterModal");
 
 }
 
@@ -1986,234 +2032,255 @@ function renderCharacter(){
    キャラ編集
 ========================= */
 
-function setColorPicker(color){
+function openEditCharacter(){
 
-  let value=color;
-
-  if(
-    !/^#[0-9a-fA-F]{6}$/.test(value)
-  ){
-
-    value="#aaaaaa";
-
-  }
-
-  document
-    .getElementById("characterColor")
-    .value=value;
-
-  document
-    .getElementById("characterColorHex")
-    .value=value.toUpperCase();
-
-  document
-    .getElementById("colorPreview")
-    .style.background=value;
-
-}
-
-
-function openCharacterEditor(index){
-
-  editingCharacter=index;
-
-  const name=
-    document.getElementById(
-      "characterName"
+  const character =
+    data.characters.find(
+      c => c.id === currentCharacterId
     );
 
-  const image=
-    document.getElementById(
-      "characterImage"
-    );
+  if(!character) return;
 
-  const preview=
+  editingCharacterId =
+    character.id;
+
+  document.getElementById(
+    "characterModalTitle"
+  ).textContent =
+    "キャラを編集";
+
+  document.getElementById(
+    "characterName"
+  ).value =
+    character.name || "";
+
+  document.getElementById(
+    "characterColor"
+  ).value =
+    character.color || "#aaaaaa";
+
+  document.getElementById(
+    "characterColorHex"
+  ).value =
+    character.color || "#AAAAAA";
+
+  document.getElementById(
+    "colorPreview"
+  ).style.background =
+    character.color || "#aaaaaa";
+
+  resetFileInput(
+    "characterImage"
+  );
+
+  const preview =
     document.getElementById(
       "characterPreview"
     );
 
-  const del=
-    document.getElementById(
-      "deleteCharacterButton"
-    );
+  if(character.image){
 
+    preview.src =
+      character.image;
 
-  if(index===-1){
-
-    document.getElementById(
-      "characterModalTitle"
-    ).textContent="キャラを追加";
-
-    name.value="";
-    image.value="";
-    preview.src="";
-    preview.style.display="none";
-    del.style.display="none";
-
-    setColorPicker("#aaaaaa");
+    preview.style.display =
+      "block";
 
   }else{
 
-    const c=data[index];
+    preview.src = "";
 
-    document.getElementById(
-      "characterModalTitle"
-    ).textContent="キャラを編集";
-
-    name.value=c.name;
-    image.value="";
-
-    if(c.image){
-
-      preview.src=c.image;
-      preview.style.display="block";
-
-    }else{
-
-      preview.style.display="none";
-
-    }
-
-    del.style.display="block";
-
-    setColorPicker(c.color);
+    preview.style.display =
+      "none";
 
   }
 
+  document.getElementById(
+    "deleteCharacterButton"
+  ).style.display =
+    "block";
 
-  openModal("characterModal");
+  showModal("characterModal");
 
 }
 
 
+/* =========================
+   キャラ保存
+========================= */
+
 async function saveCharacter(){
 
-  const name=
-    document
-      .getElementById("characterName")
-      .value
-      .trim();
+  const name =
+    document.getElementById(
+      "characterName"
+    ).value.trim();
 
   if(!name){
 
-    alert("キャラ名を入力してね！");
+    alert("キャラ名を入力してください");
+
     return;
 
   }
 
+  const colorInput =
+    document.getElementById(
+      "characterColor"
+    );
 
-  let color=
-    document
-      .getElementById("characterColor")
-      .value;
+  const colorHex =
+    document.getElementById(
+      "characterColorHex"
+    ).value.trim();
 
+  let color =
+    colorInput.value;
 
-  const hex=
-    document
-      .getElementById("characterColorHex")
-      .value
-      .trim();
+  if(/^#[0-9A-Fa-f]{6}$/.test(colorHex)){
 
-
-  if(/^#[0-9a-fA-F]{6}$/.test(hex)){
-
-    color=hex;
-
-  }
-
-
-  const file=
-    document
-      .getElementById("characterImage")
-      .files[0];
-
-
-  let image="";
-
-
-  if(editingCharacter!==-1){
-
-    image=
-      data[editingCharacter].image||"";
+    color =
+      colorHex;
 
   }
 
 
-  if(file){
+  const file =
+    document.getElementById(
+      "characterImage"
+    ).files[0];
 
-    image=await compressImage(file);
 
-  }
+  if(editingCharacterId){
 
+    const character =
+      data.characters.find(
+        c => c.id === editingCharacterId
+      );
 
-  if(editingCharacter===-1){
+    if(!character) return;
 
-    data.push({
+    character.name =
+      name;
 
-      name:name,
-      image:image,
-      color:color,
+    character.color =
+      color;
+
+    if(file){
+
+      character.image =
+        await fileToDataURL(file);
+
+    }
+
+  }else{
+
+    data.characters.push({
+
+      id:createId(),
+
+      name,
+
+      image:
+        file
+        ?
+        await fileToDataURL(file)
+        :
+        "",
+
+      color,
+
       patterns:[]
 
     });
 
-  }else{
-
-    const old=data[editingCharacter];
-
-    data[editingCharacter]={
-
-      name:name,
-      image:image,
-      color:color,
-      patterns:old.patterns||[]
-
-    };
-
   }
 
 
-  if(!await save())return;
+  await saveData();
 
-
-  closeModal("characterModal");
-
-  currentCharacter=null;
+  hideModal("characterModal");
 
   render();
 
 }
 
 
+/* =========================
+   キャラ削除
+========================= */
+
 async function deleteCharacter(){
 
-  if(editingCharacter<0)return;
+  if(!editingCharacterId) return;
 
-  const c=data[editingCharacter];
+  const character =
+    data.characters.find(
+      c => c.id === editingCharacterId
+    );
 
+  if(!character) return;
 
   if(!confirm(
-    "「"+c.name+
-    "」を削除する？\n\n"+
-    "このキャラの絵柄・グッズもすべて削除されます。"
-  ))return;
+    `「${character.name}」を削除しますか？\n登録した絵柄・グッズもすべて削除されます。`
+  )){
 
+    return;
 
-  data.splice(
-    editingCharacter,
-    1
-  );
+  }
 
+  data.characters =
+    data.characters.filter(
+      c => c.id !== editingCharacterId
+    );
 
-  if(!await save())return;
+  currentCharacterId = null;
+  editingCharacterId = null;
 
+  await saveData();
 
-  closeModal("characterModal");
-
-  editingCharacter=-1;
-  currentCharacter=null;
+  hideModal("characterModal");
 
   render();
+
+}
+
+
+/* =========================
+   絵柄追加
+========================= */
+
+function openAddPattern(){
+
+  editingPatternId = null;
+
+  document.getElementById(
+    "patternModalTitle"
+  ).textContent =
+    "絵柄を追加";
+
+  document.getElementById(
+    "patternName"
+  ).value = "";
+
+  resetFileInput(
+    "patternImage"
+  );
+
+  const preview =
+    document.getElementById(
+      "patternPreview"
+    );
+
+  preview.src = "";
+  preview.style.display = "none";
+
+  document.getElementById(
+    "deletePatternButton"
+  ).style.display =
+    "none";
+
+  showModal("patternModal");
 
 }
 
@@ -2222,534 +2289,647 @@ async function deleteCharacter(){
    絵柄編集
 ========================= */
 
-function openPatternEditor(index){
+function openEditPattern(patternId){
 
-  editingPattern=index;
+  const character =
+    data.characters.find(
+      c => c.id === currentCharacterId
+    );
 
-  const c=data[currentCharacter];
+  if(!character) return;
 
-  const name=
-    document.getElementById("patternName");
+  const pattern =
+    character.patterns.find(
+      p => p.id === patternId
+    );
 
-  const image=
-    document.getElementById("patternImage");
+  if(!pattern) return;
 
-  const preview=
-    document.getElementById("patternPreview");
+  editingPatternId =
+    patternId;
 
-  const del=
-    document.getElementById("deletePatternButton");
+  document.getElementById(
+    "patternModalTitle"
+  ).textContent =
+    "絵柄を編集";
 
+  document.getElementById(
+    "patternName"
+  ).value =
+    pattern.name || "";
 
-  if(index===-1){
+  resetFileInput(
+    "patternImage"
+  );
 
+  const preview =
     document.getElementById(
-      "patternModalTitle"
-    ).textContent="絵柄を追加";
+      "patternPreview"
+    );
 
-    name.value="";
-    image.value="";
-    preview.src="";
-    preview.style.display="none";
-    del.style.display="none";
+  if(pattern.image){
+
+    preview.src =
+      pattern.image;
+
+    preview.style.display =
+      "block";
 
   }else{
 
-    const p=c.patterns[index];
+    preview.src = "";
 
-    document.getElementById(
-      "patternModalTitle"
-    ).textContent="絵柄を編集";
-
-    name.value=p.name;
-    image.value="";
-
-    if(p.image){
-
-      preview.src=p.image;
-      preview.style.display="block";
-
-    }else{
-
-      preview.style.display="none";
-
-    }
-
-    del.style.display="block";
+    preview.style.display =
+      "none";
 
   }
 
+  document.getElementById(
+    "deletePatternButton"
+  ).style.display =
+    "block";
 
-  openModal("patternModal");
+  showModal("patternModal");
 
 }
 
 
+/* =========================
+   絵柄保存
+========================= */
+
 async function savePattern(){
 
-  const name=
-    document
-      .getElementById("patternName")
-      .value
-      .trim();
+  const character =
+    data.characters.find(
+      c => c.id === currentCharacterId
+    );
+
+  if(!character) return;
+
+  const name =
+    document.getElementById(
+      "patternName"
+    ).value.trim();
 
   if(!name){
 
-    alert("絵柄名を入力してね！");
+    alert("絵柄名を入力してください");
+
     return;
 
   }
 
-
-  const c=data[currentCharacter];
-
-  const file=
-    document
-      .getElementById("patternImage")
-      .files[0];
-
-  let image="";
+  const file =
+    document.getElementById(
+      "patternImage"
+    ).files[0];
 
 
-  if(editingPattern!==-1){
+  if(editingPatternId){
 
-    image=
-      c.patterns[editingPattern]
-      .image||"";
+    const pattern =
+      character.patterns.find(
+        p => p.id === editingPatternId
+      );
 
-  }
+    if(!pattern) return;
 
+    pattern.name =
+      name;
 
-  if(file){
+    if(file){
 
-    image=await compressImage(file);
+      pattern.image =
+        await fileToDataURL(file);
 
-  }
+    }
 
+  }else{
 
-  if(editingPattern===-1){
+    character.patterns.push({
 
-    c.patterns.push({
+      id:createId(),
 
-      name:name,
-      image:image,
+      name,
+
+      image:
+        file
+        ?
+        await fileToDataURL(file)
+        :
+        "",
+
       priority:0,
+
       goods:[]
 
     });
 
-  }else{
-
-    c.patterns[editingPattern].name=name;
-    c.patterns[editingPattern].image=image;
-
   }
 
 
-  if(!await save())return;
+  await saveData();
 
-  closeModal("patternModal");
+  hideModal("patternModal");
 
-  renderCharacter();
-
-}
-
-
-async function deletePattern(index){
-
-  const p=
-    data[currentCharacter]
-      .patterns[index];
-
-
-  if(!confirm(
-    "「"+p.name+
-    "」を削除する？\n\n"+
-    "この絵柄のグッズもすべて削除されます。"
-  ))return;
-
-
-  data[currentCharacter]
-    .patterns
-    .splice(index,1);
-
-
-  if(!await save())return;
-
-  renderCharacter();
+  render();
 
 }
 
 
 /* =========================
-   グッズ
+   絵柄削除
 ========================= */
 
-function openGoodsEditor(
-  patternIndex,
-  goodsIndex
-){
+async function deletePattern(){
 
-  editingPattern=patternIndex;
-  editingGoods=goodsIndex;
+  const character =
+    data.characters.find(
+      c => c.id === currentCharacterId
+    );
 
+  if(!character ||
+     !editingPatternId){
 
-  const p=
-    data[currentCharacter]
-      .patterns[patternIndex];
-
-
-  const name=
-    document.getElementById("goodsName");
-
-  const image=
-    document.getElementById("goodsImage");
-
-  const preview=
-    document.getElementById("goodsPreview");
-
-  const priority=
-    document.getElementById("goodsPriority");
-
-  const del=
-    document.getElementById("deleteGoodsButton");
-
-
-  if(goodsIndex===-1){
-
-    document.getElementById(
-      "goodsModalTitle"
-    ).textContent="グッズを追加";
-
-    name.value="";
-    image.value="";
-    preview.src="";
-    preview.style.display="none";
-    priority.value="0";
-    del.style.display="none";
-
-  }else{
-
-    const g=p.goods[goodsIndex];
-
-    document.getElementById(
-      "goodsModalTitle"
-    ).textContent="グッズを編集";
-
-    name.value=g.name;
-    image.value="";
-
-    if(g.image){
-
-      preview.src=g.image;
-      preview.style.display="block";
-
-    }else{
-
-      preview.style.display="none";
-
-    }
-
-    priority.value=
-      String(
-        normalizePriority(g.priority)
-      );
-
-    del.style.display="block";
-
-  }
-
-
-  openModal("goodsModal");
-
-}
-
-
-async function saveGoods(){
-
-  const name=
-    document
-      .getElementById("goodsName")
-      .value
-      .trim();
-
-
-  if(!name){
-
-    alert("グッズ名を入力してね！");
     return;
 
   }
 
-
-  const p=
-    data[currentCharacter]
-      .patterns[editingPattern];
-
-
-  const file=
-    document
-      .getElementById("goodsImage")
-      .files[0];
-
-
-  let image="";
-
-
-  if(editingGoods!==-1){
-
-    image=
-      p.goods[editingGoods]
-      .image||"";
-
-  }
-
-
-  if(file){
-
-    image=await compressImage(file);
-
-  }
-
-
-  const priority=
-    Number(
-      document
-        .getElementById("goodsPriority")
-        .value
+  const pattern =
+    character.patterns.find(
+      p => p.id === editingPatternId
     );
 
+  if(!pattern) return;
 
-  const obj={
+  if(!confirm(
+    `「${pattern.name}」を削除しますか？\n登録したグッズもすべて削除されます。`
+  )){
 
-    name:name,
-    image:image,
-    priority:priority
+    return;
 
-  };
+  }
+
+  character.patterns =
+    character.patterns.filter(
+      p => p.id !== editingPatternId
+    );
+
+  editingPatternId = null;
+
+  await saveData();
+
+  hideModal("patternModal");
+
+  render();
+
+}
 
 
-  if(editingGoods===-1){
+/* =========================
+   絵柄優先度
+========================= */
 
-    p.goods.push(obj);
+async function togglePatternPriority(patternId){
+
+  const character =
+    data.characters.find(
+      c => c.id === currentCharacterId
+    );
+
+  if(!character) return;
+
+  const pattern =
+    character.patterns.find(
+      p => p.id === patternId
+    );
+
+  if(!pattern) return;
+
+  pattern.priority =
+    (normalizePriority(pattern.priority) + 1) % 3;
+
+  await saveData();
+
+  render();
+
+}
+
+
+/* =========================
+   グッズ追加
+========================= */
+
+function openAddGoods(patternId){
+
+  editingGoodsId = null;
+  editingPatternId = patternId;
+
+  document.getElementById(
+    "goodsModalTitle"
+  ).textContent =
+    "グッズを追加";
+
+  document.getElementById(
+    "goodsName"
+  ).value = "";
+
+  document.getElementById(
+    "goodsPriority"
+  ).value = "0";
+
+  resetFileInput(
+    "goodsImage"
+  );
+
+  const preview =
+    document.getElementById(
+      "goodsPreview"
+    );
+
+  preview.src = "";
+  preview.style.display = "none";
+
+  document.getElementById(
+    "deleteGoodsButton"
+  ).style.display =
+    "none";
+
+  showModal("goodsModal");
+
+}
+
+
+/* =========================
+   グッズ編集
+========================= */
+
+function openEditGoods(patternId,goodsId){
+
+  const character =
+    data.characters.find(
+      c => c.id === currentCharacterId
+    );
+
+  if(!character) return;
+
+  const pattern =
+    character.patterns.find(
+      p => p.id === patternId
+    );
+
+  if(!pattern) return;
+
+  const goods =
+    pattern.goods.find(
+      g => g.id === goodsId
+    );
+
+  if(!goods) return;
+
+  editingPatternId =
+    patternId;
+
+  editingGoodsId =
+    goodsId;
+
+  document.getElementById(
+    "goodsModalTitle"
+  ).textContent =
+    "グッズを編集";
+
+  document.getElementById(
+    "goodsName"
+  ).value =
+    goods.name || "";
+
+  document.getElementById(
+    "goodsPriority"
+  ).value =
+    String(
+      normalizePriority(
+        goods.priority
+      )
+    );
+
+  resetFileInput(
+    "goodsImage"
+  );
+
+  const preview =
+    document.getElementById(
+      "goodsPreview"
+    );
+
+  if(goods.image){
+
+    preview.src =
+      goods.image;
+
+    preview.style.display =
+      "block";
 
   }else{
 
-    p.goods[editingGoods]=obj;
+    preview.src = "";
+
+    preview.style.display =
+      "none";
+
+  }
+
+  document.getElementById(
+    "deleteGoodsButton"
+  ).style.display =
+    "block";
+
+  showModal("goodsModal");
+
+}
+
+
+/* =========================
+   グッズ保存
+========================= */
+
+async function saveGoods(){
+
+  const character =
+    data.characters.find(
+      c => c.id === currentCharacterId
+    );
+
+  if(!character) return;
+
+  const pattern =
+    character.patterns.find(
+      p => p.id === editingPatternId
+    );
+
+  if(!pattern) return;
+
+  const name =
+    document.getElementById(
+      "goodsName"
+    ).value.trim();
+
+  if(!name){
+
+    alert("グッズ名を入力してください");
+
+    return;
+
+  }
+
+  const priority =
+    normalizePriority(
+      document.getElementById(
+        "goodsPriority"
+      ).value
+    );
+
+  const file =
+    document.getElementById(
+      "goodsImage"
+    ).files[0];
+
+
+  if(editingGoodsId){
+
+    const goods =
+      pattern.goods.find(
+        g => g.id === editingGoodsId
+      );
+
+    if(!goods) return;
+
+    goods.name =
+      name;
+
+    goods.priority =
+      priority;
+
+    if(file){
+
+      goods.image =
+        await fileToDataURL(file);
+
+    }
+
+  }else{
+
+    pattern.goods.push({
+
+      id:createId(),
+
+      name,
+
+      image:
+        file
+        ?
+        await fileToDataURL(file)
+        :
+        "",
+
+      priority
+
+    });
 
   }
 
 
-  if(!await save())return;
+  await saveData();
 
-  closeModal("goodsModal");
+  hideModal("goodsModal");
 
-  renderCharacter();
+  render();
 
 }
 
 
-async function deleteGoods(
-  patternIndex,
-  goodsIndex
-){
+/* =========================
+   グッズ削除
+========================= */
 
-  const p=
-    data[currentCharacter]
-      .patterns[patternIndex];
+async function deleteGoods(){
 
-  const g=p.goods[goodsIndex];
+  const character =
+    data.characters.find(
+      c => c.id === currentCharacterId
+    );
 
+  if(!character) return;
 
-  if(!g)return;
+  const pattern =
+    character.patterns.find(
+      p => p.id === editingPatternId
+    );
 
+  if(!pattern) return;
+
+  const goods =
+    pattern.goods.find(
+      g => g.id === editingGoodsId
+    );
+
+  if(!goods) return;
 
   if(!confirm(
-    "「"+g.name+"」を削除する？"
-  ))return;
+    `「${goods.name}」を削除しますか？`
+  )){
 
+    return;
 
-  p.goods.splice(
-    goodsIndex,
-    1
-  );
+  }
 
+  pattern.goods =
+    pattern.goods.filter(
+      g => g.id !== editingGoodsId
+    );
 
-  if(!await save())return;
+  editingGoodsId = null;
 
-  closeModal("goodsModal");
+  await saveData();
 
-  editingGoods=-1;
+  hideModal("goodsModal");
 
-  renderCharacter();
+  render();
 
 }
 
 
 /* =========================
-   優先度変更
+   グッズ優先度
 ========================= */
-
-async function togglePatternPriority(index){
-
-  const p=
-    data[currentCharacter]
-      .patterns[index];
-
-
-  p.priority=
-    nextPriority(p.priority);
-
-
-  if(!await save())return;
-
-  renderCharacter();
-
-}
-
 
 async function toggleGoodsPriority(
-  patternIndex,
-  goodsIndex
+  patternId,
+  goodsId
 ){
 
-  const g=
-    data[currentCharacter]
-      .patterns[patternIndex]
-      .goods[goodsIndex];
+  const character =
+    data.characters.find(
+      c => c.id === currentCharacterId
+    );
 
+  if(!character) return;
 
-  g.priority=
-    nextPriority(g.priority);
+  const pattern =
+    character.patterns.find(
+      p => p.id === patternId
+    );
 
+  if(!pattern) return;
 
-  if(!await save())return;
+  const goods =
+    pattern.goods.find(
+      g => g.id === goodsId
+    );
 
-  renderCharacter();
+  if(!goods) return;
+
+  goods.priority =
+    (normalizePriority(goods.priority) + 1) % 3;
+
+  await saveData();
+
+  render();
 
 }
 
 
 /* =========================
-   スクショ用
+   写真拡大
 ========================= */
 
-function makeShotGoods(goods){
+function openPhoto(src){
 
-  const gp=
-    priorityMark(goods.priority);
+  if(!src) return;
 
+  document.getElementById(
+    "photoLarge"
+  ).src = src;
 
-  return `
-
-    <div class="shot-goods-item">
-
-      ${
-        goods.image
-        ?
-        `
-          <img
-            class="shot-goods-thumb"
-            src="${goods.image}">
-        `
-        :
-        `
-          <div class="shot-goods-no-image">
-            画像なし
-          </div>
-        `
-      }
-
-      <div class="shot-goods-info">
-
-        <div class="shot-goods-name">
-          ${escapeHTML(goods.name)}
-        </div>
-
-      </div>
-
-      <div class="shot-goods-priority">
-        ${gp.mark}
-      </div>
-
-    </div>
-
-  `;
+  document.getElementById(
+    "photoView"
+  ).classList.add("show");
 
 }
 
 
-function makeShotPatternCard(
-  pattern,
-  goodsList
+function closePhoto(){
+
+  document.getElementById(
+    "photoView"
+  ).classList.remove("show");
+
+}
+
+
+/* =========================
+   スクショ画面
+========================= */
+
+function openScreenshot(
+  characterId,
+  mode
 ){
 
-  return `
+  const character =
+    data.characters.find(
+      c => c.id === characterId
+    );
 
-    <div class="shot-pattern-card">
+  if(!character) return;
 
-      <div class="shot-pattern-side">
+  currentShotCharacterId =
+    characterId;
 
-        ${
-          pattern.image
-          ?
-          `
-            <img
-              class="shot-pattern-main-image"
-              src="${pattern.image}">
-          `
-          :
-          `
-            <div class="shot-pattern-no-image">
-              画像なし
-            </div>
-          `
-        }
+  currentShotMode =
+    mode;
 
-        <div class="shot-pattern-title">
-          ${escapeHTML(pattern.name)}
-        </div>
+  selectedShotTypes = [];
 
-      </div>
+  renderScreenshot();
 
-
-      <div class="shot-goods-list">
-
-        ${
-          goodsList.map(function(g){
-
-            return makeShotGoods(g);
-
-          }).join("")
-        }
-
-      </div>
-
-    </div>
-
-  `;
+  document.getElementById(
+    "screenshotView"
+  ).classList.add("show");
 
 }
 
 
-function getGoodsTypes(c){
+function closeScreenshot(){
 
-  const result=[];
-  const seen=new Set();
+  document.getElementById(
+    "screenshotView"
+  ).classList.remove("show");
+
+}
 
 
-  c.patterns.forEach(function(p){
+/* =========================
+   種類取得
+========================= */
 
-    p.goods.forEach(function(g){
+function getGoodsTypes(character){
 
-      const name=g.name.trim();
+  const types = [];
 
-      if(!name)return;
+  character.patterns.forEach(pattern => {
 
-      if(!seen.has(name)){
+    pattern.goods.forEach(goods => {
 
-        seen.add(name);
-        result.push(name);
+      const name =
+        String(goods.name || "").trim();
+
+      if(
+        name &&
+        !types.includes(name)
+      ){
+
+        types.push(name);
 
       }
 
@@ -2757,62 +2937,64 @@ function getGoodsTypes(c){
 
   });
 
-
-  return result;
+  return types;
 
 }
 
 
+/* =========================
+   スクショ生成
+========================= */
+
 function renderScreenshot(){
 
-  const c=data[currentCharacter];
+  const character =
+    data.characters.find(
+      c => c.id === currentShotCharacterId
+    );
 
-  if(!c)return;
+  if(!character) return;
+
+  const content =
+    document.getElementById(
+      "screenshotContent"
+    );
 
 
-  let html=`
+  let html = `
 
     <div class="shot-sheet">
 
       <div class="shot-title">
-        求め絵柄まとめ
+        ${escapeHTML(character.name)}
       </div>
 
       <div class="shot-priority">
 
-        <span class="normal">
-          ☆ 通常
-        </span>
-
-        <span class="high">
-          ★ 優先
-        </span>
-
-        <span class="top">
-          ⭐️ 最優先
-        </span>
+        <span>☆ 通常</span>
+        <span>★ 優先</span>
+        <span>⭐️ 最優先</span>
 
       </div>
 
   `;
 
 
-  /*
-     種類別スクショの場合だけ、
-     選択欄はスクショの外側に置く。
-     画像そのものには表示しない。
-  */
+  /* =========================
+     種類選択
+  ========================= */
 
-  if(screenshotMode==="type"){
+  if(currentShotMode === "type"){
 
-    const types=getGoodsTypes(c);
+    const types =
+      getGoodsTypes(character);
 
-    html+=`
+    html += `
 
       <div class="shot-type-selector">
 
         <div class="shot-type-title">
-          表示するグッズ種類を選択
+          スクショするグッズ種類を選択
         </div>
 
         <div class="shot-type-list">
@@ -2820,45 +3002,28 @@ function renderScreenshot(){
     `;
 
 
-    if(types.length===0){
+    types.forEach(type => {
 
-      html+=`
+      const selected =
+        selectedShotTypes.includes(type);
 
-        <div
-          style="font-size:12px;color:#aaa;">
-          登録されているグッズがありません
-        </div>
+      html += `
+
+        <button
+          class="shot-type-chip ${
+            selected ? "selected" : ""
+          }"
+          data-action="toggle-shot-type"
+          data-type="${escapeHTML(type)}">
+          ${escapeHTML(type)}
+        </button>
 
       `;
 
-    }else{
-
-      types.forEach(function(type){
-
-        const selected=
-          selectedShotTypes.includes(type);
+    });
 
 
-        html+=`
-
-          <button
-            class="shot-type-chip ${
-              selected ? "selected" : ""
-            }"
-            data-shot-type="${escapeHTML(type)}">
-
-            ${escapeHTML(type)}
-
-          </button>
-
-        `;
-
-      });
-
-    }
-
-
-    html+=`
+    html += `
 
         </div>
 
@@ -2869,70 +3034,137 @@ function renderScreenshot(){
   }
 
 
-  html+=`
+  html += `
 
       <div class="shot-pattern-grid">
 
   `;
 
 
-  let count=0;
+  let hasAny = false;
 
 
-  c.patterns.forEach(function(pattern){
+  character.patterns.forEach(pattern => {
 
-    let goodsList=[];
+    let goodsList =
+      [...pattern.goods];
 
 
-    if(screenshotMode==="all"){
+    if(currentShotMode === "type"){
 
-      goodsList=pattern.goods.slice();
+      goodsList =
+        goodsList.filter(goods => {
 
-    }else{
+          return selectedShotTypes.includes(
+            goods.name
+          );
 
-      goodsList=
-        pattern.goods.filter(
-          function(goods){
-
-            return selectedShotTypes.includes(
-              goods.name.trim()
-            );
-
-          }
-        );
+        });
 
     }
 
 
-    if(goodsList.length===0)return;
+    if(!goodsList.length){
+
+      return;
+
+    }
 
 
-    count++;
+    hasAny = true;
 
 
-    html+=
-      makeShotPatternCard(
-        pattern,
-        goodsList
-      );
+    html += `
+
+      <div class="shot-pattern-card">
+
+        <div class="shot-pattern-side">
+
+          ${
+            pattern.image
+            ?
+            `<img
+              class="shot-pattern-main-image"
+              src="${pattern.image}"
+              data-photo="${pattern.image}">`
+            :
+            `<div class="shot-pattern-no-image">
+              No Image
+            </div>`
+          }
+
+          <div class="shot-pattern-title">
+            ${escapeHTML(pattern.name)}
+          </div>
+
+        </div>
+
+        <div class="shot-goods-list">
+
+    `;
+
+
+    goodsList.forEach(goods => {
+
+      html += `
+
+        <div class="shot-goods-item">
+
+          ${
+            goods.image
+            ?
+            `<img
+              class="shot-goods-thumb"
+              src="${goods.image}"
+              data-photo="${goods.image}">`
+            :
+            `<div class="shot-goods-no-image">
+              No
+            </div>`
+          }
+
+          <div class="shot-goods-info">
+
+            <div class="shot-goods-name">
+              ${escapeHTML(goods.name)}
+            </div>
+
+          </div>
+
+          <div class="shot-goods-priority">
+            ${priorityMark(goods.priority)}
+          </div>
+
+        </div>
+
+      `;
+
+    });
+
+
+    html += `
+
+        </div>
+
+      </div>
+
+    `;
 
   });
 
 
-  if(count===0){
+  if(!hasAny){
 
-    html+=`
+    html += `
 
       <div class="shot-empty">
-
         ${
-          screenshotMode==="type"
+          currentShotMode === "type"
           ?
-          "表示するグッズ種類を選択してください"
+          "グッズ種類を選択してください"
           :
-          "グッズがありません"
+          "まだグッズが登録されていません"
         }
-
       </div>
 
     `;
@@ -2940,7 +3172,7 @@ function renderScreenshot(){
   }
 
 
-  html+=`
+  html += `
 
       </div>
 
@@ -2949,69 +3181,34 @@ function renderScreenshot(){
   `;
 
 
-  document
-    .getElementById("screenshotContent")
-    .innerHTML=html;
+  content.innerHTML =
+    html;
 
 }
 
 
-function openScreenshot(mode){
-
-  screenshotMode=mode;
-
-
-  const c=data[currentCharacter];
-
-  if(!c)return;
-
-
-  if(mode==="type"){
-
-    const types=getGoodsTypes(c);
-
-    selectedShotTypes=
-      selectedShotTypes.filter(
-        function(type){
-
-          return types.includes(type);
-
-        }
-      );
-
-  }else{
-
-    selectedShotTypes=[];
-
-  }
-
-
-  renderScreenshot();
-
-
-  document
-    .getElementById("screenshotView")
-    .classList.add("show");
-
-}
-
+/* =========================
+   スクショ保存
+========================= */
 
 async function saveScreenshot(){
 
-  const target=
+  const target =
     document.getElementById(
       "screenshotContent"
     );
 
+  if(!target){
 
-  if(!target)return;
+    return;
+
+  }
 
 
-  if(typeof html2canvas==="undefined"){
+  if(typeof html2canvas === "undefined"){
 
     alert(
-      "画像保存機能を読み込み中です。\n"+
-      "もう一度押してみてね！"
+      "画像保存機能を読み込めていません"
     );
 
     return;
@@ -3019,41 +3216,76 @@ async function saveScreenshot(){
   }
 
 
+  const button =
+    document.querySelector(
+      '[data-action="save-screenshot"]'
+    );
+
+  if(button){
+
+    button.disabled = true;
+
+    button.textContent =
+      "📸 保存中…";
+
+  }
+
+
   try{
 
-    const canvas=
+    const canvas =
       await html2canvas(
         target,
         {
-          backgroundColor:"#eeeeee",
+          backgroundColor:"#ddd",
           scale:2,
-          useCORS:true,
-          logging:false
+          useCORS:true
         }
       );
 
 
-    const link=
+    const link =
       document.createElement("a");
 
+    const character =
+      data.characters.find(
+        c => c.id === currentShotCharacterId
+      );
 
-    link.download=
-      "求め絵柄まとめ.png";
+
+    const modeName =
+      currentShotMode === "type"
+      ?
+      "種類別"
+      :
+      "まとめ";
 
 
-    link.href=
+    link.download =
+      `Collection_${character?.name || "screenshot"}_${modeName}.png`;
+
+    link.href =
       canvas.toDataURL("image/png");
-
 
     link.click();
 
-  }catch(e){
+  }catch(error){
 
-    console.error(e);
+    console.error(error);
 
     alert(
-      "画像の保存に失敗しました。"
+      "画像の保存に失敗しました"
     );
+
+  }
+
+
+  if(button){
+
+    button.disabled = false;
+
+    button.textContent =
+      "📸 画像として保存";
 
   }
 
@@ -3061,179 +3293,30 @@ async function saveScreenshot(){
 
 
 /* =========================
-   写真
-========================= */
-
-function showPhoto(src){
-
-  if(!src)return;
-
-  document
-    .getElementById("photoLarge")
-    .src=src;
-
-  document
-    .getElementById("photoView")
-    .classList.add("show");
-
-}
-
-
-function closePhoto(){
-
-  document
-    .getElementById("photoView")
-    .classList.remove("show");
-
-}
-
-
-/* =========================
-   長押し削除
-========================= */
-
-let goodsTimer=null;
-let goodsTarget=null;
-
-
-function cancelLongPress(){
-
-  if(goodsTimer!==null){
-
-    clearTimeout(goodsTimer);
-    goodsTimer=null;
-
-  }
-
-  goodsTarget=null;
-
-}
-
-
-document.addEventListener(
-  "touchstart",
-  function(e){
-
-    const item=
-      e.target.closest(
-        ".goods-item"
-      );
-
-
-    if(!item)return;
-
-
-    if(
-      e.target.closest("button") ||
-      e.target.closest("img")
-    )return;
-
-
-    cancelLongPress();
-
-    goodsTarget=item;
-
-
-    goodsTimer=setTimeout(
-      async function(){
-
-        if(!goodsTarget)return;
-
-
-        const patternIndex=
-          Number(
-            goodsTarget.dataset.goodsPattern
-          );
-
-
-        const goodsIndex=
-          Number(
-            goodsTarget.dataset.goodsIndex
-          );
-
-
-        const p=
-          data[currentCharacter]
-            .patterns[patternIndex];
-
-
-        const g=
-          p&&p.goods
-          ?p.goods[goodsIndex]
-          :null;
-
-
-        if(!g){
-
-          cancelLongPress();
-          return;
-
-        }
-
-
-        if(confirm(
-          "「"+g.name+"」を削除する？"
-        )){
-
-          p.goods.splice(
-            goodsIndex,
-            1
-          );
-
-          await save();
-
-          renderCharacter();
-
-        }
-
-
-        cancelLongPress();
-
-      },
-      800
-    );
-
-  },
-  {passive:true}
-);
-
-
-document.addEventListener(
-  "touchend",
-  cancelLongPress,
-  {passive:true}
-);
-
-document.addEventListener(
-  "touchmove",
-  cancelLongPress,
-  {passive:true}
-);
-
-document.addEventListener(
-  "touchcancel",
-  cancelLongPress,
-  {passive:true}
-);
-
-
-/* =========================
-   クリック
+   クリック処理
 ========================= */
 
 document.addEventListener(
   "click",
-  function(e){
+  async e => {
 
-    const target=e.target;
+    const target =
+      e.target.closest(
+        "[data-action]"
+      );
 
 
-    if(target.dataset.photo){
+    /* 写真 */
 
-      e.stopPropagation();
+    const photo =
+      e.target.closest(
+        "[data-photo]"
+      );
 
-      showPhoto(
-        target.dataset.photo
+    if(photo){
+
+      openPhoto(
+        photo.dataset.photo
       );
 
       return;
@@ -3241,52 +3324,272 @@ document.addEventListener(
     }
 
 
-    const characterCard=
-      target.closest(
-        "[data-character]"
-      );
+    if(!target){
 
+      /* キャラカード */
 
-    if(
-      characterCard &&
-      !target.closest("button")
-    ){
-
-      currentCharacter=
-        Number(
-          characterCard.dataset.character
+      const card =
+        e.target.closest(
+          ".character-card"
         );
 
-      renderCharacter();
+      if(card){
+
+        currentCharacterId =
+          card.dataset.characterId;
+
+        render();
+
+      }
 
       return;
 
     }
 
 
-    const shotTypeButton=
-      target.closest(
-        "[data-shot-type]"
+    const action =
+      target.dataset.action;
+
+
+    if(action === "add-character"){
+
+      openAddCharacter();
+
+      return;
+
+    }
+
+
+    if(action === "edit-character"){
+
+      openEditCharacter();
+
+      return;
+
+    }
+
+
+    if(action === "delete-character"){
+
+      await deleteCharacter();
+
+      return;
+
+    }
+
+
+    if(action === "close-character"){
+
+      hideModal("characterModal");
+
+      return;
+
+    }
+
+
+    if(action === "save-character"){
+
+      await saveCharacter();
+
+      return;
+
+    }
+
+
+    if(action === "back-character"){
+
+      currentCharacterId = null;
+
+      render();
+
+      return;
+
+    }
+
+
+    if(action === "add-pattern"){
+
+      openAddPattern();
+
+      return;
+
+    }
+
+
+    if(action === "edit-pattern"){
+
+      openEditPattern(
+        target.dataset.patternId
       );
 
+      return;
 
-    if(shotTypeButton){
+    }
 
-      const type=
-        shotTypeButton.dataset.shotType;
 
+    if(action === "delete-pattern-modal"){
+
+      await deletePattern();
+
+      return;
+
+    }
+
+
+    if(action === "close-pattern"){
+
+      hideModal("patternModal");
+
+      return;
+
+    }
+
+
+    if(action === "save-pattern"){
+
+      await savePattern();
+
+      return;
+
+    }
+
+
+    if(action === "toggle-pattern-priority"){
+
+      await togglePatternPriority(
+        target.dataset.patternId
+      );
+
+      return;
+
+    }
+
+
+    if(action === "add-goods"){
+
+      openAddGoods(
+        target.dataset.patternId
+      );
+
+      return;
+
+    }
+
+
+    if(action === "edit-goods"){
+
+      openEditGoods(
+        target.dataset.patternId,
+        target.dataset.goodsId
+      );
+
+      return;
+
+    }
+
+
+    if(action === "delete-goods"){
+
+      await deleteGoods();
+
+      return;
+
+    }
+
+
+    if(action === "close-goods"){
+
+      hideModal("goodsModal");
+
+      return;
+
+    }
+
+
+    if(action === "save-goods"){
+
+      await saveGoods();
+
+      return;
+
+    }
+
+
+    if(action === "toggle-goods-priority"){
+
+      await toggleGoodsPriority(
+        target.dataset.patternId,
+        target.dataset.goodsId
+      );
+
+      return;
+
+    }
+
+
+    if(action === "close-photo"){
+
+      closePhoto();
+
+      return;
+
+    }
+
+
+    if(action === "screenshot-all"){
+
+      openScreenshot(
+        currentCharacterId,
+        "all"
+      );
+
+      return;
+
+    }
+
+
+    if(action === "screenshot-type"){
+
+      openScreenshot(
+        currentCharacterId,
+        "type"
+      );
+
+      return;
+
+    }
+
+
+    if(action === "close-screenshot"){
+
+      closeScreenshot();
+
+      return;
+
+    }
+
+
+    if(action === "save-screenshot"){
+
+      await saveScreenshot();
+
+      return;
+
+    }
+
+
+    if(action === "toggle-shot-type"){
+
+      const type =
+        target.dataset.type;
 
       if(
         selectedShotTypes.includes(type)
       ){
 
-        selectedShotTypes=
+        selectedShotTypes =
           selectedShotTypes.filter(
-            function(item){
-
-              return item!==type;
-
-            }
+            item => item !== type
           );
 
       }else{
@@ -3295,244 +3598,97 @@ document.addEventListener(
 
       }
 
-
       renderScreenshot();
 
       return;
 
     }
 
+  }
+);
 
-    const button=
-      target.closest(
-        "[data-action]"
+
+/* =========================
+   画像プレビュー
+========================= */
+
+document.getElementById(
+  "characterImage"
+).addEventListener(
+  "change",
+  async e => {
+
+    const file =
+      e.target.files[0];
+
+    const preview =
+      document.getElementById(
+        "characterPreview"
       );
 
+    if(file){
 
-    if(!button)return;
+      preview.src =
+        await fileToDataURL(file);
 
-
-    const action=
-      button.dataset.action;
-
-
-    if(action==="add-character"){
-
-      openCharacterEditor(-1);
-      return;
+      preview.style.display =
+        "block";
 
     }
 
-
-    if(action==="close-character"){
-
-      closeModal("characterModal");
-      return;
-
-    }
+  }
+);
 
 
-    if(action==="save-character"){
+document.getElementById(
+  "patternImage"
+).addEventListener(
+  "change",
+  async e => {
 
-      saveCharacter();
-      return;
+    const file =
+      e.target.files[0];
 
-    }
-
-
-    if(action==="delete-character"){
-
-      deleteCharacter();
-      return;
-
-    }
-
-
-    if(action==="back"){
-
-      currentCharacter=null;
-      render();
-      return;
-
-    }
-
-
-    if(action==="edit-character"){
-
-      openCharacterEditor(
-        currentCharacter
+    const preview =
+      document.getElementById(
+        "patternPreview"
       );
 
-      return;
+    if(file){
+
+      preview.src =
+        await fileToDataURL(file);
+
+      preview.style.display =
+        "block";
 
     }
 
-
-    if(action==="add-pattern"){
-
-      openPatternEditor(-1);
-      return;
-
-    }
+  }
+);
 
 
-    if(action==="close-pattern"){
+document.getElementById(
+  "goodsImage"
+).addEventListener(
+  "change",
+  async e => {
 
-      closeModal("patternModal");
-      return;
+    const file =
+      e.target.files[0];
 
-    }
-
-
-    if(action==="save-pattern"){
-
-      savePattern();
-      return;
-
-    }
-
-
-    if(action==="edit-pattern"){
-
-      openPatternEditor(
-        Number(button.dataset.pattern)
+    const preview =
+      document.getElementById(
+        "goodsPreview"
       );
 
-      return;
+    if(file){
 
-    }
+      preview.src =
+        await fileToDataURL(file);
 
-
-    if(action==="delete-pattern"){
-
-      deletePattern(
-        Number(button.dataset.pattern)
-      );
-
-      return;
-
-    }
-
-
-    if(action==="delete-pattern-modal"){
-
-      if(editingPattern!==-1){
-
-        deletePattern(
-          editingPattern
-        );
-
-        closeModal("patternModal");
-
-      }
-
-      return;
-
-    }
-
-
-    if(action==="toggle-pattern-priority"){
-
-      togglePatternPriority(
-        Number(button.dataset.pattern)
-      );
-
-      return;
-
-    }
-
-
-    if(action==="add-goods"){
-
-      openGoodsEditor(
-        Number(button.dataset.pattern),
-        -1
-      );
-
-      return;
-
-    }
-
-
-    if(action==="close-goods"){
-
-      closeModal("goodsModal");
-      return;
-
-    }
-
-
-    if(action==="save-goods"){
-
-      saveGoods();
-      return;
-
-    }
-
-
-    if(action==="delete-goods"){
-
-      deleteGoods(
-        editingPattern,
-        editingGoods
-      );
-
-      return;
-
-    }
-
-
-    if(action==="toggle-goods-priority"){
-
-      toggleGoodsPriority(
-        Number(button.dataset.pattern),
-        Number(button.dataset.goods)
-      );
-
-      return;
-
-    }
-
-
-    if(action==="close-photo"){
-
-      closePhoto();
-      return;
-
-    }
-
-
-    if(action==="screenshot-all"){
-
-      openScreenshot("all");
-      return;
-
-    }
-
-
-    if(action==="screenshot-type"){
-
-      openScreenshot("type");
-      return;
-
-    }
-
-
-    if(action==="close-screenshot"){
-
-      document
-        .getElementById("screenshotView")
-        .classList.remove("show");
-
-      return;
-
-    }
-
-
-    if(action==="save-screenshot"){
-
-      saveScreenshot();
-      return;
+      preview.style.display =
+        "block";
 
     }
 
@@ -3544,159 +3700,114 @@ document.addEventListener(
    カラー
 ========================= */
 
-document
-  .getElementById("characterColor")
-  .addEventListener(
-    "input",
-    function(){
+document.getElementById(
+  "characterColor"
+).addEventListener(
+  "input",
+  e => {
 
-      const value=
-        this.value.toUpperCase();
+    const color =
+      e.target.value;
 
+    document.getElementById(
+      "characterColorHex"
+    ).value =
+      color.toUpperCase();
 
-      document
-        .getElementById(
-          "characterColorHex"
-        )
-        .value=value;
+    document.getElementById(
+      "colorPreview"
+    ).style.background =
+      color;
 
-
-      document
-        .getElementById(
-          "colorPreview"
-        )
-        .style.background=value;
-
-    }
-  );
-
-
-document
-  .getElementById("characterColorHex")
-  .addEventListener(
-    "input",
-    function(){
-
-      let value=
-        this.value.trim();
-
-
-      if(!value.startsWith("#")){
-
-        value="#"+value;
-
-      }
-
-
-      if(
-        /^#[0-9a-fA-F]{6}$/.test(value)
-      ){
-
-        value=value.toUpperCase();
-
-
-        document
-          .getElementById(
-            "characterColor"
-          )
-          .value=value;
-
-
-        document
-          .getElementById(
-            "colorPreview"
-          )
-          .style.background=value;
-
-      }
-
-    }
-  );
-
-
-/* =========================
-   モーダル外
-========================= */
-
-document
-  .querySelectorAll(".modal-bg")
-  .forEach(function(bg){
-
-    bg.addEventListener(
-      "click",
-      function(e){
-
-        if(e.target===bg){
-
-          bg.classList.remove("show");
-
-        }
-
-      }
-    );
-
-  });
-
-
-/* =========================
-   プレビュー
-========================= */
-
-function previewFile(
-  input,
-  preview
-){
-
-  input.addEventListener(
-    "change",
-    function(){
-
-      const file=input.files[0];
-
-
-      if(!file){
-
-        preview.style.display="none";
-        return;
-
-      }
-
-
-      const reader=new FileReader();
-
-
-      reader.onload=function(){
-
-        preview.src=reader.result;
-
-        preview.style.display="block";
-
-      };
-
-
-      reader.readAsDataURL(file);
-
-    }
-  );
-
-}
-
-
-previewFile(
-  document.getElementById("characterImage"),
-  document.getElementById("characterPreview")
+  }
 );
 
 
-previewFile(
-  document.getElementById("patternImage"),
-  document.getElementById("patternPreview")
+document.getElementById(
+  "characterColorHex"
+).addEventListener(
+  "input",
+  e => {
+
+    let value =
+      e.target.value.trim();
+
+    if(!value.startsWith("#")){
+
+      value =
+        "#" + value;
+
+    }
+
+    if(/^#[0-9A-Fa-f]{6}$/.test(value)){
+
+      document.getElementById(
+        "characterColor"
+      ).value =
+        value;
+
+      document.getElementById(
+        "colorPreview"
+      ).style.background =
+        value;
+
+    }
+
+  }
 );
 
 
-previewFile(
-  document.getElementById("goodsImage"),
-  document.getElementById("goodsPreview")
+/* =========================
+   モーダル外クリック
+========================= */
+
+document.querySelectorAll(
+  ".modal-bg"
+).forEach(modal => {
+
+  modal.addEventListener(
+    "click",
+    e => {
+
+      if(e.target === modal){
+
+        modal.classList.remove(
+          "show"
+        );
+
+      }
+
+    }
+  );
+
+});
+
+
+/* =========================
+   ESC
+========================= */
+
+document.addEventListener(
+  "keydown",
+  e => {
+
+    if(e.key !== "Escape") return;
+
+    closePhoto();
+
+    closeScreenshot();
+
+    document.querySelectorAll(
+      ".modal-bg.show"
+    ).forEach(modal => {
+
+      modal.classList.remove(
+        "show"
+      );
+
+    });
+
+  }
 );
 
 
@@ -3706,36 +3817,38 @@ previewFile(
 
 (async function(){
 
+  loadLocalData();
+
   try{
 
-    data=await safeLoad();
+    await openDB();
 
-    render();
+    await loadDBData();
 
-  }catch(e){
+    /*
+      IndexedDB側に何もなかった場合でも
+      localStorageのデータを保存しておく
+    */
 
-    console.error(e);
+    await saveData();
 
-    alert(
-      "保存機能の初期化に失敗しました。"
-    );
+  }catch(error){
 
-    data=[];
-
-    render();
+    console.error(error);
 
   }
 
-})();
+  render();
 
 })();
 
 </script>
 
 
+<!-- html2canvas -->
 <script
-src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js">
+  src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js">
 </script>
 
 </body>
-</html>
+</htm

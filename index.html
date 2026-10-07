@@ -2,7 +2,8 @@
 <html lang="ja">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
 <title>Collection データ救出</title>
 
 <style>
@@ -45,6 +46,12 @@ button{
   font-size:16px;
   font-weight:bold;
   cursor:pointer;
+  -webkit-tap-highlight-color:transparent;
+  touch-action:manipulation;
+}
+
+button:active{
+  transform:scale(.98);
 }
 
 #recover{
@@ -76,6 +83,11 @@ button{
 .ng{
   color:#c62828;
 }
+
+.note{
+  font-size:13px;
+  color:#777;
+}
 </style>
 </head>
 
@@ -83,191 +95,511 @@ button{
 
 <div class="box">
 
-<h1>📦 Collection データ救出</h1>
+  <h1>📦 Collection データ救出</h1>
 
-<p>
-前のCollectionに保存されているデータを探して、
-見つかったデータをそのままバックアップします。
-</p>
+  <p>
+    前のCollectionに保存されているデータを探して、
+    見つかったデータをそのままバックアップします。
+  </p>
 
-<p>
-<strong>⚠️ 保存データを書き換えたり削除したりしません。</strong>
-</p>
+  <p>
+    <strong>⚠️ 保存データを書き換えたり削除したりしません。</strong>
+  </p>
 
-<button id="recover">
-🔎 前のデータを探す
-</button>
+  <p class="note">
+    ※このページでは「探す」と「保存」だけを行います。
+  </p>
 
-<button id="download">
-💾 見つかったデータを保存する
-</button>
+  <button
+    id="recover"
+    type="button">
+    🔎 前のデータを探す
+  </button>
 
-<div id="result"></div>
+  <button
+    id="download"
+    type="button">
+    💾 見つかったデータを保存する
+  </button>
+
+  <div id="result"></div>
 
 </div>
 
+
 <script>
 
-const DB_NAME = "CollectionDB";
-const STORE_NAME = "appData";
-const DATA_KEY = "collectionData";
+(function(){
+
+"use strict";
+
+
+/* =========================================
+   基本設定
+========================================= */
+
+const TARGET_KEY = "collectionData";
 
 let recoveredData = null;
 
-const result =
-  document.getElementById("result");
+
+/* =========================================
+   要素
+========================================= */
+
+const recoverButton =
+  document.getElementById("recover");
 
 const downloadButton =
   document.getElementById("download");
 
+const result =
+  document.getElementById("result");
 
-/* =========================
+
+/* =========================================
    結果表示
-========================= */
+========================================= */
 
-function show(text,type=""){
+function show(message,type){
 
   result.style.display = "block";
-  result.className = type;
-  result.textContent = text;
+
+  result.className = type || "";
+
+  result.textContent = message;
 
 }
 
 
-/* =========================
-   IndexedDBを開く
-========================= */
+/* =========================================
+   データらしいか判定
+========================================= */
 
-function openDB(){
+function looksLikeCollectionData(value){
 
-  return new Promise((resolve,reject)=>{
+  if(!value){
+    return false;
+  }
 
-    const request =
-      indexedDB.open(DB_NAME);
+  if(Array.isArray(value)){
 
-    request.onerror = function(){
-
-      reject(request.error);
-
-    };
-
-    request.onsuccess = function(){
-
-      resolve(request.result);
-
-    };
-
-  });
-
-}
-
-
-/* =========================
-   appDataからデータ取得
-========================= */
-
-function getData(db){
-
-  return new Promise((resolve,reject)=>{
-
-    if(!db.objectStoreNames.contains(STORE_NAME)){
-
-      resolve(null);
-      return;
-
+    if(value.length === 0){
+      return false;
     }
 
-    try{
+    return value.some(function(item){
 
-      const transaction =
-        db.transaction(
-          STORE_NAME,
-          "readonly"
-        );
+      return (
+        item &&
+        typeof item === "object" &&
+        (
+          "name" in item ||
+          "patterns" in item ||
+          "goods" in item
+        )
+      );
 
-      const store =
-        transaction.objectStore(
-          STORE_NAME
-        );
+    });
 
-      const request =
-        store.get(DATA_KEY);
+  }
 
-      request.onsuccess = function(){
 
-        resolve(request.result);
+  if(typeof value === "object"){
 
-      };
+    return (
+      "name" in value ||
+      "patterns" in value ||
+      "goods" in value ||
+      "collectionData" in value
+    );
 
-      request.onerror = function(){
+  }
 
-        reject(request.error);
 
-      };
-
-    }catch(error){
-
-      reject(error);
-
-    }
-
-  });
+  return false;
 
 }
 
 
-/* =========================
-   データの中身を取り出す
-========================= */
+/* =========================================
+   JSONを安全に解析
+========================================= */
 
-function extractData(value){
+function tryParse(value){
 
-  if(value === undefined || value === null){
+  if(typeof value !== "string"){
+    return value;
+  }
+
+  try{
+
+    return JSON.parse(value);
+
+  }catch(e){
 
     return null;
 
   }
 
+}
 
-  /*
-    IndexedDBに
-    { value: ... }
-    で入っている場合
-  */
 
-  if(
-    typeof value === "object" &&
-    value !== null &&
-    Object.prototype.hasOwnProperty.call(
-      value,
-      "value"
-    )
-  ){
+/* =========================================
+   localStorageを探す
+========================================= */
 
-    value = value.value;
+function searchLocalStorage(){
+
+  const results = [];
+
+  try{
+
+    for(let i = 0; i < localStorage.length; i++){
+
+      const key =
+        localStorage.key(i);
+
+      if(!key){
+        continue;
+      }
+
+      const raw =
+        localStorage.getItem(key);
+
+      if(raw === null){
+        continue;
+      }
+
+      const parsed =
+        tryParse(raw);
+
+
+      /*
+        collectionDataは最優先
+      */
+
+      if(key === TARGET_KEY){
+
+        if(parsed !== null){
+
+          results.push({
+            source:"localStorage",
+            key:key,
+            data:parsed,
+            priority:1
+          });
+
+        }
+
+        continue;
+
+      }
+
+
+      /*
+        その他の保存データも確認
+      */
+
+      if(looksLikeCollectionData(parsed)){
+
+        results.push({
+          source:"localStorage",
+          key:key,
+          data:parsed,
+          priority:2
+        });
+
+      }
+
+    }
+
+  }catch(error){
+
+    console.log(
+      "localStorage確認エラー",
+      error
+    );
 
   }
 
+  return results;
 
-  /*
-    JSON文字列として
-    保存されている場合
-  */
+}
 
-  if(typeof value === "string"){
+
+/* =========================================
+   IndexedDBを1個確認
+========================================= */
+
+function searchIndexedDB(name){
+
+  return new Promise(function(resolve){
+
+    let finished = false;
+
+    function done(value){
+
+      if(finished){
+        return;
+      }
+
+      finished = true;
+
+      resolve(value);
+
+    }
+
 
     try{
 
-      value = JSON.parse(value);
+      const request =
+        indexedDB.open(name);
+
+
+      request.onerror =
+        function(){
+
+          done([]);
+
+        };
+
+
+      request.onsuccess =
+        function(){
+
+          const db =
+            request.result;
+
+          const found = [];
+
+
+          try{
+
+            const storeNames =
+              Array.from(db.objectStoreNames);
+
+
+            storeNames.forEach(function(storeName){
+
+              try{
+
+                const transaction =
+                  db.transaction(
+                    storeName,
+                    "readonly"
+                  );
+
+
+                const store =
+                  transaction.objectStore(
+                    storeName
+                  );
+
+
+                const requestAll =
+                  store.getAll();
+
+
+                requestAll.onsuccess =
+                  function(){
+
+                    const records =
+                      requestAll.result || [];
+
+
+                    records.forEach(function(record){
+
+                      /*
+                        collectionDataというキー
+                      */
+
+                      if(
+                        storeName === "appData" &&
+                        record &&
+                        typeof record === "object" &&
+                        record.key === TARGET_KEY
+                      ){
+
+                        let data =
+                          record.value;
+
+                        data =
+                          tryParse(data);
+
+
+                        if(data !== null){
+
+                          found.push({
+                            source:"IndexedDB",
+                            database:name,
+                            store:storeName,
+                            key:TARGET_KEY,
+                            data:data,
+                            priority:1
+                          });
+
+                        }
+
+                      }
+
+
+                      /*
+                        レコードそのものがCollectionデータの場合
+                      */
+
+                      if(
+                        looksLikeCollectionData(record)
+                      ){
+
+                        found.push({
+                          source:"IndexedDB",
+                          database:name,
+                          store:storeName,
+                          key:"",
+                          data:record,
+                          priority:2
+                        });
+
+                      }
+
+
+                      /*
+                        {value: ...} の形
+                      */
+
+                      if(
+                        record &&
+                        typeof record === "object" &&
+                        "value" in record
+                      ){
+
+                        const value =
+                          tryParse(record.value);
+
+
+                        if(
+                          looksLikeCollectionData(value)
+                        ){
+
+                          found.push({
+                            source:"IndexedDB",
+                            database:name,
+                            store:storeName,
+                            key:record.key || "",
+                            data:value,
+                            priority:1
+                          });
+
+                        }
+
+                      }
+
+                    });
+
+
+                    done(found);
+
+                  };
+
+
+                requestAll.onerror =
+                  function(){
+
+                    done(found);
+
+                  };
+
+              }catch(error){
+
+                console.log(
+                  "IndexedDB store error",
+                  error
+                );
+
+              }
+
+            });
+
+
+            /*
+              storeがない場合
+            */
+
+            if(storeNames.length === 0){
+
+              done([]);
+
+            }
+
+          }catch(error){
+
+            done([]);
+
+          }
+
+        };
+
 
     }catch(error){
 
-      /*
-        JSONでない文字列なら
-        そのままではバックアップ不能
-      */
+      done([]);
 
-      return null;
+    }
+
+  });
+
+}
+
+
+/* =========================================
+   IndexedDBを全部探す
+========================================= */
+
+async function searchIndexedDBAll(){
+
+  const results = [];
+
+  /*
+    Safariなどでdatabases()が使える場合
+  */
+
+  if(
+    indexedDB &&
+    typeof indexedDB.databases === "function"
+  ){
+
+    try{
+
+      const databases =
+        await indexedDB.databases();
+
+
+      for(
+        const database of databases
+      ){
+
+        if(!database || !database.name){
+          continue;
+        }
+
+
+        const found =
+          await searchIndexedDB(
+            database.name
+          );
+
+
+        results.push(...found);
+
+      }
+
+    }catch(error){
+
+      console.log(
+        "IndexedDB一覧取得エラー",
+        error
+      );
 
     }
 
@@ -275,114 +607,162 @@ function extractData(value){
 
 
   /*
-    配列でもオブジェクトでも
-    そのまま保持する
+    以前使っていた可能性があるDBも直接確認
   */
 
-  return value;
+  const knownNames = [
+    "CollectionDB"
+  ];
+
+
+  for(
+    const name of knownNames
+  ){
+
+    /*
+      すでに調べていても再確認してOK
+    */
+
+    const found =
+      await searchIndexedDB(name);
+
+
+    results.push(...found);
+
+  }
+
+
+  return results;
 
 }
 
 
-/* =========================
-   データ検索
-========================= */
+/* =========================================
+   重複削除
+========================================= */
 
-document.getElementById("recover").onclick =
-async function(){
+function removeDuplicates(list){
 
-  downloadButton.style.display = "none";
+  const result = [];
+
+  const seen = new Set();
+
+
+  list.forEach(function(item){
+
+    try{
+
+      const signature =
+        JSON.stringify(item.data);
+
+
+      if(seen.has(signature)){
+        return;
+      }
+
+
+      seen.add(signature);
+
+      result.push(item);
+
+    }catch(error){
+
+      result.push(item);
+
+    }
+
+  });
+
+
+  return result;
+
+}
+
+
+/* =========================================
+   データを探す
+========================================= */
+
+async function recover(){
+
+  downloadButton.style.display =
+    "none";
+
+  recoveredData = null;
+
+
+  recoverButton.disabled =
+    true;
+
+
+  recoverButton.textContent =
+    "🔎 探しています…";
+
 
   show(
     "🔎 前のデータを探しています…"
   );
 
+
   try{
 
-    const db = await openDB();
+    /*
+      まずlocalStorage
+    */
 
-    const rawData =
-      await getData(db);
-
-    db.close();
-
-
-    if(
-      rawData === null ||
-      rawData === undefined
-    ){
-
-      show(
-        "❌ 前のデータが見つかりませんでした。\n\n"+
-        "CollectionDB の appData / collectionData を確認しました。",
-        "ng"
-      );
-
-      return;
-
-    }
-
-
-    recoveredData =
-      extractData(rawData);
-
-
-    if(
-      recoveredData === null ||
-      recoveredData === undefined
-    ){
-
-      show(
-        "❌ データは見つかりましたが、内容を読み取れませんでした。",
-        "ng"
-      );
-
-      return;
-
-    }
+    const localResults =
+      searchLocalStorage();
 
 
     /*
-      件数確認
+      IndexedDB
     */
 
-    let count = 0;
-
-    if(Array.isArray(recoveredData)){
-
-      count =
-        recoveredData.length;
-
-    }
-    else if(
-      recoveredData &&
-      Array.isArray(
-        recoveredData.characters
-      )
-    ){
-
-      count =
-        recoveredData.characters.length;
-
-    }
+    const indexedResults =
+      await searchIndexedDBAll();
 
 
-    let json;
+    /*
+      合体
+    */
 
-    try{
+    let allResults =
+      localResults.concat(
+        indexedResults
+      );
 
-      json =
-        JSON.stringify(
-          recoveredData,
-          null,
-          2
+
+    allResults =
+      removeDuplicates(
+        allResults
+      );
+
+
+    /*
+      優先度順
+    */
+
+    allResults.sort(
+      function(a,b){
+
+        return (
+          a.priority -
+          b.priority
         );
 
-    }catch(error){
+      }
+    );
+
+
+    /* =====================================
+       見つからなかった
+    ===================================== */
+
+    if(allResults.length === 0){
 
       show(
-        "❌ データをJSONに変換できませんでした。\n\n"+
-        error.message,
+        "❌ 前のデータが見つかりませんでした。\n\n" +
+        "localStorage と IndexedDB を確認しました。",
         "ng"
       );
 
@@ -391,33 +771,71 @@ async function(){
     }
 
 
+    /* =====================================
+       データ発見
+    ===================================== */
+
     /*
-      ここではlocalStorageを
-      一切使わない！！
+      一番優先度の高いデータを採用
     */
 
-    window.__collectionBackupJSON =
-      json;
+    recoveredData =
+      allResults[0].data;
 
 
-    const sizeMB =
-      (
-        new Blob([json]).size /
-        1024 /
-        1024
-      ).toFixed(1);
+    let message =
+      "✅ データが見つかりました！\n\n";
+
+
+    message +=
+      "見つかった場所：\n";
+
+
+    allResults.forEach(
+      function(item,index){
+
+        message +=
+          "・";
+
+
+        if(item.source === "localStorage"){
+
+          message +=
+            "localStorage / " +
+            item.key;
+
+        }else{
+
+          message +=
+            "IndexedDB / " +
+            item.database +
+            " / " +
+            item.store;
+
+        }
+
+
+        if(index === 0){
+
+          message +=
+            " ← 使用するデータ";
+
+        }
+
+
+        message +=
+          "\n";
+
+      }
+    );
+
+
+    message +=
+      "\nこのデータをそのままバックアップできます。";
 
 
     show(
-      "✅ 前のデータを見つけました！！\n\n"+
-      "キャラクター数：約 " +
-      count +
-      "\n"+
-      "バックアップサイズ：約 " +
-      sizeMB +
-      " MB\n\n"+
-      "「💾 見つかったデータを保存する」を押してください。\n\n"+
-      "⚠️ このページでは既存データを変更・削除していません。",
+      message,
       "ok"
     );
 
@@ -430,29 +848,39 @@ async function(){
 
     console.error(error);
 
+
     show(
-      "❌ データ検索中にエラーが発生しました。\n\n"+
-      error.name +
-      "\n"+
-      error.message,
+      "⚠️ データ検索中にエラーが発生しました。\n\n" +
+      String(error),
       "ng"
     );
 
+  }finally{
+
+    recoverButton.disabled =
+      false;
+
+    recoverButton.textContent =
+      "🔎 前のデータを探す";
+
   }
 
-};
+}
 
 
-/* =========================
-   JSONとして保存
-========================= */
+/* =========================================
+   バックアップ保存
+========================================= */
 
-downloadButton.onclick = function(){
+function downloadBackup(){
 
-  if(!window.__collectionBackupJSON){
+  if(
+    recoveredData === null ||
+    recoveredData === undefined
+  ){
 
     show(
-      "❌ 保存するデータがありません。",
+      "❌ 保存できるデータがありません。",
       "ng"
     );
 
@@ -463,11 +891,31 @@ downloadButton.onclick = function(){
 
   try{
 
+    const backup = {
+
+      app:
+        "Collection",
+
+      createdAt:
+        new Date().toISOString(),
+
+      data:
+        recoveredData
+
+    };
+
+
+    const json =
+      JSON.stringify(
+        backup,
+        null,
+        2
+      );
+
+
     const blob =
       new Blob(
-        [
-          window.__collectionBackupJSON
-        ],
+        [json],
         {
           type:"application/json"
         }
@@ -475,37 +923,52 @@ downloadButton.onclick = function(){
 
 
     const url =
-      URL.createObjectURL(blob);
+      URL.createObjectURL(
+        blob
+      );
 
 
     const link =
-      document.createElement("a");
+      document.createElement(
+        "a"
+      );
 
-    link.href = url;
+
+    link.href =
+      url;
+
 
     link.download =
       "Collection_backup.json";
 
-    document.body.appendChild(link);
+
+    document.body.appendChild(
+      link
+    );
+
 
     link.click();
 
+
     link.remove();
 
+
     setTimeout(
-      ()=>{
-        URL.revokeObjectURL(url);
+      function(){
+
+        URL.revokeObjectURL(
+          url
+        );
+
       },
-      3000
+      1000
     );
 
 
     show(
-      "✅ バックアップファイルを作成しました！！\n\n"+
-      "ファイル名：Collection_backup.json\n\n"+
-      "iPhoneの場合は、表示されたファイルを\n"+
-      「ファイルに保存」してください。\n\n"+
-      "このファイルが確認できるまで、新しいCollectionには入れ替えないでください。",
+      "✅ バックアップを保存しました！\n\n" +
+      "ファイル名：Collection_backup.json\n\n" +
+      "このファイルは元データを書き換えません。",
       "ok"
     );
 
@@ -514,17 +977,78 @@ downloadButton.onclick = function(){
 
     console.error(error);
 
+
     show(
-      "❌ ファイル保存中にエラーが発生しました。\n\n"+
-      error.name +
-      "\n"+
-      error.message,
+      "❌ バックアップ保存に失敗しました。\n\n" +
+      String(error),
       "ng"
     );
 
   }
 
-};
+}
+
+
+/* =========================================
+   ボタン
+========================================= */
+
+/*
+  addEventListenerだけに頼らず、
+  onclickも設定して確実に反応させる
+*/
+
+recoverButton.onclick =
+  function(){
+
+    recover();
+
+  };
+
+
+downloadButton.onclick =
+  function(){
+
+    downloadBackup();
+
+  };
+
+
+/*
+  Safari対策
+*/
+
+recoverButton.addEventListener(
+  "touchend",
+  function(event){
+
+    event.preventDefault();
+
+    recover();
+
+  },
+  {
+    passive:false
+  }
+);
+
+
+downloadButton.addEventListener(
+  "touchend",
+  function(event){
+
+    event.preventDefault();
+
+    downloadBackup();
+
+  },
+  {
+    passive:false
+  }
+);
+
+
+})();
 
 </script>
 

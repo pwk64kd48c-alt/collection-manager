@@ -6,29 +6,19 @@
 <title>Collection</title>
 
 <style>
-*{
-  box-sizing:border-box;
-}
+*{box-sizing:border-box}
 
 body{
   margin:0;
   background:#eeeeee;
   color:#444;
   font-family:-apple-system,BlinkMacSystemFont,
-    "Helvetica Neue","Hiragino Kaku Gothic ProN",
-    "Yu Gothic",Meiryo,sans-serif;
+  "Helvetica Neue","Hiragino Kaku Gothic ProN",
+  "Yu Gothic",Meiryo,sans-serif;
 }
 
-button,
-input,
-select{
-  font:inherit;
-}
-
-button{
-  cursor:pointer;
-  border:none;
-}
+button,input,select{font:inherit}
+button{cursor:pointer;border:none}
 
 header{
   background:#fff;
@@ -70,10 +60,6 @@ main{
   border-radius:16px;
   padding:15px;
   margin-bottom:15px;
-}
-
-.add-main:active{
-  transform:scale(.98);
 }
 
 .back{
@@ -241,13 +227,8 @@ main{
   z-index:2;
 }
 
-.priority-star{
-  color:#555;
-}
-
-.priority-none{
-  color:#777;
-}
+.priority-star{color:#555}
+.priority-none{color:#777}
 
 .pattern-info{
   padding-top:9px;
@@ -331,9 +312,7 @@ main{
   z-index:1000;
 }
 
-.modal-bg.show{
-  display:flex;
-}
+.modal-bg.show{display:flex}
 
 .modal{
   width:100%;
@@ -458,9 +437,7 @@ main{
   z-index:2000;
 }
 
-.photo-view.show{
-  display:flex;
-}
+.photo-view.show{display:flex}
 
 .photo-view img{
   max-width:95vw;
@@ -494,9 +471,7 @@ main{
   z-index:1500;
 }
 
-.screenshot-view.show{
-  display:block;
-}
+.screenshot-view.show{display:block}
 
 .screenshot-toolbar{
   position:sticky;
@@ -522,9 +497,9 @@ main{
   color:#fff;
 }
 
-/* ★★★★★
-   ここが今回の理想形
-   ★★★★★ */
+/* =========================
+   スクショ本体
+========================= */
 
 #screenshotContent{
   padding:12px;
@@ -544,44 +519,42 @@ main{
   font-size:28px;
   font-weight:bold;
   color:#777;
-  margin:3px 0 25px;
+  margin:0 0 24px;
 }
 
-.shot-mode-buttons{
-  display:flex;
-  justify-content:center;
-  gap:8px;
-  margin-bottom:12px;
-}
+/* 優先度 */
 
-.shot-mode-button{
-  background:#eee;
-  color:#777;
-  border-radius:10px;
-  padding:8px 16px;
-  font-size:12px;
-}
-
-.shot-mode-button.active{
-  background:#777;
-  color:#fff;
-}
-
-/* 優先度は1回だけ */
-
-.shot-sheet::before{
-  content:"優先度：　☆ 通常　　🟡 優先　　⭐ 最優先";
-  display:block;
-  text-align:center;
+.shot-priority{
   background:#f7f7f7;
   border-radius:18px;
   padding:13px 10px;
   margin-bottom:28px;
+
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  gap:22px;
+
   color:#666;
   font-size:20px;
+  white-space:nowrap;
 }
 
-/* 絵柄カード2列 */
+.shot-priority .normal{
+  color:#666;
+}
+
+.shot-priority .high{
+  color:#666;
+}
+
+.shot-priority .top{
+  color:#666;
+}
+
+/* =========================
+   2列カード
+========================= */
 
 .shot-pattern-grid{
   display:grid;
@@ -589,23 +562,21 @@ main{
   gap:12px;
 }
 
-/* 1枚の絵柄カード */
-
 .shot-pattern-card{
   background:#f8f8f8;
-  border:1px solid #e3e3e3;
+  border:2px solid #e3e3e3;
   border-radius:22px;
   padding:10px;
 
   display:grid;
-  grid-template-columns:190px minmax(0,1fr);
+  grid-template-columns:minmax(0,1fr) minmax(180px,1.08fr);
   gap:12px;
 
   align-items:start;
   min-width:0;
 }
 
-/* 左側：絵柄 */
+/* 左：絵柄 */
 
 .shot-pattern-side{
   min-width:0;
@@ -615,9 +586,10 @@ main{
   gap:8px;
 }
 
-.shot-pattern-main-image{
-  width:190px;
-  height:190px;
+.shot-pattern-main-image,
+.shot-pattern-no-image{
+  width:100%;
+  aspect-ratio:1/1;
   object-fit:cover;
   border-radius:17px;
   display:block;
@@ -625,15 +597,9 @@ main{
 }
 
 .shot-pattern-no-image{
-  width:190px;
-  height:190px;
-  border-radius:17px;
-  background:#ddd;
-
   display:flex;
   align-items:center;
   justify-content:center;
-
   color:#aaa;
   font-size:12px;
 }
@@ -647,7 +613,7 @@ main{
   overflow-wrap:anywhere;
 }
 
-/* 右側：グッズ */
+/* 右：グッズ */
 
 .shot-goods-list{
   width:100%;
@@ -673,7 +639,8 @@ main{
   min-height:54px;
 }
 
-.shot-goods-thumb{
+.shot-goods-thumb,
+.shot-goods-no-image{
   width:42px;
   height:42px;
   object-fit:cover;
@@ -683,18 +650,11 @@ main{
 }
 
 .shot-goods-no-image{
-  width:42px;
-  height:42px;
-  border-radius:7px;
-  background:#ddd;
-
   display:flex;
   align-items:center;
   justify-content:center;
-
   color:#aaa;
   font-size:8px;
-  flex:none;
 }
 
 .shot-goods-info{
@@ -704,9 +664,13 @@ main{
 
 .shot-goods-name{
   font-size:15px;
-  line-height:1.2;
+  line-height:1.25;
   color:#444;
-  overflow-wrap:anywhere;
+
+  /* 絶対に1文字ずつ縦にならない */
+  overflow-wrap:break-word;
+  word-break:normal;
+  white-space:normal;
 }
 
 .shot-goods-priority{
@@ -727,7 +691,7 @@ main{
 }
 
 /* =========================
-   種類別選択
+   種類選択
 ========================= */
 
 .shot-type-selector{
@@ -829,35 +793,40 @@ main{
     min-width:22px;
   }
 
-  /* スクショは画像の理想形を維持 */
+  /* =========================
+     スクショ
+     スマホでも2列を維持
+  ========================= */
 
   #screenshotContent{
-    padding:7px;
+    padding:8px;
   }
 
   .shot-sheet{
     padding:10px;
-    border-radius:15px;
+    border-radius:16px;
+    min-width:0;
   }
 
   .shot-title{
-    font-size:21px;
+    font-size:22px;
     margin-bottom:17px;
   }
 
-  .shot-sheet::before{
+  .shot-priority{
     font-size:13px;
+    gap:12px;
     padding:11px 5px;
     margin-bottom:18px;
   }
 
   .shot-pattern-grid{
     grid-template-columns:repeat(2,minmax(0,1fr));
-    gap:7px;
+    gap:8px;
   }
 
   .shot-pattern-card{
-    grid-template-columns:95px minmax(0,1fr);
+    grid-template-columns:92px minmax(0,1fr);
     gap:7px;
     padding:7px;
     border-radius:15px;
@@ -865,41 +834,45 @@ main{
 
   .shot-pattern-main-image,
   .shot-pattern-no-image{
-    width:95px;
-    height:95px;
+    width:92px;
+    height:92px;
     border-radius:10px;
   }
 
   .shot-pattern-title{
     font-size:11px;
+    line-height:1.2;
   }
 
   .shot-goods-list{
-    gap:4px;
+    gap:5px;
   }
 
   .shot-goods-item{
-    padding:4px;
-    gap:4px;
-    border-radius:8px;
+    padding:5px;
+    gap:5px;
+    border-radius:9px;
     min-height:0;
   }
 
   .shot-goods-thumb,
   .shot-goods-no-image{
-    width:27px;
-    height:27px;
+    width:28px;
+    height:28px;
     border-radius:5px;
   }
 
   .shot-goods-name{
-    font-size:9px;
+    font-size:10px;
+    line-height:1.2;
+    overflow-wrap:break-word;
+    word-break:normal;
   }
 
   .shot-goods-priority{
-    width:18px;
-    min-width:18px;
-    font-size:15px;
+    width:20px;
+    min-width:20px;
+    font-size:16px;
   }
 }
 </style>
@@ -913,8 +886,9 @@ main{
 
 <main id="app"></main>
 
+
 <!-- =========================
-     キャラ追加・編集
+     キャラ
 ========================= -->
 
 <div class="modal-bg" id="characterModal">
@@ -936,6 +910,7 @@ main{
       <input id="characterColor" type="color" value="#aaaaaa">
 
       <div class="color-code-area">
+
         <span
           id="colorPreview"
           class="color-preview"
@@ -947,6 +922,7 @@ main{
           type="text"
           value="#AAAAAA"
           maxlength="7">
+
       </div>
 
     </div>
@@ -980,7 +956,7 @@ main{
 
 
 <!-- =========================
-     絵柄追加・編集
+     絵柄
 ========================= -->
 
 <div class="modal-bg" id="patternModal">
@@ -997,7 +973,10 @@ main{
 
     <label>画像</label>
 
-    <input id="patternImage" type="file" accept="image/*">
+    <input
+      id="patternImage"
+      type="file"
+      accept="image/*">
 
     <img id="patternPreview" class="preview">
 
@@ -1030,7 +1009,7 @@ main{
 
 
 <!-- =========================
-     グッズ追加・編集
+     グッズ
 ========================= -->
 
 <div class="modal-bg" id="goodsModal">
@@ -1047,16 +1026,21 @@ main{
 
     <label>画像</label>
 
-    <input id="goodsImage" type="file" accept="image/*">
+    <input
+      id="goodsImage"
+      type="file"
+      accept="image/*">
 
     <img id="goodsPreview" class="preview">
 
     <label>優先度</label>
 
     <select id="goodsPriority">
+
       <option value="0">☆ 通常</option>
-      <option value="1">🟡 優先</option>
-      <option value="2">⭐ 最優先</option>
+      <option value="1">★ 優先</option>
+      <option value="2">⭐️ 最優先</option>
+
     </select>
 
     <div class="modal-buttons">
@@ -1088,7 +1072,7 @@ main{
 
 
 <!-- =========================
-     写真拡大
+     写真
 ========================= -->
 
 <div class="photo-view" id="photoView">
@@ -1136,35 +1120,20 @@ main{
 "use strict";
 
 
-/* =========================
-   設定
-========================= */
-
 const KEY="collectionData";
-
 const DB_NAME="CollectionDB";
-
 const DB_VERSION=1;
-
 const STORE_NAME="appData";
 
-
 let db=null;
-
 let data=[];
-
 let currentCharacter=null;
-
 let editingCharacter=-1;
-
 let editingPattern=-1;
-
 let editingGoods=-1;
 
 let screenshotMode="all";
-
 let selectedShotTypes=[];
-
 
 const app=document.getElementById("app");
 
@@ -1177,16 +1146,24 @@ function openDB(){
 
   return new Promise(function(resolve,reject){
 
-    const request=
-      indexedDB.open(DB_NAME,DB_VERSION);
+    const request=indexedDB.open(
+      DB_NAME,
+      DB_VERSION
+    );
 
     request.onupgradeneeded=function(){
 
       const d=request.result;
 
-      if(!d.objectStoreNames.contains(STORE_NAME)){
+      if(
+        !d.objectStoreNames.contains(
+          STORE_NAME
+        )
+      ){
 
-        d.createObjectStore(STORE_NAME);
+        d.createObjectStore(
+          STORE_NAME
+        );
 
       }
 
@@ -1195,7 +1172,6 @@ function openDB(){
     request.onsuccess=function(){
 
       db=request.result;
-
       resolve(db);
 
     };
@@ -1215,8 +1191,10 @@ function getDBData(){
 
   return new Promise(function(resolve,reject){
 
-    const tx=
-      db.transaction(STORE_NAME,"readonly");
+    const tx=db.transaction(
+      STORE_NAME,
+      "readonly"
+    );
 
     const request=
       tx.objectStore(STORE_NAME).get(KEY);
@@ -1244,8 +1222,10 @@ function putDBData(value){
 
   return new Promise(function(resolve,reject){
 
-    const tx=
-      db.transaction(STORE_NAME,"readwrite");
+    const tx=db.transaction(
+      STORE_NAME,
+      "readwrite"
+    );
 
     const request=
       tx.objectStore(STORE_NAME).put(
@@ -1271,7 +1251,7 @@ function putDBData(value){
 
 
 /* =========================
-   データ整理
+   優先度
 ========================= */
 
 function normalizePriority(value){
@@ -1291,7 +1271,6 @@ function normalizePriority(value){
   const n=Number(value);
 
   if(n>=2)return 2;
-
   if(n===1)return 1;
 
   return 0;
@@ -1301,13 +1280,12 @@ function normalizePriority(value){
 
 function priorityMark(priority){
 
-  const p=
-    normalizePriority(priority);
+  const p=normalizePriority(priority);
 
   if(p===2){
 
     return{
-      mark:"⭐",
+      mark:"⭐️",
       className:"priority-star"
     };
 
@@ -1316,7 +1294,7 @@ function priorityMark(priority){
   if(p===1){
 
     return{
-      mark:"🟡",
+      mark:"★",
       className:"priority-star"
     };
 
@@ -1338,6 +1316,10 @@ function nextPriority(priority){
 
 }
 
+
+/* =========================
+   データ整理
+========================= */
 
 function normalizeCharacter(c){
 
@@ -1423,15 +1405,14 @@ function normalizeGoods(g){
 
 
 /* =========================
-   保存・読み込み
+   読み込み・保存
 ========================= */
 
 async function safeLoad(){
 
   await openDB();
 
-  let saved=
-    await getDBData();
+  let saved=await getDBData();
 
 
   if(saved===null){
@@ -1439,14 +1420,12 @@ async function safeLoad(){
     const oldRaw=
       localStorage.getItem(KEY);
 
-
     if(oldRaw){
 
       try{
 
         const oldData=
           JSON.parse(oldRaw);
-
 
         if(Array.isArray(oldData)){
 
@@ -1554,62 +1533,43 @@ function compressImage(file){
 
     }
 
-
-    const reader=
-      new FileReader();
-
+    const reader=new FileReader();
 
     reader.onload=function(){
 
-      const img=
-        new Image();
-
+      const img=new Image();
 
       img.onload=function(){
 
         const max=700;
 
         let w=img.width;
-
         let h=img.height;
-
 
         if(w>max || h>max){
 
           if(w>h){
 
-            h=
-              Math.round(
-                h*max/w
-              );
-
+            h=Math.round(h*max/w);
             w=max;
 
           }else{
 
-            w=
-              Math.round(
-                w*max/h
-              );
-
+            w=Math.round(w*max/h);
             h=max;
 
           }
 
         }
 
-
         const canvas=
           document.createElement("canvas");
 
         canvas.width=w;
-
         canvas.height=h;
-
 
         const ctx=
           canvas.getContext("2d");
-
 
         ctx.drawImage(
           img,
@@ -1618,7 +1578,6 @@ function compressImage(file){
           w,
           h
         );
-
 
         resolve(
           canvas.toDataURL(
@@ -1629,25 +1588,21 @@ function compressImage(file){
 
       };
 
-
       img.onerror=function(){
 
         resolve(reader.result);
 
       };
 
-
       img.src=reader.result;
 
     };
-
 
     reader.onerror=function(){
 
       resolve("");
 
     };
-
 
     reader.readAsDataURL(file);
 
@@ -1675,7 +1630,7 @@ function closeModal(id){
 
 
 /* =========================
-   キャラ一覧
+   表示
 ========================= */
 
 function render(){
@@ -1727,9 +1682,7 @@ function renderCharacters(){
 
     data.forEach(function(c,index){
 
-      const color=
-        getColor(c.color);
-
+      const color=getColor(c.color);
 
       html+=`
 
@@ -1771,11 +1724,7 @@ function renderCharacters(){
     });
 
 
-    html+=`
-
-      </div>
-
-    `;
+    html+=`</div>`;
 
   }
 
@@ -1791,23 +1740,19 @@ function renderCharacters(){
 
 function renderCharacter(){
 
-  const c=
-    data[currentCharacter];
+  const c=data[currentCharacter];
 
 
   if(!c){
 
     currentCharacter=null;
-
     renderCharacters();
-
     return;
 
   }
 
 
-  const color=
-    getColor(c.color);
+  const color=getColor(c.color);
 
 
   let html=`
@@ -1818,7 +1763,6 @@ function renderCharacter(){
       ← キャラ一覧
     </button>
 
-
     <div
       class="character-head"
       style="--theme:${color}">
@@ -1826,7 +1770,6 @@ function renderCharacter(){
       <div class="character-title">
         ${escapeHTML(c.name)}
       </div>
-
 
       <div class="character-actions">
 
@@ -1844,7 +1787,6 @@ function renderCharacter(){
 
       </div>
 
-
       <div class="priority-legend">
 
         <span class="priority-legend-title">
@@ -1852,11 +1794,10 @@ function renderCharacter(){
         </span>
 
         <span>☆ 通常</span>
-        <span>🟡 優先</span>
-        <span>⭐ 最優先</span>
+        <span>★ 優先</span>
+        <span>⭐️ 最優先</span>
 
       </div>
-
 
       <div class="screenshot-buttons">
 
@@ -1896,9 +1837,7 @@ function renderCharacter(){
 
     c.patterns.forEach(function(p,pIndex){
 
-      const pp=
-        priorityMark(p.priority);
-
+      const pp=priorityMark(p.priority);
 
       html+=`
 
@@ -1910,7 +1849,6 @@ function renderCharacter(){
             data-pattern="${pIndex}">
             ${pp.mark}
           </button>
-
 
           ${
             p.image
@@ -1929,13 +1867,11 @@ function renderCharacter(){
             `
           }
 
-
           <div class="pattern-info">
 
             <div class="pattern-name">
               ${escapeHTML(p.name)}
             </div>
-
 
             <div class="goods-list">
 
@@ -1946,8 +1882,7 @@ function renderCharacter(){
 
         html+=`
 
-          <div
-            style="font-size:12px;color:#aaa;">
+          <div style="font-size:12px;color:#aaa;">
             グッズなし
           </div>
 
@@ -1957,9 +1892,7 @@ function renderCharacter(){
 
         p.goods.forEach(function(g,gIndex){
 
-          const gp=
-            priorityMark(g.priority);
-
+          const gp=priorityMark(g.priority);
 
           html+=`
 
@@ -1983,11 +1916,9 @@ function renderCharacter(){
                 `
               }
 
-
               <div class="goods-name">
                 ${escapeHTML(g.name)}
               </div>
-
 
               <button
                 class="priority-mark ${gp.className}"
@@ -2009,7 +1940,6 @@ function renderCharacter(){
       html+=`
 
             </div>
-
 
             <div class="small-buttons">
 
@@ -2042,11 +1972,7 @@ function renderCharacter(){
     });
 
 
-    html+=`
-
-      </div>
-
-    `;
+    html+=`</div>`;
 
   }
 
@@ -2064,7 +1990,6 @@ function setColorPicker(color){
 
   let value=color;
 
-
   if(
     !/^#[0-9a-fA-F]{6}$/.test(value)
   ){
@@ -2073,16 +1998,13 @@ function setColorPicker(color){
 
   }
 
-
   document
     .getElementById("characterColor")
     .value=value;
 
-
   document
     .getElementById("characterColorHex")
     .value=value.toUpperCase();
-
 
   document
     .getElementById("colorPreview")
@@ -2094,7 +2016,6 @@ function setColorPicker(color){
 function openCharacterEditor(index){
 
   editingCharacter=index;
-
 
   const name=
     document.getElementById(
@@ -2119,21 +2040,14 @@ function openCharacterEditor(index){
 
   if(index===-1){
 
-    document
-      .getElementById(
-        "characterModalTitle"
-      )
-      .textContent="キャラを追加";
-
+    document.getElementById(
+      "characterModalTitle"
+    ).textContent="キャラを追加";
 
     name.value="";
-
     image.value="";
-
     preview.src="";
-
     preview.style.display="none";
-
     del.style.display="none";
 
     setColorPicker("#aaaaaa");
@@ -2142,23 +2056,16 @@ function openCharacterEditor(index){
 
     const c=data[index];
 
-
-    document
-      .getElementById(
-        "characterModalTitle"
-      )
-      .textContent="キャラを編集";
-
+    document.getElementById(
+      "characterModalTitle"
+    ).textContent="キャラを編集";
 
     name.value=c.name;
-
     image.value="";
-
 
     if(c.image){
 
       preview.src=c.image;
-
       preview.style.display="block";
 
     }else{
@@ -2167,19 +2074,14 @@ function openCharacterEditor(index){
 
     }
 
-
     del.style.display="block";
 
-    setColorPicker(
-      c.color
-    );
+    setColorPicker(c.color);
 
   }
 
 
-  openModal(
-    "characterModal"
-  );
+  openModal("characterModal");
 
 }
 
@@ -2192,11 +2094,9 @@ async function saveCharacter(){
       .value
       .trim();
 
-
   if(!name){
 
     alert("キャラ名を入力してね！");
-
     return;
 
   }
@@ -2210,16 +2110,12 @@ async function saveCharacter(){
 
   const hex=
     document
-      .getElementById(
-        "characterColorHex"
-      )
+      .getElementById("characterColorHex")
       .value
       .trim();
 
 
-  if(
-    /^#[0-9a-fA-F]{6}$/.test(hex)
-  ){
+  if(/^#[0-9a-fA-F]{6}$/.test(hex)){
 
     color=hex;
 
@@ -2228,9 +2124,7 @@ async function saveCharacter(){
 
   const file=
     document
-      .getElementById(
-        "characterImage"
-      )
+      .getElementById("characterImage")
       .files[0];
 
 
@@ -2247,8 +2141,7 @@ async function saveCharacter(){
 
   if(file){
 
-    image=
-      await compressImage(file);
+    image=await compressImage(file);
 
   }
 
@@ -2258,31 +2151,22 @@ async function saveCharacter(){
     data.push({
 
       name:name,
-
       image:image,
-
       color:color,
-
       patterns:[]
 
     });
 
   }else{
 
-    const old=
-      data[editingCharacter];
-
+    const old=data[editingCharacter];
 
     data[editingCharacter]={
 
       name:name,
-
       image:image,
-
       color:color,
-
-      patterns:
-        old.patterns||[]
+      patterns:old.patterns||[]
 
     };
 
@@ -2292,10 +2176,7 @@ async function saveCharacter(){
   if(!await save())return;
 
 
-  closeModal(
-    "characterModal"
-  );
-
+  closeModal("characterModal");
 
   currentCharacter=null;
 
@@ -2308,17 +2189,13 @@ async function deleteCharacter(){
 
   if(editingCharacter<0)return;
 
-
-  const c=
-    data[editingCharacter];
+  const c=data[editingCharacter];
 
 
   if(!confirm(
-
     "「"+c.name+
     "」を削除する？\n\n"+
     "このキャラの絵柄・グッズもすべて削除されます。"
-
   ))return;
 
 
@@ -2331,13 +2208,9 @@ async function deleteCharacter(){
   if(!await save())return;
 
 
-  closeModal(
-    "characterModal"
-  );
-
+  closeModal("characterModal");
 
   editingCharacter=-1;
-
   currentCharacter=null;
 
   render();
@@ -2346,80 +2219,54 @@ async function deleteCharacter(){
 
 
 /* =========================
-   絵柄
+   絵柄編集
 ========================= */
 
 function openPatternEditor(index){
 
   editingPattern=index;
 
-
-  const c=
-    data[currentCharacter];
-
+  const c=data[currentCharacter];
 
   const name=
-    document.getElementById(
-      "patternName"
-    );
+    document.getElementById("patternName");
 
   const image=
-    document.getElementById(
-      "patternImage"
-    );
+    document.getElementById("patternImage");
 
   const preview=
-    document.getElementById(
-      "patternPreview"
-    );
+    document.getElementById("patternPreview");
 
   const del=
-    document.getElementById(
-      "deletePatternButton"
-    );
+    document.getElementById("deletePatternButton");
 
 
   if(index===-1){
 
-    document
-      .getElementById(
-        "patternModalTitle"
-      )
-      .textContent="絵柄を追加";
-
+    document.getElementById(
+      "patternModalTitle"
+    ).textContent="絵柄を追加";
 
     name.value="";
-
     image.value="";
-
     preview.src="";
-
     preview.style.display="none";
-
     del.style.display="none";
 
   }else{
 
-    const p=
-      c.patterns[index];
+    const p=c.patterns[index];
 
-
-    document
-      .getElementById(
-        "patternModalTitle"
-      )
-      .textContent="絵柄を編集";
-
+    document.getElementById(
+      "patternModalTitle"
+    ).textContent="絵柄を編集";
 
     name.value=p.name;
-
     image.value="";
-
 
     if(p.image){
 
       preview.src=p.image;
-
       preview.style.display="block";
 
     }else{
@@ -2428,15 +2275,12 @@ function openPatternEditor(index){
 
     }
 
-
     del.style.display="block";
 
   }
 
 
-  openModal(
-    "patternModal"
-  );
+  openModal("patternModal");
 
 }
 
@@ -2449,27 +2293,20 @@ async function savePattern(){
       .value
       .trim();
 
-
   if(!name){
 
     alert("絵柄名を入力してね！");
-
     return;
 
   }
 
 
-  const c=
-    data[currentCharacter];
-
+  const c=data[currentCharacter];
 
   const file=
     document
-      .getElementById(
-        "patternImage"
-      )
+      .getElementById("patternImage")
       .files[0];
-
 
   let image="";
 
@@ -2485,8 +2322,7 @@ async function savePattern(){
 
   if(file){
 
-    image=
-      await compressImage(file);
+    image=await compressImage(file);
 
   }
 
@@ -2496,33 +2332,23 @@ async function savePattern(){
     c.patterns.push({
 
       name:name,
-
       image:image,
-
       priority:0,
-
       goods:[]
 
     });
 
   }else{
 
-    c.patterns[editingPattern].name=
-      name;
-
-    c.patterns[editingPattern].image=
-      image;
+    c.patterns[editingPattern].name=name;
+    c.patterns[editingPattern].image=image;
 
   }
 
 
   if(!await save())return;
 
-
-  closeModal(
-    "patternModal"
-  );
-
+  closeModal("patternModal");
 
   renderCharacter();
 
@@ -2537,11 +2363,9 @@ async function deletePattern(index){
 
 
   if(!confirm(
-
     "「"+p.name+
     "」を削除する？\n\n"+
     "この絵柄のグッズもすべて削除されます。"
-
   ))return;
 
 
@@ -2551,7 +2375,6 @@ async function deletePattern(index){
 
 
   if(!await save())return;
-
 
   renderCharacter();
 
@@ -2567,11 +2390,8 @@ function openGoodsEditor(
   goodsIndex
 ){
 
-  editingPattern=
-    patternIndex;
-
-  editingGoods=
-    goodsIndex;
+  editingPattern=patternIndex;
+  editingGoods=goodsIndex;
 
 
   const p=
@@ -2580,74 +2400,48 @@ function openGoodsEditor(
 
 
   const name=
-    document.getElementById(
-      "goodsName"
-    );
+    document.getElementById("goodsName");
 
   const image=
-    document.getElementById(
-      "goodsImage"
-    );
+    document.getElementById("goodsImage");
 
   const preview=
-    document.getElementById(
-      "goodsPreview"
-    );
+    document.getElementById("goodsPreview");
 
   const priority=
-    document.getElementById(
-      "goodsPriority"
-    );
+    document.getElementById("goodsPriority");
 
   const del=
-    document.getElementById(
-      "deleteGoodsButton"
-    );
+    document.getElementById("deleteGoodsButton");
 
 
   if(goodsIndex===-1){
 
-    document
-      .getElementById(
-        "goodsModalTitle"
-      )
-      .textContent="グッズを追加";
-
+    document.getElementById(
+      "goodsModalTitle"
+    ).textContent="グッズを追加";
 
     name.value="";
-
     image.value="";
-
     preview.src="";
-
     preview.style.display="none";
-
     priority.value="0";
-
     del.style.display="none";
 
   }else{
 
-    const g=
-      p.goods[goodsIndex];
+    const g=p.goods[goodsIndex];
 
-
-    document
-      .getElementById(
-        "goodsModalTitle"
-      )
-      .textContent="グッズを編集";
-
+    document.getElementById(
+      "goodsModalTitle"
+    ).textContent="グッズを編集";
 
     name.value=g.name;
-
     image.value="";
-
 
     if(g.image){
 
       preview.src=g.image;
-
       preview.style.display="block";
 
     }else{
@@ -2656,23 +2450,17 @@ function openGoodsEditor(
 
     }
 
-
     priority.value=
       String(
-        normalizePriority(
-          g.priority
-        )
+        normalizePriority(g.priority)
       );
-
 
     del.style.display="block";
 
   }
 
 
-  openModal(
-    "goodsModal"
-  );
+  openModal("goodsModal");
 
 }
 
@@ -2689,7 +2477,6 @@ async function saveGoods(){
   if(!name){
 
     alert("グッズ名を入力してね！");
-
     return;
 
   }
@@ -2702,9 +2489,7 @@ async function saveGoods(){
 
   const file=
     document
-      .getElementById(
-        "goodsImage"
-      )
+      .getElementById("goodsImage")
       .files[0];
 
 
@@ -2722,8 +2507,7 @@ async function saveGoods(){
 
   if(file){
 
-    image=
-      await compressImage(file);
+    image=await compressImage(file);
 
   }
 
@@ -2731,9 +2515,7 @@ async function saveGoods(){
   const priority=
     Number(
       document
-        .getElementById(
-          "goodsPriority"
-        )
+        .getElementById("goodsPriority")
         .value
     );
 
@@ -2741,9 +2523,7 @@ async function saveGoods(){
   const obj={
 
     name:name,
-
     image:image,
-
     priority:priority
 
   };
@@ -2762,11 +2542,7 @@ async function saveGoods(){
 
   if(!await save())return;
 
-
-  closeModal(
-    "goodsModal"
-  );
-
+  closeModal("goodsModal");
 
   renderCharacter();
 
@@ -2782,9 +2558,7 @@ async function deleteGoods(
     data[currentCharacter]
       .patterns[patternIndex];
 
-
-  const g=
-    p.goods[goodsIndex];
+  const g=p.goods[goodsIndex];
 
 
   if(!g)return;
@@ -2803,14 +2577,9 @@ async function deleteGoods(
 
   if(!await save())return;
 
-
-  closeModal(
-    "goodsModal"
-  );
-
+  closeModal("goodsModal");
 
   editingGoods=-1;
-
 
   renderCharacter();
 
@@ -2818,7 +2587,7 @@ async function deleteGoods(
 
 
 /* =========================
-   優先度
+   優先度変更
 ========================= */
 
 async function togglePatternPriority(index){
@@ -2829,13 +2598,10 @@ async function togglePatternPriority(index){
 
 
   p.priority=
-    nextPriority(
-      p.priority
-    );
+    nextPriority(p.priority);
 
 
   if(!await save())return;
-
 
   renderCharacter();
 
@@ -2854,13 +2620,10 @@ async function toggleGoodsPriority(
 
 
   g.priority=
-    nextPriority(
-      g.priority
-    );
+    nextPriority(g.priority);
 
 
   if(!await save())return;
-
 
   renderCharacter();
 
@@ -2868,15 +2631,13 @@ async function toggleGoodsPriority(
 
 
 /* =========================
-   スクショ
+   スクショ用
 ========================= */
 
 function makeShotGoods(goods){
 
   const gp=
-    priorityMark(
-      goods.priority
-    );
+    priorityMark(goods.priority);
 
 
   return `
@@ -2955,13 +2716,11 @@ function makeShotPatternCard(
       <div class="shot-goods-list">
 
         ${
-          goodsList
-            .map(function(g){
+          goodsList.map(function(g){
 
-              return makeShotGoods(g);
+            return makeShotGoods(g);
 
-            })
-            .join("")
+          }).join("")
         }
 
       </div>
@@ -2976,7 +2735,6 @@ function makeShotPatternCard(
 function getGoodsTypes(c){
 
   const result=[];
-
   const seen=new Set();
 
 
@@ -2984,17 +2742,13 @@ function getGoodsTypes(c){
 
     p.goods.forEach(function(g){
 
-      const name=
-        g.name.trim();
-
+      const name=g.name.trim();
 
       if(!name)return;
-
 
       if(!seen.has(name)){
 
         seen.add(name);
-
         result.push(name);
 
       }
@@ -3011,9 +2765,7 @@ function getGoodsTypes(c){
 
 function renderScreenshot(){
 
-  const c=
-    data[currentCharacter];
-
+  const c=data[currentCharacter];
 
   if(!c)return;
 
@@ -3026,40 +2778,34 @@ function renderScreenshot(){
         求め絵柄まとめ
       </div>
 
+      <div class="shot-priority">
 
-      <div class="shot-mode-buttons">
+        <span class="normal">
+          ☆ 通常
+        </span>
 
-        <button
-          class="shot-mode-button ${
-            screenshotMode==="all"
-            ?"active"
-            :""
-          }"
-          data-shot-mode="all">
-          絵柄別
-        </button>
+        <span class="high">
+          ★ 優先
+        </span>
 
-
-        <button
-          class="shot-mode-button ${
-            screenshotMode==="type"
-            ?"active"
-            :""
-          }"
-          data-shot-mode="type">
-          グッズ種類別
-        </button>
+        <span class="top">
+          ⭐️ 最優先
+        </span>
 
       </div>
 
   `;
 
 
+  /*
+     種類別スクショの場合だけ、
+     選択欄はスクショの外側に置く。
+     画像そのものには表示しない。
+  */
+
   if(screenshotMode==="type"){
 
-    const types=
-      getGoodsTypes(c);
-
+    const types=getGoodsTypes(c);
 
     html+=`
 
@@ -3090,17 +2836,14 @@ function renderScreenshot(){
       types.forEach(function(type){
 
         const selected=
-          selectedShotTypes
-            .includes(type);
+          selectedShotTypes.includes(type);
 
 
         html+=`
 
           <button
             class="shot-type-chip ${
-              selected
-              ?"selected"
-              :""
+              selected ? "selected" : ""
             }"
             data-shot-type="${escapeHTML(type)}">
 
@@ -3143,8 +2886,7 @@ function renderScreenshot(){
 
     if(screenshotMode==="all"){
 
-      goodsList=
-        pattern.goods.slice();
+      goodsList=pattern.goods.slice();
 
     }else{
 
@@ -3152,10 +2894,9 @@ function renderScreenshot(){
         pattern.goods.filter(
           function(goods){
 
-            return selectedShotTypes
-              .includes(
-                goods.name.trim()
-              );
+            return selectedShotTypes.includes(
+              goods.name.trim()
+            );
 
           }
         );
@@ -3209,9 +2950,7 @@ function renderScreenshot(){
 
 
   document
-    .getElementById(
-      "screenshotContent"
-    )
+    .getElementById("screenshotContent")
     .innerHTML=html;
 
 }
@@ -3219,22 +2958,17 @@ function renderScreenshot(){
 
 function openScreenshot(mode){
 
-  screenshotMode=
-    mode;
+  screenshotMode=mode;
 
 
-  const c=
-    data[currentCharacter];
-
+  const c=data[currentCharacter];
 
   if(!c)return;
 
 
   if(mode==="type"){
 
-    const types=
-      getGoodsTypes(c);
-
+    const types=getGoodsTypes(c);
 
     selectedShotTypes=
       selectedShotTypes.filter(
@@ -3256,9 +2990,7 @@ function openScreenshot(mode){
 
 
   document
-    .getElementById(
-      "screenshotView"
-    )
+    .getElementById("screenshotView")
     .classList.add("show");
 
 }
@@ -3275,9 +3007,7 @@ async function saveScreenshot(){
   if(!target)return;
 
 
-  if(
-    typeof html2canvas==="undefined"
-  ){
+  if(typeof html2canvas==="undefined"){
 
     alert(
       "画像保存機能を読み込み中です。\n"+
@@ -3312,9 +3042,7 @@ async function saveScreenshot(){
 
 
     link.href=
-      canvas.toDataURL(
-        "image/png"
-      );
+      canvas.toDataURL("image/png");
 
 
     link.click();
@@ -3340,18 +3068,12 @@ function showPhoto(src){
 
   if(!src)return;
 
-
   document
-    .getElementById(
-      "photoLarge"
-    )
+    .getElementById("photoLarge")
     .src=src;
 
-
   document
-    .getElementById(
-      "photoView"
-    )
+    .getElementById("photoView")
     .classList.add("show");
 
 }
@@ -3360,9 +3082,7 @@ function showPhoto(src){
 function closePhoto(){
 
   document
-    .getElementById(
-      "photoView"
-    )
+    .getElementById("photoView")
     .classList.remove("show");
 
 }
@@ -3373,7 +3093,6 @@ function closePhoto(){
 ========================= */
 
 let goodsTimer=null;
-
 let goodsTarget=null;
 
 
@@ -3382,7 +3101,6 @@ function cancelLongPress(){
   if(goodsTimer!==null){
 
     clearTimeout(goodsTimer);
-
     goodsTimer=null;
 
   }
@@ -3406,81 +3124,74 @@ document.addEventListener(
 
 
     if(
-      e.target.closest("button")||
+      e.target.closest("button") ||
       e.target.closest("img")
     )return;
 
 
     cancelLongPress();
 
-
     goodsTarget=item;
 
 
-    goodsTimer=
-      setTimeout(
-        async function(){
+    goodsTimer=setTimeout(
+      async function(){
 
-          if(!goodsTarget)return;
-
-
-          const patternIndex=
-            Number(
-              goodsTarget
-                .dataset
-                .goodsPattern
-            );
+        if(!goodsTarget)return;
 
 
-          const goodsIndex=
-            Number(
-              goodsTarget
-                .dataset
-                .goodsIndex
-            );
+        const patternIndex=
+          Number(
+            goodsTarget.dataset.goodsPattern
+          );
 
 
-          const p=
-            data[currentCharacter]
-              .patterns[patternIndex];
+        const goodsIndex=
+          Number(
+            goodsTarget.dataset.goodsIndex
+          );
 
 
-          const g=
-            p&&p.goods
-            ?p.goods[goodsIndex]
-            :null;
+        const p=
+          data[currentCharacter]
+            .patterns[patternIndex];
 
 
-          if(!g){
-
-            cancelLongPress();
-
-            return;
-
-          }
+        const g=
+          p&&p.goods
+          ?p.goods[goodsIndex]
+          :null;
 
 
-          if(confirm(
-            "「"+g.name+"」を削除する？"
-          )){
-
-            p.goods.splice(
-              goodsIndex,
-              1
-            );
-
-            await save();
-
-            renderCharacter();
-
-          }
-
+        if(!g){
 
           cancelLongPress();
+          return;
 
-        },
-        800
-      );
+        }
+
+
+        if(confirm(
+          "「"+g.name+"」を削除する？"
+        )){
+
+          p.goods.splice(
+            goodsIndex,
+            1
+          );
+
+          await save();
+
+          renderCharacter();
+
+        }
+
+
+        cancelLongPress();
+
+      },
+      800
+    );
 
   },
   {passive:true}
@@ -3493,13 +3204,11 @@ document.addEventListener(
   {passive:true}
 );
 
-
 document.addEventListener(
   "touchmove",
   cancelLongPress,
   {passive:true}
 );
-
 
 document.addEventListener(
   "touchcancel",
@@ -3545,42 +3254,10 @@ document.addEventListener(
 
       currentCharacter=
         Number(
-          characterCard
-            .dataset
-            .character
+          characterCard.dataset.character
         );
 
       renderCharacter();
-
-      return;
-
-    }
-
-
-    const shotModeButton=
-      target.closest(
-        "[data-shot-mode]"
-      );
-
-
-    if(shotModeButton){
-
-      screenshotMode=
-        shotModeButton
-          .dataset
-          .shotMode;
-
-
-      if(
-        screenshotMode==="all"
-      ){
-
-        selectedShotTypes=[];
-
-      }
-
-
-      renderScreenshot();
 
       return;
 
@@ -3596,14 +3273,11 @@ document.addEventListener(
     if(shotTypeButton){
 
       const type=
-        shotTypeButton
-          .dataset
-          .shotType;
+        shotTypeButton.dataset.shotType;
 
 
       if(
-        selectedShotTypes
-          .includes(type)
+        selectedShotTypes.includes(type)
       ){
 
         selectedShotTypes=
@@ -3645,7 +3319,6 @@ document.addEventListener(
     if(action==="add-character"){
 
       openCharacterEditor(-1);
-
       return;
 
     }
@@ -3653,10 +3326,7 @@ document.addEventListener(
 
     if(action==="close-character"){
 
-      closeModal(
-        "characterModal"
-      );
-
+      closeModal("characterModal");
       return;
 
     }
@@ -3665,7 +3335,6 @@ document.addEventListener(
     if(action==="save-character"){
 
       saveCharacter();
-
       return;
 
     }
@@ -3674,7 +3343,6 @@ document.addEventListener(
     if(action==="delete-character"){
 
       deleteCharacter();
-
       return;
 
     }
@@ -3683,9 +3351,7 @@ document.addEventListener(
     if(action==="back"){
 
       currentCharacter=null;
-
       render();
-
       return;
 
     }
@@ -3705,7 +3371,6 @@ document.addEventListener(
     if(action==="add-pattern"){
 
       openPatternEditor(-1);
-
       return;
 
     }
@@ -3713,10 +3378,7 @@ document.addEventListener(
 
     if(action==="close-pattern"){
 
-      closeModal(
-        "patternModal"
-      );
-
+      closeModal("patternModal");
       return;
 
     }
@@ -3725,7 +3387,6 @@ document.addEventListener(
     if(action==="save-pattern"){
 
       savePattern();
-
       return;
 
     }
@@ -3734,9 +3395,7 @@ document.addEventListener(
     if(action==="edit-pattern"){
 
       openPatternEditor(
-        Number(
-          button.dataset.pattern
-        )
+        Number(button.dataset.pattern)
       );
 
       return;
@@ -3747,9 +3406,7 @@ document.addEventListener(
     if(action==="delete-pattern"){
 
       deletePattern(
-        Number(
-          button.dataset.pattern
-        )
+        Number(button.dataset.pattern)
       );
 
       return;
@@ -3757,9 +3414,7 @@ document.addEventListener(
     }
 
 
-    if(
-      action==="delete-pattern-modal"
-    ){
+    if(action==="delete-pattern-modal"){
 
       if(editingPattern!==-1){
 
@@ -3767,9 +3422,7 @@ document.addEventListener(
           editingPattern
         );
 
-        closeModal(
-          "patternModal"
-        );
+        closeModal("patternModal");
 
       }
 
@@ -3778,14 +3431,10 @@ document.addEventListener(
     }
 
 
-    if(
-      action==="toggle-pattern-priority"
-    ){
+    if(action==="toggle-pattern-priority"){
 
       togglePatternPriority(
-        Number(
-          button.dataset.pattern
-        )
+        Number(button.dataset.pattern)
       );
 
       return;
@@ -3796,9 +3445,7 @@ document.addEventListener(
     if(action==="add-goods"){
 
       openGoodsEditor(
-        Number(
-          button.dataset.pattern
-        ),
+        Number(button.dataset.pattern),
         -1
       );
 
@@ -3809,10 +3456,7 @@ document.addEventListener(
 
     if(action==="close-goods"){
 
-      closeModal(
-        "goodsModal"
-      );
-
+      closeModal("goodsModal");
       return;
 
     }
@@ -3821,7 +3465,6 @@ document.addEventListener(
     if(action==="save-goods"){
 
       saveGoods();
-
       return;
 
     }
@@ -3839,17 +3482,11 @@ document.addEventListener(
     }
 
 
-    if(
-      action==="toggle-goods-priority"
-    ){
+    if(action==="toggle-goods-priority"){
 
       toggleGoodsPriority(
-        Number(
-          button.dataset.pattern
-        ),
-        Number(
-          button.dataset.goods
-        )
+        Number(button.dataset.pattern),
+        Number(button.dataset.goods)
       );
 
       return;
@@ -3860,7 +3497,6 @@ document.addEventListener(
     if(action==="close-photo"){
 
       closePhoto();
-
       return;
 
     }
@@ -3869,7 +3505,6 @@ document.addEventListener(
     if(action==="screenshot-all"){
 
       openScreenshot("all");
-
       return;
 
     }
@@ -3878,7 +3513,6 @@ document.addEventListener(
     if(action==="screenshot-type"){
 
       openScreenshot("type");
-
       return;
 
     }
@@ -3887,9 +3521,7 @@ document.addEventListener(
     if(action==="close-screenshot"){
 
       document
-        .getElementById(
-          "screenshotView"
-        )
+        .getElementById("screenshotView")
         .classList.remove("show");
 
       return;
@@ -3900,7 +3532,6 @@ document.addEventListener(
     if(action==="save-screenshot"){
 
       saveScreenshot();
-
       return;
 
     }
@@ -3914,9 +3545,7 @@ document.addEventListener(
 ========================= */
 
 document
-  .getElementById(
-    "characterColor"
-  )
+  .getElementById("characterColor")
   .addEventListener(
     "input",
     function(){
@@ -3943,9 +3572,7 @@ document
 
 
 document
-  .getElementById(
-    "characterColorHex"
-  )
+  .getElementById("characterColorHex")
   .addEventListener(
     "input",
     function(){
@@ -3965,8 +3592,7 @@ document
         /^#[0-9a-fA-F]{6}$/.test(value)
       ){
 
-        value=
-          value.toUpperCase();
+        value=value.toUpperCase();
 
 
         document
@@ -3989,7 +3615,7 @@ document
 
 
 /* =========================
-   モーダル外クリック
+   モーダル外
 ========================= */
 
 document
@@ -4002,9 +3628,7 @@ document
 
         if(e.target===bg){
 
-          bg.classList.remove(
-            "show"
-          );
+          bg.classList.remove("show");
 
         }
 
@@ -4015,7 +3639,7 @@ document
 
 
 /* =========================
-   ファイルプレビュー
+   プレビュー
 ========================= */
 
 function previewFile(
@@ -4027,30 +3651,25 @@ function previewFile(
     "change",
     function(){
 
-      const file=
-        input.files[0];
+      const file=input.files[0];
 
 
       if(!file){
 
         preview.style.display="none";
-
         return;
 
       }
 
 
-      const reader=
-        new FileReader();
+      const reader=new FileReader();
 
 
       reader.onload=function(){
 
-        preview.src=
-          reader.result;
+        preview.src=reader.result;
 
-        preview.style.display=
-          "block";
+        preview.style.display="block";
 
       };
 
@@ -4064,32 +3683,20 @@ function previewFile(
 
 
 previewFile(
-  document.getElementById(
-    "characterImage"
-  ),
-  document.getElementById(
-    "characterPreview"
-  )
+  document.getElementById("characterImage"),
+  document.getElementById("characterPreview")
 );
 
 
 previewFile(
-  document.getElementById(
-    "patternImage"
-  ),
-  document.getElementById(
-    "patternPreview"
-  )
+  document.getElementById("patternImage"),
+  document.getElementById("patternPreview")
 );
 
 
 previewFile(
-  document.getElementById(
-    "goodsImage"
-  ),
-  document.getElementById(
-    "goodsPreview"
-  )
+  document.getElementById("goodsImage"),
+  document.getElementById("goodsPreview")
 );
 
 
@@ -4101,8 +3708,7 @@ previewFile(
 
   try{
 
-    data=
-      await safeLoad();
+    data=await safeLoad();
 
     render();
 

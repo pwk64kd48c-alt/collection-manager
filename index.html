@@ -499,7 +499,7 @@ input[type="file"]{
 }
 
 .screenshot-toolbar{
-  max-width:800px;
+  max-width:600px;
   margin:0 auto 14px;
   display:flex;
   gap:8px;
@@ -510,12 +510,11 @@ input[type="file"]{
 
 .screenshot-toolbar button{
   flex:1;
-  padding:14px 5px;
-  border-radius:14px;
+  padding:12px 5px;
+  border-radius:11px;
   background:white;
   color:#555;
   box-shadow:0 2px 7px rgba(0,0,0,.08);
-  font-size:16px;
 }
 
 .screenshot-toolbar .shot-save{
@@ -523,38 +522,37 @@ input[type="file"]{
   color:white;
 }
 
-/* スクショ本体 */
 .shot-sheet{
   width:100%;
-  max-width:800px;
+  max-width:600px;
   margin:0 auto;
   background:white;
-  border-radius:22px;
-  padding:24px;
+  border-radius:18px;
+  padding:18px;
 }
 
 .shot-title{
-  font-size:30px;
+  font-size:22px;
   font-weight:bold;
   color:#444;
-  margin-bottom:20px;
+  margin-bottom:12px;
 }
 
 /* モード切替 */
+
 .shot-mode-buttons{
   display:grid;
   grid-template-columns:1fr 1fr;
-  gap:12px;
-  margin-bottom:20px;
+  gap:8px;
+  margin-bottom:10px;
 }
 
 .shot-mode-button{
-  padding:15px 8px;
-  border-radius:15px;
+  padding:11px 5px;
+  border-radius:11px;
   background:#eee;
-  color:#777;
-  font-size:17px;
-  font-weight:bold;
+  color:#666;
+  font-size:14px;
 }
 
 .shot-mode-button.active{
@@ -563,137 +561,141 @@ input[type="file"]{
 }
 
 /* グッズ種類選択 */
-.shot-type-panel{
+
+.shot-type-selector{
   background:#f7f7f7;
-  border-radius:15px;
-  padding:14px;
-  margin-bottom:18px;
+  border-radius:12px;
+  padding:10px;
+  margin-bottom:12px;
 }
 
 .shot-type-title{
-  font-size:13px;
+  font-size:12px;
   font-weight:bold;
-  color:#666;
-  margin-bottom:10px;
+  color:#777;
+  margin-bottom:7px;
 }
 
 .shot-type-list{
   display:flex;
   flex-wrap:wrap;
-  gap:7px;
+  gap:6px;
 }
 
-.shot-type-button{
-  padding:8px 12px;
-  border-radius:20px;
+.shot-type-chip{
+  padding:7px 11px;
+  border-radius:18px;
   background:white;
-  border:1px solid #ddd;
-  color:#666;
-  font-size:13px;
+  color:#777;
+  font-size:11px;
+  box-shadow:0 1px 4px rgba(0,0,0,.06);
 }
 
-.shot-type-button.active{
+.shot-type-chip.selected{
   background:#777;
   color:white;
-  border-color:#777;
 }
 
-.shot-type-help{
-  margin-top:9px;
-  font-size:11px;
-  color:#999;
-}
+/* =========================
+   絵柄ごとのまとめ
+========================= */
 
-/*
-  絵柄ごとの大きなカード
-*/
 .shot-pattern-grid{
   display:grid;
   grid-template-columns:repeat(2,minmax(0,1fr));
-  gap:14px;
-  align-items:start;
+  gap:10px;
 }
 
 .shot-pattern-card{
   background:#f7f7f7;
-  border:2px solid #e7e7e7;
-  border-radius:18px;
-  padding:12px;
-  display:grid;
-  grid-template-columns:120px minmax(0,1fr);
-  gap:12px;
+  border:1px solid #e4e4e4;
+  border-radius:15px;
+  padding:9px;
+  display:flex;
+  align-items:flex-start;
+  gap:8px;
   min-width:0;
 }
 
-/* 絵柄側 */
+/* 左側：絵柄 */
+
 .shot-pattern-side{
-  min-width:0;
+  width:92px;
+  min-width:92px;
+  flex:none;
 }
 
-.shot-pattern-image-large{
-  width:100%;
-  aspect-ratio:1;
+.shot-pattern-main-image{
+  width:92px;
+  height:92px;
   object-fit:cover;
-  border-radius:13px;
+  border-radius:10px;
   background:#ddd;
   display:block;
 }
 
-.shot-pattern-name-large{
-  margin-top:8px;
-  font-size:15px;
-  font-weight:bold;
-  line-height:1.25;
-  color:#444;
-  overflow-wrap:anywhere;
-}
-
-/* グッズ側 */
-.shot-goods-side{
-  min-width:0;
-  display:flex;
-  flex-direction:column;
-  gap:7px;
-}
-
-.shot-goods-label{
-  display:inline-block;
-  align-self:flex-start;
-  padding:5px 9px;
-  background:#e9eeee;
-  border-radius:20px;
-  font-size:10px;
-  color:#777;
-  margin-bottom:1px;
-}
-
-.shot-goods-row{
-  display:flex;
-  align-items:center;
-  gap:7px;
-  min-width:0;
-  background:white;
+.shot-pattern-no-image{
+  width:92px;
+  height:92px;
   border-radius:10px;
-  padding:7px;
-  min-height:52px;
-}
-
-.shot-goods-image{
-  width:42px;
-  height:42px;
-  object-fit:cover;
-  border-radius:7px;
   background:#ddd;
-  flex:none;
-}
-
-.shot-no-image{
   display:flex;
   align-items:center;
   justify-content:center;
   color:#aaa;
-  font-size:9px;
+  font-size:10px;
+}
+
+.shot-pattern-title{
+  margin-top:6px;
+  font-size:13px;
+  line-height:1.25;
+  font-weight:bold;
+  color:#444;
+  overflow-wrap:anywhere;
+}
+
+/* 右側：グッズ */
+
+.shot-goods-list{
+  flex:1;
+  min-width:0;
+  display:flex;
+  flex-direction:column;
+  gap:6px;
+}
+
+.shot-goods-item{
+  width:100%;
+  min-width:0;
+  background:white;
+  border-radius:9px;
+  padding:6px;
+  display:flex;
+  align-items:center;
+  gap:6px;
+}
+
+.shot-goods-thumb{
+  width:34px;
+  height:34px;
+  object-fit:cover;
+  border-radius:6px;
   background:#ddd;
+  flex:none;
+}
+
+.shot-goods-no-image{
+  width:34px;
+  height:34px;
+  border-radius:6px;
+  background:#ddd;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  color:#aaa;
+  font-size:7px;
+  flex:none;
 }
 
 .shot-goods-info{
@@ -702,122 +704,104 @@ input[type="file"]{
 }
 
 .shot-goods-name{
-  font-size:12px;
-  font-weight:bold;
+  font-size:11px;
   line-height:1.25;
-  color:#444;
+  color:#555;
   overflow-wrap:anywhere;
+  word-break:normal;
+  white-space:normal;
 }
 
-.shot-priority{
-  width:22px;
-  flex:none;
+.shot-goods-priority{
+  width:17px;
+  min-width:17px;
   text-align:center;
-  font-size:18px;
+  font-size:16px;
   line-height:1;
+  flex:none;
 }
 
 .shot-empty{
-  grid-column:1/-1;
   text-align:center;
-  padding:35px 10px;
+  padding:30px 10px;
   color:#aaa;
   font-size:13px;
+  grid-column:1/-1;
 }
 
-@media(max-width:600px){
+/* 小さいスマホ */
 
-  .screenshot-view{
-    padding:12px;
+@media(max-width:430px){
+
+  main{
+    padding-left:12px;
+    padding-right:12px;
+  }
+
+  .character-list,
+  .pattern-grid{
+    gap:10px;
   }
 
   .shot-sheet{
-    padding:14px;
-    border-radius:18px;
-  }
-
-  .shot-title{
-    font-size:24px;
+    padding:12px;
   }
 
   .shot-pattern-grid{
-    gap:9px;
+    gap:7px;
   }
 
   .shot-pattern-card{
-    grid-template-columns:72px minmax(0,1fr);
-    gap:7px;
-    padding:8px;
-    border-radius:14px;
+    padding:7px;
+    gap:6px;
+    border-radius:12px;
   }
 
-  .shot-pattern-name-large{
-    font-size:12px;
+  .shot-pattern-side{
+    width:72px;
+    min-width:72px;
   }
 
-  .shot-goods-label{
-    font-size:8px;
-    padding:4px 6px;
+  .shot-pattern-main-image,
+  .shot-pattern-no-image{
+    width:72px;
+    height:72px;
   }
 
-  .shot-goods-row{
+  .shot-pattern-title{
+    font-size:11px;
+  }
+
+  .shot-goods-item{
     padding:5px;
-    gap:5px;
-    min-height:43px;
+    gap:4px;
   }
 
-  .shot-goods-image{
-    width:32px;
-    height:32px;
+  .shot-goods-thumb,
+  .shot-goods-no-image{
+    width:29px;
+    height:29px;
   }
 
   .shot-goods-name{
     font-size:10px;
   }
 
-  .shot-priority{
-    font-size:15px;
-    width:17px;
-  }
-
-}
-
-@media(max-width:420px){
-
-  .shot-mode-buttons{
-    gap:7px;
-  }
-
-  .shot-mode-button{
+  .shot-goods-priority{
     font-size:14px;
-    padding:12px 5px;
-  }
-
-  .shot-pattern-card{
-    grid-template-columns:64px minmax(0,1fr);
-  }
-
-  .shot-pattern-name-large{
-    font-size:11px;
-  }
-
-  .shot-goods-name{
-    font-size:9px;
-  }
-
-  .shot-goods-image{
-    width:29px;
-    height:29px;
+    width:15px;
+    min-width:15px;
   }
 
 }
+
 </style>
 </head>
 
 <body>
 
 <header>
-<h1>Collection</h1>
+  <h1>Collection</h1>
 </header>
 
 <main id="app"></main>
@@ -1003,8 +987,8 @@ let editingGoods=-1;
 
 let screenshotMode="all";
 
-/* 選択中のグッズ種類 */
-let selectedGoodsTypes=[];
+/* グッズ種類別で選択されている種類 */
+let selectedShotTypes=[];
 
 const app=document.getElementById("app");
 
@@ -1024,7 +1008,7 @@ const COLORS=[
 ];
 
 /* =========================
- IndexedDB
+   IndexedDB
 ========================= */
 
 function openDB(){
@@ -1101,7 +1085,7 @@ reject(request.error);
 }
 
 /* =========================
- データ
+   データ
 ========================= */
 
 function normalizePriority(value){
@@ -1267,7 +1251,7 @@ return false;
 }
 
 /* =========================
- 共通
+   共通
 ========================= */
 
 function escapeHTML(str){
@@ -1380,7 +1364,7 @@ document.getElementById(id).classList.remove("show");
 }
 
 /* =========================
- 一覧
+   一覧
 ========================= */
 
 function render(){
@@ -1463,7 +1447,7 @@ app.innerHTML=html;
 }
 
 /* =========================
- キャラ詳細
+   キャラ詳細
 ========================= */
 
 function renderCharacter(){
@@ -1679,7 +1663,7 @@ app.innerHTML=html;
 }
 
 /* =========================
- キャラ編集
+   キャラ編集
 ========================= */
 
 function setColorPicker(color){
@@ -1846,7 +1830,7 @@ render();
 }
 
 /* =========================
- 絵柄
+   絵柄
 ========================= */
 
 function openPatternEditor(index){
@@ -1968,7 +1952,7 @@ renderCharacter();
 }
 
 /* =========================
- グッズ
+   グッズ
 ========================= */
 
 function openGoodsEditor(patternIndex,goodsIndex){
@@ -2102,7 +2086,7 @@ renderCharacter();
 }
 
 /* =========================
- 優先度
+   優先度
 ========================= */
 
 async function togglePatternPriority(index){
@@ -2132,7 +2116,7 @@ renderCharacter();
 }
 
 /* =========================
- スクショ
+   スクショ
 ========================= */
 
 function createShotImage(src,className){
@@ -2154,43 +2138,51 @@ return `
 
 }
 
-/*
- 1つの絵柄の中に、
- 選択されたグッズを全部まとめる
-*/
-function makePatternShotCard(pattern,goodsList){
+/* 絵柄1つ分のグッズ一覧 */
 
-let goodsHTML="";
+function makeShotGoods(goods){
 
-goodsList.forEach(function(g){
+const gp=priorityMark(goods.priority);
 
-const gp=priorityMark(g.priority);
+return `
+<div class="shot-goods-item">
 
-goodsHTML+=`
-
-<div class="shot-goods-row">
-
-${createShotImage(
-g.image,
-"shot-goods-image"
-)}
+${
+goods.image
+?`
+<img
+class="shot-goods-thumb"
+src="${goods.image}">
+`
+:`
+<div class="shot-goods-no-image">
+画像なし
+</div>
+`
+}
 
 <div class="shot-goods-info">
 
 <div class="shot-goods-name">
-${escapeHTML(g.name)}
+${escapeHTML(goods.name)}
 </div>
 
 </div>
 
-<div class="shot-priority">
+<div class="shot-goods-priority">
 ${gp.mark}
 </div>
 
 </div>
 `;
 
-});
+}
+
+/* =========================
+   絵柄1つ＝1枠
+========================= */
+
+function makeShotPatternCard(pattern,goodsList){
 
 return `
 
@@ -2198,24 +2190,31 @@ return `
 
 <div class="shot-pattern-side">
 
-${createShotImage(
-pattern.image,
-"shot-pattern-image-large"
-)}
+${
+pattern.image
+?`
+<img
+class="shot-pattern-main-image"
+src="${pattern.image}">
+`
+:`
+<div class="shot-pattern-no-image">
+画像なし
+</div>
+`
+}
 
-<div class="shot-pattern-name-large">
+<div class="shot-pattern-title">
 ${escapeHTML(pattern.name)}
 </div>
 
 </div>
 
-<div class="shot-goods-side">
+<div class="shot-goods-list">
 
-<div class="shot-goods-label">
-求めてるグッズ
-</div>
-
-${goodsHTML}
+${goodsList.map(function(g){
+return makeShotGoods(g);
+}).join("")}
 
 </div>
 
@@ -2224,12 +2223,14 @@ ${goodsHTML}
 
 }
 
-/*
- 登録されているグッズ種類を取得
-*/
+/* =========================
+   グッズ種類を取得
+========================= */
+
 function getGoodsTypes(c){
 
-const map=new Map();
+const result=[];
+const seen=new Set();
 
 c.patterns.forEach(function(p){
 
@@ -2237,90 +2238,27 @@ p.goods.forEach(function(g){
 
 const name=g.name.trim();
 
-if(name && !map.has(name)){
-map.set(name,name);
+if(!name)return;
+
+if(!seen.has(name)){
+
+seen.add(name);
+result.push(name);
+
 }
 
 });
 
 });
 
-return Array.from(map.values());
+return result;
 
 }
 
-/*
- グッズ種類選択UI
-*/
-function makeGoodsTypePanel(c){
+/* =========================
+   スクショ描画
+========================= */
 
-const types=getGoodsTypes(c);
-
-if(types.length===0){
-
-return `
-<div class="shot-type-panel">
-
-<div class="shot-type-title">
-表示するグッズ種類
-</div>
-
-<div style="font-size:12px;color:#aaa;">
-まだグッズが登録されていません
-</div>
-
-</div>
-`;
-
-}
-
-let html=`
-
-<div class="shot-type-panel">
-
-<div class="shot-type-title">
-表示するグッズ種類
-</div>
-
-<div class="shot-type-list">
-`;
-
-types.forEach(function(type){
-
-const active=selectedGoodsTypes.includes(type)
-?"active"
-:"";
-
-html+=`
-
-<button
-class="shot-type-button ${active}"
-data-action="toggle-shot-type"
-data-shot-type="${escapeHTML(type)}">
-${escapeHTML(type)}
-</button>
-`;
-
-});
-
-html+=`
-
-</div>
-
-<div class="shot-type-help">
-複数選択OK。同じ絵柄のグッズは1つの枠にまとまります。
-</div>
-
-</div>
-`;
-
-return html;
-
-}
-
-/*
- スクショ全体を作る
-*/
 function renderScreenshot(){
 
 const c=data[currentCharacter];
@@ -2339,13 +2277,13 @@ ${escapeHTML(c.name)} Collection
 
 <button
 class="shot-mode-button ${screenshotMode==="all"?"active":""}"
-data-action="shot-mode-all">
+data-shot-mode="all">
 絵柄別
 </button>
 
 <button
 class="shot-mode-button ${screenshotMode==="type"?"active":""}"
-data-action="shot-mode-type">
+data-shot-mode="type">
 グッズ種類別
 </button>
 
@@ -2353,66 +2291,63 @@ data-action="shot-mode-type">
 `;
 
 /* =========================
- 絵柄別
+   グッズ種類別の選択
 ========================= */
 
-if(screenshotMode==="all"){
+if(screenshotMode==="type"){
+
+const types=getGoodsTypes(c);
 
 html+=`
 
-<div class="shot-pattern-grid">
+<div class="shot-type-selector">
+
+<div class="shot-type-title">
+表示するグッズ種類を選択
+</div>
+
+<div class="shot-type-list">
 `;
 
-let count=0;
-
-c.patterns.forEach(function(p){
-
-if(!p.goods.length)return;
-
-html+=makePatternShotCard(
-p,
-p.goods
-);
-
-count++;
-
-});
-
-if(count===0){
+if(types.length===0){
 
 html+=`
-<div class="shot-empty">
-グッズがありません
+<div style="font-size:12px;color:#aaa;">
+登録されているグッズがありません
 </div>
 `;
+
+}else{
+
+types.forEach(function(type){
+
+const selected=
+selectedShotTypes.includes(type);
+
+html+=`
+
+<button
+class="shot-type-chip ${selected?"selected":""}"
+data-shot-type="${escapeHTML(type)}">
+${escapeHTML(type)}
+</button>
+`;
+
+});
 
 }
 
 html+=`
 
+</div>
 </div>
 `;
 
 }
 
 /* =========================
- グッズ種類別
+   絵柄ごとにまとめる
 ========================= */
-
-else{
-
-html+=makeGoodsTypePanel(c);
-
-if(selectedGoodsTypes.length===0){
-
-html+=`
-
-<div class="shot-empty">
-グッズ種類を1つ以上選択してください
-</div>
-`;
-
-}else{
 
 html+=`
 
@@ -2421,40 +2356,57 @@ html+=`
 
 let count=0;
 
-c.patterns.forEach(function(p){
+c.patterns.forEach(function(pattern){
+
+let goodsList=[];
+
+if(screenshotMode==="all"){
+
+goodsList=pattern.goods.slice();
+
+}else{
 
 /*
- 同じ絵柄の中から、
- 選択された種類だけを抽出
+  選択されたグッズ種類だけ残す
+  ↓
+  その後「同じ絵柄」でまとめる
 */
-const filtered=p.goods.filter(function(g){
 
-return selectedGoodsTypes.includes(
-g.name.trim()
+goodsList=pattern.goods.filter(function(goods){
+
+return selectedShotTypes.includes(
+goods.name.trim()
 );
 
 });
 
-if(filtered.length===0)return;
+}
 
-/*
- filteredされたものを
- 絵柄単位で1つの枠にする
-*/
-html+=makePatternShotCard(
-p,
-filtered
-);
+/* グッズがある絵柄だけ表示 */
+
+if(goodsList.length===0)return;
 
 count++;
+
+html+=makeShotPatternCard(
+pattern,
+goodsList
+);
 
 });
 
 if(count===0){
 
 html+=`
+
 <div class="shot-empty">
-選択したグッズがありません
+
+${
+screenshotMode==="type"
+?"表示するグッズ種類を選択してください"
+:"グッズがありません"
+}
+
 </div>
 `;
 
@@ -2463,67 +2415,56 @@ html+=`
 html+=`
 
 </div>
-`;
-
-}
-
-}
-
-html+=`
-
 </div>
 `;
 
-document.getElementById("screenshotContent")
-.innerHTML=html;
+document.getElementById("screenshotContent").innerHTML=html;
+
+}
+
+/* =========================
+   スクショを開く
+========================= */
+
+function openScreenshot(mode){
+
+screenshotMode=mode;
+
+const c=data[currentCharacter];
+
+if(!c)return;
+
+/*
+  種類別を開いたとき、
+  最初は全部未選択
+*/
+if(mode==="type"){
+
+const types=getGoodsTypes(c);
+
+/*
+  以前選択した種類がまだ存在するなら残す
+*/
+selectedShotTypes=
+selectedShotTypes.filter(function(type){
+return types.includes(type);
+});
+
+}else{
+
+selectedShotTypes=[];
+
+}
+
+renderScreenshot();
 
 document.getElementById("screenshotView")
 .classList.add("show");
 
 }
 
-/*
- スクショ開始
-*/
-function openScreenshot(mode){
-
-screenshotMode=mode;
-
-/*
- 種類別を開いたとき、
- 以前の選択を残さず最初は全種類未選択
-*/
-if(mode==="type"){
-selectedGoodsTypes=[];
-}
-
-renderScreenshot();
-
-}
-
-/*
- グッズ種類のON/OFF
-*/
-function toggleShotType(type){
-
-const index=selectedGoodsTypes.indexOf(type);
-
-if(index===-1){
-
-selectedGoodsTypes.push(type);
-
-}else{
-
-selectedGoodsTypes.splice(index,1);
-
-}
-
-renderScreenshot();
-
-}
-
 /* =========================
- スクショ保存
+   スクショ画像保存
 ========================= */
 
 async function saveScreenshot(){
@@ -2559,12 +2500,7 @@ const c=data[currentCharacter];
 let suffix="絵柄別";
 
 if(screenshotMode==="type"){
-
-suffix=
-selectedGoodsTypes.length
-?selectedGoodsTypes.join("・")
-:"種類別";
-
+suffix="グッズ種類別";
 }
 
 link.download=
@@ -2589,7 +2525,7 @@ alert(
 }
 
 /* =========================
- 写真
+   写真
 ========================= */
 
 function showPhoto(src){
@@ -2611,7 +2547,7 @@ document.getElementById("photoView")
 }
 
 /* =========================
- 長押し削除
+   長押し削除
 ========================= */
 
 let goodsTimer=null;
@@ -2755,7 +2691,7 @@ renderCharacter();
 );
 
 /* =========================
- イベント
+   イベント
 ========================= */
 
 document.addEventListener(
@@ -2765,6 +2701,7 @@ function(e){
 const target=e.target;
 
 /* 写真 */
+
 if(target.dataset.photo){
 
 e.stopPropagation();
@@ -2776,6 +2713,7 @@ return;
 }
 
 /* キャラ */
+
 const characterCard=target.closest(
 "[data-character]"
 );
@@ -2795,7 +2733,58 @@ return;
 
 }
 
-/* アクション */
+/* スクショモード切替 */
+
+const shotModeButton=
+target.closest("[data-shot-mode]");
+
+if(shotModeButton){
+
+screenshotMode=
+shotModeButton.dataset.shotMode;
+
+if(screenshotMode==="all"){
+
+selectedShotTypes=[];
+
+}
+
+renderScreenshot();
+
+return;
+
+}
+
+/* グッズ種類選択 */
+
+const shotTypeButton=
+target.closest("[data-shot-type]");
+
+if(shotTypeButton){
+
+const type=shotTypeButton.dataset.shotType;
+
+if(selectedShotTypes.includes(type)){
+
+selectedShotTypes=
+selectedShotTypes.filter(function(item){
+return item!==type;
+});
+
+}else{
+
+selectedShotTypes.push(type);
+
+}
+
+renderScreenshot();
+
+return;
+
+}
+
+/* 通常ボタン */
+
 const button=target.closest(
 "[data-action]"
 );
@@ -2941,10 +2930,6 @@ closePhoto();
 return;
 }
 
-/* =========================
- スクショ
-========================= */
-
 if(action==="screenshot-all"){
 
 openScreenshot("all");
@@ -2955,33 +2940,6 @@ return;
 if(action==="screenshot-type"){
 
 openScreenshot("type");
-
-return;
-}
-
-if(action==="shot-mode-all"){
-
-screenshotMode="all";
-
-renderScreenshot();
-
-return;
-}
-
-if(action==="shot-mode-type"){
-
-screenshotMode="type";
-
-renderScreenshot();
-
-return;
-}
-
-if(action==="toggle-shot-type"){
-
-toggleShotType(
-button.dataset.shotType
-);
 
 return;
 }
@@ -3005,7 +2963,7 @@ return;
 );
 
 /* =========================
- カラー
+   カラー
 ========================= */
 
 document.getElementById("characterColor")
@@ -3045,7 +3003,7 @@ document.getElementById("colorPreview")
 });
 
 /* =========================
- モーダル外
+   モーダル外
 ========================= */
 
 document.querySelectorAll(".modal-bg")
@@ -3062,7 +3020,7 @@ bg.classList.remove("show");
 });
 
 /* =========================
- プレビュー
+   プレビュー
 ========================= */
 
 function previewFile(input,preview){
@@ -3109,7 +3067,7 @@ document.getElementById("goodsPreview")
 );
 
 /* =========================
- 初期化
+   初期化
 ========================= */
 
 (async function(){

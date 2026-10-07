@@ -3,8 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-<title>Collection データ救出</title>
+<title>Collection</title>
 
 <style>
 *{
@@ -13,875 +12,3278 @@
 
 body{
   margin:0;
-  padding:30px 16px;
-  font-family:-apple-system,BlinkMacSystemFont,"Helvetica Neue",sans-serif;
-  background:#f5f5f7;
-  color:#333;
-}
-
-.box{
-  max-width:620px;
-  margin:auto;
   background:#fff;
-  border-radius:22px;
-  padding:26px 20px;
-  box-shadow:0 4px 20px rgba(0,0,0,.08);
+  color:#555;
+  font-family:
+    -apple-system,
+    BlinkMacSystemFont,
+    "Helvetica Neue",
+    "Hiragino Kaku Gothic ProN",
+    "Yu Gothic",
+    Meiryo,
+    sans-serif;
 }
 
-h1{
-  margin:0 0 18px;
-  font-size:23px;
-}
-
-p{
-  line-height:1.7;
+button,
+input{
+  font:inherit;
 }
 
 button{
-  width:100%;
-  border:0;
-  border-radius:15px;
-  padding:16px;
-  margin-top:12px;
-  font-size:16px;
-  font-weight:bold;
   cursor:pointer;
-  -webkit-tap-highlight-color:transparent;
-  touch-action:manipulation;
 }
 
-button:active{
-  transform:scale(.98);
+header{
+  padding:18px 14px 8px;
+  text-align:center;
 }
 
-#recover{
-  background:#333;
-  color:#fff;
+header h1{
+  margin:0;
+  font-size:25px;
+  font-weight:500;
+  color:#666;
 }
 
-#download{
+.top-buttons{
+  display:flex;
+  justify-content:center;
+  gap:8px;
+  flex-wrap:wrap;
+  margin:14px 0 8px;
+}
+
+.top-buttons button{
+  border:0;
+  background:#f3f3f3;
+  color:#666;
+  border-radius:12px;
+  padding:9px 14px;
+}
+
+.top-buttons button:hover{
   background:#e8e8e8;
-  color:#333;
-  display:none;
 }
 
-#result{
-  margin-top:20px;
-  padding:16px;
+#app{
+  max-width:1100px;
+  margin:auto;
+  padding:8px 12px 50px;
+}
+
+/* =========================
+   キャラクター一覧
+========================= */
+
+.character-list{
+  display:grid;
+  grid-template-columns:repeat(2,minmax(0,1fr));
+  gap:12px;
+}
+
+.character-card{
+  border:1px solid #ddd;
+  border-radius:18px;
+  padding:12px;
+  background:#fff;
+  box-shadow:0 2px 8px rgba(0,0,0,.04);
+}
+
+.character-card-head{
+  display:flex;
+  align-items:center;
+  gap:10px;
+}
+
+.character-thumb{
+  width:70px;
+  height:70px;
+  object-fit:cover;
   border-radius:14px;
   background:#f2f2f2;
-  white-space:pre-wrap;
+  flex-shrink:0;
+}
+
+.character-name{
+  font-size:18px;
+  font-weight:bold;
+  color:#555;
   word-break:break-word;
-  line-height:1.6;
+}
+
+.character-card-actions{
+  margin-left:auto;
+  display:flex;
+  gap:5px;
+}
+
+.small-btn{
+  border:0;
+  background:#f3f3f3;
+  color:#666;
+  border-radius:9px;
+  padding:6px 8px;
+  font-size:12px;
+}
+
+.small-btn:hover{
+  background:#e7e7e7;
+}
+
+.pattern-list{
+  display:grid;
+  grid-template-columns:repeat(2,minmax(0,1fr));
+  gap:8px;
+  margin-top:10px;
+}
+
+.pattern-mini{
+  display:flex;
+  align-items:center;
+  gap:7px;
+  padding:7px;
+  background:#fafafa;
+  border-radius:10px;
+  min-width:0;
+}
+
+.pattern-mini img{
+  width:42px;
+  height:42px;
+  object-fit:cover;
+  border-radius:7px;
+  flex-shrink:0;
+}
+
+.pattern-mini-name{
+  font-size:13px;
+  min-width:0;
+  word-break:break-word;
+}
+
+.add-pattern-btn{
+  margin-top:9px;
+  width:100%;
+  border:1px dashed #ccc;
+  background:#fafafa;
+  color:#777;
+  border-radius:10px;
+  padding:8px;
+}
+
+/* =========================
+   詳細
+========================= */
+
+.detail-page{
   display:none;
 }
 
-.ok{
-  color:#16803c;
+.detail-head{
+  display:flex;
+  align-items:center;
+  gap:10px;
+  margin-bottom:15px;
 }
 
-.ng{
-  color:#c62828;
+.back-btn{
+  border:0;
+  background:#f1f1f1;
+  border-radius:10px;
+  padding:8px 12px;
+  color:#666;
 }
 
-.note{
+.detail-title{
+  font-size:22px;
+  font-weight:bold;
+  color:#555;
+  flex:1;
+}
+
+.detail-actions{
+  display:flex;
+  gap:6px;
+  flex-wrap:wrap;
+}
+
+.detail-actions button{
+  border:0;
+  background:#f2f2f2;
+  color:#666;
+  border-radius:10px;
+  padding:8px 10px;
   font-size:13px;
+}
+
+/* =========================
+   絵柄
+========================= */
+
+.pattern-card{
+  border:1px solid #ddd;
+  border-radius:18px;
+  padding:12px;
+  margin-bottom:14px;
+  background:#fff;
+}
+
+.pattern-head{
+  display:flex;
+  align-items:center;
+  gap:10px;
+  margin-bottom:10px;
+}
+
+.pattern-image{
+  width:95px;
+  height:95px;
+  object-fit:cover;
+  border-radius:12px;
+  background:#f3f3f3;
+  flex-shrink:0;
+}
+
+.pattern-info{
+  flex:1;
+  min-width:0;
+}
+
+.pattern-name{
+  font-size:18px;
+  font-weight:bold;
+  color:#555;
+  word-break:break-word;
+}
+
+.priority-buttons{
+  display:flex;
+  gap:5px;
+  margin-top:7px;
+  flex-wrap:wrap;
+}
+
+.priority-btn{
+  border:0;
+  border-radius:8px;
+  background:#f1f1f1;
+  padding:5px 8px;
+  font-size:12px;
+  color:#666;
+}
+
+.priority-btn.active{
+  background:#ddd;
+  font-weight:bold;
+}
+
+.pattern-actions{
+  display:flex;
+  gap:5px;
+  flex-wrap:wrap;
+}
+
+.pattern-actions button{
+  border:0;
+  background:#f1f1f1;
+  border-radius:8px;
+  padding:6px 8px;
+  color:#666;
+  font-size:12px;
+}
+
+/* =========================
+   グッズ
+========================= */
+
+.goods-list{
+  display:flex;
+  flex-direction:column;
+  gap:7px;
+}
+
+.goods-item{
+  display:flex;
+  align-items:center;
+  gap:9px;
+  padding:8px;
+  border-radius:11px;
+  background:#fafafa;
+  min-width:0;
+}
+
+.goods-image{
+  width:55px;
+  height:55px;
+  object-fit:cover;
+  border-radius:8px;
+  background:#eee;
+  flex-shrink:0;
+}
+
+.goods-info{
+  flex:1;
+  min-width:0;
+}
+
+.goods-name{
+  font-size:14px;
+  color:#555;
+  word-break:break-word;
+}
+
+.goods-type{
+  display:inline-block;
+  margin-top:3px;
+  padding:2px 6px;
+  border-radius:6px;
+  background:#ededed;
   color:#777;
+  font-size:10px;
+}
+
+.goods-priority{
+  font-size:22px;
+  flex-shrink:0;
+  width:30px;
+  text-align:center;
+}
+
+.goods-actions{
+  display:flex;
+  gap:4px;
+  flex-shrink:0;
+}
+
+.goods-actions button{
+  border:0;
+  background:#eee;
+  color:#666;
+  border-radius:7px;
+  padding:5px 7px;
+  font-size:11px;
+}
+
+.add-goods-btn{
+  margin-top:8px;
+  width:100%;
+  border:1px dashed #ccc;
+  background:#fafafa;
+  color:#777;
+  border-radius:10px;
+  padding:8px;
+}
+
+/* =========================
+   モーダル
+========================= */
+
+.modal-bg{
+  position:fixed;
+  inset:0;
+  background:rgba(0,0,0,.35);
+  display:none;
+  align-items:center;
+  justify-content:center;
+  z-index:1000;
+  padding:15px;
+}
+
+.modal{
+  width:min(500px,100%);
+  max-height:90vh;
+  overflow:auto;
+  background:#fff;
+  border-radius:18px;
+  padding:20px;
+}
+
+.modal h2{
+  margin:0 0 15px;
+  color:#555;
+  font-size:20px;
+}
+
+.form-group{
+  margin-bottom:12px;
+}
+
+.form-group label{
+  display:block;
+  margin-bottom:5px;
+  font-size:13px;
+  color:#666;
+}
+
+.form-group input{
+  width:100%;
+  border:1px solid #ddd;
+  border-radius:10px;
+  padding:10px;
+  outline:none;
+}
+
+.form-group input:focus{
+  border-color:#aaa;
+}
+
+.modal-buttons{
+  display:flex;
+  gap:7px;
+  margin-top:15px;
+  flex-wrap:wrap;
+}
+
+.modal-buttons button{
+  flex:1;
+  min-width:90px;
+  border:0;
+  border-radius:10px;
+  padding:10px;
+  background:#eee;
+  color:#666;
+}
+
+.modal-buttons .save-btn{
+  background:#ddd;
+  font-weight:bold;
+}
+
+.modal-buttons .delete-btn{
+  background:#f3dddd;
+  color:#a55;
+}
+
+/* =========================
+   写真表示
+========================= */
+
+.photo-bg{
+  position:fixed;
+  inset:0;
+  background:rgba(0,0,0,.8);
+  display:none;
+  align-items:center;
+  justify-content:center;
+  z-index:2000;
+  padding:20px;
+}
+
+.photo-bg img{
+  max-width:95vw;
+  max-height:90vh;
+  object-fit:contain;
+  border-radius:10px;
+}
+
+.photo-close{
+  position:fixed;
+  right:15px;
+  top:15px;
+  border:0;
+  background:#fff;
+  color:#555;
+  width:40px;
+  height:40px;
+  border-radius:50%;
+  font-size:20px;
+}
+
+/* =========================
+   スクショ画面
+========================= */
+
+.screenshot-page{
+  display:none;
+  background:#fff;
+}
+
+.screenshot-title{
+  text-align:center;
+  font-size:26px;
+  color:#777;
+  margin:5px 0 25px;
+  font-weight:500;
+}
+
+.priority-legend{
+  width:100%;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  gap:18px;
+  background:#f7f7f7;
+  border-radius:20px;
+  padding:17px 10px;
+  margin-bottom:45px;
+  font-size:22px;
+  color:#666;
+  flex-wrap:wrap;
+}
+
+.priority-legend span{
+  white-space:nowrap;
+}
+
+/* 種類選択 */
+
+.shot-mode-buttons{
+  display:flex;
+  justify-content:center;
+  gap:8px;
+  margin-bottom:15px;
+}
+
+.shot-mode-buttons button{
+  border:0;
+  border-radius:10px;
+  padding:8px 13px;
+  background:#eee;
+  color:#666;
+}
+
+.shot-mode-buttons button.active{
+  background:#dcdcdc;
+  font-weight:bold;
+}
+
+.shot-type-select{
+  display:none;
+  justify-content:center;
+  gap:7px;
+  flex-wrap:wrap;
+  margin-bottom:20px;
+}
+
+.shot-type-select.show{
+  display:flex;
+}
+
+.type-chip{
+  border:0;
+  border-radius:15px;
+  padding:7px 12px;
+  background:#f1f1f1;
+  color:#666;
+}
+
+.type-chip.active{
+  background:#ccc;
+  font-weight:bold;
+}
+
+/* =========================
+   ★ スクショの構図
+   ここは変えない
+========================= */
+
+.shot-character{
+  width:100%;
+}
+
+.shot-pattern-grid{
+  display:grid;
+  grid-template-columns:repeat(2,minmax(0,1fr));
+  gap:22px;
+}
+
+.shot-pattern-card{
+  min-width:0;
+  display:grid;
+  grid-template-columns:minmax(0,.82fr) minmax(0,1.18fr);
+  gap:14px;
+  align-items:stretch;
+
+  padding:12px;
+  border:1px solid #ddd;
+  border-radius:22px;
+  background:#fff;
+  box-shadow:0 1px 4px rgba(0,0,0,.04);
+}
+
+.shot-pattern-left{
+  min-width:0;
+  display:flex;
+  flex-direction:column;
+  align-items:flex-start;
+}
+
+.shot-pattern-image{
+  width:100%;
+  aspect-ratio:1/1;
+  object-fit:cover;
+  border-radius:17px;
+  background:#eee;
+}
+
+.shot-pattern-name{
+  width:100%;
+  margin-top:13px;
+  padding:0 2px;
+  font-size:18px;
+  line-height:1.3;
+  font-weight:bold;
+  color:#444;
+  word-break:break-word;
+}
+
+.shot-goods-side{
+  min-width:0;
+  display:flex;
+  flex-direction:column;
+}
+
+.shot-goods-title{
+  display:inline-block;
+  align-self:flex-start;
+  background:#eef1f3;
+  border-radius:18px;
+  padding:8px 13px;
+  font-size:15px;
+  color:#555;
+  margin-bottom:9px;
+  white-space:nowrap;
+}
+
+.shot-goods-list{
+  display:flex;
+  flex-direction:column;
+  gap:7px;
+}
+
+.shot-goods-item{
+  display:flex;
+  align-items:center;
+  gap:7px;
+  min-width:0;
+  padding:6px;
+  background:#fff;
+  border-radius:14px;
+}
+
+.shot-goods-image{
+  width:48px;
+  height:48px;
+  object-fit:cover;
+  border-radius:8px;
+  background:#eee;
+  flex-shrink:0;
+}
+
+.shot-goods-name{
+  flex:1;
+  min-width:0;
+  font-size:14px;
+  line-height:1.3;
+  color:#444;
+  white-space:normal;
+  word-break:keep-all;
+  overflow-wrap:break-word;
+}
+
+.shot-goods-priority{
+  flex-shrink:0;
+  width:27px;
+  text-align:center;
+  font-size:23px;
+}
+
+.screenshot-buttons{
+  display:flex;
+  justify-content:center;
+  gap:8px;
+  margin:25px 0;
+  flex-wrap:wrap;
+}
+
+.screenshot-buttons button{
+  border:0;
+  background:#eee;
+  color:#666;
+  border-radius:10px;
+  padding:9px 14px;
+}
+
+/* =========================
+   スマホ
+========================= */
+
+@media(max-width:700px){
+
+  #app{
+    padding-left:8px;
+    padding-right:8px;
+  }
+
+  .character-list{
+    grid-template-columns:1fr;
+  }
+
+  .pattern-list{
+    grid-template-columns:1fr;
+  }
+
+  .priority-legend{
+    font-size:18px;
+    gap:10px;
+    padding:14px 7px;
+    margin-bottom:25px;
+  }
+
+  .shot-pattern-grid{
+    grid-template-columns:1fr;
+    gap:12px;
+  }
+
+  /* ★スマホでも左右構図は維持 */
+
+  .shot-pattern-card{
+    grid-template-columns:minmax(0,.85fr) minmax(0,1.15fr);
+    gap:9px;
+    padding:9px;
+    border-radius:17px;
+  }
+
+  .shot-pattern-name{
+    font-size:13px;
+    margin-top:8px;
+  }
+
+  .shot-goods-title{
+    font-size:11px;
+    padding:6px 8px;
+    margin-bottom:5px;
+  }
+
+  .shot-goods-list{
+    gap:4px;
+  }
+
+  .shot-goods-item{
+    gap:4px;
+    padding:3px;
+    border-radius:8px;
+  }
+
+  .shot-goods-image{
+    width:34px;
+    height:34px;
+    border-radius:6px;
+  }
+
+  .shot-goods-name{
+    font-size:9px;
+    line-height:1.25;
+    word-break:keep-all;
+    overflow-wrap:break-word;
+  }
+
+  .shot-goods-priority{
+    width:20px;
+    font-size:17px;
+  }
 }
 </style>
 </head>
 
 <body>
 
-<div class="box">
+<header>
+  <h1>Collection</h1>
 
-  <h1>📦 Collection データ救出</h1>
+  <div class="top-buttons">
+    <button data-action="show-home">一覧</button>
+    <button data-action="add-character">＋ キャラ追加</button>
+  </div>
+</header>
 
-  <p>
-    前のCollectionに保存されているデータを探して、
-    見つかったデータをそのままバックアップします。
-  </p>
+<div id="app">
 
-  <p>
-    <strong>⚠️ 保存データを書き換えたり削除したりしません。</strong>
-  </p>
+  <!-- =========================
+       HOME
+  ========================== -->
 
-  <p class="note">
-    ※このページでは「探す」と「保存」だけを行います。
-  </p>
+  <section id="homePage">
+
+    <div
+      id="characterList"
+      class="character-list">
+    </div>
+
+  </section>
+
+
+  <!-- =========================
+       DETAIL
+  ========================== -->
+
+  <section
+    id="detailPage"
+    class="detail-page">
+
+    <div class="detail-head">
+
+      <button
+        class="back-btn"
+        data-action="show-home">
+        ← 戻る
+      </button>
+
+      <div
+        id="detailTitle"
+        class="detail-title">
+      </div>
+
+      <div class="detail-actions">
+
+        <button
+          data-action="edit-character">
+          編集
+        </button>
+
+        <button
+          data-action="screenshot-all">
+          まとめてスクショ
+        </button>
+
+        <button
+          data-action="screenshot-type">
+          種類別スクショ
+        </button>
+
+      </div>
+
+    </div>
+
+    <div id="patternList"></div>
+
+    <button
+      class="add-pattern-btn"
+      data-action="add-pattern">
+      ＋ 絵柄を追加
+    </button>
+
+  </section>
+
+
+  <!-- =========================
+       SCREENSHOT
+  ========================== -->
+
+  <section
+    id="screenshotPage"
+    class="screenshot-page">
+
+    <div class="screenshot-title">
+      求め絵柄まとめ
+    </div>
+
+    <div class="priority-legend">
+      <span>優先度：</span>
+      <span>☆ 通常</span>
+      <span>★ 優先</span>
+      <span>⭐️ 最優先</span>
+    </div>
+
+    <div class="shot-mode-buttons">
+
+      <button
+        id="shotAllBtn"
+        data-action="shot-mode-all">
+        まとめて
+      </button>
+
+      <button
+        id="shotTypeBtn"
+        data-action="shot-mode-type">
+        種類別
+      </button>
+
+    </div>
+
+    <div
+      id="shotTypeSelect"
+      class="shot-type-select">
+    </div>
+
+    <div
+      id="screenshotContent"
+      class="shot-character">
+    </div>
+
+    <div class="screenshot-buttons">
+
+      <button
+        data-action="close-screenshot">
+        ← 戻る
+      </button>
+
+      <button
+        data-action="save-screenshot">
+        📷 画像保存
+      </button>
+
+    </div>
+
+  </section>
+
+</div>
+
+
+<!-- =========================
+     CHARACTER MODAL
+========================= -->
+
+<div
+  id="characterModal"
+  class="modal-bg">
+
+  <div class="modal">
+
+    <h2 id="characterModalTitle">
+      キャラ追加
+    </h2>
+
+    <div class="form-group">
+
+      <label>
+        キャラ名
+      </label>
+
+      <input
+        id="characterName"
+        type="text">
+
+    </div>
+
+    <div class="form-group">
+
+      <label>
+        画像URL
+      </label>
+
+      <input
+        id="characterImage"
+        type="text">
+
+    </div>
+
+    <div class="form-group">
+
+      <label>
+        テーマカラー
+      </label>
+
+      <input
+        id="characterColor"
+        type="text"
+        value="#8f8f8f"
+        placeholder="#8f8f8f">
+
+    </div>
+
+    <div class="modal-buttons">
+
+      <button
+        data-action="close-character-modal">
+        キャンセル
+      </button>
+
+      <button
+        class="save-btn"
+        data-action="save-character">
+        保存
+      </button>
+
+      <button
+        id="deleteCharacterButton"
+        class="delete-btn"
+        data-action="delete-character">
+        削除
+      </button>
+
+    </div>
+
+  </div>
+
+</div>
+
+
+<!-- =========================
+     PATTERN MODAL
+========================= -->
+
+<div
+  id="patternModal"
+  class="modal-bg">
+
+  <div class="modal">
+
+    <h2 id="patternModalTitle">
+      絵柄追加
+    </h2>
+
+    <div class="form-group">
+
+      <label>
+        絵柄名
+      </label>
+
+      <input
+        id="patternName"
+        type="text">
+
+    </div>
+
+    <div class="form-group">
+
+      <label>
+        絵柄画像URL
+      </label>
+
+      <input
+        id="patternImage"
+        type="text">
+
+    </div>
+
+    <div class="modal-buttons">
+
+      <button
+        data-action="close-pattern-modal">
+        キャンセル
+      </button>
+
+      <button
+        class="save-btn"
+        data-action="save-pattern">
+        保存
+      </button>
+
+      <button
+        id="deletePatternButton"
+        class="delete-btn"
+        data-action="delete-pattern">
+        削除
+      </button>
+
+    </div>
+
+  </div>
+
+</div>
+
+
+<!-- =========================
+     GOODS MODAL
+========================= -->
+
+<div
+  id="goodsModal"
+  class="modal-bg">
+
+  <div class="modal">
+
+    <h2 id="goodsModalTitle">
+      グッズ追加
+    </h2>
+
+    <div class="form-group">
+
+      <label>
+        グッズ名
+      </label>
+
+      <input
+        id="goodsName"
+        type="text"
+        placeholder="例：チェキ">
+
+    </div>
+
+    <div class="form-group">
+
+      <label>
+        種類
+      </label>
+
+      <input
+        id="goodsType"
+        type="text"
+        placeholder="例：チェキ / ぱしゃっつ / 缶バッジ">
+
+    </div>
+
+    <div class="form-group">
+
+      <label>
+        画像URL
+      </label>
+
+      <input
+        id="goodsImage"
+        type="text">
+
+    </div>
+
+    <div class="form-group">
+
+      <label>
+        優先度
+      </label>
+
+      <div class="priority-buttons">
+
+        <button
+          class="priority-btn"
+          data-action="goods-priority"
+          data-priority="0">
+          ☆ 通常
+        </button>
+
+        <button
+          class="priority-btn"
+          data-action="goods-priority"
+          data-priority="1">
+          ★ 優先
+        </button>
+
+        <button
+          class="priority-btn"
+          data-action="goods-priority"
+          data-priority="2">
+          ⭐️ 最優先
+        </button>
+
+      </div>
+
+    </div>
+
+    <div class="modal-buttons">
+
+      <button
+        data-action="close-goods-modal">
+        キャンセル
+      </button>
+
+      <button
+        class="save-btn"
+        data-action="save-goods">
+        保存
+      </button>
+
+      <button
+        id="deleteGoodsButton"
+        class="delete-btn"
+        data-action="delete-goods">
+        削除
+      </button>
+
+    </div>
+
+  </div>
+
+</div>
+
+
+<!-- =========================
+     PHOTO
+========================= -->
+
+<div
+  id="photoBg"
+  class="photo-bg">
 
   <button
-    id="recover"
-    type="button">
-    🔎 前のデータを探す
+    class="photo-close"
+    data-action="close-photo">
+    ×
   </button>
 
-  <button
-    id="download"
-    type="button">
-    💾 見つかったデータを保存する
-  </button>
-
-  <div id="result"></div>
+  <img
+    id="photoImage"
+    src=""
+    alt="">
 
 </div>
 
 
 <script>
 
-(function(){
+/* =========================
+   データ
+========================= */
 
-"use strict";
+const DB_NAME = "CollectionDB";
+const DB_VERSION = 1;
+const STORE_NAME = "data";
+const DATA_KEY = "collectionData";
+
+let data = {
+  characters:[]
+};
+
+let currentCharacterId = null;
+let currentPatternId = null;
+let currentGoodsId = null;
+
+let editingCharacterId = null;
+let editingPatternId = null;
+let editingGoodsId = null;
+
+let currentGoodsPriority = 0;
+
+let currentShotMode = "all";
+let selectedShotTypes = [];
 
 
-/* =========================================
-   基本設定
-========================================= */
+/* =========================
+   共通
+========================= */
 
-const TARGET_KEY = "collectionData";
+function uid(){
 
-let recoveredData = null;
-
-
-/* =========================================
-   要素
-========================================= */
-
-const recoverButton =
-  document.getElementById("recover");
-
-const downloadButton =
-  document.getElementById("download");
-
-const result =
-  document.getElementById("result");
-
-
-/* =========================================
-   結果表示
-========================================= */
-
-function show(message,type){
-
-  result.style.display = "block";
-
-  result.className = type || "";
-
-  result.textContent = message;
+  return Date.now().toString(36) +
+    Math.random().toString(36).slice(2);
 
 }
 
 
-/* =========================================
-   データらしいか判定
-========================================= */
+function priorityMark(priority){
 
-function looksLikeCollectionData(value){
+  priority =
+    Number(priority) || 0;
 
-  if(!value){
-    return false;
+  if(priority === 2){
+    return "⭐️";
   }
 
-  if(Array.isArray(value)){
+  if(priority === 1){
+    return "★";
+  }
 
-    if(value.length === 0){
-      return false;
+  return "☆";
+
+}
+
+
+function normalizeData(input){
+
+  if(!input || typeof input !== "object"){
+
+    return {
+      characters:[]
+    };
+
+  }
+
+  if(!Array.isArray(input.characters)){
+
+    input.characters = [];
+
+  }
+
+
+  input.characters.forEach(character => {
+
+    if(!Array.isArray(character.patterns)){
+
+      character.patterns = [];
+
     }
 
-    return value.some(function(item){
 
-      return (
-        item &&
-        typeof item === "object" &&
-        (
-          "name" in item ||
-          "patterns" in item ||
-          "goods" in item
-        )
+    character.patterns.forEach(pattern => {
+
+      if(!Array.isArray(pattern.goods)){
+
+        pattern.goods = [];
+
+      }
+
+
+      pattern.goods.forEach(goods => {
+
+        if(goods.priority === undefined){
+
+          goods.priority = 0;
+
+        }
+
+        goods.priority =
+          Number(goods.priority);
+
+
+        if(![0,1,2].includes(goods.priority)){
+
+          goods.priority = 0;
+
+        }
+
+
+        /*
+          既存データには「種類」がないため
+          未分類として保持
+        */
+
+        if(
+          goods.type === undefined ||
+          goods.type === null ||
+          goods.type === ""
+        ){
+
+          goods.type = "未分類";
+
+        }
+
+      });
+
+    });
+
+  });
+
+
+  return input;
+
+}
+
+
+/* =========================
+   LocalStorage
+========================= */
+
+function loadLocalData(){
+
+  try{
+
+    const saved =
+      localStorage.getItem(DATA_KEY);
+
+    if(!saved){
+
+      return false;
+
+    }
+
+    const parsed =
+      JSON.parse(saved);
+
+    data =
+      normalizeData(parsed);
+
+    return true;
+
+  }catch(error){
+
+    console.error(
+      "localStorage読み込みエラー",
+      error
+    );
+
+    return false;
+
+  }
+
+}
+
+
+function saveLocalData(){
+
+  try{
+
+    localStorage.setItem(
+      DATA_KEY,
+      JSON.stringify(data)
+    );
+
+  }catch(error){
+
+    console.error(
+      "localStorage保存エラー",
+      error
+    );
+
+  }
+
+}
+
+
+/* =========================
+   IndexedDB
+========================= */
+
+function openDB(){
+
+  return new Promise((resolve,reject)=>{
+
+    const request =
+      indexedDB.open(
+        DB_NAME,
+        DB_VERSION
       );
+
+
+    request.onupgradeneeded =
+      event => {
+
+        const db =
+          event.target.result;
+
+        if(
+          !db.objectStoreNames.contains(
+            STORE_NAME
+          )
+        ){
+
+          db.createObjectStore(
+            STORE_NAME
+          );
+
+        }
+
+      };
+
+
+    request.onsuccess =
+      event => {
+
+        resolve(
+          event.target.result
+        );
+
+      };
+
+
+    request.onerror =
+      () => {
+
+        reject(
+          request.error
+        );
+
+      };
+
+  });
+
+}
+
+
+async function loadDBData(){
+
+  try{
+
+    const db =
+      await openDB();
+
+    return new Promise(resolve=>{
+
+      const transaction =
+        db.transaction(
+          STORE_NAME,
+          "readonly"
+        );
+
+      const store =
+        transaction.objectStore(
+          STORE_NAME
+        );
+
+      const request =
+        store.get(DATA_KEY);
+
+
+      request.onsuccess = () => {
+
+        if(request.result){
+
+          data =
+            normalizeData(
+              request.result
+            );
+
+          resolve(true);
+
+        }else{
+
+          resolve(false);
+
+        }
+
+      };
+
+
+      request.onerror = () => {
+
+        resolve(false);
+
+      };
+
+    });
+
+  }catch(error){
+
+    console.error(
+      "IndexedDB読み込みエラー",
+      error
+    );
+
+    return false;
+
+  }
+
+}
+
+
+async function saveDBData(){
+
+  try{
+
+    const db =
+      await openDB();
+
+    return new Promise(resolve=>{
+
+      const transaction =
+        db.transaction(
+          STORE_NAME,
+          "readwrite"
+        );
+
+      const store =
+        transaction.objectStore(
+          STORE_NAME
+        );
+
+      const request =
+        store.put(
+          data,
+          DATA_KEY
+        );
+
+
+      request.onsuccess = () => {
+
+        resolve(true);
+
+      };
+
+
+      request.onerror = () => {
+
+        resolve(false);
+
+      };
+
+    });
+
+  }catch(error){
+
+    console.error(
+      "IndexedDB保存エラー",
+      error
+    );
+
+    return false;
+
+  }
+
+}
+
+
+async function saveData(){
+
+  saveLocalData();
+
+  await saveDBData();
+
+}
+
+
+/* =========================
+   初期化
+========================= */
+
+async function init(){
+
+  const localExists =
+    loadLocalData();
+
+  const dbExists =
+    await loadDBData();
+
+
+  if(
+    !dbExists &&
+    localExists
+  ){
+
+    await saveDBData();
+
+  }
+
+
+  showHome();
+
+}
+
+
+init();
+
+
+/* =========================
+   ページ切替
+========================= */
+
+function showHome(){
+
+  document
+    .getElementById("homePage")
+    .style.display = "block";
+
+  document
+    .getElementById("detailPage")
+    .style.display = "none";
+
+  document
+    .getElementById("screenshotPage")
+    .style.display = "none";
+
+
+  renderCharacters();
+
+}
+
+
+function showDetail(characterId){
+
+  currentCharacterId =
+    characterId;
+
+
+  document
+    .getElementById("homePage")
+    .style.display = "none";
+
+  document
+    .getElementById("detailPage")
+    .style.display = "block";
+
+  document
+    .getElementById("screenshotPage")
+    .style.display = "none";
+
+
+  renderDetail();
+
+}
+
+
+function getCurrentCharacter(){
+
+  return data.characters.find(
+    character =>
+      character.id ===
+      currentCharacterId
+  );
+
+}
+
+
+/* =========================
+   キャラクター一覧
+========================= */
+
+function renderCharacters(){
+
+  const container =
+    document.getElementById(
+      "characterList"
+    );
+
+
+  container.innerHTML = "";
+
+
+  if(data.characters.length === 0){
+
+    container.innerHTML = `
+      <div style="
+        grid-column:1/-1;
+        text-align:center;
+        padding:50px 10px;
+        color:#999;
+      ">
+        まだキャラが登録されていません
+      </div>
+    `;
+
+    return;
+
+  }
+
+
+  data.characters.forEach(character => {
+
+    const card =
+      document.createElement("div");
+
+    card.className =
+      "character-card";
+
+
+    const patterns =
+      character.patterns || [];
+
+
+    card.innerHTML = `
+
+      <div class="character-card-head">
+
+        ${
+          character.image
+          ? `
+            <img
+              class="character-thumb"
+              src="${escapeAttr(character.image)}"
+              data-photo="${escapeAttr(character.image)}"
+              alt="">
+          `
+          : `
+            <div class="character-thumb"></div>
+          `
+        }
+
+        <div
+          class="character-name"
+          data-character-open="${character.id}">
+          ${escapeHtml(
+            character.name ||
+            "名前なし"
+          )}
+        </div>
+
+        <div class="character-card-actions">
+
+          <button
+            class="small-btn"
+            data-action="edit-character"
+            data-character-id="${character.id}">
+            編集
+          </button>
+
+        </div>
+
+      </div>
+
+
+      <div class="pattern-list">
+
+        ${
+          patterns.length
+          ? patterns.map(pattern => `
+
+              <div
+                class="pattern-mini"
+                data-pattern-open="${character.id}"
+                data-pattern-id="${pattern.id}">
+
+                ${
+                  pattern.image
+                  ? `
+                    <img
+                      src="${escapeAttr(
+                        pattern.image
+                      )}"
+                      alt="">
+                  `
+                  : `
+                    <div
+                      style="
+                        width:42px;
+                        height:42px;
+                        border-radius:7px;
+                        background:#eee;
+                      ">
+                    </div>
+                  `
+                }
+
+                <div class="pattern-mini-name">
+                  ${escapeHtml(
+                    pattern.name ||
+                    "絵柄なし"
+                  )}
+                </div>
+
+              </div>
+
+          `).join("")
+          : `
+            <div style="
+              grid-column:1/-1;
+              font-size:12px;
+              color:#aaa;
+              padding:5px;
+            ">
+              絵柄なし
+            </div>
+          `
+        }
+
+      </div>
+
+
+      <button
+        class="add-pattern-btn"
+        data-action="add-pattern"
+        data-character-id="${character.id}">
+        ＋ 絵柄を追加
+      </button>
+
+    `;
+
+
+    container.appendChild(card);
+
+  });
+
+}
+
+
+/* =========================
+   詳細表示
+========================= */
+
+function renderDetail(){
+
+  const character =
+    getCurrentCharacter();
+
+
+  if(!character){
+
+    showHome();
+
+    return;
+
+  }
+
+
+  document
+    .getElementById("detailTitle")
+    .textContent =
+      character.name ||
+      "名前なし";
+
+
+  const container =
+    document.getElementById(
+      "patternList"
+    );
+
+
+  container.innerHTML = "";
+
+
+  if(!character.patterns.length){
+
+    container.innerHTML = `
+      <div style="
+        text-align:center;
+        padding:35px 10px;
+        color:#aaa;
+      ">
+        絵柄がまだありません
+      </div>
+    `;
+
+    return;
+
+  }
+
+
+  character.patterns.forEach(pattern => {
+
+    const card =
+      document.createElement("div");
+
+    card.className =
+      "pattern-card";
+
+
+    const goods =
+      pattern.goods || [];
+
+
+    card.innerHTML = `
+
+      <div class="pattern-head">
+
+        ${
+          pattern.image
+          ? `
+            <img
+              class="pattern-image"
+              src="${escapeAttr(
+                pattern.image
+              )}"
+              data-photo="${escapeAttr(
+                pattern.image
+              )}"
+              alt="">
+          `
+          : `
+            <div
+              class="pattern-image">
+            </div>
+          `
+        }
+
+
+        <div class="pattern-info">
+
+          <div class="pattern-name">
+            ${escapeHtml(
+              pattern.name ||
+              "絵柄なし"
+            )}
+          </div>
+
+        </div>
+
+
+        <div class="pattern-actions">
+
+          <button
+            data-action="edit-pattern"
+            data-pattern-id="${pattern.id}">
+            編集
+          </button>
+
+        </div>
+
+      </div>
+
+
+      <div class="goods-list">
+
+        ${
+          goods.length
+          ? goods.map(item => `
+
+              <div class="goods-item">
+
+                ${
+                  item.image
+                  ? `
+                    <img
+                      class="goods-image"
+                      src="${escapeAttr(
+                        item.image
+                      )}"
+                      data-photo="${escapeAttr(
+                        item.image
+                      )}"
+                      alt="">
+                  `
+                  : `
+                    <div class="goods-image"></div>
+                  `
+                }
+
+
+                <div class="goods-info">
+
+                  <div class="goods-name">
+                    ${escapeHtml(
+                      item.name ||
+                      "名前なし"
+                    )}
+                  </div>
+
+                  <div class="goods-type">
+                    ${escapeHtml(
+                      item.type ||
+                      "未分類"
+                    )}
+                  </div>
+
+                </div>
+
+
+                <div class="goods-priority">
+                  ${priorityMark(
+                    item.priority
+                  )}
+                </div>
+
+
+                <div class="goods-actions">
+
+                  <button
+                    data-action="edit-goods"
+                    data-pattern-id="${pattern.id}"
+                    data-goods-id="${item.id}">
+                    編集
+                  </button>
+
+                </div>
+
+              </div>
+
+          `).join("")
+          : `
+            <div style="
+              padding:12px;
+              text-align:center;
+              color:#aaa;
+              font-size:13px;
+              background:#fafafa;
+              border-radius:10px;
+            ">
+              グッズなし
+            </div>
+          `
+        }
+
+      </div>
+
+
+      <button
+        class="add-goods-btn"
+        data-action="add-goods"
+        data-pattern-id="${pattern.id}">
+        ＋ 求めるグッズを追加
+      </button>
+
+    `;
+
+
+    container.appendChild(card);
+
+  });
+
+}
+
+
+/* =========================
+   キャラ追加・編集
+========================= */
+
+function openAddCharacter(){
+
+  editingCharacterId = null;
+
+
+  document
+    .getElementById(
+      "characterModalTitle"
+    )
+    .textContent =
+      "キャラ追加";
+
+
+  document
+    .getElementById(
+      "characterName"
+    )
+    .value = "";
+
+
+  document
+    .getElementById(
+      "characterImage"
+    )
+    .value = "";
+
+
+  document
+    .getElementById(
+      "characterColor"
+    )
+    .value =
+      "#8f8f8f";
+
+
+  document
+    .getElementById(
+      "deleteCharacterButton"
+    )
+    .style.display =
+      "none";
+
+
+  openModal(
+    "characterModal"
+  );
+
+}
+
+
+function openEditCharacter(characterId){
+
+  const character =
+    data.characters.find(
+      item =>
+        item.id ===
+        characterId
+    );
+
+
+  if(!character) return;
+
+
+  editingCharacterId =
+    character.id;
+
+
+  document
+    .getElementById(
+      "characterModalTitle"
+    )
+    .textContent =
+      "キャラ編集";
+
+
+  document
+    .getElementById(
+      "characterName"
+    )
+    .value =
+      character.name || "";
+
+
+  document
+    .getElementById(
+      "characterImage"
+    )
+    .value =
+      character.image || "";
+
+
+  document
+    .getElementById(
+      "characterColor"
+    )
+    .value =
+      character.color ||
+      "#8f8f8f";
+
+
+  document
+    .getElementById(
+      "deleteCharacterButton"
+    )
+    .style.display =
+      "block";
+
+
+  openModal(
+    "characterModal"
+  );
+
+}
+
+
+async function saveCharacter(){
+
+  const name =
+    document
+      .getElementById(
+        "characterName"
+      )
+      .value
+      .trim();
+
+
+  const image =
+    document
+      .getElementById(
+        "characterImage"
+      )
+      .value
+      .trim();
+
+
+  const color =
+    document
+      .getElementById(
+        "characterColor"
+      )
+      .value
+      .trim() ||
+      "#8f8f8f";
+
+
+  if(!name){
+
+    alert(
+      "キャラ名を入力してね"
+    );
+
+    return;
+
+  }
+
+
+  if(editingCharacterId){
+
+    const character =
+      data.characters.find(
+        item =>
+          item.id ===
+          editingCharacterId
+      );
+
+
+    if(character){
+
+      character.name =
+        name;
+
+      character.image =
+        image;
+
+      character.color =
+        color;
+
+    }
+
+  }else{
+
+    data.characters.push({
+
+      id:uid(),
+
+      name:name,
+
+      image:image,
+
+      color:color,
+
+      patterns:[]
 
     });
 
   }
 
 
-  if(typeof value === "object"){
+  await saveData();
 
-    return (
-      "name" in value ||
-      "patterns" in value ||
-      "goods" in value ||
-      "collectionData" in value
-    );
 
-  }
-
-
-  return false;
-
-}
-
-
-/* =========================================
-   JSONを安全に解析
-========================================= */
-
-function tryParse(value){
-
-  if(typeof value !== "string"){
-    return value;
-  }
-
-  try{
-
-    return JSON.parse(value);
-
-  }catch(e){
-
-    return null;
-
-  }
-
-}
-
-
-/* =========================================
-   localStorageを探す
-========================================= */
-
-function searchLocalStorage(){
-
-  const results = [];
-
-  try{
-
-    for(let i = 0; i < localStorage.length; i++){
-
-      const key =
-        localStorage.key(i);
-
-      if(!key){
-        continue;
-      }
-
-      const raw =
-        localStorage.getItem(key);
-
-      if(raw === null){
-        continue;
-      }
-
-      const parsed =
-        tryParse(raw);
-
-
-      /*
-        collectionDataは最優先
-      */
-
-      if(key === TARGET_KEY){
-
-        if(parsed !== null){
-
-          results.push({
-            source:"localStorage",
-            key:key,
-            data:parsed,
-            priority:1
-          });
-
-        }
-
-        continue;
-
-      }
-
-
-      /*
-        その他の保存データも確認
-      */
-
-      if(looksLikeCollectionData(parsed)){
-
-        results.push({
-          source:"localStorage",
-          key:key,
-          data:parsed,
-          priority:2
-        });
-
-      }
-
-    }
-
-  }catch(error){
-
-    console.log(
-      "localStorage確認エラー",
-      error
-    );
-
-  }
-
-  return results;
-
-}
-
-
-/* =========================================
-   IndexedDBを1個確認
-========================================= */
-
-function searchIndexedDB(name){
-
-  return new Promise(function(resolve){
-
-    let finished = false;
-
-    function done(value){
-
-      if(finished){
-        return;
-      }
-
-      finished = true;
-
-      resolve(value);
-
-    }
-
-
-    try{
-
-      const request =
-        indexedDB.open(name);
-
-
-      request.onerror =
-        function(){
-
-          done([]);
-
-        };
-
-
-      request.onsuccess =
-        function(){
-
-          const db =
-            request.result;
-
-          const found = [];
-
-
-          try{
-
-            const storeNames =
-              Array.from(db.objectStoreNames);
-
-
-            storeNames.forEach(function(storeName){
-
-              try{
-
-                const transaction =
-                  db.transaction(
-                    storeName,
-                    "readonly"
-                  );
-
-
-                const store =
-                  transaction.objectStore(
-                    storeName
-                  );
-
-
-                const requestAll =
-                  store.getAll();
-
-
-                requestAll.onsuccess =
-                  function(){
-
-                    const records =
-                      requestAll.result || [];
-
-
-                    records.forEach(function(record){
-
-                      /*
-                        collectionDataというキー
-                      */
-
-                      if(
-                        storeName === "appData" &&
-                        record &&
-                        typeof record === "object" &&
-                        record.key === TARGET_KEY
-                      ){
-
-                        let data =
-                          record.value;
-
-                        data =
-                          tryParse(data);
-
-
-                        if(data !== null){
-
-                          found.push({
-                            source:"IndexedDB",
-                            database:name,
-                            store:storeName,
-                            key:TARGET_KEY,
-                            data:data,
-                            priority:1
-                          });
-
-                        }
-
-                      }
-
-
-                      /*
-                        レコードそのものがCollectionデータの場合
-                      */
-
-                      if(
-                        looksLikeCollectionData(record)
-                      ){
-
-                        found.push({
-                          source:"IndexedDB",
-                          database:name,
-                          store:storeName,
-                          key:"",
-                          data:record,
-                          priority:2
-                        });
-
-                      }
-
-
-                      /*
-                        {value: ...} の形
-                      */
-
-                      if(
-                        record &&
-                        typeof record === "object" &&
-                        "value" in record
-                      ){
-
-                        const value =
-                          tryParse(record.value);
-
-
-                        if(
-                          looksLikeCollectionData(value)
-                        ){
-
-                          found.push({
-                            source:"IndexedDB",
-                            database:name,
-                            store:storeName,
-                            key:record.key || "",
-                            data:value,
-                            priority:1
-                          });
-
-                        }
-
-                      }
-
-                    });
-
-
-                    done(found);
-
-                  };
-
-
-                requestAll.onerror =
-                  function(){
-
-                    done(found);
-
-                  };
-
-              }catch(error){
-
-                console.log(
-                  "IndexedDB store error",
-                  error
-                );
-
-              }
-
-            });
-
-
-            /*
-              storeがない場合
-            */
-
-            if(storeNames.length === 0){
-
-              done([]);
-
-            }
-
-          }catch(error){
-
-            done([]);
-
-          }
-
-        };
-
-
-    }catch(error){
-
-      done([]);
-
-    }
-
-  });
-
-}
-
-
-/* =========================================
-   IndexedDBを全部探す
-========================================= */
-
-async function searchIndexedDBAll(){
-
-  const results = [];
-
-  /*
-    Safariなどでdatabases()が使える場合
-  */
-
-  if(
-    indexedDB &&
-    typeof indexedDB.databases === "function"
-  ){
-
-    try{
-
-      const databases =
-        await indexedDB.databases();
-
-
-      for(
-        const database of databases
-      ){
-
-        if(!database || !database.name){
-          continue;
-        }
-
-
-        const found =
-          await searchIndexedDB(
-            database.name
-          );
-
-
-        results.push(...found);
-
-      }
-
-    }catch(error){
-
-      console.log(
-        "IndexedDB一覧取得エラー",
-        error
-      );
-
-    }
-
-  }
-
-
-  /*
-    以前使っていた可能性があるDBも直接確認
-  */
-
-  const knownNames = [
-    "CollectionDB"
-  ];
-
-
-  for(
-    const name of knownNames
-  ){
-
-    /*
-      すでに調べていても再確認してOK
-    */
-
-    const found =
-      await searchIndexedDB(name);
-
-
-    results.push(...found);
-
-  }
-
-
-  return results;
-
-}
-
-
-/* =========================================
-   重複削除
-========================================= */
-
-function removeDuplicates(list){
-
-  const result = [];
-
-  const seen = new Set();
-
-
-  list.forEach(function(item){
-
-    try{
-
-      const signature =
-        JSON.stringify(item.data);
-
-
-      if(seen.has(signature)){
-        return;
-      }
-
-
-      seen.add(signature);
-
-      result.push(item);
-
-    }catch(error){
-
-      result.push(item);
-
-    }
-
-  });
-
-
-  return result;
-
-}
-
-
-/* =========================================
-   データを探す
-========================================= */
-
-async function recover(){
-
-  downloadButton.style.display =
-    "none";
-
-  recoveredData = null;
-
-
-  recoverButton.disabled =
-    true;
-
-
-  recoverButton.textContent =
-    "🔎 探しています…";
-
-
-  show(
-    "🔎 前のデータを探しています…"
+  closeModal(
+    "characterModal"
   );
 
 
-  try{
+  renderCharacters();
 
-    /*
-      まずlocalStorage
-    */
-
-    const localResults =
-      searchLocalStorage();
+}
 
 
-    /*
-      IndexedDB
-    */
+async function deleteCharacter(){
 
-    const indexedResults =
-      await searchIndexedDBAll();
-
-
-    /*
-      合体
-    */
-
-    let allResults =
-      localResults.concat(
-        indexedResults
-      );
+  if(!editingCharacterId){
+    return;
+  }
 
 
-    allResults =
-      removeDuplicates(
-        allResults
-      );
-
-
-    /*
-      優先度順
-    */
-
-    allResults.sort(
-      function(a,b){
-
-        return (
-          a.priority -
-          b.priority
-        );
-
-      }
+  const character =
+    data.characters.find(
+      item =>
+        item.id ===
+        editingCharacterId
     );
 
 
-    /* =====================================
-       見つからなかった
-    ===================================== */
+  if(!character){
+    return;
+  }
 
-    if(allResults.length === 0){
 
-      show(
-        "❌ 前のデータが見つかりませんでした。\n\n" +
-        "localStorage と IndexedDB を確認しました。",
-        "ng"
+  const ok =
+    confirm(
+      `「${character.name}」を削除しますか？`
+    );
+
+
+  if(!ok){
+    return;
+  }
+
+
+  data.characters =
+    data.characters.filter(
+      item =>
+        item.id !==
+        editingCharacterId
+    );
+
+
+  await saveData();
+
+
+  closeModal(
+    "characterModal"
+  );
+
+
+  showHome();
+
+}
+
+
+ 
+/* =========================
+   絵柄追加・編集
+========================= */
+
+function openAddPattern(){
+
+  editingPatternId = null;
+
+  document
+    .getElementById("patternModalTitle")
+    .textContent = "絵柄追加";
+
+  document
+    .getElementById("patternName")
+    .value = "";
+
+  document
+    .getElementById("patternImage")
+    .value = "";
+
+  document
+    .getElementById("deletePatternButton")
+    .style.display = "none";
+
+  openModal("patternModal");
+}
+
+
+function openEditPattern(patternId){
+
+  const character =
+    getCurrentCharacter();
+
+  if(!character) return;
+
+  const pattern =
+    character.patterns.find(
+      item => item.id === patternId
+    );
+
+  if(!pattern) return;
+
+  editingPatternId =
+    pattern.id;
+
+  document
+    .getElementById("patternModalTitle")
+    .textContent = "絵柄編集";
+
+  document
+    .getElementById("patternName")
+    .value =
+      pattern.name || "";
+
+  document
+    .getElementById("patternImage")
+    .value =
+      pattern.image || "";
+
+  document
+    .getElementById("deletePatternButton")
+    .style.display = "block";
+
+  openModal("patternModal");
+}
+
+
+async function savePattern(){
+
+  const character =
+    getCurrentCharacter();
+
+  if(!character) return;
+
+  const name =
+    document
+      .getElementById("patternName")
+      .value
+      .trim();
+
+  const image =
+    document
+      .getElementById("patternImage")
+      .value
+      .trim();
+
+  if(!name){
+
+    alert("絵柄名を入力してね");
+
+    return;
+  }
+
+
+  if(editingPatternId){
+
+    const pattern =
+      character.patterns.find(
+        item =>
+          item.id === editingPatternId
       );
+
+    if(pattern){
+
+      pattern.name = name;
+      pattern.image = image;
+
+    }
+
+  }else{
+
+    character.patterns.push({
+
+      id:uid(),
+
+      name:name,
+
+      image:image,
+
+      priority:0,
+
+      goods:[]
+
+    });
+
+  }
+
+
+  await saveData();
+
+  closeModal("patternModal");
+
+  renderDetail();
+}
+
+
+async function deletePattern(){
+
+  const character =
+    getCurrentCharacter();
+
+  if(
+    !character ||
+    !editingPatternId
+  ){
+    return;
+  }
+
+  const pattern =
+    character.patterns.find(
+      item =>
+        item.id === editingPatternId
+    );
+
+  if(!pattern) return;
+
+  const ok =
+    confirm(
+      `「${pattern.name}」を削除しますか？\nこの絵柄のグッズも削除されます。`
+    );
+
+  if(!ok) return;
+
+  character.patterns =
+    character.patterns.filter(
+      item =>
+        item.id !== editingPatternId
+    );
+
+  await saveData();
+
+  closeModal("patternModal");
+
+  renderDetail();
+}
+
+
+/* =========================
+   グッズ追加・編集
+========================= */
+
+function openAddGoods(patternId){
+
+  currentPatternId =
+    patternId;
+
+  editingGoodsId = null;
+
+  currentGoodsPriority = 0;
+
+  document
+    .getElementById("goodsModalTitle")
+    .textContent = "グッズ追加";
+
+  document
+    .getElementById("goodsName")
+    .value = "";
+
+  document
+    .getElementById("goodsType")
+    .value = "";
+
+  document
+    .getElementById("goodsImage")
+    .value = "";
+
+  document
+    .getElementById("deleteGoodsButton")
+    .style.display = "none";
+
+  updateGoodsPriorityButtons();
+
+  openModal("goodsModal");
+}
+
+
+function openEditGoods(
+  patternId,
+  goodsId
+){
+
+  const character =
+    getCurrentCharacter();
+
+  if(!character) return;
+
+  const pattern =
+    character.patterns.find(
+      item =>
+        item.id === patternId
+    );
+
+  if(!pattern) return;
+
+  const goods =
+    pattern.goods.find(
+      item =>
+        item.id === goodsId
+    );
+
+  if(!goods) return;
+
+
+  currentPatternId =
+    patternId;
+
+  editingGoodsId =
+    goodsId;
+
+  currentGoodsPriority =
+    Number(goods.priority) || 0;
+
+
+  document
+    .getElementById("goodsModalTitle")
+    .textContent = "グッズ編集";
+
+  document
+    .getElementById("goodsName")
+    .value =
+      goods.name || "";
+
+  document
+    .getElementById("goodsType")
+    .value =
+      goods.type || "未分類";
+
+  document
+    .getElementById("goodsImage")
+    .value =
+      goods.image || "";
+
+  document
+    .getElementById("deleteGoodsButton")
+    .style.display = "block";
+
+  updateGoodsPriorityButtons();
+
+  openModal("goodsModal");
+}
+
+
+function updateGoodsPriorityButtons(){
+
+  document
+    .querySelectorAll(
+      '[data-action="goods-priority"]'
+    )
+    .forEach(button => {
+
+      const value =
+        Number(
+          button.dataset.priority
+        );
+
+      button.classList.toggle(
+        "active",
+        value === currentGoodsPriority
+      );
+
+    });
+
+}
+
+
+async function saveGoods(){
+
+  const character =
+    getCurrentCharacter();
+
+  if(!character) return;
+
+  const pattern =
+    character.patterns.find(
+      item =>
+        item.id === currentPatternId
+    );
+
+  if(!pattern) return;
+
+
+  const name =
+    document
+      .getElementById("goodsName")
+      .value
+      .trim();
+
+  let type =
+    document
+      .getElementById("goodsType")
+      .value
+      .trim();
+
+  const image =
+    document
+      .getElementById("goodsImage")
+      .value
+      .trim();
+
+
+  if(!name){
+
+    alert("グッズ名を入力してね");
+
+    return;
+  }
+
+
+  if(!type){
+
+    type = "未分類";
+
+  }
+
+
+  if(!Array.isArray(pattern.goods)){
+
+    pattern.goods = [];
+
+  }
+
+
+  if(editingGoodsId){
+
+    const goods =
+      pattern.goods.find(
+        item =>
+          item.id === editingGoodsId
+      );
+
+    if(goods){
+
+      goods.name =
+        name;
+
+      goods.type =
+        type;
+
+      goods.image =
+        image;
+
+      goods.priority =
+        currentGoodsPriority;
+
+    }
+
+  }else{
+
+    pattern.goods.push({
+
+      id:uid(),
+
+      name:name,
+
+      type:type,
+
+      image:image,
+
+      priority:currentGoodsPriority
+
+    });
+
+  }
+
+
+  await saveData();
+
+  closeModal("goodsModal");
+
+  renderDetail();
+}
+
+
+async function deleteGoods(){
+
+  const character =
+    getCurrentCharacter();
+
+  if(
+    !character ||
+    !currentPatternId ||
+    !editingGoodsId
+  ){
+    return;
+  }
+
+  const pattern =
+    character.patterns.find(
+      item =>
+        item.id === currentPatternId
+    );
+
+  if(!pattern) return;
+
+  const goods =
+    pattern.goods.find(
+      item =>
+        item.id === editingGoodsId
+    );
+
+  if(!goods) return;
+
+
+  const ok =
+    confirm(
+      `「${goods.name}」を削除しますか？`
+    );
+
+  if(!ok) return;
+
+
+  pattern.goods =
+    pattern.goods.filter(
+      item =>
+        item.id !== editingGoodsId
+    );
+
+
+  await saveData();
+
+  closeModal("goodsModal");
+
+  renderDetail();
+}
+
+
+/* =========================
+   種類
+========================= */
+
+function getGoodsTypes(character){
+
+  const types = [];
+
+  character.patterns.forEach(
+    pattern => {
+
+      (pattern.goods || [])
+        .forEach(goods => {
+
+          const type =
+            goods.type || "未分類";
+
+          if(!types.includes(type)){
+
+            types.push(type);
+
+          }
+
+        });
+
+    }
+  );
+
+  return types;
+}
+
+
+/* =========================
+   スクショ
+========================= */
+
+function openScreenshot(
+  characterId,
+  mode
+){
+
+  const character =
+    data.characters.find(
+      item =>
+        item.id === characterId
+    );
+
+  if(!character) return;
+
+  currentCharacterId =
+    characterId;
+
+  currentShotMode =
+    mode;
+
+  selectedShotTypes = [];
+
+
+  document
+    .getElementById("homePage")
+    .style.display = "none";
+
+  document
+    .getElementById("detailPage")
+    .style.display = "none";
+
+  document
+    .getElementById("screenshotPage")
+    .style.display = "block";
+
+
+  renderShotTypeButtons();
+
+  renderScreenshot();
+}
+
+
+function renderShotTypeButtons(){
+
+  const character =
+    getCurrentCharacter();
+
+  const container =
+    document.getElementById(
+      "shotTypeSelect"
+    );
+
+  container.innerHTML = "";
+
+
+  const types =
+    getGoodsTypes(character);
+
+
+  if(currentShotMode === "type"){
+
+    container.classList.add("show");
+
+
+    if(types.length === 0){
+
+      container.innerHTML = `
+        <span style="
+          color:#aaa;
+          font-size:13px;
+        ">
+          種類がありません
+        </span>
+      `;
 
       return;
 
     }
 
 
-    /* =====================================
-       データ発見
-    ===================================== */
+    types.forEach(type => {
 
-    /*
-      一番優先度の高いデータを採用
-    */
+      const button =
+        document.createElement(
+          "button"
+        );
 
-    recoveredData =
-      allResults[0].data;
+      button.className =
+        "type-chip";
 
+      button.textContent =
+        type;
 
-    let message =
-      "✅ データが見つかりました！\n\n";
+      button.dataset.type =
+        type;
 
-
-    message +=
-      "見つかった場所：\n";
-
-
-    allResults.forEach(
-      function(item,index){
-
-        message +=
-          "・";
+      button.dataset.action =
+        "shot-type";
 
 
-        if(item.source === "localStorage"){
+      if(
+        selectedShotTypes
+          .includes(type)
+      ){
 
-          message +=
-            "localStorage / " +
-            item.key;
-
-        }else{
-
-          message +=
-            "IndexedDB / " +
-            item.database +
-            " / " +
-            item.store;
-
-        }
-
-
-        if(index === 0){
-
-          message +=
-            " ← 使用するデータ";
-
-        }
-
-
-        message +=
-          "\n";
+        button.classList.add(
+          "active"
+        );
 
       }
+
+
+      container.appendChild(
+        button
+      );
+
+    });
+
+  }else{
+
+    container.classList.remove(
+      "show"
     );
-
-
-    message +=
-      "\nこのデータをそのままバックアップできます。";
-
-
-    show(
-      message,
-      "ok"
-    );
-
-
-    downloadButton.style.display =
-      "block";
-
-
-  }catch(error){
-
-    console.error(error);
-
-
-    show(
-      "⚠️ データ検索中にエラーが発生しました。\n\n" +
-      String(error),
-      "ng"
-    );
-
-  }finally{
-
-    recoverButton.disabled =
-      false;
-
-    recoverButton.textContent =
-      "🔎 前のデータを探す";
 
   }
 
 }
 
 
-/* =========================================
-   バックアップ保存
-========================================= */
+function renderScreenshot(){
 
-function downloadBackup(){
+  const character =
+    getCurrentCharacter();
+
+  if(!character) return;
+
+
+  const container =
+    document.getElementById(
+      "screenshotContent"
+    );
+
+  container.innerHTML = "";
+
+
+  const grid =
+    document.createElement(
+      "div"
+    );
+
+  grid.className =
+    "shot-pattern-grid";
+
+
+  character.patterns.forEach(
+    pattern => {
+
+      let goods =
+        pattern.goods || [];
+
+
+      /*
+        種類別で種類を選択した場合だけ
+        その種類に絞る
+      */
+
+      if(
+        currentShotMode === "type" &&
+        selectedShotTypes.length > 0
+      ){
+
+        goods =
+          goods.filter(
+            item =>
+              selectedShotTypes
+                .includes(
+                  item.type ||
+                  "未分類"
+                )
+          );
+
+      }
+
+
+      if(goods.length === 0){
+
+        return;
+
+      }
+
+
+      const card =
+        document.createElement(
+          "div"
+        );
+
+      card.className =
+        "shot-pattern-card";
+
+
+      /* 左：絵柄 */
+
+      const left =
+        document.createElement(
+          "div"
+        );
+
+      left.className =
+        "shot-pattern-left";
+
+
+      if(pattern.image){
+
+        const img =
+          document.createElement(
+            "img"
+          );
+
+        img.className =
+          "shot-pattern-image";
+
+        img.src =
+          pattern.image;
+
+        img.alt = "";
+
+        left.appendChild(img);
+
+      }else{
+
+        const empty =
+          document.createElement(
+            "div"
+          );
+
+        empty.className =
+          "shot-pattern-image";
+
+        left.appendChild(empty);
+
+      }
+
+
+      const patternName =
+        document.createElement(
+          "div"
+        );
+
+      patternName.className =
+        "shot-pattern-name";
+
+      patternName.textContent =
+        pattern.name ||
+        "絵柄なし";
+
+      left.appendChild(
+        patternName
+      );
+
+
+      /* 右：求めてるグッズ */
+
+      const right =
+        document.createElement(
+          "div"
+        );
+
+      right.className =
+        "shot-goods-side";
+
+
+      const title =
+        document.createElement(
+          "div"
+        );
+
+      title.className =
+        "shot-goods-title";
+
+      title.textContent =
+        "求めてるグッズ";
+
+      right.appendChild(
+        title
+      );
+
+
+      const goodsList =
+        document.createElement(
+          "div"
+        );
+
+      goodsList.className =
+        "shot-goods-list";
+
+
+      goods.forEach(item => {
+
+        const row =
+          document.createElement(
+            "div"
+          );
+
+        row.className =
+          "shot-goods-item";
+
+
+        if(item.image){
+
+          const img =
+            document.createElement(
+              "img"
+            );
+
+          img.className =
+            "shot-goods-image";
+
+          img.src =
+            item.image;
+
+          img.alt = "";
+
+          row.appendChild(img);
+
+        }else{
+
+          const empty =
+            document.createElement(
+              "div"
+            );
+
+          empty.className =
+            "shot-goods-image";
+
+          row.appendChild(empty);
+
+        }
+
+
+        const name =
+          document.createElement(
+            "div"
+          );
+
+        name.className =
+          "shot-goods-name";
+
+        name.textContent =
+          item.name ||
+          "名前なし";
+
+        row.appendChild(name);
+
+
+        const priority =
+          document.createElement(
+            "div"
+          );
+
+        priority.className =
+          "shot-goods-priority";
+
+        priority.textContent =
+          priorityMark(
+            item.priority
+          );
+
+        row.appendChild(
+          priority
+        );
+
+
+        goodsList.appendChild(
+          row
+        );
+
+      });
+
+
+      right.appendChild(
+        goodsList
+      );
+
+
+      card.appendChild(left);
+
+      card.appendChild(right);
+
+      grid.appendChild(card);
+
+    }
+  );
+
+
+  container.appendChild(
+    grid
+  );
+
+
+  updateShotModeButtons();
+
+}
+
+
+/* =========================
+   スクショボタン状態
+========================= */
+
+function updateShotModeButtons(){
+
+  document
+    .getElementById("shotAllBtn")
+    .classList.toggle(
+      "active",
+      currentShotMode === "all"
+    );
+
+
+  document
+    .getElementById("shotTypeBtn")
+    .classList.toggle(
+      "active",
+      currentShotMode === "type"
+    );
+
+}
+
+
+/* =========================
+   スクショ保存
+========================= */
+
+async function saveScreenshot(){
+
+  const target =
+    document.getElementById(
+      "screenshotContent"
+    );
+
+  if(!target) return;
+
 
   if(
-    recoveredData === null ||
-    recoveredData === undefined
+    typeof html2canvas ===
+    "undefined"
   ){
 
-    show(
-      "❌ 保存できるデータがありません。",
-      "ng"
+    alert(
+      "画像保存機能の読み込みに失敗しました。少し待ってからもう一度試してね。"
     );
 
     return;
@@ -891,40 +3293,14 @@ function downloadBackup(){
 
   try{
 
-    const backup = {
-
-      app:
-        "Collection",
-
-      createdAt:
-        new Date().toISOString(),
-
-      data:
-        recoveredData
-
-    };
-
-
-    const json =
-      JSON.stringify(
-        backup,
-        null,
-        2
-      );
-
-
-    const blob =
-      new Blob(
-        [json],
+    const canvas =
+      await html2canvas(
+        target,
         {
-          type:"application/json"
+          backgroundColor:"#ffffff",
+          scale:2,
+          useCORS:true
         }
-      );
-
-
-    const url =
-      URL.createObjectURL(
-        blob
       );
 
 
@@ -933,55 +3309,22 @@ function downloadBackup(){
         "a"
       );
 
+    link.download =
+      "Collection_求め絵柄まとめ.png";
 
     link.href =
-      url;
-
-
-    link.download =
-      "Collection_backup.json";
-
-
-    document.body.appendChild(
-      link
-    );
-
+      canvas.toDataURL(
+        "image/png"
+      );
 
     link.click();
-
-
-    link.remove();
-
-
-    setTimeout(
-      function(){
-
-        URL.revokeObjectURL(
-          url
-        );
-
-      },
-      1000
-    );
-
-
-    show(
-      "✅ バックアップを保存しました！\n\n" +
-      "ファイル名：Collection_backup.json\n\n" +
-      "このファイルは元データを書き換えません。",
-      "ok"
-    );
-
 
   }catch(error){
 
     console.error(error);
 
-
-    show(
-      "❌ バックアップ保存に失敗しました。\n\n" +
-      String(error),
-      "ng"
+    alert(
+      "画像保存に失敗しました"
     );
 
   }
@@ -989,67 +3332,683 @@ function downloadBackup(){
 }
 
 
-/* =========================================
-   ボタン
-========================================= */
+/* =========================
+   モーダル
+========================= */
 
-/*
-  addEventListenerだけに頼らず、
-  onclickも設定して確実に反応させる
-*/
+function openModal(id){
 
-recoverButton.onclick =
-  function(){
+  document
+    .getElementById(id)
+    .style.display = "flex";
 
-    recover();
-
-  };
+}
 
 
-downloadButton.onclick =
-  function(){
+function closeModal(id){
 
-    downloadBackup();
+  document
+    .getElementById(id)
+    .style.display = "none";
 
-  };
+}
 
 
-/*
-  Safari対策
-*/
+/* =========================
+   写真
+========================= */
 
-recoverButton.addEventListener(
-  "touchend",
-  function(event){
+function openPhoto(src){
 
-    event.preventDefault();
+  if(!src) return;
 
-    recover();
 
-  },
-  {
-    passive:false
+  document
+    .getElementById("photoImage")
+    .src = src;
+
+
+  document
+    .getElementById("photoBg")
+    .style.display = "flex";
+
+}
+
+
+function closePhoto(){
+
+  document
+    .getElementById("photoBg")
+    .style.display = "none";
+
+
+  document
+    .getElementById("photoImage")
+    .src = "";
+
+}
+
+
+/* =========================
+   HTMLエスケープ
+========================= */
+
+function escapeHtml(value){
+
+  return String(value ?? "")
+    .replaceAll(
+      "&",
+      "&amp;"
+    )
+    .replaceAll(
+      "<",
+      "&lt;"
+    )
+    .replaceAll(
+      ">",
+      "&gt;"
+    )
+    .replaceAll(
+      '"',
+      "&quot;"
+    )
+    .replaceAll(
+      "'",
+      "&#039;"
+    );
+
+}
+
+
+function escapeAttr(value){
+
+  return escapeHtml(value);
+
+}
+
+
+/* =========================
+   クリック処理
+========================= */
+
+document.addEventListener(
+  "click",
+  async event => {
+
+    const photo =
+      event.target.closest(
+        "[data-photo]"
+      );
+
+
+    if(
+      photo &&
+      !event.target.closest(
+        "button"
+      )
+    ){
+
+      openPhoto(
+        photo.dataset.photo
+      );
+
+      return;
+
+    }
+
+
+    const characterOpen =
+      event.target.closest(
+        "[data-character-open]"
+      );
+
+
+    if(characterOpen){
+
+      showDetail(
+        characterOpen.dataset
+          .characterOpen
+      );
+
+      return;
+
+    }
+
+
+    const patternOpen =
+      event.target.closest(
+        "[data-pattern-open]"
+      );
+
+
+    if(patternOpen){
+
+      showDetail(
+        patternOpen.dataset
+          .patternOpen
+      );
+
+      return;
+
+    }
+
+
+    const target =
+      event.target.closest(
+        "[data-action]"
+      );
+
+
+    if(!target) return;
+
+
+    const action =
+      target.dataset.action;
+
+
+    /* 一覧 */
+
+    if(action === "show-home"){
+
+      showHome();
+
+      return;
+
+    }
+
+
+    /* キャラ追加 */
+
+    if(
+      action ===
+      "add-character"
+    ){
+
+      openAddCharacter();
+
+      return;
+
+    }
+
+
+    /* キャラ編集 */
+
+    if(
+      action ===
+      "edit-character"
+    ){
+
+      const id =
+        target.dataset
+          .characterId ||
+        currentCharacterId;
+
+      openEditCharacter(id);
+
+      return;
+
+    }
+
+
+    /* キャラ保存 */
+
+    if(
+      action ===
+      "save-character"
+    ){
+
+      await saveCharacter();
+
+      return;
+
+    }
+
+
+    /* キャラ削除 */
+
+    if(
+      action ===
+      "delete-character"
+    ){
+
+      await deleteCharacter();
+
+      return;
+
+    }
+
+
+    /* 絵柄追加 */
+
+    if(
+      action ===
+      "add-pattern"
+    ){
+
+      const id =
+        target.dataset
+          .characterId ||
+        currentCharacterId;
+
+
+      if(
+        id !==
+        currentCharacterId
+      ){
+
+        currentCharacterId =
+          id;
+
+      }
+
+
+      openAddPattern();
+
+      return;
+
+    }
+
+
+    /* 絵柄編集 */
+
+    if(
+      action ===
+      "edit-pattern"
+    ){
+
+      openEditPattern(
+        target.dataset
+          .patternId
+      );
+
+      return;
+
+    }
+
+
+    /* 絵柄保存 */
+
+    if(
+      action ===
+      "save-pattern"
+    ){
+
+      await savePattern();
+
+      return;
+
+    }
+
+
+    /* 絵柄削除 */
+
+    if(
+      action ===
+      "delete-pattern"
+    ){
+
+      await deletePattern();
+
+      return;
+
+    }
+
+
+    /* グッズ追加 */
+
+    if(
+      action ===
+      "add-goods"
+    ){
+
+      openAddGoods(
+        target.dataset
+          .patternId
+      );
+
+      return;
+
+    }
+
+
+    /* グッズ編集 */
+
+    if(
+      action ===
+      "edit-goods"
+    ){
+
+      openEditGoods(
+        target.dataset
+          .patternId,
+
+        target.dataset
+          .goodsId
+      );
+
+      return;
+
+    }
+
+
+    /* グッズ保存 */
+
+    if(
+      action ===
+      "save-goods"
+    ){
+
+      await saveGoods();
+
+      return;
+
+    }
+
+
+    /* グッズ削除 */
+
+    if(
+      action ===
+      "delete-goods"
+    ){
+
+      await deleteGoods();
+
+      return;
+
+    }
+
+
+    /* 優先度 */
+
+    if(
+      action ===
+      "goods-priority"
+    ){
+
+      currentGoodsPriority =
+        Number(
+          target.dataset.priority
+        );
+
+
+      updateGoodsPriorityButtons();
+
+      return;
+
+    }
+
+
+    /* まとめてスクショ */
+
+    if(
+      action ===
+      "screenshot-all"
+    ){
+
+      openScreenshot(
+        currentCharacterId,
+        "all"
+      );
+
+      return;
+
+    }
+
+
+    /* 種類別スクショ */
+
+    if(
+      action ===
+      "screenshot-type"
+    ){
+
+      openScreenshot(
+        currentCharacterId,
+        "type"
+      );
+
+      return;
+
+    }
+
+
+    /* スクショ：まとめて */
+
+    if(
+      action ===
+      "shot-mode-all"
+    ){
+
+      currentShotMode =
+        "all";
+
+      selectedShotTypes = [];
+
+      renderShotTypeButtons();
+
+      renderScreenshot();
+
+      return;
+
+    }
+
+
+    /* スクショ：種類別 */
+
+    if(
+      action ===
+      "shot-mode-type"
+    ){
+
+      currentShotMode =
+        "type";
+
+      renderShotTypeButtons();
+
+      renderScreenshot();
+
+      return;
+
+    }
+
+
+    /* 種類選択 */
+
+    if(
+      action ===
+      "shot-type"
+    ){
+
+      const type =
+        target.dataset.type;
+
+
+      if(
+        selectedShotTypes
+          .includes(type)
+      ){
+
+        selectedShotTypes =
+          selectedShotTypes.filter(
+            item =>
+              item !== type
+          );
+
+      }else{
+
+        selectedShotTypes.push(
+          type
+        );
+
+      }
+
+
+      renderShotTypeButtons();
+
+      renderScreenshot();
+
+      return;
+
+    }
+
+
+    /* スクショ戻る */
+
+    if(
+      action ===
+      "close-screenshot"
+    ){
+
+      showDetail(
+        currentCharacterId
+      );
+
+      return;
+
+    }
+
+
+    /* スクショ保存 */
+
+    if(
+      action ===
+      "save-screenshot"
+    ){
+
+      await saveScreenshot();
+
+      return;
+
+    }
+
+
+    /* モーダル閉じる */
+
+    if(
+      action ===
+      "close-character-modal"
+    ){
+
+      closeModal(
+        "characterModal"
+      );
+
+      return;
+
+    }
+
+
+    if(
+      action ===
+      "close-pattern-modal"
+    ){
+
+      closeModal(
+        "patternModal"
+      );
+
+      return;
+
+    }
+
+
+    if(
+      action ===
+      "close-goods-modal"
+    ){
+
+      closeModal(
+        "goodsModal"
+      );
+
+      return;
+
+    }
+
+
+    /* 写真閉じる */
+
+    if(
+      action ===
+      "close-photo"
+    ){
+
+      closePhoto();
+
+      return;
+
+    }
+
   }
 );
 
 
-downloadButton.addEventListener(
-  "touchend",
-  function(event){
+/* =========================
+   モーダル外クリック
+========================= */
 
-    event.preventDefault();
+document
+  .querySelectorAll(".modal-bg")
+  .forEach(bg => {
 
-    downloadBackup();
+    bg.addEventListener(
+      "click",
+      event => {
 
-  },
-  {
-    passive:false
+        if(
+          event.target === bg
+        ){
+
+          bg.style.display =
+            "none";
+
+        }
+
+      }
+    );
+
+  });
+
+
+/* =========================
+   ESC
+========================= */
+
+document.addEventListener(
+  "keydown",
+  event => {
+
+    if(
+      event.key ===
+      "Escape"
+    ){
+
+      document
+        .querySelectorAll(
+          ".modal-bg"
+        )
+        .forEach(modal => {
+
+          modal.style.display =
+            "none";
+
+        });
+
+
+      closePhoto();
+
+    }
+
   }
 );
 
+</script>
 
-})();
 
+<!-- html2canvas -->
+<script
+  src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js">
 </script>
 
 </body>

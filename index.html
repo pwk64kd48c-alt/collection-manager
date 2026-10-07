@@ -236,6 +236,15 @@ button{
   overflow-wrap:anywhere;
 }
 
+.goods-type{
+  font-size:10px;
+  color:#999;
+  background:#eee;
+  padding:3px 6px;
+  border-radius:6px;
+  flex:none;
+}
+
 .priority-mark{
   width:27px;
   height:27px;
@@ -254,7 +263,7 @@ button{
 }
 
 .priority-yellow{
-  color:#e6c44a;
+  color:#555;
 }
 
 .priority-star{
@@ -464,7 +473,6 @@ input[type="file"]{
 
 /* =========================
    スクショ画面
-   この構図を固定
 ========================= */
 
 .screenshot-page{
@@ -513,6 +521,76 @@ input[type="file"]{
   background:#888;
   color:white;
 }
+
+
+/* 種類選択 */
+
+.shot-type-box{
+  background:#f7f7f7;
+  border-radius:18px;
+  padding:14px;
+  margin-bottom:18px;
+}
+
+.shot-type-title{
+  font-weight:bold;
+  color:#555;
+  margin-bottom:10px;
+  font-size:14px;
+}
+
+.shot-type-actions{
+  display:flex;
+  gap:7px;
+  margin-bottom:10px;
+}
+
+.shot-type-actions button{
+  flex:1;
+  padding:8px;
+  border-radius:9px;
+  background:#fff;
+  color:#666;
+  border:1px solid #ddd;
+  font-size:12px;
+}
+
+.shot-type-list{
+  display:grid;
+  grid-template-columns:repeat(2,minmax(0,1fr));
+  gap:7px;
+}
+
+.shot-type-check{
+  display:flex;
+  align-items:center;
+  gap:7px;
+  padding:9px 10px;
+  background:#fff;
+  border-radius:10px;
+  border:1px solid #e5e5e5;
+  font-size:13px;
+  color:#555;
+  cursor:pointer;
+  margin:0;
+}
+
+.shot-type-check input{
+  width:17px;
+  height:17px;
+  margin:0;
+  flex:none;
+  accent-color:#888;
+}
+
+.shot-type-empty{
+  font-size:12px;
+  color:#aaa;
+  padding:8px 0;
+}
+
+
+/* ★★★ この2列構成は固定 ★★★ */
 
 .shot-pattern-grid{
   display:grid;
@@ -642,6 +720,15 @@ input[type="file"]{
   color:white;
 }
 
+.shot-no-selection{
+  text-align:center;
+  padding:35px 10px;
+  color:#aaa;
+  background:#f7f7f7;
+  border-radius:15px;
+  font-size:13px;
+}
+
 
 @media(max-width:600px){
 
@@ -658,6 +745,10 @@ input[type="file"]{
     font-size:17px;
     gap:10px;
     padding:13px 8px;
+  }
+
+  .shot-type-list{
+    grid-template-columns:1fr 1fr;
   }
 
   .shot-pattern-grid{
@@ -732,7 +823,9 @@ input[type="file"]{
 <main id="app"></main>
 
 
-<!-- キャラ編集 -->
+<!-- =========================
+     キャラ編集
+========================= -->
 
 <div class="modal-bg" id="characterModal">
 
@@ -816,7 +909,9 @@ input[type="file"]{
 </div>
 
 
-<!-- 絵柄編集 -->
+<!-- =========================
+     絵柄編集
+========================= -->
 
 <div class="modal-bg" id="patternModal">
 
@@ -873,7 +968,9 @@ input[type="file"]{
 </div>
 
 
-<!-- グッズ編集 -->
+<!-- =========================
+     グッズ編集
+========================= -->
 
 <div class="modal-bg" id="goodsModal">
 
@@ -979,7 +1076,22 @@ input[type="file"]{
 "use strict";
 
 
-const KEY = "collectionData";
+/* =========================
+   設定
+========================= */
+
+const KEY =
+  "collectionData";
+
+const DB_NAME =
+  "CollectionDB";
+
+const DB_VERSION =
+  1;
+
+const DB_STORE =
+  "data";
+
 
 let data = [];
 
@@ -995,7 +1107,12 @@ let screenshotMode = "all";
 
 let screenshotCharacter = -1;
 
-let screenshotSelectedType = "";
+/*
+  種類別スクショで選択されている種類
+  配列にすることで複数選択可能
+*/
+let screenshotSelectedTypes = [];
+
 
 const app =
   document.getElementById("app");
@@ -1019,7 +1136,26 @@ function normalizePriority(value){
     return 0;
   }
 
-  const n = Number(value);
+  const text =
+    String(value);
+
+  if(
+    text.includes("最優先") ||
+    text.includes("⭐")
+  ){
+    return 2;
+  }
+
+  if(
+    text.includes("優先") ||
+    text.includes("🟡") ||
+    text.includes("★")
+  ){
+    return 1;
+  }
+
+  const n =
+    Number(value);
 
   if(n >= 2){
     return 2;
@@ -1030,7 +1166,6 @@ function normalizePriority(value){
   }
 
   return 0;
-
 }
 
 
@@ -1040,19 +1175,14 @@ function priorityMark(priority){
     normalizePriority(priority);
 
   if(p === 2){
-
     return "⭐️";
-
   }
 
   if(p === 1){
-
     return "★";
-
   }
 
   return "☆";
-
 }
 
 
@@ -1062,19 +1192,14 @@ function priorityClass(priority){
     normalizePriority(priority);
 
   if(p === 2){
-
     return "priority-star";
-
   }
 
   if(p === 1){
-
     return "priority-yellow";
-
   }
 
   return "priority-none";
-
 }
 
 
@@ -1088,7 +1213,8 @@ function nextPriority(priority){
 
 
 /* =========================
-   データ
+   データ正規化
+   ※既存データを消さない
 ========================= */
 
 function normalizeGoods(g){
@@ -1099,12 +1225,25 @@ function normalizeGoods(g){
       name:g,
       image:"",
       priority:0,
-      type:g
+      type:"未分類"
     };
 
   }
 
   g = g || {};
+
+  let type =
+    g.type ||
+    g.goodsType ||
+    "";
+
+  /*
+    昔のデータに type がない場合でも
+    グッズ自体は残す。
+  */
+  if(!String(type).trim()){
+    type = "未分類";
+  }
 
   return {
 
@@ -1119,12 +1258,7 @@ function normalizeGoods(g){
       normalizePriority(g.priority),
 
     type:
-      String(
-        g.type ||
-        g.goodsType ||
-        g.name ||
-        "未分類"
-      )
+      String(type)
 
   };
 
@@ -1183,7 +1317,219 @@ function normalizeCharacter(c){
 }
 
 
-function loadData(){
+/* =========================
+   IndexedDB
+========================= */
+
+function openDB(){
+
+  return new Promise(
+    function(resolve,reject){
+
+      if(!window.indexedDB){
+
+        resolve(null);
+
+        return;
+
+      }
+
+      const request =
+        indexedDB.open(
+          DB_NAME,
+          DB_VERSION
+        );
+
+      request.onupgradeneeded =
+        function(e){
+
+          const db =
+            e.target.result;
+
+          if(
+            !db.objectStoreNames.contains(
+              DB_STORE
+            )
+          ){
+
+            db.createObjectStore(
+              DB_STORE
+            );
+
+          }
+
+        };
+
+      request.onsuccess =
+        function(){
+
+          resolve(
+            request.result
+          );
+
+        };
+
+      request.onerror =
+        function(){
+
+          resolve(null);
+
+        };
+
+    }
+  );
+
+}
+
+
+async function saveIndexedDB(){
+
+  try{
+
+    const db =
+      await openDB();
+
+    if(!db){
+
+      return;
+
+    }
+
+    await new Promise(
+      function(resolve){
+
+        const tx =
+          db.transaction(
+            DB_STORE,
+            "readwrite"
+          );
+
+        const store =
+          tx.objectStore(
+            DB_STORE
+          );
+
+        store.put(
+          JSON.parse(
+            JSON.stringify(data)
+          ),
+          "collectionData"
+        );
+
+        tx.oncomplete =
+          function(){
+
+            resolve();
+
+          };
+
+        tx.onerror =
+          function(){
+
+            resolve();
+
+          };
+
+      }
+    );
+
+    db.close();
+
+  }catch(e){
+
+    console.log(
+      "IndexedDB保存エラー",
+      e
+    );
+
+  }
+
+}
+
+
+async function loadIndexedDB(){
+
+  try{
+
+    const db =
+      await openDB();
+
+    if(!db){
+
+      return null;
+
+    }
+
+    const result =
+      await new Promise(
+        function(resolve){
+
+          const tx =
+            db.transaction(
+              DB_STORE,
+              "readonly"
+            );
+
+          const store =
+            tx.objectStore(
+              DB_STORE
+            );
+
+          const request =
+            store.get(
+              "collectionData"
+            );
+
+          request.onsuccess =
+            function(){
+
+              resolve(
+                request.result || null
+              );
+
+            };
+
+          request.onerror =
+            function(){
+
+              resolve(null);
+
+            };
+
+        }
+      );
+
+    db.close();
+
+    if(!Array.isArray(result)){
+
+      return null;
+
+    }
+
+    return result.map(
+      normalizeCharacter
+    );
+
+  }catch(e){
+
+    console.log(
+      "IndexedDB読み込みエラー",
+      e
+    );
+
+    return null;
+
+  }
+
+}
+
+
+/* =========================
+   localStorage
+========================= */
+
+function loadLocalStorage(){
 
   try{
 
@@ -1212,7 +1558,7 @@ function loadData(){
   }catch(e){
 
     console.log(
-      "データ読み込みエラー",
+      "localStorage読み込みエラー",
       e
     );
 
@@ -1223,7 +1569,13 @@ function loadData(){
 }
 
 
-function save(){
+async function save(){
+
+  /*
+    先にlocalStorageへ保存。
+    今まで使っていた保存先なので、
+    既存データとの互換性を維持。
+  */
 
   try{
 
@@ -1239,7 +1591,96 @@ function save(){
       "画像が大きすぎる可能性があります。"
     );
 
+    return;
+
   }
+
+  /*
+    IndexedDBにも同じデータを保存
+  */
+
+  await saveIndexedDB();
+
+}
+
+
+/* =========================
+   初期データ読み込み
+========================= */
+
+async function initializeData(){
+
+  const localData =
+    loadLocalStorage();
+
+  /*
+    localStorageにデータがある場合は
+    それを最優先で使う。
+
+    これにより、古いIndexedDBの空データで
+    今あるデータが上書きされる事故を防ぐ。
+  */
+
+  if(localData.length > 0){
+
+    data =
+      localData;
+
+    /*
+      正規化後の形を保存。
+      データ自体は削除しない。
+    */
+
+    try{
+
+      localStorage.setItem(
+        KEY,
+        JSON.stringify(data)
+      );
+
+    }catch(e){}
+
+    /*
+      IndexedDBにも現在のデータを同期
+    */
+
+    await saveIndexedDB();
+
+    return;
+
+  }
+
+
+  /*
+    localStorageが空の場合だけ
+    IndexedDBを確認。
+  */
+
+  const dbData =
+    await loadIndexedDB();
+
+  if(
+    Array.isArray(dbData) &&
+    dbData.length > 0
+  ){
+
+    data =
+      dbData;
+
+    try{
+
+      localStorage.setItem(
+        KEY,
+        JSON.stringify(data)
+      );
+
+    }catch(e){}
+
+    return;
+
+  }
+
+  data = [];
 
 }
 
@@ -1491,14 +1932,12 @@ function renderCharacters(){
 
             ${
               c.image
-
               ? `
                 <img
                   class="char-image"
                   src="${c.image}"
                   data-photo="${c.image}">
               `
-
               : `
                 <div class="char-image"></div>
               `
@@ -1522,11 +1961,7 @@ function renderCharacters(){
       }
     );
 
-    html += `
-
-      </div>
-
-    `;
+    html += `</div>`;
 
   }
 
@@ -1634,9 +2069,7 @@ function renderCharacter(){
   }else{
 
     html += `
-
       <div class="pattern-grid">
-
     `;
 
 
@@ -1650,9 +2083,7 @@ function renderCharacter(){
 
         html += `
 
-          <div
-            class="pattern-card"
-            style="--theme:${color}">
+          <div class="pattern-card">
 
             <button
               class="pattern-priority ${priorityClass(p.priority)}"
@@ -1663,14 +2094,12 @@ function renderCharacter(){
 
             ${
               p.image
-
               ? `
                 <img
                   class="pattern-image"
                   src="${p.image}"
                   data-photo="${p.image}">
               `
-
               : `
                 <div class="pattern-empty">
                   画像なし
@@ -1689,9 +2118,7 @@ function renderCharacter(){
         `;
 
 
-        if(
-          !p.goods.length
-        ){
+        if(!p.goods.length){
 
           html += `
 
@@ -1716,14 +2143,12 @@ function renderCharacter(){
 
                   ${
                     g.image
-
                     ? `
                       <img
                         class="goods-thumb"
                         src="${g.image}"
                         data-photo="${g.image}">
                     `
-
                     : `
                       <div class="goods-thumb"></div>
                     `
@@ -1733,12 +2158,25 @@ function renderCharacter(){
                     ${esc(g.name)}
                   </div>
 
+                  <div class="goods-type">
+                    ${esc(g.type || "未分類")}
+                  </div>
+
                   <button
                     class="priority-mark ${priorityClass(g.priority)}"
                     data-action="toggle-goods-priority"
                     data-pattern="${pIndex}"
                     data-goods="${gIndex}">
                     ${priorityMark(g.priority)}
+                  </button>
+
+                  <button
+                    class="priority-mark"
+                    style="font-size:15px;color:#777;"
+                    data-action="edit-goods"
+                    data-pattern="${pIndex}"
+                    data-goods="${gIndex}">
+                    ✎
                   </button>
 
                 </div>
@@ -1787,11 +2225,7 @@ function renderCharacter(){
     );
 
 
-    html += `
-
-      </div>
-
-    `;
+    html += `</div>`;
 
   }
 
@@ -1827,24 +2261,19 @@ function setColorPicker(color){
   }
 
   document
-    .getElementById(
-      "characterColor"
-    )
-    .value = value;
-
-  document
-    .getElementById(
-      "characterColorHex"
-    )
+    .getElementById("characterColor")
     .value =
-      value.toUpperCase();
+    value;
 
   document
-    .getElementById(
-      "colorPreview"
-    )
+    .getElementById("characterColorHex")
+    .value =
+    value.toUpperCase();
+
+  document
+    .getElementById("colorPreview")
     .style.background =
-      value;
+    value;
 
 }
 
@@ -1896,9 +2325,7 @@ function openChar(index){
     del.style.display =
       "none";
 
-    setColorPicker(
-      "#aaaaaa"
-    );
+    setColorPicker("#aaaaaa");
 
   }else{
 
@@ -1953,9 +2380,7 @@ async function saveChar(){
 
   const name =
     document
-      .getElementById(
-        "characterName"
-      )
+      .getElementById("characterName")
       .value
       .trim();
 
@@ -1971,16 +2396,12 @@ async function saveChar(){
 
   let color =
     document
-      .getElementById(
-        "characterColor"
-      )
+      .getElementById("characterColor")
       .value;
 
   const hex =
     document
-      .getElementById(
-        "characterColorHex"
-      )
+      .getElementById("characterColorHex")
       .value
       .trim();
 
@@ -1995,9 +2416,7 @@ async function saveChar(){
 
   const file =
     document
-      .getElementById(
-        "characterImage"
-      )
+      .getElementById("characterImage")
       .files[0];
 
   let image =
@@ -2038,7 +2457,7 @@ async function saveChar(){
 
   }
 
-  save();
+  await save();
 
   modal(
     "characterModal",
@@ -2200,9 +2619,7 @@ async function savePattern(){
 
   const name =
     document
-      .getElementById(
-        "patternName"
-      )
+      .getElementById("patternName")
       .value
       .trim();
 
@@ -2221,9 +2638,7 @@ async function savePattern(){
 
   const file =
     document
-      .getElementById(
-        "patternImage"
-      )
+      .getElementById("patternImage")
       .files[0];
 
   let image =
@@ -2265,7 +2680,7 @@ async function savePattern(){
 
   }
 
-  save();
+  await save();
 
   modal(
     "patternModal",
@@ -2343,47 +2758,34 @@ function openGoods(
       : "グッズを追加";
 
   document
-    .getElementById(
-      "goodsName"
-    )
+    .getElementById("goodsName")
     .value =
       g?.name || "";
 
   document
-    .getElementById(
-      "goodsType"
-    )
+    .getElementById("goodsType")
     .value =
       g?.type ||
-      g?.name ||
-      "";
+      "未分類";
 
   document
-    .getElementById(
-      "goodsImage"
-    )
+    .getElementById("goodsImage")
     .value = "";
 
   document
-    .getElementById(
-      "goodsPreview"
-    )
+    .getElementById("goodsPreview")
     .src =
       g?.image || "";
 
   document
-    .getElementById(
-      "goodsPreview"
-    )
+    .getElementById("goodsPreview")
     .style.display =
       g?.image
       ? "block"
       : "none";
 
   document
-    .getElementById(
-      "goodsPriority"
-    )
+    .getElementById("goodsPriority")
     .value =
       String(
         normalizePriority(
@@ -2412,9 +2814,7 @@ async function saveGoods(){
 
   const name =
     document
-      .getElementById(
-        "goodsName"
-      )
+      .getElementById("goodsName")
       .value
       .trim();
 
@@ -2434,9 +2834,7 @@ async function saveGoods(){
 
   const file =
     document
-      .getElementById(
-        "goodsImage"
-      )
+      .getElementById("goodsImage")
       .files[0];
 
   let image =
@@ -2455,18 +2853,15 @@ async function saveGoods(){
 
   const type =
     document
-      .getElementById(
-        "goodsType"
-      )
+      .getElementById("goodsType")
       .value
-      .trim() || name;
+      .trim() ||
+    "未分類";
 
   const priority =
     Number(
       document
-        .getElementById(
-          "goodsPriority"
-        )
+        .getElementById("goodsPriority")
         .value
     );
 
@@ -2476,7 +2871,8 @@ async function saveGoods(){
 
     image:image,
 
-    priority:priority,
+    priority:
+      normalizePriority(priority),
 
     type:type
 
@@ -2495,7 +2891,7 @@ async function saveGoods(){
 
   }
 
-  save();
+  await save();
 
   modal(
     "goodsModal",
@@ -2561,25 +2957,14 @@ function shot(mode){
   screenshotMode =
     mode;
 
-  screenshotSelectedType =
-    "";
+  screenshotSelectedTypes = [];
 
   renderShot();
 
 }
 
 
-function renderShot(){
-
-  const c =
-    data[screenshotCharacter];
-
-  if(!c){
-
-    return;
-
-  }
-
+function getScreenshotTypes(c){
 
   const types = [];
 
@@ -2590,8 +2975,10 @@ function renderShot(){
         function(g){
 
           const type =
-            g.type ||
-            g.name ||
+            String(
+              g.type ||
+              "未分類"
+            ).trim() ||
             "未分類";
 
           if(
@@ -2607,6 +2994,68 @@ function renderShot(){
 
     }
   );
+
+  return types;
+
+}
+
+
+/*
+  現在選択されている種類だけ
+  表示するか判定
+*/
+
+function isGoodsVisibleForShot(g){
+
+  if(
+    screenshotMode === "all"
+  ){
+
+    return true;
+
+  }
+
+  const type =
+    String(
+      g.type ||
+      "未分類"
+    ).trim() ||
+    "未分類";
+
+  return screenshotSelectedTypes
+    .includes(type);
+
+}
+
+
+function renderShot(){
+
+  const c =
+    data[screenshotCharacter];
+
+  if(!c){
+
+    return;
+
+  }
+
+  const types =
+    getScreenshotTypes(c);
+
+
+  /*
+    選択済みの種類が
+    今存在しなくなった場合は除外
+  */
+
+  screenshotSelectedTypes =
+    screenshotSelectedTypes.filter(
+      function(type){
+
+        return types.includes(type);
+
+      }
+    );
 
 
   let html = `
@@ -2628,7 +3077,7 @@ function renderShot(){
         </span>
 
         <span>
-          🟡 優先
+          ★ 優先
         </span>
 
         <span>
@@ -2656,73 +3105,106 @@ function renderShot(){
   `;
 
 
+  /* =========================
+     種類別チェックボックス
+  ========================= */
+
   if(
     screenshotMode === "type"
   ){
 
     html += `
 
-      <select id="shotTypeSelect">
+      <div class="shot-type-box">
 
-        <option value="">
-          種類を選択
-        </option>
+        <div class="shot-type-title">
+          📋 スクショする種類を選択
+        </div>
+
+        <div class="shot-type-actions">
+
+          <button
+            data-action="shot-select-all">
+            ☑ 全選択
+          </button>
+
+          <button
+            data-action="shot-clear-all">
+            □ 全解除
+          </button>
+
+        </div>
 
         ${
-          types.map(
-            function(t){
+          types.length
+          ? `
+            <div class="shot-type-list">
 
-              return `
-                <option value="${esc(t)}">
-                  ${esc(t)}
-                </option>
-              `;
+              ${
+                types.map(
+                  function(type){
 
-            }
-          ).join("")
+                    const checked =
+                      screenshotSelectedTypes
+                        .includes(type);
+
+                    return `
+
+                      <label class="shot-type-check">
+
+                        <input
+                          type="checkbox"
+                          data-shot-type="${esc(type)}"
+                          ${checked ? "checked" : ""}>
+
+                        <span>
+                          ${esc(type)}
+                        </span>
+
+                      </label>
+
+                    `;
+
+                  }
+                ).join("")
+              }
+
+            </div>
+          `
+          : `
+            <div class="shot-type-empty">
+              まだグッズの種類が登録されていません
+            </div>
+          `
         }
 
-      </select>
+      </div>
 
     `;
 
   }
 
 
+  /*
+    選択されたグッズだけで
+    絵柄カードを作る
+  */
+
+  let visiblePatternCount = 0;
+
+
   html += `
-
       <div class="shot-pattern-grid">
-
   `;
 
 
   c.patterns.forEach(
     function(p){
 
-      let goods =
-        p.goods || [];
-
-
-      if(
-        screenshotMode === "type" &&
-        screenshotSelectedType
-      ){
-
-        goods =
-          goods.filter(
-            function(g){
-
-              return (
-                g.type ||
-                g.name ||
-                "未分類"
-              ) ===
-              screenshotSelectedType;
-
-            }
-          );
-
-      }
+      const goods =
+        (p.goods || []).filter(
+          isGoodsVisibleForShot
+        );
 
 
       if(!goods.length){
@@ -2730,6 +3212,9 @@ function renderShot(){
         return;
 
       }
+
+
+      visiblePatternCount++;
 
 
       html += `
@@ -2740,13 +3225,11 @@ function renderShot(){
 
             ${
               p.image
-
               ? `
                 <img
                   class="shot-pattern-image"
                   src="${p.image}">
               `
-
               : `
                 <div class="shot-pattern-empty">
                   画像なし
@@ -2781,13 +3264,11 @@ function renderShot(){
 
               ${
                 g.image
-
                 ? `
                   <img
                     class="shot-goods-image"
                     src="${g.image}">
                 `
-
                 : `
                   <div class="shot-goods-image"></div>
                 `
@@ -2823,10 +3304,39 @@ function renderShot(){
   );
 
 
+  if(
+    screenshotMode === "type" &&
+    screenshotSelectedTypes.length === 0
+  ){
+
+    html += `
+
+      <div class="shot-no-selection">
+        上のチェックボックスから<br>
+        スクショしたい種類を選んでね
+      </div>
+
+    `;
+
+  }else if(
+    screenshotMode === "type" &&
+    visiblePatternCount === 0
+  ){
+
+    html += `
+
+      <div class="shot-no-selection">
+        選択した種類のグッズがありません
+      </div>
+
+    `;
+
+  }
+
+
   html += `
 
       </div>
-
 
       <div class="screenshot-actions">
 
@@ -2851,32 +3361,43 @@ function renderShot(){
   app.innerHTML =
     html;
 
+}
 
-  const select =
-    document.getElementById(
-      "shotTypeSelect"
+
+/* =========================
+   種類チェック
+========================= */
+
+function toggleShotType(type){
+
+  if(
+    screenshotSelectedTypes
+      .includes(type)
+  ){
+
+    screenshotSelectedTypes =
+      screenshotSelectedTypes.filter(
+        function(t){
+          return t !== type;
+        }
+      );
+
+  }else{
+
+    screenshotSelectedTypes.push(
+      type
     );
-
-
-  if(select){
-
-    select.value =
-      screenshotSelectedType;
-
-    select.onchange =
-      function(){
-
-        screenshotSelectedType =
-          select.value;
-
-        renderShot();
-
-      };
 
   }
 
+  renderShot();
+
 }
 
+
+/* =========================
+   スクショ保存
+========================= */
 
 async function saveShot(){
 
@@ -2921,8 +3442,15 @@ async function saveShot(){
     const a =
       document.createElement("a");
 
+    const modeName =
+      screenshotMode === "type"
+      ? "種類別"
+      : "まとめ";
+
     a.download =
-      "Collection_求め絵柄まとめ.png";
+      "Collection_求め絵柄まとめ_" +
+      modeName +
+      ".png";
 
     a.href =
       canvas.toDataURL(
@@ -2957,16 +3485,12 @@ function show(src){
   }
 
   document
-    .getElementById(
-      "photoLarge"
-    )
+    .getElementById("photoLarge")
     .src =
-      src;
+    src;
 
   document
-    .getElementById(
-      "photoView"
-    )
+    .getElementById("photoView")
     .classList
     .add("show");
 
@@ -2976,9 +3500,7 @@ function show(src){
 function closePhoto(){
 
   document
-    .getElementById(
-      "photoView"
-    )
+    .getElementById("photoView")
     .classList
     .remove("show");
 
@@ -3044,6 +3566,10 @@ document.addEventListener(
       e.target;
 
 
+    /*
+      写真
+    */
+
     if(
       target.dataset.photo
     ){
@@ -3056,6 +3582,10 @@ document.addEventListener(
 
     }
 
+
+    /*
+      キャラカード
+    */
 
     const characterCard =
       target.closest(
@@ -3096,6 +3626,8 @@ document.addEventListener(
     const action =
       button.dataset.action;
 
+
+    /* キャラ */
 
     if(
       action ===
@@ -3176,6 +3708,8 @@ document.addEventListener(
 
     }
 
+
+    /* 絵柄 */
 
     if(
       action ===
@@ -3294,6 +3828,8 @@ document.addEventListener(
     }
 
 
+    /* グッズ */
+
     if(
       action ===
       "add-goods"
@@ -3304,6 +3840,25 @@ document.addEventListener(
           button.dataset.pattern
         ),
         -1
+      );
+
+      return;
+
+    }
+
+
+    if(
+      action ===
+      "edit-goods"
+    ){
+
+      openGoods(
+        Number(
+          button.dataset.pattern
+        ),
+        Number(
+          button.dataset.goods
+        )
       );
 
       return;
@@ -3382,6 +3937,8 @@ document.addEventListener(
     }
 
 
+    /* スクショ */
+
     if(
       action ===
       "open-screenshot"
@@ -3414,8 +3971,8 @@ document.addEventListener(
       screenshotMode =
         "all";
 
-      screenshotSelectedType =
-        "";
+      screenshotSelectedTypes =
+        [];
 
       renderShot();
 
@@ -3432,8 +3989,46 @@ document.addEventListener(
       screenshotMode =
         "type";
 
-      screenshotSelectedType =
-        "";
+      renderShot();
+
+      return;
+
+    }
+
+
+    /*
+      種類を全部選択
+    */
+
+    if(
+      action ===
+      "shot-select-all"
+    ){
+
+      const c =
+        data[screenshotCharacter];
+
+      screenshotSelectedTypes =
+        getScreenshotTypes(c);
+
+      renderShot();
+
+      return;
+
+    }
+
+
+    /*
+      種類を全部解除
+    */
+
+    if(
+      action ===
+      "shot-clear-all"
+    ){
+
+      screenshotSelectedTypes =
+        [];
 
       renderShot();
 
@@ -3469,6 +4064,8 @@ document.addEventListener(
     }
 
 
+    /* 写真 */
+
     if(
       action ===
       "close-photo"
@@ -3479,6 +4076,34 @@ document.addEventListener(
       return;
 
     }
+
+  }
+);
+
+
+/* =========================
+   種類チェックボックス
+========================= */
+
+document.addEventListener(
+  "change",
+  function(e){
+
+    const checkbox =
+      e.target.closest(
+        "[data-shot-type]"
+      );
+
+    if(!checkbox){
+
+      return;
+
+    }
+
+    const type =
+      checkbox.dataset.shotType;
+
+    toggleShotType(type);
 
   }
 );
@@ -3842,23 +4467,87 @@ document.addEventListener(
 
 
 /* =========================
+   html2canvas
+   scriptを増やさず読み込む
+========================= */
+
+function loadHtml2Canvas(){
+
+  return new Promise(
+    function(resolve){
+
+      if(
+        typeof html2canvas !==
+        "undefined"
+      ){
+
+        resolve();
+
+        return;
+
+      }
+
+      const script =
+        document.createElement(
+          "script"
+        );
+
+      script.src =
+        "https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js";
+
+      script.onload =
+        function(){
+
+          resolve();
+
+        };
+
+      script.onerror =
+        function(){
+
+          resolve();
+
+        };
+
+      document.head.appendChild(
+        script
+      );
+
+    }
+  );
+
+}
+
+
+/* =========================
    初期化
 ========================= */
 
-data =
-  loadData();
+(async function(){
 
-render();
+  /*
+    まずデータを読み込む。
+    localStorageにあるデータを優先。
+  */
+
+  await initializeData();
+
+  /*
+    スクショ用ライブラリを読み込む。
+  */
+
+  await loadHtml2Canvas();
+
+  /*
+    最後に画面表示。
+  */
+
+  render();
+
+})();
 
 
 })();
-</script>
-
-
-<!-- スクショ保存用 -->
-
-<script
-  src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js">
 </script>
 
 </body>

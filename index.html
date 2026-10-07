@@ -3,38 +3,44 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
-<title>Collection データ復旧</title>
+<title>Collection データ救出</title>
 
 <style>
-*{box-sizing:border-box}
+*{
+  box-sizing:border-box;
+}
 
 body{
   margin:0;
   padding:30px 16px;
   font-family:-apple-system,BlinkMacSystemFont,"Helvetica Neue",sans-serif;
-  background:#f5f5f5;
+  background:#f5f5f7;
   color:#333;
 }
 
 .box{
-  max-width:600px;
+  max-width:620px;
   margin:auto;
   background:#fff;
-  border-radius:20px;
-  padding:25px;
+  border-radius:22px;
+  padding:26px 20px;
   box-shadow:0 4px 20px rgba(0,0,0,.08);
 }
 
 h1{
-  font-size:22px;
-  margin-top:0;
+  margin:0 0 18px;
+  font-size:23px;
+}
+
+p{
+  line-height:1.7;
 }
 
 button{
   width:100%;
   border:0;
-  border-radius:14px;
-  padding:15px;
+  border-radius:15px;
+  padding:16px;
   margin-top:12px;
   font-size:16px;
   font-weight:bold;
@@ -46,30 +52,29 @@ button{
   color:#fff;
 }
 
-#backup{
-  background:#e9e9e9;
+#download{
+  background:#e8e8e8;
   color:#333;
+  display:none;
 }
 
 #result{
   margin-top:20px;
-  padding:15px;
-  border-radius:12px;
-  background:#f3f3f3;
+  padding:16px;
+  border-radius:14px;
+  background:#f2f2f2;
   white-space:pre-wrap;
-  word-break:break-all;
-  font-size:13px;
+  word-break:break-word;
+  line-height:1.6;
   display:none;
 }
 
 .ok{
   color:#16803c;
-  font-weight:bold;
 }
 
 .ng{
   color:#c62828;
-  font-weight:bold;
 }
 </style>
 </head>
@@ -78,21 +83,23 @@ button{
 
 <div class="box">
 
-<h1>📦 Collection データ復旧</h1>
+<h1>📦 Collection データ救出</h1>
 
 <p>
-前のCollectionに保存されていたデータを探して、
-見つかった場合は現在の保存場所にも復元します。
+前のCollectionに保存されているデータを探して、
+見つかったデータをそのままバックアップします。
 </p>
 
 <p>
-<strong>このページでは既存データを削除しません。</strong>
+<strong>⚠️ 保存データを書き換えたり削除したりしません。</strong>
 </p>
 
-<button id="recover">🔎 前のデータを探して復元</button>
+<button id="recover">
+🔎 前のデータを探す
+</button>
 
-<button id="backup" style="display:none;">
-💾 復元データをバックアップ
+<button id="download">
+💾 見つかったデータを保存する
 </button>
 
 <div id="result"></div>
@@ -102,23 +109,28 @@ button{
 <script>
 
 const DB_NAME = "CollectionDB";
-const OLD_STORE = "appData";
+const STORE_NAME = "appData";
 const DATA_KEY = "collectionData";
-
-const result = document.getElementById("result");
-const backupBtn = document.getElementById("backup");
 
 let recoveredData = null;
 
+const result =
+  document.getElementById("result");
+
+const downloadButton =
+  document.getElementById("download");
+
 
 /* =========================
-   表示
+   結果表示
 ========================= */
 
-function show(message, type=""){
+function show(text,type=""){
+
   result.style.display = "block";
   result.className = type;
-  result.textContent = message;
+  result.textContent = text;
+
 }
 
 
@@ -126,18 +138,23 @@ function show(message, type=""){
    IndexedDBを開く
 ========================= */
 
-function openDatabase(){
+function openDB(){
 
   return new Promise((resolve,reject)=>{
 
-    const request = indexedDB.open(DB_NAME);
+    const request =
+      indexedDB.open(DB_NAME);
 
-    request.onerror = () => {
+    request.onerror = function(){
+
       reject(request.error);
+
     };
 
-    request.onsuccess = () => {
+    request.onsuccess = function(){
+
       resolve(request.result);
+
     };
 
   });
@@ -146,47 +163,51 @@ function openDatabase(){
 
 
 /* =========================
-   appDataから探す
+   appDataからデータ取得
 ========================= */
 
-function readOldData(db){
+function getData(db){
 
   return new Promise((resolve,reject)=>{
 
-    if(!db.objectStoreNames.contains(OLD_STORE)){
+    if(!db.objectStoreNames.contains(STORE_NAME)){
+
       resolve(null);
       return;
+
     }
 
     try{
 
       const transaction =
-        db.transaction(OLD_STORE,"readonly");
+        db.transaction(
+          STORE_NAME,
+          "readonly"
+        );
 
       const store =
-        transaction.objectStore(OLD_STORE);
+        transaction.objectStore(
+          STORE_NAME
+        );
 
       const request =
         store.get(DATA_KEY);
 
-      request.onsuccess = () => {
-
-        if(request.result === undefined){
-          resolve(null);
-          return;
-        }
+      request.onsuccess = function(){
 
         resolve(request.result);
 
       };
 
-      request.onerror = () => {
+      request.onerror = function(){
+
         reject(request.error);
+
       };
 
-    }catch(e){
+    }catch(error){
 
-      reject(e);
+      reject(error);
 
     }
 
@@ -196,190 +217,224 @@ function readOldData(db){
 
 
 /* =========================
-   データを正規化
+   データの中身を取り出す
 ========================= */
 
-function normalizeData(data){
+function extractData(value){
 
-  if(!data) return null;
+  if(value === undefined || value === null){
 
-  /*
-    前のCollectionが
-    配列で保存されていた場合にも対応
-  */
+    return null;
 
-  if(Array.isArray(data)){
-    return {
-      characters:data
-    };
   }
 
+
   /*
-    {characters: [...]} の場合
+    IndexedDBに
+    { value: ... }
+    で入っている場合
   */
 
   if(
-    typeof data === "object" &&
-    Array.isArray(data.characters)
+    typeof value === "object" &&
+    value !== null &&
+    Object.prototype.hasOwnProperty.call(
+      value,
+      "value"
+    )
   ){
-    return data;
+
+    value = value.value;
+
   }
 
-  return data;
+
+  /*
+    JSON文字列として
+    保存されている場合
+  */
+
+  if(typeof value === "string"){
+
+    try{
+
+      value = JSON.parse(value);
+
+    }catch(error){
+
+      /*
+        JSONでない文字列なら
+        そのままではバックアップ不能
+      */
+
+      return null;
+
+    }
+
+  }
+
+
+  /*
+    配列でもオブジェクトでも
+    そのまま保持する
+  */
+
+  return value;
+
 }
 
 
 /* =========================
-   復元
+   データ検索
 ========================= */
 
 document.getElementById("recover").onclick =
 async function(){
 
-  show("🔎 データを探しています…");
+  downloadButton.style.display = "none";
+
+  show(
+    "🔎 前のデータを探しています…"
+  );
 
   try{
 
-    /*
-      ① localStorage
-    */
+    const db = await openDB();
 
-    let localData = null;
+    const rawData =
+      await getData(db);
 
-    try{
-
-      const raw =
-        localStorage.getItem(DATA_KEY);
-
-      if(raw){
-        localData = JSON.parse(raw);
-      }
-
-    }catch(e){}
+    db.close();
 
 
-    /*
-      ② IndexedDB
-    */
-
-    let dbData = null;
-
-    try{
-
-      const db = await openDatabase();
-
-      dbData = await readOldData(db);
-
-      db.close();
-
-    }catch(e){
-
-      console.log("IndexedDB error:",e);
-
-    }
-
-
-    /*
-      IndexedDBを優先
-    */
-
-    let found =
-      dbData !== null
-        ? dbData
-        : localData;
-
-
-    if(found === null){
+    if(
+      rawData === null ||
+      rawData === undefined
+    ){
 
       show(
         "❌ 前のデータが見つかりませんでした。\n\n"+
-        "IndexedDB / localStorage の両方を確認しました。",
+        "CollectionDB の appData / collectionData を確認しました。",
         "ng"
       );
 
       return;
-    }
 
-
-    /*
-      result.value形式の場合
-      にも対応
-    */
-
-    if(
-      found &&
-      typeof found === "object" &&
-      "value" in found
-    ){
-      found = found.value;
     }
 
 
     recoveredData =
-      normalizeData(found);
+      extractData(rawData);
 
 
-    if(!recoveredData){
+    if(
+      recoveredData === null ||
+      recoveredData === undefined
+    ){
 
       show(
-        "❌ データは見つかりましたが、読み取れませんでした。",
+        "❌ データは見つかりましたが、内容を読み取れませんでした。",
         "ng"
       );
 
       return;
+
     }
-
-
-    /*
-      localStorageにも復元
-    */
-
-    localStorage.setItem(
-      DATA_KEY,
-      JSON.stringify(recoveredData)
-    );
 
 
     /*
       件数確認
     */
 
-    let characterCount = 0;
+    let count = 0;
 
     if(Array.isArray(recoveredData)){
-      characterCount = recoveredData.length;
+
+      count =
+        recoveredData.length;
+
+    }
+    else if(
+      recoveredData &&
+      Array.isArray(
+        recoveredData.characters
+      )
+    ){
+
+      count =
+        recoveredData.characters.length;
+
     }
 
-    if(
-      recoveredData.characters &&
-      Array.isArray(recoveredData.characters)
-    ){
-      characterCount =
-        recoveredData.characters.length;
+
+    let json;
+
+    try{
+
+      json =
+        JSON.stringify(
+          recoveredData,
+          null,
+          2
+        );
+
+    }catch(error){
+
+      show(
+        "❌ データをJSONに変換できませんでした。\n\n"+
+        error.message,
+        "ng"
+      );
+
+      return;
+
     }
+
+
+    /*
+      ここではlocalStorageを
+      一切使わない！！
+    */
+
+    window.__collectionBackupJSON =
+      json;
+
+
+    const sizeMB =
+      (
+        new Blob([json]).size /
+        1024 /
+        1024
+      ).toFixed(1);
 
 
     show(
-      "✅ データを復元しました！！\n\n"+
-      "キャラクター数："+
-      characterCount+
-      "\n\n"+
-      "今のところデータは削除していません。\n"+
-      "まず下の「バックアップ」を押してください。",
+      "✅ 前のデータを見つけました！！\n\n"+
+      "キャラクター数：約 " +
+      count +
+      "\n"+
+      "バックアップサイズ：約 " +
+      sizeMB +
+      " MB\n\n"+
+      "「💾 見つかったデータを保存する」を押してください。\n\n"+
+      "⚠️ このページでは既存データを変更・削除していません。",
       "ok"
     );
 
 
-    backupBtn.style.display = "block";
+    downloadButton.style.display =
+      "block";
 
 
-  }catch(e){
+  }catch(error){
 
-    console.error(e);
+    console.error(error);
 
     show(
-      "❌ 復元中にエラーが発生しました。\n\n"+
-      e.message,
+      "❌ データ検索中にエラーが発生しました。\n\n"+
+      error.name +
+      "\n"+
+      error.message,
       "ng"
     );
 
@@ -389,48 +444,85 @@ async function(){
 
 
 /* =========================
-   JSONバックアップ
+   JSONとして保存
 ========================= */
 
-backupBtn.onclick = function(){
+downloadButton.onclick = function(){
 
-  if(!recoveredData){
+  if(!window.__collectionBackupJSON){
+
+    show(
+      "❌ 保存するデータがありません。",
+      "ng"
+    );
+
     return;
+
   }
 
-  const blob =
-    new Blob(
-      [
-        JSON.stringify(
-          recoveredData,
-          null,
-          2
-        )
-      ],
-      {
-        type:"application/json"
-      }
+
+  try{
+
+    const blob =
+      new Blob(
+        [
+          window.__collectionBackupJSON
+        ],
+        {
+          type:"application/json"
+        }
+      );
+
+
+    const url =
+      URL.createObjectURL(blob);
+
+
+    const link =
+      document.createElement("a");
+
+    link.href = url;
+
+    link.download =
+      "Collection_backup.json";
+
+    document.body.appendChild(link);
+
+    link.click();
+
+    link.remove();
+
+    setTimeout(
+      ()=>{
+        URL.revokeObjectURL(url);
+      },
+      3000
     );
 
 
-  const url =
-    URL.createObjectURL(blob);
+    show(
+      "✅ バックアップファイルを作成しました！！\n\n"+
+      "ファイル名：Collection_backup.json\n\n"+
+      "iPhoneの場合は、表示されたファイルを\n"+
+      「ファイルに保存」してください。\n\n"+
+      "このファイルが確認できるまで、新しいCollectionには入れ替えないでください。",
+      "ok"
+    );
 
-  const a =
-    document.createElement("a");
 
-  a.href = url;
+  }catch(error){
 
-  a.download =
-    "Collection_backup.json";
+    console.error(error);
 
-  document.body.appendChild(a);
+    show(
+      "❌ ファイル保存中にエラーが発生しました。\n\n"+
+      error.name +
+      "\n"+
+      error.message,
+      "ng"
+    );
 
-  a.click();
-
-  a.remove();
-
-  URL.revokeObjectURL(url);
+  }
 
 };
 

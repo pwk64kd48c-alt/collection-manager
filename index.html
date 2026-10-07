@@ -12,232 +12,275 @@
 
 body{
   margin:0;
-  background:#f6f6f6;
-  color:#555;
-  font-family:-apple-system,BlinkMacSystemFont,"Helvetica Neue",Arial,sans-serif;
+  background:#eeeeee;
+  color:#444;
+  font-family:-apple-system,BlinkMacSystemFont,
+    "Helvetica Neue","Hiragino Kaku Gothic ProN",
+    "Yu Gothic",Meiryo,sans-serif;
+}
+
+button,
+input,
+select{
+  font:inherit;
+}
+
+button{
+  cursor:pointer;
+  border:none;
 }
 
 header{
   background:#fff;
-  padding:30px 20px 25px;
-  border-bottom:1px solid #e5e5e5;
+  padding:20px 15px;
+  text-align:center;
+  border-bottom:1px solid #eee;
 }
 
-h1{
+header h1{
   margin:0;
-  font-size:30px;
-  color:#444;
+  font-size:24px;
+  color:#555;
 }
 
 main{
-  max-width:800px;
-  margin:auto;
-  padding:28px 16px 60px;
-}
-
-button{
-  font:inherit;
-  border:0;
-  cursor:pointer;
-}
-
-button:active{
-  transform:scale(.98);
+  max-width:1000px;
+  margin:0 auto;
+  padding:18px;
 }
 
 /* =========================
-   メイン
+   共通
 ========================= */
+
+.empty{
+  background:#fff;
+  border-radius:18px;
+  padding:50px 20px;
+  text-align:center;
+  color:#aaa;
+  font-size:14px;
+}
 
 .add-main{
   width:100%;
-  padding:18px;
-  border-radius:18px;
-  background:#999;
-  color:white;
-  font-size:19px;
-  margin-bottom:24px;
+  background:#fff;
+  border:1px dashed #bbb;
+  color:#777;
+  border-radius:16px;
+  padding:15px;
+  margin-bottom:15px;
 }
+
+.add-main:active{
+  transform:scale(.98);
+}
+
+.back{
+  background:#fff;
+  color:#777;
+  border-radius:12px;
+  padding:9px 13px;
+  margin-bottom:12px;
+}
+
+/* =========================
+   キャラ一覧
+========================= */
 
 .character-list{
   display:grid;
-  grid-template-columns:repeat(2,1fr);
-  gap:14px;
+  grid-template-columns:repeat(2,minmax(0,1fr));
+  gap:12px;
 }
 
 .character-card{
-  background:white;
+  background:#fff;
   border-radius:18px;
-  padding:14px;
-  box-shadow:0 2px 8px rgba(0,0,0,.06);
-  position:relative;
   overflow:hidden;
+  border:2px solid var(--theme);
+  position:relative;
 }
 
 .char-image{
   width:100%;
-  aspect-ratio:1;
+  aspect-ratio:1/1;
   object-fit:cover;
-  border-radius:14px;
-  background:#eee;
   display:block;
+  background:#eee;
 }
 
 .char-name{
-  font-size:17px;
+  padding:11px 12px;
+  font-size:16px;
   font-weight:bold;
-  margin-top:10px;
-  color:#444;
+  display:flex;
+  align-items:center;
+  gap:7px;
 }
 
 .char-color{
-  width:12px;
-  height:12px;
+  width:11px;
+  height:11px;
   border-radius:50%;
-  display:inline-block;
-  margin-right:5px;
-  vertical-align:middle;
+  flex:none;
 }
 
 /* =========================
    キャラ詳細
 ========================= */
 
-.back{
-  background:white;
-  border-radius:12px;
-  padding:10px 15px;
-  margin-bottom:18px;
-  color:#666;
-}
-
 .character-head{
-  background:white;
-  border-radius:20px;
-  padding:18px;
-  margin-bottom:20px;
-  border-left:8px solid var(--theme,#aaa);
+  background:#fff;
+  border-radius:18px;
+  padding:15px;
+  margin-bottom:14px;
+  border-left:5px solid var(--theme);
 }
 
 .character-title{
-  font-size:25px;
+  font-size:23px;
   font-weight:bold;
-  color:#444;
+  margin-bottom:12px;
 }
 
 .character-actions{
   display:flex;
   gap:8px;
-  margin-top:12px;
+  flex-wrap:wrap;
 }
 
 .action{
-  flex:1;
-  padding:10px;
-  border-radius:10px;
-  background:#eee;
-  color:#555;
+  background:#f2f2f2;
+  color:#666;
+  border-radius:11px;
+  padding:9px 12px;
 }
 
 .action.theme{
-  background:var(--theme,#999);
-  color:white;
+  background:var(--theme);
+  color:#fff;
 }
 
-/* =========================
-   優先度
-========================= */
-
 .priority-legend{
-  margin-top:10px;
-  padding:9px 11px;
+  margin-top:13px;
   background:#f7f7f7;
-  border-radius:10px;
-  font-size:11px;
-  color:#888;
+  border-radius:12px;
+  padding:10px;
   display:flex;
-  flex-wrap:wrap;
   align-items:center;
-  gap:6px 10px;
+  justify-content:center;
+  gap:15px;
+  flex-wrap:wrap;
+  font-size:13px;
 }
 
 .priority-legend-title{
-  font-weight:bold;
-  color:#666;
+  color:#777;
+}
+
+.screenshot-buttons{
+  display:flex;
+  gap:8px;
+  margin-top:10px;
+}
+
+.screenshot-buttons button{
+  flex:1;
+  background:#555;
+  color:#fff;
+  border-radius:11px;
+  padding:10px;
 }
 
 /* =========================
-   絵柄一覧
+   絵柄
 ========================= */
 
 .pattern-grid{
   display:grid;
-  grid-template-columns:repeat(2,1fr);
-  gap:14px;
+  grid-template-columns:repeat(2,minmax(0,1fr));
+  gap:12px;
 }
 
 .pattern-card{
-  background:white;
+  background:#fff;
   border-radius:18px;
-  overflow:hidden;
-  box-shadow:0 2px 8px rgba(0,0,0,.06);
+  padding:10px;
   position:relative;
+  overflow:hidden;
 }
 
-.pattern-image{
+.pattern-image,
+.pattern-empty{
   width:100%;
-  aspect-ratio:1;
+  aspect-ratio:1/1;
+  border-radius:13px;
   object-fit:cover;
   display:block;
   background:#eee;
 }
 
 .pattern-empty{
-  aspect-ratio:1;
   display:flex;
   align-items:center;
   justify-content:center;
-  background:#eee;
   color:#aaa;
+  font-size:12px;
+}
+
+.pattern-priority{
+  position:absolute;
+  top:14px;
+  right:14px;
+  width:38px;
+  height:38px;
+  border-radius:50%;
+  background:rgba(255,255,255,.92);
+  font-size:23px;
+  z-index:2;
+}
+
+.priority-star{
+  color:#555;
+}
+
+.priority-none{
+  color:#777;
 }
 
 .pattern-info{
-  padding:12px;
+  padding-top:9px;
 }
 
 .pattern-name{
   font-weight:bold;
-  color:#444;
-  font-size:16px;
+  font-size:15px;
+  line-height:1.3;
+  margin-bottom:8px;
 }
 
 .goods-list{
-  margin-top:10px;
   display:flex;
   flex-direction:column;
-  gap:7px;
+  gap:6px;
 }
 
 .goods-item{
+  background:#f7f7f7;
+  border-radius:10px;
+  padding:5px;
   display:flex;
   align-items:center;
-  gap:7px;
-  padding:7px;
-  background:#f7f7f7;
-  border-radius:9px;
-  font-size:13px;
+  gap:6px;
   min-width:0;
-  user-select:none;
-  -webkit-user-select:none;
-  -webkit-touch-callout:none;
-  touch-action:pan-y;
 }
 
 .goods-thumb{
-  width:38px;
-  height:38px;
-  object-fit:cover;
+  width:40px;
+  height:40px;
   border-radius:7px;
+  object-fit:cover;
   background:#ddd;
   flex:none;
 }
@@ -245,42 +288,17 @@ button:active{
 .goods-name{
   flex:1;
   min-width:0;
+  font-size:12px;
+  line-height:1.2;
   overflow-wrap:anywhere;
 }
 
 .priority-mark{
   width:27px;
-  height:27px;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  background:none;
+  min-width:27px;
+  background:transparent;
+  font-size:21px;
   padding:0;
-  flex:none;
-  font-size:18px;
-  line-height:1;
-}
-
-.priority-none{
-  color:#777;
-}
-
-.priority-star{
-  color:#777;
-}
-
-.pattern-priority{
-  position:absolute;
-  right:9px;
-  top:8px;
-  background:rgba(255,255,255,.92);
-  border-radius:50%;
-  width:34px;
-  height:34px;
-  font-size:20px;
-  display:flex;
-  align-items:center;
-  justify-content:center;
 }
 
 .small-buttons{
@@ -291,38 +309,11 @@ button:active{
 
 .small-buttons button{
   flex:1;
-  padding:7px 3px;
-  border-radius:8px;
   background:#eee;
   color:#666;
-  font-size:12px;
-}
-
-.screenshot-buttons{
-  display:grid;
-  grid-template-columns:1fr 1fr;
-  gap:8px;
-  margin-top:10px;
-}
-
-.screenshot-buttons button{
-  padding:11px 5px;
-  border-radius:11px;
-  background:#eee;
-  color:#555;
-  font-size:13px;
-}
-
-.screenshot-buttons button:first-child{
-  grid-column:1/-1;
-  background:#777;
-  color:white;
-}
-
-.empty{
-  text-align:center;
-  color:#aaa;
-  padding:40px 10px;
+  border-radius:8px;
+  padding:7px 3px;
+  font-size:11px;
 }
 
 /* =========================
@@ -330,13 +321,14 @@ button:active{
 ========================= */
 
 .modal-bg{
-  display:none;
   position:fixed;
   inset:0;
   background:rgba(0,0,0,.45);
-  z-index:1000;
-  align-items:flex-end;
+  display:none;
+  align-items:center;
   justify-content:center;
+  padding:18px;
+  z-index:1000;
 }
 
 .modal-bg.show{
@@ -345,105 +337,95 @@ button:active{
 
 .modal{
   width:100%;
-  max-width:600px;
+  max-width:430px;
   max-height:90vh;
   overflow:auto;
-  background:white;
-  border-radius:22px 22px 0 0;
-  padding:22px;
+  background:#fff;
+  border-radius:20px;
+  padding:20px;
 }
 
 .modal h2{
   margin:0 0 18px;
-  color:#444;
+  font-size:20px;
 }
 
-label{
+.modal label{
   display:block;
+  margin:12px 0 6px;
   font-size:13px;
-  margin:14px 0 6px;
   color:#777;
 }
 
-input[type="text"],
-select{
+.modal input[type="text"],
+.modal select{
   width:100%;
-  padding:13px;
+  padding:11px;
   border:1px solid #ddd;
   border-radius:10px;
-  font:inherit;
-  background:white;
+  background:#fff;
 }
 
-input[type="file"]{
+.modal input[type="file"]{
   width:100%;
-  margin-bottom:8px;
 }
 
 .preview{
-  width:100%;
-  max-height:220px;
-  object-fit:contain;
-  border-radius:12px;
-  background:#f5f5f5;
-  margin-top:8px;
   display:none;
+  width:120px;
+  height:120px;
+  object-fit:cover;
+  border-radius:12px;
+  margin-top:10px;
+  background:#eee;
 }
 
 .color-picker-area{
   display:flex;
   align-items:center;
-  gap:12px;
-  padding:12px;
-  background:#f7f7f7;
-  border-radius:14px;
+  gap:10px;
 }
 
-#characterColor{
-  width:58px;
-  height:58px;
+.color-picker-area input[type="color"]{
+  width:45px;
+  height:45px;
   padding:0;
-  border:0;
-  border-radius:12px;
-  overflow:hidden;
-  cursor:pointer;
+  border:none;
   background:none;
 }
 
 .color-code-area{
   display:flex;
   align-items:center;
-  gap:8px;
+  gap:7px;
   flex:1;
 }
 
 .color-preview{
-  width:24px;
-  height:24px;
+  width:22px;
+  height:22px;
   border-radius:50%;
   border:1px solid #ddd;
   flex:none;
 }
 
-#characterColorHex{
-  width:100%;
-  padding:11px;
+.color-code-area input{
+  flex:1;
+  padding:9px;
   border:1px solid #ddd;
-  border-radius:10px;
-  font:inherit;
-  text-transform:uppercase;
+  border-radius:9px;
 }
 
 .modal-buttons{
   display:flex;
-  gap:8px;
+  gap:7px;
   margin-top:20px;
 }
 
 .modal-buttons button{
   flex:1;
-  padding:13px;
-  border-radius:11px;
+  padding:11px 5px;
+  border-radius:10px;
 }
 
 .cancel{
@@ -451,14 +433,14 @@ input[type="file"]{
   color:#666;
 }
 
-.save{
-  background:#777;
-  color:white;
+.delete{
+  background:#f3dede;
+  color:#b55;
 }
 
-.delete{
-  background:#f0dddd;
-  color:#a55;
+.save{
+  background:#555;
+  color:#fff;
 }
 
 /* =========================
@@ -466,14 +448,14 @@ input[type="file"]{
 ========================= */
 
 .photo-view{
-  display:none;
   position:fixed;
   inset:0;
   background:rgba(0,0,0,.85);
-  z-index:2000;
+  display:none;
   align-items:center;
   justify-content:center;
   padding:20px;
+  z-index:2000;
 }
 
 .photo-view.show{
@@ -481,21 +463,22 @@ input[type="file"]{
 }
 
 .photo-view img{
-  max-width:100%;
+  max-width:95vw;
   max-height:90vh;
   object-fit:contain;
   border-radius:10px;
 }
 
 .close-photo{
-  position:fixed;
-  top:20px;
-  right:20px;
-  width:45px;
-  height:45px;
+  position:absolute;
+  top:12px;
+  right:15px;
+  width:42px;
+  height:42px;
   border-radius:50%;
-  background:white;
-  font-size:25px;
+  background:rgba(255,255,255,.9);
+  font-size:28px;
+  color:#555;
 }
 
 /* =========================
@@ -503,13 +486,12 @@ input[type="file"]{
 ========================= */
 
 .screenshot-view{
-  display:none;
   position:fixed;
   inset:0;
-  background:#eee;
-  z-index:3000;
+  background:#ddd;
   overflow:auto;
-  padding:20px;
+  display:none;
+  z-index:1500;
 }
 
 .screenshot-view.show{
@@ -517,206 +499,201 @@ input[type="file"]{
 }
 
 .screenshot-toolbar{
-  max-width:600px;
-  margin:0 auto 14px;
-  display:flex;
-  gap:8px;
   position:sticky;
   top:0;
-  z-index:20;
+  z-index:10;
+  background:rgba(255,255,255,.95);
+  padding:10px;
+  display:flex;
+  gap:8px;
+  box-shadow:0 1px 5px rgba(0,0,0,.08);
 }
 
 .screenshot-toolbar button{
-  flex:1;
-  padding:12px 5px;
-  border-radius:11px;
-  background:white;
+  background:#eee;
   color:#555;
-  box-shadow:0 2px 7px rgba(0,0,0,.08);
+  border-radius:10px;
+  padding:9px 12px;
 }
 
 .screenshot-toolbar .shot-save{
-  background:#777;
-  color:white;
+  margin-left:auto;
+  background:#555;
+  color:#fff;
+}
+
+/* ★★★★★
+   ここが今回の理想形
+   ★★★★★ */
+
+#screenshotContent{
+  padding:12px;
 }
 
 .shot-sheet{
   width:100%;
-  max-width:600px;
+  max-width:1100px;
   margin:0 auto;
-  background:white;
-  border-radius:18px;
-  padding:16px;
+  background:#fff;
+  padding:18px;
+  border-radius:20px;
 }
 
 .shot-title{
-  font-size:22px;
+  text-align:center;
+  font-size:28px;
   font-weight:bold;
-  color:#444;
-  margin-bottom:10px;
+  color:#777;
+  margin:3px 0 25px;
 }
 
-/* =========================
-   スクショ モード
-========================= */
-
 .shot-mode-buttons{
-  display:grid;
-  grid-template-columns:1fr 1fr;
+  display:flex;
+  justify-content:center;
   gap:8px;
-  margin-bottom:10px;
+  margin-bottom:12px;
 }
 
 .shot-mode-button{
-  padding:11px 5px;
-  border-radius:11px;
   background:#eee;
-  color:#666;
-  font-size:14px;
+  color:#777;
+  border-radius:10px;
+  padding:8px 16px;
+  font-size:12px;
 }
 
 .shot-mode-button.active{
   background:#777;
-  color:white;
+  color:#fff;
 }
 
-/* =========================
-   グッズ種類選択
-========================= */
+/* 優先度は1回だけ */
 
-.shot-type-selector{
+.shot-sheet::before{
+  content:"優先度：　☆ 通常　　🟡 優先　　⭐ 最優先";
+  display:block;
+  text-align:center;
   background:#f7f7f7;
-  border-radius:12px;
-  padding:10px;
-  margin-bottom:12px;
-}
-
-.shot-type-title{
-  font-size:12px;
-  font-weight:bold;
-  color:#777;
-  margin-bottom:7px;
-}
-
-.shot-type-list{
-  display:flex;
-  flex-wrap:wrap;
-  gap:6px;
-}
-
-.shot-type-chip{
-  padding:7px 11px;
   border-radius:18px;
-  background:white;
-  color:#777;
-  font-size:11px;
-  box-shadow:0 1px 4px rgba(0,0,0,.06);
+  padding:13px 10px;
+  margin-bottom:28px;
+  color:#666;
+  font-size:20px;
 }
 
-.shot-type-chip.selected{
-  background:#777;
-  color:white;
-}
-
-/* =========================
-   ★ スクショ用まとめ
-========================= */
+/* 絵柄カード2列 */
 
 .shot-pattern-grid{
   display:grid;
   grid-template-columns:repeat(2,minmax(0,1fr));
-  gap:10px;
+  gap:12px;
 }
+
+/* 1枚の絵柄カード */
 
 .shot-pattern-card{
-  background:#f7f7f7;
-  border:1px solid #e4e4e4;
-  border-radius:15px;
-  padding:9px;
+  background:#f8f8f8;
+  border:1px solid #e3e3e3;
+  border-radius:22px;
+  padding:10px;
+
+  display:grid;
+  grid-template-columns:190px minmax(0,1fr);
+  gap:12px;
+
+  align-items:start;
   min-width:0;
 }
 
-/* 絵柄 */
+/* 左側：絵柄 */
 
 .shot-pattern-side{
-  display:flex;
-  align-items:center;
-  gap:8px;
   min-width:0;
-  margin-bottom:7px;
+  display:flex;
+  flex-direction:column;
+  align-items:flex-start;
+  gap:8px;
 }
 
 .shot-pattern-main-image{
-  width:58px;
-  height:58px;
+  width:190px;
+  height:190px;
   object-fit:cover;
-  border-radius:9px;
-  background:#ddd;
+  border-radius:17px;
   display:block;
-  flex:none;
+  background:#ddd;
 }
 
 .shot-pattern-no-image{
-  width:58px;
-  height:58px;
-  border-radius:9px;
+  width:190px;
+  height:190px;
+  border-radius:17px;
   background:#ddd;
+
   display:flex;
   align-items:center;
   justify-content:center;
+
   color:#aaa;
-  font-size:9px;
-  flex:none;
+  font-size:12px;
 }
 
 .shot-pattern-title{
-  font-size:12px;
-  line-height:1.25;
-  font-weight:bold;
+  width:100%;
   color:#444;
+  font-weight:bold;
+  font-size:20px;
+  line-height:1.18;
   overflow-wrap:anywhere;
-  min-width:0;
 }
 
-/* グッズ */
+/* 右側：グッズ */
 
 .shot-goods-list{
   width:100%;
-  display:grid;
-  grid-template-columns:repeat(2,minmax(0,1fr));
-  gap:5px;
+  min-width:0;
+
+  display:flex;
+  flex-direction:column;
+  gap:7px;
 }
 
 .shot-goods-item{
   width:100%;
   min-width:0;
-  background:white;
-  border-radius:8px;
-  padding:5px;
+
+  background:#fff;
+  border-radius:14px;
+  padding:7px;
+
   display:flex;
   align-items:center;
-  gap:5px;
+  gap:8px;
+
+  min-height:54px;
 }
 
 .shot-goods-thumb{
-  width:30px;
-  height:30px;
+  width:42px;
+  height:42px;
   object-fit:cover;
-  border-radius:5px;
+  border-radius:7px;
   background:#ddd;
   flex:none;
 }
 
 .shot-goods-no-image{
-  width:30px;
-  height:30px;
-  border-radius:5px;
+  width:42px;
+  height:42px;
+  border-radius:7px;
   background:#ddd;
+
   display:flex;
   align-items:center;
   justify-content:center;
+
   color:#aaa;
-  font-size:7px;
+  font-size:8px;
   flex:none;
 }
 
@@ -726,73 +703,175 @@ input[type="file"]{
 }
 
 .shot-goods-name{
-  font-size:10px;
+  font-size:15px;
   line-height:1.2;
-  color:#555;
+  color:#444;
   overflow-wrap:anywhere;
-  word-break:normal;
-  white-space:normal;
 }
 
 .shot-goods-priority{
-  width:15px;
-  min-width:15px;
+  width:31px;
+  min-width:31px;
   text-align:center;
-  font-size:14px;
+  font-size:27px;
   line-height:1;
   flex:none;
 }
 
 .shot-empty{
   text-align:center;
-  padding:30px 10px;
+  padding:35px 10px;
   color:#aaa;
   font-size:13px;
   grid-column:1/-1;
 }
 
 /* =========================
+   種類別選択
+========================= */
+
+.shot-type-selector{
+  background:#f7f7f7;
+  border-radius:15px;
+  padding:12px;
+  margin-bottom:12px;
+}
+
+.shot-type-title{
+  font-size:12px;
+  color:#777;
+  margin-bottom:8px;
+}
+
+.shot-type-list{
+  display:flex;
+  flex-wrap:wrap;
+  gap:6px;
+}
+
+.shot-type-chip{
+  background:#fff;
+  border:1px solid #ddd;
+  color:#777;
+  border-radius:9px;
+  padding:7px 10px;
+  font-size:11px;
+}
+
+.shot-type-chip.selected{
+  background:#777;
+  color:#fff;
+  border-color:#777;
+}
+
+/* =========================
    スマホ
 ========================= */
 
-@media(max-width:430px){
+@media(max-width:700px){
 
   main{
-    padding-left:12px;
-    padding-right:12px;
+    padding:12px;
   }
 
   .character-list,
   .pattern-grid{
-    gap:10px;
+    gap:9px;
+  }
+
+  .character-card{
+    border-radius:14px;
+  }
+
+  .char-name{
+    font-size:13px;
+    padding:8px;
+  }
+
+  .character-head{
+    padding:12px;
+  }
+
+  .character-title{
+    font-size:20px;
+  }
+
+  .priority-legend{
+    gap:9px;
+    font-size:11px;
+  }
+
+  .screenshot-buttons button{
+    font-size:11px;
+  }
+
+  .pattern-card{
+    padding:7px;
+    border-radius:14px;
+  }
+
+  .pattern-name{
+    font-size:12px;
+  }
+
+  .goods-thumb{
+    width:32px;
+    height:32px;
+  }
+
+  .goods-name{
+    font-size:10px;
+  }
+
+  .priority-mark{
+    font-size:17px;
+    width:22px;
+    min-width:22px;
+  }
+
+  /* スクショは画像の理想形を維持 */
+
+  #screenshotContent{
+    padding:7px;
   }
 
   .shot-sheet{
     padding:10px;
+    border-radius:15px;
+  }
+
+  .shot-title{
+    font-size:21px;
+    margin-bottom:17px;
+  }
+
+  .shot-sheet::before{
+    font-size:13px;
+    padding:11px 5px;
+    margin-bottom:18px;
   }
 
   .shot-pattern-grid{
+    grid-template-columns:repeat(2,minmax(0,1fr));
     gap:7px;
   }
 
   .shot-pattern-card{
+    grid-template-columns:95px minmax(0,1fr);
+    gap:7px;
     padding:7px;
-    border-radius:12px;
-  }
-
-  .shot-pattern-side{
-    gap:6px;
-    margin-bottom:6px;
+    border-radius:15px;
   }
 
   .shot-pattern-main-image,
   .shot-pattern-no-image{
-    width:52px;
-    height:52px;
+    width:95px;
+    height:95px;
+    border-radius:10px;
   }
 
   .shot-pattern-title{
-    font-size:10px;
+    font-size:11px;
   }
 
   .shot-goods-list{
@@ -802,13 +881,15 @@ input[type="file"]{
   .shot-goods-item{
     padding:4px;
     gap:4px;
-    border-radius:7px;
+    border-radius:8px;
+    min-height:0;
   }
 
   .shot-goods-thumb,
   .shot-goods-no-image{
     width:27px;
     height:27px;
+    border-radius:5px;
   }
 
   .shot-goods-name{
@@ -816,13 +897,14 @@ input[type="file"]{
   }
 
   .shot-goods-priority{
-    font-size:12px;
-    width:13px;
-    min-width:13px;
+    width:18px;
+    min-width:18px;
+    font-size:15px;
   }
-
 }
 </style>
+</head>
+
 <body>
 
 <header>
@@ -836,81 +918,64 @@ input[type="file"]{
 ========================= -->
 
 <div class="modal-bg" id="characterModal">
+  <div class="modal">
 
-<div class="modal">
+    <h2 id="characterModalTitle">キャラを追加</h2>
 
-<h2 id="characterModalTitle">キャラを追加</h2>
+    <label>キャラ名</label>
+    <input id="characterName" type="text" placeholder="例：月永レオ">
 
-<label>キャラ名</label>
+    <label>画像</label>
+    <input id="characterImage" type="file" accept="image/*">
+    <img id="characterPreview" class="preview">
 
-<input
-id="characterName"
-type="text"
-placeholder="例：月永レオ">
+    <label>テーマカラー</label>
 
-<label>画像</label>
+    <div class="color-picker-area">
 
-<input
-id="characterImage"
-type="file"
-accept="image/*">
+      <input id="characterColor" type="color" value="#aaaaaa">
 
-<img
-id="characterPreview"
-class="preview">
+      <div class="color-code-area">
+        <span
+          id="colorPreview"
+          class="color-preview"
+          style="background:#aaaaaa">
+        </span>
 
-<label>テーマカラー</label>
+        <input
+          id="characterColorHex"
+          type="text"
+          value="#AAAAAA"
+          maxlength="7">
+      </div>
 
-<div class="color-picker-area">
+    </div>
 
-<input
-id="characterColor"
-type="color"
-value="#aaaaaa">
+    <div class="modal-buttons">
 
-<div class="color-code-area">
+      <button
+        class="cancel"
+        data-action="close-character">
+        キャンセル
+      </button>
 
-<span
-id="colorPreview"
-class="color-preview"
-style="background:#aaaaaa">
-</span>
+      <button
+        class="delete"
+        id="deleteCharacterButton"
+        data-action="delete-character"
+        style="display:none;">
+        🗑️ 削除
+      </button>
 
-<input
-id="characterColorHex"
-type="text"
-value="#AAAAAA"
-maxlength="7">
+      <button
+        class="save"
+        data-action="save-character">
+        保存
+      </button>
 
-</div>
+    </div>
 
-</div>
-
-<div class="modal-buttons">
-
-<button
-class="cancel"
-data-action="close-character">
-キャンセル
-</button>
-
-<button
-class="delete"
-id="deleteCharacterButton"
-data-action="delete-character"
-style="display:none;">
-🗑️ 削除
-</button>
-
-<button
-class="save"
-data-action="save-character">
-保存
-</button>
-
-</div>
-
-</div>
+  </div>
 </div>
 
 
@@ -919,56 +984,48 @@ data-action="save-character">
 ========================= -->
 
 <div class="modal-bg" id="patternModal">
+  <div class="modal">
 
-<div class="modal">
+    <h2 id="patternModalTitle">絵柄を追加</h2>
 
-<h2 id="patternModalTitle">
-絵柄を追加
-</h2>
+    <label>絵柄名</label>
 
-<label>絵柄名</label>
+    <input
+      id="patternName"
+      type="text"
+      placeholder="例：Half Anniversary">
 
-<input
-id="patternName"
-type="text"
-placeholder="例：ハフアニ">
+    <label>画像</label>
 
-<label>画像</label>
+    <input id="patternImage" type="file" accept="image/*">
 
-<input
-id="patternImage"
-type="file"
-accept="image/*">
+    <img id="patternPreview" class="preview">
 
-<img
-id="patternPreview"
-class="preview">
+    <div class="modal-buttons">
 
-<div class="modal-buttons">
+      <button
+        class="cancel"
+        data-action="close-pattern">
+        キャンセル
+      </button>
 
-<button
-class="cancel"
-data-action="close-pattern">
-キャンセル
-</button>
+      <button
+        class="delete"
+        id="deletePatternButton"
+        data-action="delete-pattern-modal"
+        style="display:none;">
+        🗑️ 削除
+      </button>
 
-<button
-class="delete"
-id="deletePatternButton"
-data-action="delete-pattern-modal"
-style="display:none;">
-🗑️ 削除
-</button>
+      <button
+        class="save"
+        data-action="save-pattern">
+        保存
+      </button>
 
-<button
-class="save"
-data-action="save-pattern">
-保存
-</button>
+    </div>
 
-</div>
-
-</div>
+  </div>
 </div>
 
 
@@ -977,74 +1034,56 @@ data-action="save-pattern">
 ========================= -->
 
 <div class="modal-bg" id="goodsModal">
+  <div class="modal">
 
-<div class="modal">
+    <h2 id="goodsModalTitle">グッズを追加</h2>
 
-<h2 id="goodsModalTitle">
-グッズを追加
-</h2>
+    <label>グッズ名</label>
 
-<label>グッズ名</label>
+    <input
+      id="goodsName"
+      type="text"
+      placeholder="例：チェキ">
 
-<input
-id="goodsName"
-type="text"
-placeholder="例：缶バッジ">
+    <label>画像</label>
 
-<label>画像</label>
+    <input id="goodsImage" type="file" accept="image/*">
 
-<input
-id="goodsImage"
-type="file"
-accept="image/*">
+    <img id="goodsPreview" class="preview">
 
-<img
-id="goodsPreview"
-class="preview">
+    <label>優先度</label>
 
-<label>優先度</label>
+    <select id="goodsPriority">
+      <option value="0">☆ 通常</option>
+      <option value="1">🟡 優先</option>
+      <option value="2">⭐ 最優先</option>
+    </select>
 
-<select id="goodsPriority">
+    <div class="modal-buttons">
 
-<option value="0">
-☆ 通常
-</option>
+      <button
+        class="cancel"
+        data-action="close-goods">
+        キャンセル
+      </button>
 
-<option value="1">
-★ 優先
-</option>
+      <button
+        class="delete"
+        id="deleteGoodsButton"
+        data-action="delete-goods"
+        style="display:none;">
+        🗑️ 削除
+      </button>
 
-<option value="2">
-⭐️ 最優先
-</option>
+      <button
+        class="save"
+        data-action="save-goods">
+        保存
+      </button>
 
-</select>
+    </div>
 
-<div class="modal-buttons">
-
-<button
-class="cancel"
-data-action="close-goods">
-キャンセル
-</button>
-
-<button
-class="delete"
-id="deleteGoodsButton"
-data-action="delete-goods"
-style="display:none;">
-🗑️ 削除
-</button>
-
-<button
-class="save"
-data-action="save-goods">
-保存
-</button>
-
-</div>
-
-</div>
+  </div>
 </div>
 
 
@@ -1052,45 +1091,40 @@ data-action="save-goods">
      写真拡大
 ========================= -->
 
-<div
-class="photo-view"
-id="photoView">
+<div class="photo-view" id="photoView">
 
-<button
-class="close-photo"
-data-action="close-photo">
-×
-</button>
+  <button
+    class="close-photo"
+    data-action="close-photo">
+    ×
+  </button>
 
-<img id="photoLarge">
+  <img id="photoLarge">
 
 </div>
 
 
 <!-- =========================
-     スクショ画面
+     スクショ
 ========================= -->
 
-<div
-class="screenshot-view"
-id="screenshotView">
+<div class="screenshot-view" id="screenshotView">
 
-<div class="screenshot-toolbar">
+  <div class="screenshot-toolbar">
 
-<button
-data-action="close-screenshot">
-← 戻る
-</button>
+    <button data-action="close-screenshot">
+      ← 戻る
+    </button>
 
-<button
-class="shot-save"
-data-action="save-screenshot">
-📸 画像として保存
-</button>
+    <button
+      class="shot-save"
+      data-action="save-screenshot">
+      📸 画像として保存
+    </button>
 
-</div>
+  </div>
 
-<div id="screenshotContent"></div>
+  <div id="screenshotContent"></div>
 
 </div>
 
@@ -1103,7 +1137,7 @@ data-action="save-screenshot">
 
 
 /* =========================
-   基本設定
+   設定
 ========================= */
 
 const KEY="collectionData";
@@ -1135,119 +1169,103 @@ let selectedShotTypes=[];
 const app=document.getElementById("app");
 
 
-const COLORS=[
-{name:"赤",value:"#e57373"},
-{name:"ピンク",value:"#f48fb1"},
-{name:"オレンジ",value:"#ffb74d"},
-{name:"黄色",value:"#fff176"},
-{name:"緑",value:"#81c784"},
-{name:"水色",value:"#80cbc4"},
-{name:"青",value:"#64b5f6"},
-{name:"紫",value:"#9575cd"},
-{name:"茶色",value:"#a1887f"},
-{name:"黒",value:"#555555"},
-{name:"白",value:"#dddddd"},
-{name:"グレー",value:"#aaaaaa"}
-];
-
-
 /* =========================
    IndexedDB
 ========================= */
 
 function openDB(){
 
-return new Promise(function(resolve,reject){
+  return new Promise(function(resolve,reject){
 
-const request=
-indexedDB.open(DB_NAME,DB_VERSION);
+    const request=
+      indexedDB.open(DB_NAME,DB_VERSION);
 
-request.onupgradeneeded=function(){
+    request.onupgradeneeded=function(){
 
-const d=request.result;
+      const d=request.result;
 
-if(!d.objectStoreNames.contains(STORE_NAME)){
+      if(!d.objectStoreNames.contains(STORE_NAME)){
 
-d.createObjectStore(STORE_NAME);
+        d.createObjectStore(STORE_NAME);
 
-}
+      }
 
-};
+    };
 
-request.onsuccess=function(){
+    request.onsuccess=function(){
 
-db=request.result;
+      db=request.result;
 
-resolve(db);
+      resolve(db);
 
-};
+    };
 
-request.onerror=function(){
+    request.onerror=function(){
 
-reject(request.error);
+      reject(request.error);
 
-};
+    };
 
-});
+  });
 
 }
 
 
 function getDBData(){
 
-return new Promise(function(resolve,reject){
+  return new Promise(function(resolve,reject){
 
-const tx=
-db.transaction(STORE_NAME,"readonly");
+    const tx=
+      db.transaction(STORE_NAME,"readonly");
 
-const request=
-tx.objectStore(STORE_NAME).get(KEY);
+    const request=
+      tx.objectStore(STORE_NAME).get(KEY);
 
-request.onsuccess=function(){
+    request.onsuccess=function(){
 
-resolve(
-request.result??null
-);
+      resolve(
+        request.result ?? null
+      );
 
-};
+    };
 
-request.onerror=function(){
+    request.onerror=function(){
 
-reject(request.error);
+      reject(request.error);
 
-};
+    };
 
-});
+  });
 
 }
 
 
 function putDBData(value){
 
-return new Promise(function(resolve,reject){
+  return new Promise(function(resolve,reject){
 
-const tx=
-db.transaction(STORE_NAME,"readwrite");
+    const tx=
+      db.transaction(STORE_NAME,"readwrite");
 
-const request=
-tx.objectStore(STORE_NAME).put(
-value,
-KEY
-);
+    const request=
+      tx.objectStore(STORE_NAME).put(
+        value,
+        KEY
+      );
 
-request.onsuccess=function(){
+    request.onsuccess=function(){
 
-resolve();
+      resolve();
 
-};
+    };
 
-request.onerror=function(){
+    request.onerror=function(){
 
-reject(request.error);
+      reject(request.error);
 
-};
+    };
 
-});
+  });
 
 }
 
@@ -1258,236 +1276,235 @@ reject(request.error);
 
 function normalizePriority(value){
 
-if(value===true)return 2;
+  if(value===true)return 2;
 
-if(
-value===false ||
-value===undefined ||
-value===null
-){
+  if(
+    value===false ||
+    value===undefined ||
+    value===null
+  ){
 
-return 0;
+    return 0;
 
-}
+  }
 
-const n=Number(value);
+  const n=Number(value);
 
-if(n>=2)return 2;
+  if(n>=2)return 2;
 
-if(n===1)return 1;
+  if(n===1)return 1;
 
-return 0;
+  return 0;
 
 }
 
 
 function priorityMark(priority){
 
-const p=
-normalizePriority(priority);
+  const p=
+    normalizePriority(priority);
 
-if(p===2){
+  if(p===2){
 
-return{
-mark:"⭐️",
-className:"priority-star"
-};
+    return{
+      mark:"⭐",
+      className:"priority-star"
+    };
 
-}
+  }
 
-if(p===1){
+  if(p===1){
 
-return{
-mark:"★",
-className:"priority-star"
-};
+    return{
+      mark:"🟡",
+      className:"priority-star"
+    };
 
-}
+  }
 
-return{
-mark:"☆",
-className:"priority-none"
-};
+  return{
+    mark:"☆",
+    className:"priority-none"
+  };
 
 }
 
 
 function nextPriority(priority){
 
-return(
-normalizePriority(priority)+1
-)%3;
+  return(
+    normalizePriority(priority)+1
+  )%3;
 
 }
 
 
 function normalizeCharacter(c){
 
-c=c||{};
+  c=c||{};
 
-return{
+  return{
 
-name:String(c.name||""),
+    name:String(c.name||""),
 
-image:
-typeof c.image==="string"
-?c.image
-:"",
+    image:
+      typeof c.image==="string"
+      ?c.image
+      :"",
 
-color:
-c.color||"#aaaaaa",
+    color:
+      c.color||"#aaaaaa",
 
-patterns:
-Array.isArray(c.patterns)
-?c.patterns.map(normalizePattern)
-:[]
+    patterns:
+      Array.isArray(c.patterns)
+      ?c.patterns.map(normalizePattern)
+      :[]
 
-};
+  };
 
 }
 
 
 function normalizePattern(p){
 
-p=p||{};
+  p=p||{};
 
-return{
+  return{
 
-name:String(p.name||""),
+    name:String(p.name||""),
 
-image:
-typeof p.image==="string"
-?p.image
-:"",
+    image:
+      typeof p.image==="string"
+      ?p.image
+      :"",
 
-priority:
-normalizePriority(p.priority),
+    priority:
+      normalizePriority(p.priority),
 
-goods:
-Array.isArray(p.goods)
-?p.goods.map(normalizeGoods)
-:[]
+    goods:
+      Array.isArray(p.goods)
+      ?p.goods.map(normalizeGoods)
+      :[]
 
-};
+  };
 
 }
 
 
 function normalizeGoods(g){
 
-if(typeof g==="string"){
+  if(typeof g==="string"){
 
-return{
+    return{
+      name:g,
+      image:"",
+      priority:0
+    };
 
-name:g,
+  }
 
-image:"",
+  g=g||{};
 
-priority:0
+  return{
 
-};
+    name:String(g.name||""),
 
-}
+    image:
+      typeof g.image==="string"
+      ?g.image
+      :"",
 
-g=g||{};
+    priority:
+      normalizePriority(g.priority)
 
-return{
-
-name:String(g.name||""),
-
-image:
-typeof g.image==="string"
-?g.image
-:"",
-
-priority:
-normalizePriority(g.priority)
-
-};
+  };
 
 }
 
+
+/* =========================
+   保存・読み込み
+========================= */
 
 async function safeLoad(){
 
-await openDB();
+  await openDB();
 
-let saved=
-await getDBData();
-
-
-if(saved===null){
-
-const oldRaw=
-localStorage.getItem(KEY);
+  let saved=
+    await getDBData();
 
 
-if(oldRaw){
+  if(saved===null){
 
-try{
-
-const oldData=
-JSON.parse(oldRaw);
+    const oldRaw=
+      localStorage.getItem(KEY);
 
 
-if(Array.isArray(oldData)){
+    if(oldRaw){
 
-saved=
-oldData.map(
-normalizeCharacter
-);
+      try{
 
-await putDBData(saved);
-
-localStorage.removeItem(KEY);
-
-}
-
-}catch(e){
-
-console.error(e);
-
-}
-
-}
-
-}
+        const oldData=
+          JSON.parse(oldRaw);
 
 
-if(!Array.isArray(saved)){
+        if(Array.isArray(oldData)){
 
-return[];
+          saved=
+            oldData.map(
+              normalizeCharacter
+            );
 
-}
+          await putDBData(saved);
+
+          localStorage.removeItem(KEY);
+
+        }
+
+      }catch(e){
+
+        console.error(e);
+
+      }
+
+    }
+
+  }
 
 
-return saved.map(
-normalizeCharacter
-);
+  if(!Array.isArray(saved)){
+
+    return[];
+
+  }
+
+
+  return saved.map(
+    normalizeCharacter
+  );
 
 }
 
 
 async function save(){
 
-try{
+  try{
 
-await putDBData(data);
+    await putDBData(data);
 
-return true;
+    return true;
 
-}catch(e){
+  }catch(e){
 
-console.error(e);
+    console.error(e);
 
-alert(
-"保存できませんでした。\n"+
-"端末の保存容量などを確認してみてください。"
-);
+    alert(
+      "保存できませんでした。"
+    );
 
-return false;
+    return false;
 
-}
+  }
 
 }
 
@@ -1498,288 +1515,272 @@ return false;
 
 function escapeHTML(str){
 
-return String(str||"")
+  return String(str||"")
 
-.replace(/&/g,"&amp;")
-
-.replace(/</g,"&lt;")
-
-.replace(/>/g,"&gt;")
-
-.replace(/"/g,"&quot;")
-
-.replace(/'/g,"&#039;");
+    .replace(/&/g,"&amp;")
+    .replace(/</g,"&lt;")
+    .replace(/>/g,"&gt;")
+    .replace(/"/g,"&quot;")
+    .replace(/'/g,"&#039;");
 
 }
 
 
 function getColor(color){
 
-const found=
-COLORS.find(function(c){
+  if(
+    typeof color==="string" &&
+    /^#[0-9a-fA-F]{6}$/.test(color)
+  ){
 
-return c.name===color;
+    return color;
 
-});
+  }
 
-
-if(found)return found.value;
-
-
-if(
-typeof color==="string" &&
-/^#[0-9a-fA-F]{6}$/.test(color)
-){
-
-return color;
-
-}
-
-
-return "#aaaaaa";
+  return "#aaaaaa";
 
 }
 
 
 function compressImage(file){
 
-return new Promise(function(resolve){
+  return new Promise(function(resolve){
 
-if(!file){
+    if(!file){
 
-resolve("");
+      resolve("");
 
-return;
+      return;
 
-}
-
-
-const reader=
-new FileReader();
+    }
 
 
-reader.onload=function(){
-
-const img=
-new Image();
+    const reader=
+      new FileReader();
 
 
-img.onload=function(){
+    reader.onload=function(){
 
-const max=600;
-
-let w=img.width;
-
-let h=img.height;
+      const img=
+        new Image();
 
 
-if(w>max || h>max){
+      img.onload=function(){
 
-if(w>h){
+        const max=700;
 
-h=
-Math.round(
-h*max/w
-);
+        let w=img.width;
 
-w=max;
-
-}else{
-
-w=
-Math.round(
-w*max/h
-);
-
-h=max;
-
-}
-
-}
+        let h=img.height;
 
 
-const canvas=
-document.createElement("canvas");
+        if(w>max || h>max){
 
-canvas.width=w;
+          if(w>h){
 
-canvas.height=h;
+            h=
+              Math.round(
+                h*max/w
+              );
 
+            w=max;
 
-const ctx=
-canvas.getContext("2d");
+          }else{
 
+            w=
+              Math.round(
+                w*max/h
+              );
 
-ctx.drawImage(
-img,
-0,
-0,
-w,
-h
-);
+            h=max;
 
+          }
 
-resolve(
-canvas.toDataURL(
-"image/jpeg",
-.72
-)
-);
-
-};
+        }
 
 
-img.onerror=function(){
+        const canvas=
+          document.createElement("canvas");
 
-resolve(reader.result);
+        canvas.width=w;
 
-};
-
-
-img.src=reader.result;
-
-};
+        canvas.height=h;
 
 
-reader.onerror=function(){
-
-resolve("");
-
-};
+        const ctx=
+          canvas.getContext("2d");
 
 
-reader.readAsDataURL(file);
+        ctx.drawImage(
+          img,
+          0,
+          0,
+          w,
+          h
+        );
 
-});
+
+        resolve(
+          canvas.toDataURL(
+            "image/jpeg",
+            .75
+          )
+        );
+
+      };
+
+
+      img.onerror=function(){
+
+        resolve(reader.result);
+
+      };
+
+
+      img.src=reader.result;
+
+    };
+
+
+    reader.onerror=function(){
+
+      resolve("");
+
+    };
+
+
+    reader.readAsDataURL(file);
+
+  });
 
 }
 
 
 function openModal(id){
 
-document
-.getElementById(id)
-.classList.add("show");
+  document
+    .getElementById(id)
+    .classList.add("show");
 
 }
 
 
 function closeModal(id){
 
-document
-.getElementById(id)
-.classList.remove("show");
+  document
+    .getElementById(id)
+    .classList.remove("show");
 
 }
 
 
 /* =========================
-   一覧
+   キャラ一覧
 ========================= */
 
 function render(){
 
-if(currentCharacter===null){
+  if(currentCharacter===null){
 
-renderCharacters();
+    renderCharacters();
 
-}else{
+  }else{
 
-renderCharacter();
+    renderCharacter();
 
-}
+  }
 
 }
 
 
 function renderCharacters(){
 
-let html=`
+  let html=`
 
-<button
-class="add-main"
-data-action="add-character">
-＋ キャラを追加
-</button>
+    <button
+      class="add-main"
+      data-action="add-character">
+      ＋ キャラを追加
+    </button>
 
-`;
-
-
-if(data.length===0){
-
-html+=`
-
-<div class="empty">
-まだキャラが登録されていません
-</div>
-
-`;
-
-}else{
-
-html+=`
-
-<div class="character-list">
-
-`;
+  `;
 
 
-data.forEach(function(c,index){
+  if(data.length===0){
 
-const color=
-getColor(c.color);
+    html+=`
 
+      <div class="empty">
+        まだキャラが登録されていません
+      </div>
 
-html+=`
+    `;
 
-<div
-class="character-card"
-data-character="${index}"
-style="--theme:${color}">
+  }else{
 
-${
-c.image
-?
-`
-<img
-class="char-image"
-src="${c.image}"
-data-photo="${c.image}">
-`
-:
-`
-<div class="char-image"></div>
-`
-}
+    html+=`
 
-<div class="char-name">
+      <div class="character-list">
 
-<span
-class="char-color"
-style="background:${color}">
-</span>
-
-${escapeHTML(c.name)}
-
-</div>
-
-</div>
-
-`;
-
-});
+    `;
 
 
-html+=`
+    data.forEach(function(c,index){
 
-</div>
-
-`;
-
-}
+      const color=
+        getColor(c.color);
 
 
-app.innerHTML=html;
+      html+=`
+
+        <div
+          class="character-card"
+          data-character="${index}"
+          style="--theme:${color}">
+
+          ${
+            c.image
+            ?
+            `
+              <img
+                class="char-image"
+                src="${c.image}"
+                data-photo="${c.image}">
+            `
+            :
+            `
+              <div class="char-image"></div>
+            `
+          }
+
+          <div class="char-name">
+
+            <span
+              class="char-color"
+              style="background:${color}">
+            </span>
+
+            ${escapeHTML(c.name)}
+
+          </div>
+
+        </div>
+
+      `;
+
+    });
+
+
+    html+=`
+
+      </div>
+
+    `;
+
+  }
+
+
+  app.innerHTML=html;
 
 }
 
@@ -1790,275 +1791,267 @@ app.innerHTML=html;
 
 function renderCharacter(){
 
-const c=
-data[currentCharacter];
+  const c=
+    data[currentCharacter];
 
 
-if(!c){
+  if(!c){
 
-currentCharacter=null;
+    currentCharacter=null;
 
-renderCharacters();
+    renderCharacters();
 
-return;
+    return;
 
-}
+  }
 
 
-const color=
-getColor(c.color);
+  const color=
+    getColor(c.color);
 
 
-let html=`
+  let html=`
 
-<button
-class="back"
-data-action="back">
-← キャラ一覧
-</button>
+    <button
+      class="back"
+      data-action="back">
+      ← キャラ一覧
+    </button>
 
 
-<div
-class="character-head"
-style="--theme:${color}">
+    <div
+      class="character-head"
+      style="--theme:${color}">
 
-<div class="character-title">
-${escapeHTML(c.name)}
-</div>
+      <div class="character-title">
+        ${escapeHTML(c.name)}
+      </div>
 
 
-<div class="character-actions">
+      <div class="character-actions">
 
-<button
-class="action theme"
-data-action="add-pattern">
-＋ 絵柄を追加
-</button>
+        <button
+          class="action theme"
+          data-action="add-pattern">
+          ＋ 絵柄を追加
+        </button>
 
+        <button
+          class="action"
+          data-action="edit-character">
+          ⚙ キャラ情報
+        </button>
 
-<button
-class="action"
-data-action="edit-character">
-⚙ キャラ情報
-</button>
+      </div>
 
-</div>
 
+      <div class="priority-legend">
 
-<div class="priority-legend">
+        <span class="priority-legend-title">
+          優先度：
+        </span>
 
-<span class="priority-legend-title">
-優先度：
-</span>
+        <span>☆ 通常</span>
+        <span>🟡 優先</span>
+        <span>⭐ 最優先</span>
 
-<span>☆ 通常</span>
+      </div>
 
-<span>★ 優先</span>
 
-<span>⭐️ 最優先</span>
+      <div class="screenshot-buttons">
 
-</div>
+        <button data-action="screenshot-all">
+          📸 まとめてスクショ
+        </button>
 
+        <button data-action="screenshot-type">
+          📷 種類別にスクショ
+        </button>
 
-<div class="screenshot-buttons">
+      </div>
 
-<button
-data-action="screenshot-all">
-📸 まとめてスクショ
-</button>
+    </div>
 
-<button
-data-action="screenshot-type">
-📷 種類別にスクショ
-</button>
+  `;
 
-</div>
 
-</div>
+  if(c.patterns.length===0){
 
-`;
+    html+=`
 
+      <div class="empty">
+        まだ絵柄がありません
+      </div>
 
-if(c.patterns.length===0){
+    `;
 
-html+=`
+  }else{
 
-<div class="empty">
-まだ絵柄がありません
-</div>
+    html+=`
 
-`;
+      <div class="pattern-grid">
 
-}else{
+    `;
 
-html+=`
 
-<div class="pattern-grid">
+    c.patterns.forEach(function(p,pIndex){
 
-`;
+      const pp=
+        priorityMark(p.priority);
 
 
-c.patterns.forEach(function(p,pIndex){
+      html+=`
 
-const pp=
-priorityMark(p.priority);
+        <div class="pattern-card">
 
+          <button
+            class="pattern-priority ${pp.className}"
+            data-action="toggle-pattern-priority"
+            data-pattern="${pIndex}">
+            ${pp.mark}
+          </button>
 
-html+=`
 
-<div
-class="pattern-card">
+          ${
+            p.image
+            ?
+            `
+              <img
+                class="pattern-image"
+                src="${p.image}"
+                data-photo="${p.image}">
+            `
+            :
+            `
+              <div class="pattern-empty">
+                画像なし
+              </div>
+            `
+          }
 
-<button
-class="pattern-priority ${pp.className}"
-data-action="toggle-pattern-priority"
-data-pattern="${pIndex}">
-${pp.mark}
-</button>
 
+          <div class="pattern-info">
 
-${
-p.image
-?
-`
-<img
-class="pattern-image"
-src="${p.image}"
-data-photo="${p.image}">
-`
-:
-`
-<div class="pattern-empty">
-画像なし
-</div>
-`
-}
+            <div class="pattern-name">
+              ${escapeHTML(p.name)}
+            </div>
 
 
-<div class="pattern-info">
+            <div class="goods-list">
 
-<div class="pattern-name">
-${escapeHTML(p.name)}
-</div>
+      `;
 
 
-<div class="goods-list">
+      if(p.goods.length===0){
 
-`;
+        html+=`
 
+          <div
+            style="font-size:12px;color:#aaa;">
+            グッズなし
+          </div>
 
-if(p.goods.length===0){
+        `;
 
-html+=`
+      }else{
 
-<div
-style="font-size:12px;color:#aaa">
-グッズなし
-</div>
+        p.goods.forEach(function(g,gIndex){
 
-`;
+          const gp=
+            priorityMark(g.priority);
 
-}else{
 
-p.goods.forEach(function(g,gIndex){
+          html+=`
 
-const gp=
-priorityMark(g.priority);
+            <div
+              class="goods-item"
+              data-goods-pattern="${pIndex}"
+              data-goods-index="${gIndex}">
 
+              ${
+                g.image
+                ?
+                `
+                  <img
+                    class="goods-thumb"
+                    src="${g.image}"
+                    data-photo="${g.image}">
+                `
+                :
+                `
+                  <div class="goods-thumb"></div>
+                `
+              }
 
-html+=`
 
-<div
-class="goods-item"
-data-goods-pattern="${pIndex}"
-data-goods-index="${gIndex}">
+              <div class="goods-name">
+                ${escapeHTML(g.name)}
+              </div>
 
-${
-g.image
-?
-`
-<img
-class="goods-thumb"
-src="${g.image}"
-data-photo="${g.image}">
-`
-:
-`
-<div class="goods-thumb"></div>
-`
-}
 
+              <button
+                class="priority-mark ${gp.className}"
+                data-action="toggle-goods-priority"
+                data-pattern="${pIndex}"
+                data-goods="${gIndex}">
+                ${gp.mark}
+              </button>
 
-<div class="goods-name">
-${escapeHTML(g.name)}
-</div>
+            </div>
 
+          `;
 
-<button
-class="priority-mark ${gp.className}"
-data-action="toggle-goods-priority"
-data-pattern="${pIndex}"
-data-goods="${gIndex}">
-${gp.mark}
-</button>
+        });
 
-</div>
+      }
 
-`;
 
-});
+      html+=`
 
-}
+            </div>
 
 
-html+=`
+            <div class="small-buttons">
 
-</div>
+              <button
+                data-action="add-goods"
+                data-pattern="${pIndex}">
+                ＋グッズ
+              </button>
 
+              <button
+                data-action="edit-pattern"
+                data-pattern="${pIndex}">
+                編集
+              </button>
 
-<div class="small-buttons">
+              <button
+                data-action="delete-pattern"
+                data-pattern="${pIndex}">
+                削除
+              </button>
 
-<button
-data-action="add-goods"
-data-pattern="${pIndex}">
-＋グッズ
-</button>
+            </div>
 
+          </div>
 
-<button
-data-action="edit-pattern"
-data-pattern="${pIndex}">
-編集
-</button>
+        </div>
 
+      `;
 
-<button
-data-action="delete-pattern"
-data-pattern="${pIndex}">
-削除
-</button>
+    });
 
-</div>
 
-</div>
+    html+=`
 
-</div>
+      </div>
 
-`;
+    `;
 
-});
+  }
 
 
-html+=`
-
-</div>
-
-`;
-
-}
-
-
-app.innerHTML=html;
+  app.innerHTML=html;
 
 }
 
@@ -2069,295 +2062,285 @@ app.innerHTML=html;
 
 function setColorPicker(color){
 
-let value=color;
+  let value=color;
 
 
-if(!String(value).startsWith("#")){
+  if(
+    !/^#[0-9a-fA-F]{6}$/.test(value)
+  ){
 
-value=getColor(value);
+    value="#aaaaaa";
 
-}
-
-
-if(
-!/^#[0-9a-fA-F]{6}$/.test(value)
-){
-
-value="#aaaaaa";
-
-}
+  }
 
 
-document
-.getElementById("characterColor")
-.value=value;
+  document
+    .getElementById("characterColor")
+    .value=value;
 
 
-document
-.getElementById("characterColorHex")
-.value=value.toUpperCase();
+  document
+    .getElementById("characterColorHex")
+    .value=value.toUpperCase();
 
 
-document
-.getElementById("colorPreview")
-.style.background=value;
+  document
+    .getElementById("colorPreview")
+    .style.background=value;
 
 }
 
 
 function openCharacterEditor(index){
 
-editingCharacter=index;
+  editingCharacter=index;
 
 
-const name=
-document.getElementById(
-"characterName"
-);
+  const name=
+    document.getElementById(
+      "characterName"
+    );
 
-const image=
-document.getElementById(
-"characterImage"
-);
+  const image=
+    document.getElementById(
+      "characterImage"
+    );
 
-const preview=
-document.getElementById(
-"characterPreview"
-);
+  const preview=
+    document.getElementById(
+      "characterPreview"
+    );
 
-const del=
-document.getElementById(
-"deleteCharacterButton"
-);
-
-
-if(index===-1){
-
-document
-.getElementById(
-"characterModalTitle"
-)
-.textContent=
-"キャラを追加";
+  const del=
+    document.getElementById(
+      "deleteCharacterButton"
+    );
 
 
-name.value="";
+  if(index===-1){
 
-image.value="";
-
-preview.style.display="none";
-
-preview.src="";
-
-del.style.display="none";
-
-setColorPicker(
-"#aaaaaa"
-);
-
-}else{
-
-const c=data[index];
+    document
+      .getElementById(
+        "characterModalTitle"
+      )
+      .textContent="キャラを追加";
 
 
-document
-.getElementById(
-"characterModalTitle"
-)
-.textContent=
-"キャラを編集";
+    name.value="";
+
+    image.value="";
+
+    preview.src="";
+
+    preview.style.display="none";
+
+    del.style.display="none";
+
+    setColorPicker("#aaaaaa");
+
+  }else{
+
+    const c=data[index];
 
 
-name.value=c.name;
-
-image.value="";
-
-
-if(c.image){
-
-preview.src=c.image;
-
-preview.style.display="block";
-
-}else{
-
-preview.style.display="none";
-
-}
+    document
+      .getElementById(
+        "characterModalTitle"
+      )
+      .textContent="キャラを編集";
 
 
-del.style.display="block";
+    name.value=c.name;
 
-setColorPicker(c.color);
-
-}
+    image.value="";
 
 
-openModal(
-"characterModal"
-);
+    if(c.image){
+
+      preview.src=c.image;
+
+      preview.style.display="block";
+
+    }else{
+
+      preview.style.display="none";
+
+    }
+
+
+    del.style.display="block";
+
+    setColorPicker(
+      c.color
+    );
+
+  }
+
+
+  openModal(
+    "characterModal"
+  );
 
 }
 
 
 async function saveCharacter(){
 
-const name=
-document
-.getElementById("characterName")
-.value
-.trim();
+  const name=
+    document
+      .getElementById("characterName")
+      .value
+      .trim();
 
 
-if(!name){
+  if(!name){
 
-alert(
-"キャラ名を入力してね！"
-);
+    alert("キャラ名を入力してね！");
 
-return;
+    return;
 
-}
+  }
 
 
-let color=
-document
-.getElementById("characterColor")
-.value;
+  let color=
+    document
+      .getElementById("characterColor")
+      .value;
 
 
-const hex=
-document
-.getElementById("characterColorHex")
-.value
-.trim();
+  const hex=
+    document
+      .getElementById(
+        "characterColorHex"
+      )
+      .value
+      .trim();
 
 
-if(
-/^#[0-9a-fA-F]{6}$/.test(hex)
-){
+  if(
+    /^#[0-9a-fA-F]{6}$/.test(hex)
+  ){
 
-color=hex;
+    color=hex;
 
-}
-
-
-const file=
-document
-.getElementById("characterImage")
-.files[0];
+  }
 
 
-let image="";
+  const file=
+    document
+      .getElementById(
+        "characterImage"
+      )
+      .files[0];
 
 
-if(editingCharacter!==-1){
-
-image=
-data[editingCharacter]
-.image||"";
-
-}
+  let image="";
 
 
-if(file){
+  if(editingCharacter!==-1){
 
-image=
-await compressImage(file);
+    image=
+      data[editingCharacter].image||"";
 
-}
-
-
-if(editingCharacter===-1){
-
-data.push({
-
-name:name,
-
-image:image,
-
-color:color,
-
-patterns:[]
-
-});
-
-}else{
-
-const old=
-data[editingCharacter];
+  }
 
 
-data[editingCharacter]={
+  if(file){
 
-name:name,
+    image=
+      await compressImage(file);
 
-image:image,
-
-color:color,
-
-patterns:
-old.patterns||[]
-
-};
-
-}
+  }
 
 
-if(!await save())return;
+  if(editingCharacter===-1){
+
+    data.push({
+
+      name:name,
+
+      image:image,
+
+      color:color,
+
+      patterns:[]
+
+    });
+
+  }else{
+
+    const old=
+      data[editingCharacter];
 
 
-closeModal(
-"characterModal"
-);
+    data[editingCharacter]={
+
+      name:name,
+
+      image:image,
+
+      color:color,
+
+      patterns:
+        old.patterns||[]
+
+    };
+
+  }
 
 
-currentCharacter=null;
+  if(!await save())return;
 
 
-render();
+  closeModal(
+    "characterModal"
+  );
+
+
+  currentCharacter=null;
+
+  render();
 
 }
 
 
 async function deleteCharacter(){
 
-if(editingCharacter<0)return;
+  if(editingCharacter<0)return;
 
 
-const c=
-data[editingCharacter];
+  const c=
+    data[editingCharacter];
 
 
-if(!confirm(
+  if(!confirm(
 
-"「"+c.name+
-"」を削除する？\n\n"+
-"このキャラの絵柄・グッズもすべて削除されます。"
+    "「"+c.name+
+    "」を削除する？\n\n"+
+    "このキャラの絵柄・グッズもすべて削除されます。"
 
-))return;
-
-
-data.splice(
-editingCharacter,
-1
-);
+  ))return;
 
 
-if(!await save())return;
+  data.splice(
+    editingCharacter,
+    1
+  );
 
 
-closeModal(
-"characterModal"
-);
+  if(!await save())return;
 
 
-editingCharacter=-1;
+  closeModal(
+    "characterModal"
+  );
 
-currentCharacter=null;
 
+  editingCharacter=-1;
 
-render();
+  currentCharacter=null;
+
+  render();
 
 }
 
@@ -2368,211 +2351,209 @@ render();
 
 function openPatternEditor(index){
 
-editingPattern=index;
+  editingPattern=index;
 
 
-const c=
-data[currentCharacter];
+  const c=
+    data[currentCharacter];
 
 
-const name=
-document.getElementById(
-"patternName"
-);
+  const name=
+    document.getElementById(
+      "patternName"
+    );
 
-const image=
-document.getElementById(
-"patternImage"
-);
+  const image=
+    document.getElementById(
+      "patternImage"
+    );
 
-const preview=
-document.getElementById(
-"patternPreview"
-);
+  const preview=
+    document.getElementById(
+      "patternPreview"
+    );
 
-const del=
-document.getElementById(
-"deletePatternButton"
-);
-
-
-if(index===-1){
-
-document
-.getElementById(
-"patternModalTitle"
-)
-.textContent=
-"絵柄を追加";
+  const del=
+    document.getElementById(
+      "deletePatternButton"
+    );
 
 
-name.value="";
+  if(index===-1){
 
-image.value="";
-
-preview.style.display="none";
-
-preview.src="";
-
-del.style.display="none";
-
-}else{
-
-const p=
-c.patterns[index];
+    document
+      .getElementById(
+        "patternModalTitle"
+      )
+      .textContent="絵柄を追加";
 
 
-document
-.getElementById(
-"patternModalTitle"
-)
-.textContent=
-"絵柄を編集";
+    name.value="";
+
+    image.value="";
+
+    preview.src="";
+
+    preview.style.display="none";
+
+    del.style.display="none";
+
+  }else{
+
+    const p=
+      c.patterns[index];
 
 
-name.value=p.name;
-
-image.value="";
-
-
-if(p.image){
-
-preview.src=p.image;
-
-preview.style.display="block";
-
-}else{
-
-preview.style.display="none";
-
-}
+    document
+      .getElementById(
+        "patternModalTitle"
+      )
+      .textContent="絵柄を編集";
 
 
-del.style.display="block";
+    name.value=p.name;
 
-}
+    image.value="";
 
 
-openModal(
-"patternModal"
-);
+    if(p.image){
+
+      preview.src=p.image;
+
+      preview.style.display="block";
+
+    }else{
+
+      preview.style.display="none";
+
+    }
+
+
+    del.style.display="block";
+
+  }
+
+
+  openModal(
+    "patternModal"
+  );
 
 }
 
 
 async function savePattern(){
 
-const name=
-document
-.getElementById("patternName")
-.value
-.trim();
+  const name=
+    document
+      .getElementById("patternName")
+      .value
+      .trim();
 
 
-if(!name){
+  if(!name){
 
-alert(
-"絵柄名を入力してね！"
-);
+    alert("絵柄名を入力してね！");
 
-return;
+    return;
 
-}
+  }
 
 
-const c=
-data[currentCharacter];
+  const c=
+    data[currentCharacter];
 
 
-const file=
-document
-.getElementById("patternImage")
-.files[0];
+  const file=
+    document
+      .getElementById(
+        "patternImage"
+      )
+      .files[0];
 
 
-let image="";
+  let image="";
 
 
-if(editingPattern!==-1){
+  if(editingPattern!==-1){
 
-image=
-c.patterns[editingPattern]
-.image||"";
+    image=
+      c.patterns[editingPattern]
+      .image||"";
 
-}
-
-
-if(file){
-
-image=
-await compressImage(file);
-
-}
+  }
 
 
-if(editingPattern===-1){
+  if(file){
 
-c.patterns.push({
+    image=
+      await compressImage(file);
 
-name:name,
-
-image:image,
-
-priority:0,
-
-goods:[]
-
-});
-
-}else{
-
-c.patterns[editingPattern].name=
-name;
-
-c.patterns[editingPattern].image=
-image;
-
-}
+  }
 
 
-if(!await save())return;
+  if(editingPattern===-1){
+
+    c.patterns.push({
+
+      name:name,
+
+      image:image,
+
+      priority:0,
+
+      goods:[]
+
+    });
+
+  }else{
+
+    c.patterns[editingPattern].name=
+      name;
+
+    c.patterns[editingPattern].image=
+      image;
+
+  }
 
 
-closeModal(
-"patternModal"
-);
+  if(!await save())return;
 
 
-renderCharacter();
+  closeModal(
+    "patternModal"
+  );
+
+
+  renderCharacter();
 
 }
 
 
 async function deletePattern(index){
 
-const p=
-data[currentCharacter]
-.patterns[index];
+  const p=
+    data[currentCharacter]
+      .patterns[index];
 
 
-if(!confirm(
+  if(!confirm(
 
-"「"+p.name+
-"」を削除する？\n\n"+
-"この絵柄のグッズもすべて削除されます。"
+    "「"+p.name+
+    "」を削除する？\n\n"+
+    "この絵柄のグッズもすべて削除されます。"
 
-))return;
-
-
-data[currentCharacter]
-.patterns
-.splice(index,1);
+  ))return;
 
 
-if(!await save())return;
+  data[currentCharacter]
+    .patterns
+    .splice(index,1);
 
 
-renderCharacter();
+  if(!await save())return;
+
+
+  renderCharacter();
 
 }
 
@@ -2582,258 +2563,256 @@ renderCharacter();
 ========================= */
 
 function openGoodsEditor(
-patternIndex,
-goodsIndex
+  patternIndex,
+  goodsIndex
 ){
 
-editingPattern=
-patternIndex;
+  editingPattern=
+    patternIndex;
 
-editingGoods=
-goodsIndex;
-
-
-const p=
-data[currentCharacter]
-.patterns[patternIndex];
+  editingGoods=
+    goodsIndex;
 
 
-const name=
-document.getElementById(
-"goodsName"
-);
-
-const image=
-document.getElementById(
-"goodsImage"
-);
-
-const preview=
-document.getElementById(
-"goodsPreview"
-);
-
-const priority=
-document.getElementById(
-"goodsPriority"
-);
-
-const del=
-document.getElementById(
-"deleteGoodsButton"
-);
+  const p=
+    data[currentCharacter]
+      .patterns[patternIndex];
 
 
-if(goodsIndex===-1){
+  const name=
+    document.getElementById(
+      "goodsName"
+    );
 
-document
-.getElementById(
-"goodsModalTitle"
-)
-.textContent=
-"グッズを追加";
+  const image=
+    document.getElementById(
+      "goodsImage"
+    );
 
+  const preview=
+    document.getElementById(
+      "goodsPreview"
+    );
 
-name.value="";
+  const priority=
+    document.getElementById(
+      "goodsPriority"
+    );
 
-image.value="";
-
-preview.style.display="none";
-
-preview.src="";
-
-priority.value="0";
-
-del.style.display="none";
-
-}else{
-
-const g=
-p.goods[goodsIndex];
+  const del=
+    document.getElementById(
+      "deleteGoodsButton"
+    );
 
 
-document
-.getElementById(
-"goodsModalTitle"
-)
-.textContent=
-"グッズを編集";
+  if(goodsIndex===-1){
+
+    document
+      .getElementById(
+        "goodsModalTitle"
+      )
+      .textContent="グッズを追加";
 
 
-name.value=g.name;
+    name.value="";
 
-image.value="";
+    image.value="";
 
+    preview.src="";
 
-if(g.image){
+    preview.style.display="none";
 
-preview.src=g.image;
+    priority.value="0";
 
-preview.style.display="block";
+    del.style.display="none";
 
-}else{
+  }else{
 
-preview.style.display="none";
-
-}
-
-
-priority.value=
-String(
-normalizePriority(
-g.priority
-)
-);
+    const g=
+      p.goods[goodsIndex];
 
 
-del.style.display="block";
+    document
+      .getElementById(
+        "goodsModalTitle"
+      )
+      .textContent="グッズを編集";
 
-}
+
+    name.value=g.name;
+
+    image.value="";
 
 
-openModal(
-"goodsModal"
-);
+    if(g.image){
+
+      preview.src=g.image;
+
+      preview.style.display="block";
+
+    }else{
+
+      preview.style.display="none";
+
+    }
+
+
+    priority.value=
+      String(
+        normalizePriority(
+          g.priority
+        )
+      );
+
+
+    del.style.display="block";
+
+  }
+
+
+  openModal(
+    "goodsModal"
+  );
 
 }
 
 
 async function saveGoods(){
 
-const name=
-document
-.getElementById("goodsName")
-.value
-.trim();
+  const name=
+    document
+      .getElementById("goodsName")
+      .value
+      .trim();
 
 
-if(!name){
+  if(!name){
 
-alert(
-"グッズ名を入力してね！"
-);
+    alert("グッズ名を入力してね！");
 
-return;
+    return;
 
-}
+  }
 
 
-const p=
-data[currentCharacter]
-.patterns[editingPattern];
+  const p=
+    data[currentCharacter]
+      .patterns[editingPattern];
 
 
-const file=
-document
-.getElementById("goodsImage")
-.files[0];
+  const file=
+    document
+      .getElementById(
+        "goodsImage"
+      )
+      .files[0];
 
 
-let image="";
+  let image="";
 
 
-if(editingGoods!==-1){
+  if(editingGoods!==-1){
 
-image=
-p.goods[editingGoods]
-.image||"";
+    image=
+      p.goods[editingGoods]
+      .image||"";
 
-}
-
-
-if(file){
-
-image=
-await compressImage(file);
-
-}
+  }
 
 
-const priority=
-Number(
-document
-.getElementById(
-"goodsPriority"
-)
-.value
-);
+  if(file){
+
+    image=
+      await compressImage(file);
+
+  }
 
 
-const obj={
-
-name:name,
-
-image:image,
-
-priority:priority
-
-};
-
-
-if(editingGoods===-1){
-
-p.goods.push(obj);
-
-}else{
-
-p.goods[editingGoods]=obj;
-
-}
+  const priority=
+    Number(
+      document
+        .getElementById(
+          "goodsPriority"
+        )
+        .value
+    );
 
 
-if(!await save())return;
+  const obj={
+
+    name:name,
+
+    image:image,
+
+    priority:priority
+
+  };
 
 
-closeModal(
-"goodsModal"
-);
+  if(editingGoods===-1){
+
+    p.goods.push(obj);
+
+  }else{
+
+    p.goods[editingGoods]=obj;
+
+  }
 
 
-renderCharacter();
+  if(!await save())return;
+
+
+  closeModal(
+    "goodsModal"
+  );
+
+
+  renderCharacter();
 
 }
 
 
 async function deleteGoods(
-patternIndex,
-goodsIndex
+  patternIndex,
+  goodsIndex
 ){
 
-const p=
-data[currentCharacter]
-.patterns[patternIndex];
+  const p=
+    data[currentCharacter]
+      .patterns[patternIndex];
 
 
-const g=
-p.goods[goodsIndex];
+  const g=
+    p.goods[goodsIndex];
 
 
-if(!g)return;
+  if(!g)return;
 
 
-if(!confirm(
-"「"+g.name+"」を削除する？"
-))return;
+  if(!confirm(
+    "「"+g.name+"」を削除する？"
+  ))return;
 
 
-p.goods.splice(
-goodsIndex,
-1
-);
+  p.goods.splice(
+    goodsIndex,
+    1
+  );
 
 
-if(!await save())return;
+  if(!await save())return;
 
 
-closeModal(
-"goodsModal"
-);
+  closeModal(
+    "goodsModal"
+  );
 
 
-editingGoods=-1;
+  editingGoods=-1;
 
 
-renderCharacter();
+  renderCharacter();
 
 }
 
@@ -2844,561 +2823,511 @@ renderCharacter();
 
 async function togglePatternPriority(index){
 
-const p=
-data[currentCharacter]
-.patterns[index];
+  const p=
+    data[currentCharacter]
+      .patterns[index];
 
 
-p.priority=
-nextPriority(
-p.priority
-);
+  p.priority=
+    nextPriority(
+      p.priority
+    );
 
 
-if(!await save())return;
+  if(!await save())return;
 
 
-renderCharacter();
+  renderCharacter();
 
 }
 
 
 async function toggleGoodsPriority(
-patternIndex,
-goodsIndex
+  patternIndex,
+  goodsIndex
 ){
 
-const g=
-data[currentCharacter]
-.patterns[patternIndex]
-.goods[goodsIndex];
+  const g=
+    data[currentCharacter]
+      .patterns[patternIndex]
+      .goods[goodsIndex];
 
 
-g.priority=
-nextPriority(
-g.priority
-);
+  g.priority=
+    nextPriority(
+      g.priority
+    );
 
 
-if(!await save())return;
+  if(!await save())return;
 
 
-renderCharacter();
+  renderCharacter();
 
 }
 
 
 /* =========================
-   スクショ用グッズ
+   スクショ
 ========================= */
 
 function makeShotGoods(goods){
 
-const gp=
-priorityMark(
-goods.priority
-);
+  const gp=
+    priorityMark(
+      goods.priority
+    );
 
 
-return `
+  return `
 
-<div class="shot-goods-item">
+    <div class="shot-goods-item">
 
-${
-goods.image
-?
-`
-<img
-class="shot-goods-thumb"
-src="${goods.image}">
-`
-:
-`
-<div class="shot-goods-no-image">
-画像なし
-</div>
-`
+      ${
+        goods.image
+        ?
+        `
+          <img
+            class="shot-goods-thumb"
+            src="${goods.image}">
+        `
+        :
+        `
+          <div class="shot-goods-no-image">
+            画像なし
+          </div>
+        `
+      }
+
+      <div class="shot-goods-info">
+
+        <div class="shot-goods-name">
+          ${escapeHTML(goods.name)}
+        </div>
+
+      </div>
+
+      <div class="shot-goods-priority">
+        ${gp.mark}
+      </div>
+
+    </div>
+
+  `;
+
 }
 
-<div class="shot-goods-info">
-
-<div class="shot-goods-name">
-${escapeHTML(goods.name)}
-</div>
-
-</div>
-
-<div class="shot-goods-priority">
-${gp.mark}
-</div>
-
-</div>
-
-`;
-
-}
-
-
-/* =========================
-   スクショ用 絵柄カード
-========================= */
 
 function makeShotPatternCard(
-pattern,
-goodsList
+  pattern,
+  goodsList
 ){
 
-return `
+  return `
 
-<div class="shot-pattern-card">
+    <div class="shot-pattern-card">
 
-<div class="shot-pattern-side">
+      <div class="shot-pattern-side">
 
-${
-pattern.image
-?
-`
-<img
-class="shot-pattern-main-image"
-src="${pattern.image}">
-`
-:
-`
-<div class="shot-pattern-no-image">
-画像なし
-</div>
-`
+        ${
+          pattern.image
+          ?
+          `
+            <img
+              class="shot-pattern-main-image"
+              src="${pattern.image}">
+          `
+          :
+          `
+            <div class="shot-pattern-no-image">
+              画像なし
+            </div>
+          `
+        }
+
+        <div class="shot-pattern-title">
+          ${escapeHTML(pattern.name)}
+        </div>
+
+      </div>
+
+
+      <div class="shot-goods-list">
+
+        ${
+          goodsList
+            .map(function(g){
+
+              return makeShotGoods(g);
+
+            })
+            .join("")
+        }
+
+      </div>
+
+    </div>
+
+  `;
+
 }
 
-<div class="shot-pattern-title">
-${escapeHTML(pattern.name)}
-</div>
-
-</div>
-
-
-<div class="shot-goods-list">
-
-${
-goodsList
-.map(function(g){
-
-return makeShotGoods(g);
-
-})
-.join("")
-}
-
-</div>
-
-</div>
-
-`;
-
-}
-
-
-/* =========================
-   グッズ種類取得
-========================= */
 
 function getGoodsTypes(c){
 
-const result=[];
+  const result=[];
 
-const seen=new Set();
-
-
-c.patterns.forEach(function(p){
-
-p.goods.forEach(function(g){
-
-const name=
-g.name.trim();
+  const seen=new Set();
 
 
-if(!name)return;
+  c.patterns.forEach(function(p){
+
+    p.goods.forEach(function(g){
+
+      const name=
+        g.name.trim();
 
 
-if(!seen.has(name)){
+      if(!name)return;
 
-seen.add(name);
 
-result.push(name);
+      if(!seen.has(name)){
+
+        seen.add(name);
+
+        result.push(name);
+
+      }
+
+    });
+
+  });
+
+
+  return result;
 
 }
 
-});
-
-});
-
-
-return result;
-
-}
-
-
-/* =========================
-   スクショ描画
-========================= */
 
 function renderScreenshot(){
 
-const c=
-data[currentCharacter];
+  const c=
+    data[currentCharacter];
 
 
-if(!c)return;
+  if(!c)return;
 
 
-let html=`
+  let html=`
 
-<div class="shot-sheet">
+    <div class="shot-sheet">
 
-<div class="shot-title">
-
-${escapeHTML(c.name)}
-Collection
-
-</div>
+      <div class="shot-title">
+        求め絵柄まとめ
+      </div>
 
 
-<div class="shot-mode-buttons">
+      <div class="shot-mode-buttons">
 
-<button
-class="shot-mode-button ${
-screenshotMode==="all"
-?"active"
-:""
-}"
-data-shot-mode="all">
-絵柄別
-</button>
-
-
-<button
-class="shot-mode-button ${
-screenshotMode==="type"
-?"active"
-:""
-}"
-data-shot-mode="type">
-グッズ種類別
-</button>
-
-</div>
-
-`;
+        <button
+          class="shot-mode-button ${
+            screenshotMode==="all"
+            ?"active"
+            :""
+          }"
+          data-shot-mode="all">
+          絵柄別
+        </button>
 
 
-/* =========================
-   種類別選択
-========================= */
+        <button
+          class="shot-mode-button ${
+            screenshotMode==="type"
+            ?"active"
+            :""
+          }"
+          data-shot-mode="type">
+          グッズ種類別
+        </button>
 
-if(screenshotMode==="type"){
+      </div>
 
-const types=
-getGoodsTypes(c);
-
-
-html+=`
-
-<div class="shot-type-selector">
-
-<div class="shot-type-title">
-表示するグッズ種類を選択
-</div>
-
-<div class="shot-type-list">
-
-`;
+  `;
 
 
-if(types.length===0){
+  if(screenshotMode==="type"){
 
-html+=`
-
-<div
-style="font-size:12px;color:#aaa;">
-登録されているグッズがありません
-</div>
-
-`;
-
-}else{
-
-types.forEach(function(type){
-
-const selected=
-selectedShotTypes
-.includes(type);
+    const types=
+      getGoodsTypes(c);
 
 
-html+=`
+    html+=`
 
-<button
-class="shot-type-chip ${
-selected
-?"selected"
-:""
-}"
-data-shot-type="${escapeHTML(type)}">
+      <div class="shot-type-selector">
 
-${escapeHTML(type)}
+        <div class="shot-type-title">
+          表示するグッズ種類を選択
+        </div>
 
-</button>
+        <div class="shot-type-list">
 
-`;
+    `;
 
-});
+
+    if(types.length===0){
+
+      html+=`
+
+        <div
+          style="font-size:12px;color:#aaa;">
+          登録されているグッズがありません
+        </div>
+
+      `;
+
+    }else{
+
+      types.forEach(function(type){
+
+        const selected=
+          selectedShotTypes
+            .includes(type);
+
+
+        html+=`
+
+          <button
+            class="shot-type-chip ${
+              selected
+              ?"selected"
+              :""
+            }"
+            data-shot-type="${escapeHTML(type)}">
+
+            ${escapeHTML(type)}
+
+          </button>
+
+        `;
+
+      });
+
+    }
+
+
+    html+=`
+
+        </div>
+
+      </div>
+
+    `;
+
+  }
+
+
+  html+=`
+
+      <div class="shot-pattern-grid">
+
+  `;
+
+
+  let count=0;
+
+
+  c.patterns.forEach(function(pattern){
+
+    let goodsList=[];
+
+
+    if(screenshotMode==="all"){
+
+      goodsList=
+        pattern.goods.slice();
+
+    }else{
+
+      goodsList=
+        pattern.goods.filter(
+          function(goods){
+
+            return selectedShotTypes
+              .includes(
+                goods.name.trim()
+              );
+
+          }
+        );
+
+    }
+
+
+    if(goodsList.length===0)return;
+
+
+    count++;
+
+
+    html+=
+      makeShotPatternCard(
+        pattern,
+        goodsList
+      );
+
+  });
+
+
+  if(count===0){
+
+    html+=`
+
+      <div class="shot-empty">
+
+        ${
+          screenshotMode==="type"
+          ?
+          "表示するグッズ種類を選択してください"
+          :
+          "グッズがありません"
+        }
+
+      </div>
+
+    `;
+
+  }
+
+
+  html+=`
+
+      </div>
+
+    </div>
+
+  `;
+
+
+  document
+    .getElementById(
+      "screenshotContent"
+    )
+    .innerHTML=html;
 
 }
 
-
-html+=`
-
-</div>
-
-</div>
-
-`;
-
-}
-
-
-/* =========================
-   絵柄カード
-========================= */
-
-html+=`
-
-<div class="shot-pattern-grid">
-
-`;
-
-
-let count=0;
-
-
-c.patterns.forEach(function(pattern){
-
-let goodsList=[];
-
-
-if(screenshotMode==="all"){
-
-goodsList=
-pattern.goods.slice();
-
-}else{
-
-goodsList=
-pattern.goods.filter(
-function(goods){
-
-return selectedShotTypes
-.includes(
-goods.name.trim()
-);
-
-}
-);
-
-}
-
-
-if(goodsList.length===0)return;
-
-
-count++;
-
-
-html+=
-makeShotPatternCard(
-pattern,
-goodsList
-);
-
-});
-
-
-if(count===0){
-
-html+=`
-
-<div class="shot-empty">
-
-${
-screenshotMode==="type"
-?
-"表示するグッズ種類を選択してください"
-:
-"グッズがありません"
-}
-
-</div>
-
-`;
-
-}
-
-
-html+=`
-
-</div>
-
-</div>
-
-`;
-
-
-document
-.getElementById(
-"screenshotContent"
-)
-.innerHTML=html;
-
-}
-
-
-/* =========================
-   スクショを開く
-========================= */
 
 function openScreenshot(mode){
 
-screenshotMode=
-mode;
+  screenshotMode=
+    mode;
 
 
-const c=
-data[currentCharacter];
+  const c=
+    data[currentCharacter];
 
 
-if(!c)return;
+  if(!c)return;
 
 
-if(mode==="type"){
+  if(mode==="type"){
 
-const types=
-getGoodsTypes(c);
+    const types=
+      getGoodsTypes(c);
 
 
-selectedShotTypes=
-selectedShotTypes.filter(
-function(type){
+    selectedShotTypes=
+      selectedShotTypes.filter(
+        function(type){
 
-return types.includes(type);
+          return types.includes(type);
+
+        }
+      );
+
+  }else{
+
+    selectedShotTypes=[];
+
+  }
+
+
+  renderScreenshot();
+
+
+  document
+    .getElementById(
+      "screenshotView"
+    )
+    .classList.add("show");
 
 }
-);
 
-}else{
-
-selectedShotTypes=[];
-
-}
-
-
-renderScreenshot();
-
-
-document
-.getElementById(
-"screenshotView"
-)
-.classList.add("show");
-
-}
-
-
-/* =========================
-   スクショ保存
-========================= */
 
 async function saveScreenshot(){
 
-const target=
-document.getElementById(
-"screenshotContent"
-);
+  const target=
+    document.getElementById(
+      "screenshotContent"
+    );
 
 
-if(!target)return;
+  if(!target)return;
 
 
-if(
-typeof html2canvas==="undefined"
-){
+  if(
+    typeof html2canvas==="undefined"
+  ){
 
-alert(
-"画像保存機能を読み込み中です。\n"+
-"もう一度押してみてね！"
-);
+    alert(
+      "画像保存機能を読み込み中です。\n"+
+      "もう一度押してみてね！"
+    );
 
-return;
+    return;
 
-}
-
-
-try{
-
-const canvas=
-await html2canvas(
-target,
-{
-backgroundColor:"#eeeeee",
-scale:2,
-useCORS:true,
-logging:false
-}
-);
+  }
 
 
-const link=
-document.createElement("a");
+  try{
+
+    const canvas=
+      await html2canvas(
+        target,
+        {
+          backgroundColor:"#eeeeee",
+          scale:2,
+          useCORS:true,
+          logging:false
+        }
+      );
 
 
-const c=
-data[currentCharacter];
+    const link=
+      document.createElement("a");
 
 
-let suffix="絵柄別";
+    link.download=
+      "求め絵柄まとめ.png";
 
 
-if(screenshotMode==="type"){
-
-suffix="グッズ種類別";
-
-}
-
-
-link.download=
-(c.name||"Collection")+
-"_"+suffix+
-".png";
+    link.href=
+      canvas.toDataURL(
+        "image/png"
+      );
 
 
-link.href=
-canvas.toDataURL(
-"image/png"
-);
+    link.click();
 
+  }catch(e){
 
-link.click();
+    console.error(e);
 
+    alert(
+      "画像の保存に失敗しました。"
+    );
 
-}catch(e){
-
-console.error(e);
-
-
-alert(
-"画像の保存に失敗しました。\n"+
-"スクリーンショット画面をそのまま保存することもできます。"
-);
-
-}
+  }
 
 }
 
@@ -3409,32 +3338,32 @@ alert(
 
 function showPhoto(src){
 
-if(!src)return;
+  if(!src)return;
 
 
-document
-.getElementById(
-"photoLarge"
-)
-.src=src;
+  document
+    .getElementById(
+      "photoLarge"
+    )
+    .src=src;
 
 
-document
-.getElementById(
-"photoView"
-)
-.classList.add("show");
+  document
+    .getElementById(
+      "photoView"
+    )
+    .classList.add("show");
 
 }
 
 
 function closePhoto(){
 
-document
-.getElementById(
-"photoView"
-)
-.classList.remove("show");
+  document
+    .getElementById(
+      "photoView"
+    )
+    .classList.remove("show");
 
 }
 
@@ -3450,207 +3379,132 @@ let goodsTarget=null;
 
 function cancelLongPress(){
 
-if(goodsTimer!==null){
+  if(goodsTimer!==null){
 
-clearTimeout(goodsTimer);
+    clearTimeout(goodsTimer);
 
-goodsTimer=null;
+    goodsTimer=null;
 
-}
+  }
 
-
-goodsTarget=null;
+  goodsTarget=null;
 
 }
 
 
 document.addEventListener(
-"touchstart",
-function(e){
+  "touchstart",
+  function(e){
 
-const item=
-e.target.closest(
-".goods-item"
-);
-
-
-if(!item)return;
+    const item=
+      e.target.closest(
+        ".goods-item"
+      );
 
 
-if(
-e.target.closest("button")||
-e.target.closest("img")
-)return;
+    if(!item)return;
 
 
-cancelLongPress();
+    if(
+      e.target.closest("button")||
+      e.target.closest("img")
+    )return;
 
 
-goodsTarget=item;
+    cancelLongPress();
 
 
-goodsTimer=
-setTimeout(
-async function(){
-
-if(!goodsTarget)return;
+    goodsTarget=item;
 
 
-const patternIndex=
-Number(
-goodsTarget
-.dataset
-.goodsPattern
-);
+    goodsTimer=
+      setTimeout(
+        async function(){
+
+          if(!goodsTarget)return;
 
 
-const goodsIndex=
-Number(
-goodsTarget
-.dataset
-.goodsIndex
-);
+          const patternIndex=
+            Number(
+              goodsTarget
+                .dataset
+                .goodsPattern
+            );
 
 
-const p=
-data[currentCharacter]
-.patterns[patternIndex];
+          const goodsIndex=
+            Number(
+              goodsTarget
+                .dataset
+                .goodsIndex
+            );
 
 
-const g=
-p&&p.goods
-?p.goods[goodsIndex]
-:null;
+          const p=
+            data[currentCharacter]
+              .patterns[patternIndex];
 
 
-if(!g){
-
-cancelLongPress();
-
-return;
-
-}
+          const g=
+            p&&p.goods
+            ?p.goods[goodsIndex]
+            :null;
 
 
-if(confirm(
-"「"+g.name+
-"」を削除する？"
-)){
+          if(!g){
 
-p.goods.splice(
-goodsIndex,
-1
-);
+            cancelLongPress();
 
-await save();
+            return;
 
-renderCharacter();
-
-}
+          }
 
 
-cancelLongPress();
+          if(confirm(
+            "「"+g.name+"」を削除する？"
+          )){
 
-},
-800
-);
+            p.goods.splice(
+              goodsIndex,
+              1
+            );
 
-},
-{passive:true}
-);
+            await save();
+
+            renderCharacter();
+
+          }
 
 
-document.addEventListener(
-"touchend",
-cancelLongPress,
-{passive:true}
+          cancelLongPress();
+
+        },
+        800
+      );
+
+  },
+  {passive:true}
 );
 
 
 document.addEventListener(
-"touchmove",
-cancelLongPress,
-{passive:true}
+  "touchend",
+  cancelLongPress,
+  {passive:true}
 );
 
 
 document.addEventListener(
-"touchcancel",
-cancelLongPress,
-{passive:true}
+  "touchmove",
+  cancelLongPress,
+  {passive:true}
 );
 
 
 document.addEventListener(
-"contextmenu",
-function(e){
-
-const item=
-e.target.closest(
-".goods-item"
-);
-
-
-if(!item)return;
-
-
-if(
-e.target.closest("button")||
-e.target.closest("img")
-)return;
-
-
-e.preventDefault();
-
-
-const patternIndex=
-Number(
-item.dataset.goodsPattern
-);
-
-
-const goodsIndex=
-Number(
-item.dataset.goodsIndex
-);
-
-
-const p=
-data[currentCharacter]
-.patterns[patternIndex];
-
-
-const g=
-p&&p.goods
-?p.goods[goodsIndex]
-:null;
-
-
-if(!g)return;
-
-
-if(confirm(
-"「"+g.name+
-"」を削除する？"
-)){
-
-p.goods.splice(
-goodsIndex,
-1
-);
-
-
-save().then(
-function(){
-
-renderCharacter();
-
-}
-);
-
-}
-
-}
+  "touchcancel",
+  cancelLongPress,
+  {passive:true}
 );
 
 
@@ -3659,480 +3513,479 @@ renderCharacter();
 ========================= */
 
 document.addEventListener(
-"click",
-function(e){
+  "click",
+  function(e){
 
-const target=e.target;
+    const target=e.target;
 
 
-/* 写真 */
+    if(target.dataset.photo){
 
-if(target.dataset.photo){
+      e.stopPropagation();
 
-e.stopPropagation();
+      showPhoto(
+        target.dataset.photo
+      );
 
-showPhoto(
-target.dataset.photo
-);
+      return;
 
-return;
+    }
 
-}
 
+    const characterCard=
+      target.closest(
+        "[data-character]"
+      );
 
-/* キャラ */
 
-const characterCard=
-target.closest(
-"[data-character]"
-);
+    if(
+      characterCard &&
+      !target.closest("button")
+    ){
 
+      currentCharacter=
+        Number(
+          characterCard
+            .dataset
+            .character
+        );
 
-if(
-characterCard &&
-!target.closest("button")
-){
+      renderCharacter();
 
-currentCharacter=
-Number(
-characterCard.dataset.character
-);
+      return;
 
-renderCharacter();
+    }
 
-return;
 
-}
+    const shotModeButton=
+      target.closest(
+        "[data-shot-mode]"
+      );
 
 
-/* スクショモード */
+    if(shotModeButton){
 
-const shotModeButton=
-target.closest(
-"[data-shot-mode]"
-);
+      screenshotMode=
+        shotModeButton
+          .dataset
+          .shotMode;
 
 
-if(shotModeButton){
+      if(
+        screenshotMode==="all"
+      ){
 
-screenshotMode=
-shotModeButton
-.dataset
-.shotMode;
+        selectedShotTypes=[];
 
+      }
 
-if(screenshotMode==="all"){
 
-selectedShotTypes=[];
+      renderScreenshot();
 
-}
+      return;
 
+    }
 
-renderScreenshot();
 
-return;
+    const shotTypeButton=
+      target.closest(
+        "[data-shot-type]"
+      );
 
-}
 
+    if(shotTypeButton){
 
-/* グッズ種類 */
+      const type=
+        shotTypeButton
+          .dataset
+          .shotType;
 
-const shotTypeButton=
-target.closest(
-"[data-shot-type]"
-);
 
+      if(
+        selectedShotTypes
+          .includes(type)
+      ){
 
-if(shotTypeButton){
+        selectedShotTypes=
+          selectedShotTypes.filter(
+            function(item){
 
-const type=
-shotTypeButton
-.dataset
-.shotType;
+              return item!==type;
 
+            }
+          );
 
-if(
-selectedShotTypes
-.includes(type)
-){
+      }else{
 
-selectedShotTypes=
-selectedShotTypes.filter(
-function(item){
+        selectedShotTypes.push(type);
 
-return item!==type;
+      }
 
-}
-);
 
-}else{
+      renderScreenshot();
 
-selectedShotTypes.push(type);
+      return;
 
-}
+    }
 
 
-renderScreenshot();
+    const button=
+      target.closest(
+        "[data-action]"
+      );
 
-return;
 
-}
+    if(!button)return;
 
 
-/* 通常ボタン */
+    const action=
+      button.dataset.action;
 
-const button=
-target.closest(
-"[data-action]"
-);
 
+    if(action==="add-character"){
 
-if(!button)return;
+      openCharacterEditor(-1);
 
+      return;
 
-const action=
-button.dataset.action;
+    }
 
 
-if(action==="add-character"){
+    if(action==="close-character"){
 
-openCharacterEditor(-1);
+      closeModal(
+        "characterModal"
+      );
 
-return;
+      return;
 
-}
+    }
 
 
-if(action==="close-character"){
+    if(action==="save-character"){
 
-closeModal(
-"characterModal"
-);
+      saveCharacter();
 
-return;
+      return;
 
-}
+    }
 
 
-if(action==="save-character"){
+    if(action==="delete-character"){
 
-saveCharacter();
+      deleteCharacter();
 
-return;
+      return;
 
-}
+    }
 
 
-if(action==="delete-character"){
+    if(action==="back"){
 
-deleteCharacter();
+      currentCharacter=null;
 
-return;
+      render();
 
-}
+      return;
 
+    }
 
-if(action==="back"){
 
-currentCharacter=null;
+    if(action==="edit-character"){
 
-render();
+      openCharacterEditor(
+        currentCharacter
+      );
 
-return;
+      return;
 
-}
+    }
 
 
-if(action==="edit-character"){
+    if(action==="add-pattern"){
 
-openCharacterEditor(
-currentCharacter
-);
+      openPatternEditor(-1);
 
-return;
+      return;
 
-}
+    }
 
 
-if(action==="add-pattern"){
+    if(action==="close-pattern"){
 
-openPatternEditor(-1);
+      closeModal(
+        "patternModal"
+      );
 
-return;
+      return;
 
-}
+    }
 
 
-if(action==="close-pattern"){
+    if(action==="save-pattern"){
 
-closeModal(
-"patternModal"
-);
+      savePattern();
 
-return;
+      return;
 
-}
+    }
 
 
-if(action==="save-pattern"){
+    if(action==="edit-pattern"){
 
-savePattern();
+      openPatternEditor(
+        Number(
+          button.dataset.pattern
+        )
+      );
 
-return;
+      return;
 
-}
+    }
 
 
-if(action==="edit-pattern"){
+    if(action==="delete-pattern"){
 
-openPatternEditor(
-Number(
-button.dataset.pattern
-)
-);
+      deletePattern(
+        Number(
+          button.dataset.pattern
+        )
+      );
 
-return;
+      return;
 
-}
+    }
 
 
-if(action==="delete-pattern"){
+    if(
+      action==="delete-pattern-modal"
+    ){
 
-deletePattern(
-Number(
-button.dataset.pattern
-)
-);
+      if(editingPattern!==-1){
 
-return;
+        deletePattern(
+          editingPattern
+        );
 
-}
+        closeModal(
+          "patternModal"
+        );
 
+      }
 
-if(action==="delete-pattern-modal"){
+      return;
 
-if(editingPattern!==-1){
+    }
 
-deletePattern(
-editingPattern
-);
 
-closeModal(
-"patternModal"
-);
+    if(
+      action==="toggle-pattern-priority"
+    ){
 
-}
+      togglePatternPriority(
+        Number(
+          button.dataset.pattern
+        )
+      );
 
-return;
+      return;
 
-}
+    }
 
 
-if(action==="toggle-pattern-priority"){
+    if(action==="add-goods"){
 
-togglePatternPriority(
-Number(
-button.dataset.pattern
-)
-);
+      openGoodsEditor(
+        Number(
+          button.dataset.pattern
+        ),
+        -1
+      );
 
-return;
+      return;
 
-}
+    }
 
 
-if(action==="add-goods"){
+    if(action==="close-goods"){
 
-openGoodsEditor(
-Number(
-button.dataset.pattern
-),
--1
-);
+      closeModal(
+        "goodsModal"
+      );
 
-return;
+      return;
 
-}
+    }
 
 
-if(action==="close-goods"){
+    if(action==="save-goods"){
 
-closeModal(
-"goodsModal"
-);
+      saveGoods();
 
-return;
+      return;
 
-}
+    }
 
 
-if(action==="save-goods"){
+    if(action==="delete-goods"){
 
-saveGoods();
+      deleteGoods(
+        editingPattern,
+        editingGoods
+      );
 
-return;
+      return;
 
-}
+    }
 
 
-if(action==="delete-goods"){
+    if(
+      action==="toggle-goods-priority"
+    ){
 
-deleteGoods(
-editingPattern,
-editingGoods
-);
+      toggleGoodsPriority(
+        Number(
+          button.dataset.pattern
+        ),
+        Number(
+          button.dataset.goods
+        )
+      );
 
-return;
+      return;
 
-}
+    }
 
 
-if(action==="toggle-goods-priority"){
+    if(action==="close-photo"){
 
-toggleGoodsPriority(
-Number(
-button.dataset.pattern
-),
-Number(
-button.dataset.goods
-)
-);
+      closePhoto();
 
-return;
+      return;
 
-}
+    }
 
 
-if(action==="close-photo"){
+    if(action==="screenshot-all"){
 
-closePhoto();
+      openScreenshot("all");
 
-return;
+      return;
 
-}
+    }
 
 
-if(action==="screenshot-all"){
+    if(action==="screenshot-type"){
 
-openScreenshot("all");
+      openScreenshot("type");
 
-return;
+      return;
 
-}
+    }
 
 
-if(action==="screenshot-type"){
+    if(action==="close-screenshot"){
 
-openScreenshot("type");
+      document
+        .getElementById(
+          "screenshotView"
+        )
+        .classList.remove("show");
 
-return;
+      return;
 
-}
+    }
 
 
-if(action==="close-screenshot"){
+    if(action==="save-screenshot"){
 
-document
-.getElementById(
-"screenshotView"
-)
-.classList.remove("show");
+      saveScreenshot();
 
-return;
+      return;
 
-}
+    }
 
-
-if(action==="save-screenshot"){
-
-saveScreenshot();
-
-return;
-
-}
-
-}
+  }
 );
 
 
 /* =========================
-   カラーピッカー
+   カラー
 ========================= */
 
 document
-.getElementById(
-"characterColor"
-)
-.addEventListener(
-"input",
-function(){
+  .getElementById(
+    "characterColor"
+  )
+  .addEventListener(
+    "input",
+    function(){
 
-const value=
-this.value.toUpperCase();
-
-
-document
-.getElementById(
-"characterColorHex"
-)
-.value=value;
+      const value=
+        this.value.toUpperCase();
 
 
-document
-.getElementById(
-"colorPreview"
-)
-.style.background=value;
-
-}
-);
+      document
+        .getElementById(
+          "characterColorHex"
+        )
+        .value=value;
 
 
-document
-.getElementById(
-"characterColorHex"
-)
-.addEventListener(
-"input",
-function(){
+      document
+        .getElementById(
+          "colorPreview"
+        )
+        .style.background=value;
 
-let value=
-this.value.trim();
-
-
-if(!value.startsWith("#")){
-
-value="#"+value;
-
-}
-
-
-if(
-/^#[0-9a-fA-F]{6}$/
-.test(value)
-){
-
-value=
-value.toUpperCase();
+    }
+  );
 
 
 document
-.getElementById(
-"characterColor"
-)
-.value=value;
+  .getElementById(
+    "characterColorHex"
+  )
+  .addEventListener(
+    "input",
+    function(){
+
+      let value=
+        this.value.trim();
 
 
-document
-.getElementById(
-"colorPreview"
-)
-.style.background=value;
+      if(!value.startsWith("#")){
 
-}
+        value="#"+value;
 
-}
-);
+      }
+
+
+      if(
+        /^#[0-9a-fA-F]{6}$/.test(value)
+      ){
+
+        value=
+          value.toUpperCase();
+
+
+        document
+          .getElementById(
+            "characterColor"
+          )
+          .value=value;
+
+
+        document
+          .getElementById(
+            "colorPreview"
+          )
+          .style.background=value;
+
+      }
+
+    }
+  );
 
 
 /* =========================
@@ -4140,27 +3993,25 @@ document
 ========================= */
 
 document
-.querySelectorAll(
-".modal-bg"
-)
-.forEach(function(bg){
+  .querySelectorAll(".modal-bg")
+  .forEach(function(bg){
 
-bg.addEventListener(
-"click",
-function(e){
+    bg.addEventListener(
+      "click",
+      function(e){
 
-if(e.target===bg){
+        if(e.target===bg){
 
-bg.classList.remove(
-"show"
-);
+          bg.classList.remove(
+            "show"
+          );
 
-}
+        }
 
-}
-);
+      }
+    );
 
-});
+  });
 
 
 /* =========================
@@ -4168,78 +4019,77 @@ bg.classList.remove(
 ========================= */
 
 function previewFile(
-input,
-preview
+  input,
+  preview
 ){
 
-input.addEventListener(
-"change",
-function(){
+  input.addEventListener(
+    "change",
+    function(){
 
-const file=
-input.files[0];
-
-
-if(!file){
-
-preview.style.display=
-"none";
-
-return;
-
-}
+      const file=
+        input.files[0];
 
 
-const reader=
-new FileReader();
+      if(!file){
+
+        preview.style.display="none";
+
+        return;
+
+      }
 
 
-reader.onload=function(){
-
-preview.src=
-reader.result;
-
-preview.style.display=
-"block";
-
-};
+      const reader=
+        new FileReader();
 
 
-reader.readAsDataURL(file);
+      reader.onload=function(){
 
-}
-);
+        preview.src=
+          reader.result;
+
+        preview.style.display=
+          "block";
+
+      };
+
+
+      reader.readAsDataURL(file);
+
+    }
+  );
 
 }
 
 
 previewFile(
-document.getElementById(
-"characterImage"
-),
-document.getElementById(
-"characterPreview"
-)
+  document.getElementById(
+    "characterImage"
+  ),
+  document.getElementById(
+    "characterPreview"
+  )
 );
 
 
 previewFile(
-document.getElementById(
-"patternImage"
-),
-document.getElementById(
-"patternPreview"
-)
+  document.getElementById(
+    "patternImage"
+  ),
+  document.getElementById(
+    "patternPreview"
+  )
 );
 
 
 previewFile(
-document.getElementById(
-"goodsImage"
-),
-document.getElementById(
-"goodsPreview"
-)
+  document.getElementById(
+    "goodsImage"
+  ),
+  document.getElementById(
+    "goodsPreview"
+  )
 );
 
 
@@ -4249,29 +4099,26 @@ document.getElementById(
 
 (async function(){
 
-try{
+  try{
 
-data=
-await safeLoad();
+    data=
+      await safeLoad();
 
-render();
+    render();
 
-}catch(e){
+  }catch(e){
 
-console.error(e);
+    console.error(e);
 
+    alert(
+      "保存機能の初期化に失敗しました。"
+    );
 
-alert(
-"保存機能の初期化に失敗しました。\n"+
-"Safariを通常モードで開き直してみてください。"
-);
+    data=[];
 
+    render();
 
-data=[];
-
-render();
-
-}
+  }
 
 })();
 
